@@ -98,6 +98,7 @@
 }
 
 .cinematic-music,
+.cinematic-source-link,
 .cinematic-full-link {
   height: 38px;
   display: grid;
@@ -113,7 +114,16 @@
   border-radius: 50%;
 }
 
-.cinematic-music svg { width: 17px; height: 17px; }
+.cinematic-source-link {
+  width: 38px;
+  border-radius: 50%;
+  text-decoration: none;
+}
+
+.cinematic-music svg,
+.cinematic-source-link svg { width: 17px; height: 17px; }
+.cinematic-source-link:hover,
+.cinematic-source-link:focus-visible { color: #fff; border-color: var(--cinematic-teal); }
 .cinematic-music.playing.hopeful { color: #1c211f; border-color: #e6b75d; background: #e6b75d; }
 .cinematic-music.playing.sorrowful { color: #0c2025; border-color: #83c5d4; background: #83c5d4; }
 .cinematic-music.playing.difficulty { color: #281414; border-color: #e47d70; background: #e47d70; }

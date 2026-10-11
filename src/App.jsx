@@ -18,6 +18,7 @@ import {
   FirstAidKit,
   ForkKnife,
   Gavel,
+  GithubLogo,
   Handshake,
   Heartbeat,
   HouseLine,
@@ -631,6 +632,16 @@ export function App() {
           </div>
           <span className="header-actions">
             <a className="guided-return" href="/" data-tooltip="Switch to the simpler story view">Guided view</a>
+            <a
+              className="source-link"
+              href="https://github.com/thachp/theundocumentedtrail"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="View the open-source project on GitHub"
+              data-tooltip="Open source on GitHub · MIT license"
+            >
+              <GithubLogo weight="fill" aria-hidden="true" />
+            </a>
             <button
               className={`soundtrack-toggle ${soundtrackOn ? `is-playing theme-${soundtrackTheme.id}` : ""}`}
               onClick={toggleSoundtrack}
