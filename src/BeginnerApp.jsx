@@ -13,6 +13,7 @@ import {
   Eye,
   FirstAidKit,
   ForkKnife,
+  GithubLogo,
   Handshake,
   Heartbeat,
   HouseLine,
@@ -820,6 +821,16 @@ export function BeginnerApp() {
           <button className="cinematic-music" onClick={replayTutorial} aria-label="Open tutorial" data-tooltip="How to play" data-sound="tap"><Question weight="duotone" /></button>
           <button className="cinematic-music" onClick={() => setShowContentSettings(true)} aria-label="Open content settings" data-tooltip="Sensitive-content settings" data-sound="tap"><WarningCircle weight="duotone" /></button>
           <button className="cinematic-music" onClick={() => setShowJourneyLog(true)} aria-label="Open journey log" data-tooltip="Journey log" data-sound="tap"><BookOpenText weight="duotone" /></button>
+          <a
+            className="cinematic-source-link"
+            href="https://github.com/thachp/theundocumentedtrail"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="View the open-source project on GitHub"
+            data-tooltip="Open source on GitHub · MIT license"
+          >
+            <GithubLogo weight="fill" aria-hidden="true" />
+          </a>
           <button
             className={`cinematic-music ${soundtrackOn ? `playing ${soundtrackTheme.id}` : ""}`}
             onClick={toggleSoundtrack}

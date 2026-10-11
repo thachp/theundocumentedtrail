@@ -260,7 +260,8 @@ button:focus-visible {
 }
 .guided-return:hover { color: #fff; border-color: #567985; }
 
-.header-actions button {
+.header-actions button,
+.header-actions .source-link {
   width: 32px;
   height: 32px;
   display: grid;
@@ -273,7 +274,11 @@ button:focus-visible {
   cursor: pointer;
 }
 
-.header-actions button:hover {
+.header-actions .source-link { text-decoration: none; }
+
+.header-actions button:hover,
+.header-actions .source-link:hover,
+.header-actions .source-link:focus-visible {
   color: #ffffff;
   border-color: #567985;
 }
