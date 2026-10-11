@@ -1,0 +1,7 @@
+.portrait-crop {
+  display: block;
+  overflow: hidden;
+  background-color: #13252a;
+}
+
+.portrait-crop image { pointer-events: none; }

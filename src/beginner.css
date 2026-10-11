@@ -145,6 +145,12 @@
   background-image: url("/assets/long-road-departure.webp");
   background-position: center 48%;
   background-size: cover;
+  animation: cinematic-scene-in 700ms ease-out both;
+}
+
+@keyframes cinematic-scene-in {
+  from { opacity: 0.46; transform: scale(1.025); filter: saturate(0.72); }
+  to { opacity: 1; transform: scale(1); filter: saturate(1); }
 }
 
 .cinematic-stage::after {
@@ -179,7 +185,6 @@
 }
 
 .cinematic-map-destination,
-.cinematic-map-location,
 .cinematic-map-route {
   position: absolute;
   display: flex;
@@ -193,21 +198,124 @@
 }
 
 .cinematic-map-destination { top: 5%; right: 7%; }
-.cinematic-map-location { left: 9%; transition: bottom 650ms ease; }
 .cinematic-map-route { right: 7%; top: 43%; }
 .cinematic-map-destination svg,
-.cinematic-map-location svg,
 .cinematic-map-route svg { width: 20px; height: 20px; color: #174f49; flex: 0 0 auto; }
-.cinematic-map-location svg { color: var(--cinematic-rust); }
 .cinematic-map-destination span,
-.cinematic-map-location span,
 .cinematic-map-route span { display: flex; flex-direction: column; }
 .cinematic-map-destination strong,
-.cinematic-map-location strong,
 .cinematic-map-route strong { font-family: Georgia, "Times New Roman", serif; font-size: 12px; }
 .cinematic-map-destination small,
-.cinematic-map-location small,
 .cinematic-map-route small { margin-top: 2px; font-size: 9px; }
+
+.cinematic-journey-status {
+  position: absolute;
+  z-index: 4;
+  left: 7%;
+  right: 7%;
+  bottom: 20%;
+  padding: 10px 11px 9px;
+  color: #251f17;
+  border: 1px solid rgba(59, 48, 32, 0.3);
+  background: rgba(235, 220, 187, 0.94);
+  box-shadow: 0 8px 22px rgba(42, 29, 15, 0.28);
+}
+
+.cinematic-current-chapter {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 7px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(65, 53, 36, 0.22);
+}
+
+.cinematic-current-chapter > svg {
+  width: 20px;
+  height: 20px;
+  color: var(--cinematic-rust);
+}
+
+.cinematic-current-chapter > span {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cinematic-current-chapter small {
+  font-size: 7px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+}
+
+.cinematic-current-chapter strong {
+  margin-top: 2px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 11px;
+  line-height: 1.15;
+}
+
+.cinematic-current-chapter em {
+  color: #385c56;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.cinematic-stage-gauge {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 8px;
+}
+
+.cinematic-stage-gauge::before,
+.cinematic-stage-gauge::after {
+  content: "";
+  height: 2px;
+  position: absolute;
+  z-index: 0;
+  top: 11px;
+  left: 12.5%;
+  right: 12.5%;
+}
+
+.cinematic-stage-gauge::before { background: rgba(50, 44, 33, 0.2); }
+
+.cinematic-stage-gauge::after {
+  right: auto;
+  width: var(--stage-fill);
+  background: #26776b;
+  transition: width 500ms ease;
+}
+
+.cinematic-stage-gauge > span {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  color: #756b59;
+}
+
+.cinematic-stage-gauge i {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(63, 54, 40, 0.3);
+  border-radius: 50%;
+  background: #e1d2b2;
+}
+
+.cinematic-stage-gauge svg { width: 12px; height: 12px; }
+.cinematic-stage-gauge small { font-size: 7px; font-weight: 600; }
+.cinematic-stage-gauge .complete,
+.cinematic-stage-gauge .active { color: #185b52; }
+.cinematic-stage-gauge .complete i { border-color: #4b8e83; background: #bdd8ca; }
+.cinematic-stage-gauge .active i { color: #f4ead5; border-color: #185b52; background: #26776b; box-shadow: 0 0 0 3px rgba(38, 119, 107, 0.16); }
 
 .cinematic-story {
   height: 100%;
@@ -315,9 +423,14 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 14px;
-  margin-left: -120px;
+  margin-left: 0;
   position: relative;
   z-index: 4;
+}
+
+.cinematic-copy,
+.cinematic-outcome {
+  animation: interface-rise-in 320ms ease-out both;
 }
 
 .cinematic-choice {
@@ -335,7 +448,11 @@
   cursor: pointer;
   box-shadow: 0 5px 18px rgba(0, 0, 0, 0.2);
   transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
+  animation: interface-rise-in 300ms ease-out both;
 }
+
+.cinematic-choice:nth-child(2) { animation-delay: 55ms; }
+.cinematic-choice:nth-child(3) { animation-delay: 110ms; }
 
 .cinematic-choice:hover {
   transform: translateY(-2px);
@@ -381,7 +498,7 @@
   padding: 18px 20px;
   border: 1px solid var(--cinematic-teal);
   background: rgba(10, 54, 54, 0.9);
-  margin-left: -120px;
+  margin-left: 0;
   position: relative;
   z-index: 4;
 }
@@ -426,7 +543,8 @@
 }
 
 .cinematic-travel-planner {
-  margin: 10px 0 0 -120px;
+  width: 100%;
+  margin: 10px 0 0;
   padding: 12px;
   position: relative;
   z-index: 4;
@@ -494,6 +612,7 @@
   gap: 8px;
   padding: 16px 10px;
   border-right: 1px solid var(--cinematic-line);
+  animation: interface-pop-in 280ms ease-out both;
 }
 
 .cinematic-status-item:last-child { border-right: 0; }
@@ -527,7 +646,7 @@
 
 .cinematic-person:hover strong { color: var(--cinematic-teal); }
 
-.cinematic-person img {
+.cinematic-person .portrait-crop {
   width: 58px;
   height: 58px;
   object-fit: cover;
@@ -535,17 +654,20 @@
   border: 1px solid #e8ddc3;
   border-radius: 50%;
   background: #263437;
-  transition: border-color 220ms ease, box-shadow 220ms ease, filter 220ms ease;
+  transition: border-color 220ms ease, box-shadow 220ms ease, filter 220ms ease, transform 220ms ease;
 }
 
-.cinematic-person.mood-strained img { filter: saturate(0.82) brightness(0.88); border-color: var(--cinematic-amber); box-shadow: 0 0 0 2px rgba(231, 163, 59, 0.13); }
-.cinematic-person.mood-critical img { filter: saturate(0.58) brightness(0.7) contrast(1.08); border-color: #e58372; box-shadow: 0 0 0 2px rgba(229, 131, 114, 0.18), 0 0 18px rgba(196, 95, 56, 0.2); }
+.cinematic-person:hover .portrait-crop,
+.cinematic-person:focus-visible .portrait-crop { transform: scale(1.045); }
+
+.cinematic-person.mood-strained .portrait-crop { filter: saturate(0.82) brightness(0.88); border-color: var(--cinematic-amber); box-shadow: 0 0 0 2px rgba(231, 163, 59, 0.13); }
+.cinematic-person.mood-critical .portrait-crop { filter: saturate(0.58) brightness(0.7) contrast(1.08); border-color: #e58372; box-shadow: 0 0 0 2px rgba(229, 131, 114, 0.18), 0 0 18px rgba(196, 95, 56, 0.2); }
 
 .cinematic-person span { min-width: 0; display: flex; flex-direction: column; }
 .cinematic-person strong { font-family: Georgia, "Times New Roman", serif; font-size: 12px; }
 .cinematic-person small { margin-top: 4px; color: #aeb9b6; font-size: 9px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-.cinematic-person.lost img {
+.cinematic-person.lost .portrait-crop {
   opacity: 0.48;
   filter: grayscale(1);
   border-color: #a66558;
@@ -576,6 +698,14 @@
   padding: 20px;
   background: rgba(3, 9, 12, 0.84);
   backdrop-filter: blur(8px);
+  animation: interface-overlay-in 160ms ease-out both;
+}
+
+.cinematic-work-backdrop > section,
+.cinematic-family-backdrop > section,
+.cinematic-tutorial-backdrop > section,
+.cinematic-ending-backdrop > section {
+  animation: interface-dialog-in 220ms ease-out both;
 }
 
 .cinematic-work-dialog {
@@ -587,6 +717,67 @@
   background: #101a1e;
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.62);
 }
+
+.cinematic-reset-backdrop { z-index: 240; }
+
+.cinematic-reset-dialog {
+  width: min(590px, 100%);
+  padding: 34px;
+  color: #f3eee2;
+  border: 1px solid rgba(229, 131, 114, 0.62);
+  background: #101a1e;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.7);
+}
+
+.cinematic-reset-dialog > svg {
+  width: 44px;
+  height: 44px;
+  color: #e58372;
+}
+
+.cinematic-reset-dialog > small {
+  display: block;
+  margin-top: 10px;
+  color: #e99a8c;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.cinematic-reset-dialog h2 {
+  margin: 6px 0 10px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(28px, 4vw, 38px);
+  line-height: 1.08;
+}
+
+.cinematic-reset-dialog > p {
+  margin: 0;
+  color: #bdc7c4;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.cinematic-reset-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.cinematic-reset-actions button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 17px;
+  cursor: pointer;
+}
+
+.cinematic-reset-actions svg { width: 16px; height: 16px; }
+.cinematic-reset-cancel { color: #d9dfdc; border: 1px solid var(--cinematic-line); background: transparent; }
+.cinematic-reset-confirm { color: #250e09; border: 1px solid #f0a093; background: #e58372; font-weight: 600; }
 
 .cinematic-work-dialog > svg {
   width: 38px;
@@ -717,7 +908,7 @@
 }
 
 .cinematic-care-heading { display: flex; align-items: center; gap: 16px; }
-.cinematic-care-heading img { width: 84px; height: 84px; object-fit: cover; border: 2px solid var(--cinematic-paper); border-radius: 50%; }
+.cinematic-care-heading .portrait-crop { width: 84px; height: 84px; object-fit: cover; border: 2px solid var(--cinematic-paper); border-radius: 50%; }
 .cinematic-care-heading span { display: flex; flex-direction: column; }
 .cinematic-care-heading small,
 .cinematic-log-dialog > small,
@@ -787,10 +978,11 @@
     linear-gradient(rgba(2, 8, 11, 0.82), rgba(2, 8, 11, 0.95)),
     url("/assets/long-road-departure.webp") center / cover;
   backdrop-filter: blur(8px);
+  animation: interface-overlay-in 160ms ease-out both;
 }
 
 .cinematic-family-dialog {
-  width: min(920px, 100%);
+  width: min(1180px, 100%);
   max-height: calc(100vh - 40px);
   position: relative;
   overflow: auto;
@@ -806,14 +998,14 @@
 .cinematic-family-dialog > small { display: block; margin-top: 14px; color: var(--cinematic-teal); font-size: 8px; text-transform: uppercase; letter-spacing: 0.18em; }
 .cinematic-family-dialog h2 { margin: 6px 48px 8px 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(30px, 4vw, 44px); line-height: 1.05; }
 .cinematic-family-dialog > p { max-width: 720px; margin: 0; color: #bbc6c2; font-size: 13px; line-height: 1.55; }
-.cinematic-family-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 24px; }
+.cinematic-family-options { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
 .cinematic-family-options > button { position: relative; overflow: hidden; padding: 0; color: #f2ecdf; text-align: left; border: 1px solid rgba(197, 209, 208, 0.35); background: rgba(6, 16, 21, 0.9); cursor: pointer; }
 .cinematic-family-options > button:hover,
 .cinematic-family-options > button.selected { transform: translateY(-2px); border-color: var(--cinematic-teal); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28); }
-.cinematic-family-options img { width: 100%; height: 150px; display: block; object-fit: cover; filter: saturate(0.86) brightness(0.82); }
-.cinematic-family-options > button > span { min-height: 190px; display: flex; flex-direction: column; align-items: flex-start; padding: 17px 48px 17px 17px; }
+.cinematic-family-options img { width: 100%; height: 138px; display: block; object-fit: cover; filter: saturate(0.86) brightness(0.82); }
+.cinematic-family-options > button > span { min-height: 196px; display: flex; flex-direction: column; align-items: flex-start; padding: 15px 42px 15px 15px; }
 .cinematic-family-options small { color: #80d7c7; font-size: 8px; text-transform: uppercase; letter-spacing: 0.14em; }
-.cinematic-family-options strong { margin-top: 5px; font-family: Georgia, "Times New Roman", serif; font-size: 24px; font-weight: 500; }
+.cinematic-family-options strong { margin-top: 5px; font-family: Georgia, "Times New Roman", serif; font-size: 21px; font-weight: 500; }
 .cinematic-family-options p { margin: 8px 0 14px; color: #b8c3bf; font-size: 10px; line-height: 1.5; }
 .cinematic-family-options em { display: flex; align-items: center; gap: 6px; margin-top: auto; color: #e6bd70; font-size: 9px; line-height: 1.35; font-style: normal; }
 .cinematic-family-options em svg { width: 13px; height: 13px; flex: 0 0 auto; }
@@ -831,6 +1023,7 @@
     linear-gradient(rgba(2, 9, 12, 0.8), rgba(2, 9, 12, 0.92)),
     url("/assets/long-road-theft-night.webp") center / cover;
   backdrop-filter: blur(8px);
+  animation: interface-overlay-in 160ms ease-out both;
 }
 
 .cinematic-tutorial {
@@ -876,6 +1069,7 @@
   padding: 20px;
   background: rgba(3, 9, 12, 0.8);
   backdrop-filter: blur(8px);
+  animation: interface-overlay-in 160ms ease-out both;
 }
 
 .cinematic-ending-backdrop.arrival {
@@ -915,6 +1109,9 @@
 .cinematic-ending h2 { margin: 9px 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(28px, 4vw, 38px); }
 .cinematic-ending p { max-width: 610px; margin: 0 auto 20px; color: #b7c0bd; line-height: 1.55; }
 .cinematic-ending button { width: 100%; }
+.cinematic-ending-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.cinematic-ending-actions .choose-family { color: #d7e1dd; border: 1px solid var(--cinematic-line); background: transparent; }
+.cinematic-ending-actions .choose-family:hover { border-color: rgba(153, 245, 224, 0.58); background: rgba(39, 90, 84, 0.22); }
 
 .cinematic-arrival-route {
   padding: 14px 16px;
@@ -964,8 +1161,8 @@
 .cinematic-ending-people { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
 .cinematic-ending-people > div { display: flex; align-items: center; gap: 8px; padding: 7px; text-align: left; border: 1px solid var(--cinematic-line); background: rgba(16, 39, 43, 0.72); }
 .cinematic-ending-people > div.remembered { border-color: rgba(214, 108, 92, 0.42); background: rgba(68, 29, 27, 0.34); }
-.cinematic-ending-people img { width: 38px; height: 48px; flex: 0 0 auto; object-fit: cover; filter: saturate(0.92); }
-.cinematic-ending-people .remembered img { filter: grayscale(0.75) brightness(0.68); }
+.cinematic-ending-people .portrait-crop { width: 38px; height: 48px; flex: 0 0 auto; object-fit: cover; filter: saturate(0.92); }
+.cinematic-ending-people .remembered .portrait-crop { filter: grayscale(0.75) brightness(0.68); }
 .cinematic-ending-people span { min-width: 0; display: flex; flex-direction: column; }
 .cinematic-ending-people strong { font-family: Georgia, "Times New Roman", serif; font-size: 13px; font-weight: 500; }
 .cinematic-ending-people small { color: #8fa09c; font-size: 8px; }
@@ -988,6 +1185,9 @@
   .cinematic-footer { grid-template-columns: 1fr; }
   .cinematic-resources { min-height: 116px; border-right: 0; border-bottom: 1px solid var(--cinematic-line); }
   .cinematic-people { min-height: 110px; }
+  .cinematic-family-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cinematic-family-options img { height: 130px; }
+  .cinematic-family-options > button > span { min-height: 172px; }
 }
 
 @media (max-width: 720px) {
@@ -1000,17 +1200,25 @@
   .cinematic-scene { height: 340px; inset: 0 0 auto; background-position: 60% center; }
   .cinematic-map { width: 42%; height: 340px; top: 0; bottom: auto; }
   .cinematic-map-destination,
-  .cinematic-map-location,
   .cinematic-map-route { padding: 5px 6px; }
   .cinematic-map-destination strong,
-  .cinematic-map-location strong,
   .cinematic-map-route strong { font-size: 9px; }
   .cinematic-map-destination small,
-  .cinematic-map-location small,
   .cinematic-map-route small { display: none; }
   .cinematic-map-destination svg,
-  .cinematic-map-location svg,
   .cinematic-map-route svg { width: 14px; height: 14px; }
+  .cinematic-journey-status { left: 5%; right: 5%; bottom: 3%; padding: 7px; }
+  .cinematic-current-chapter { grid-template-columns: 17px minmax(0, 1fr) auto; gap: 5px; padding-bottom: 6px; }
+  .cinematic-current-chapter > svg { width: 16px; height: 16px; }
+  .cinematic-current-chapter small { font-size: 6px; }
+  .cinematic-current-chapter strong { font-size: 9px; }
+  .cinematic-current-chapter em { font-size: 10px; }
+  .cinematic-stage-gauge { margin-top: 6px; }
+  .cinematic-stage-gauge::before,
+  .cinematic-stage-gauge::after { top: 9px; }
+  .cinematic-stage-gauge i { width: 20px; height: 20px; }
+  .cinematic-stage-gauge svg { width: 10px; height: 10px; }
+  .cinematic-stage-gauge small { font-size: 6px; }
   .cinematic-story { height: auto; margin-left: 0; padding: 360px 14px 18px; background: linear-gradient(to bottom, transparent 0 340px, #071116 340px); }
   .cinematic-stage::after { display: none; }
   .cinematic-copy { padding: 18px 4px; }
@@ -1033,6 +1241,9 @@
   .cinematic-person { justify-content: flex-start; }
   .cinematic-restart { grid-column: 3; grid-row: 1 / 3; }
   .cinematic-work-dialog { padding: 26px 18px 18px; }
+  .cinematic-reset-dialog { padding: 26px 18px 18px; }
+  .cinematic-reset-actions { flex-direction: column-reverse; }
+  .cinematic-reset-actions button { width: 100%; }
   .cinematic-work-choices { grid-template-columns: 1fr; }
   .cinematic-work-choices > button { min-height: 132px; }
   .cinematic-care-dialog,
@@ -1058,9 +1269,10 @@
   .cinematic-ending-stats > div:nth-child(2) { border-right: 0; }
   .cinematic-ending-stats > div:nth-child(-n + 2) { border-bottom: 1px solid var(--cinematic-line); }
   .cinematic-ending-people { grid-template-columns: 1fr 1fr; }
+  .cinematic-ending-actions { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .cinematic-choice,
-  .cinematic-map-location { transition: none; }
+  .cinematic-stage-gauge::after { transition: none; }
 }

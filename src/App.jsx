@@ -44,6 +44,7 @@ import {
   EVENTS,
   GAME_SAVE_KEY,
   ROUTES,
+  buySupply,
   chooseOption,
   continueJourney,
   createInitialGame,
@@ -52,16 +53,25 @@ import {
   getFamilyPreset,
   getJourneyScore,
   getPeople,
-  getPortraitImage,
   getPortraitMood,
   getRequirementFailure,
   getResourceTone,
+  getSocialFeed,
+  getSocialResponseOptions,
+  getSupplyStop,
   getTravelPlanOptions,
   isSavedGameValid,
+  hasRespondedToSocialFeed,
   planTravelLeg,
   requiresTravelPlan,
+  respondToSocialFeed,
+  resolveTravelIncident,
   useMedicine,
 } from "./game.js";
+import { SocialFeedModal, SocialFeedTrigger } from "./SocialFeed.jsx";
+import { Portrait } from "./Portrait.jsx";
+import { SupplyShop, SupplyStopTrigger } from "./SupplyShop.jsx";
+import { TravelIncident } from "./TravelIncident.jsx";
 import { createJourneySoundtrack, selectSoundtrackTheme } from "./soundtrack.js";
 import { createInteractionSounds } from "./soundEffects.js";
 import "@fontsource/ibm-plex-sans/latin-400.css";
@@ -102,9 +112,14 @@ const IconText = ({ icon: Icon, children }) => (
   </span>
 );
 
-function StatusMetric({ icon: Icon, value, label, tone = "default" }) {
+function StatusMetric({ icon: Icon, value, label, tone = "default", tooltip }) {
   return (
-    <div className={`status-metric ${tone}`}>
+    <div
+      className={`status-metric ${tone}`}
+      tabIndex="0"
+      data-tooltip={tooltip}
+      aria-label={`${label}: ${value}. ${tooltip}`}
+    >
       <Icon weight="duotone" aria-hidden="true" />
       <span>
         <strong>{value}</strong>
@@ -152,7 +167,7 @@ function CharacterCard({ person, state, stress, familyId, active, onClick }) {
       aria-pressed={active}
       data-sound="tap"
     >
-      <img src={getPortraitImage(person, state, stress, familyId)} alt="" style={{ objectPosition: person.focus }} />
+      <Portrait person={person} state={state} stress={stress} family={familyId} />
       <span className="character-copy">
         <span className="character-heading">
           <strong>{person.name}</strong>
@@ -178,7 +193,7 @@ function CharacterCard({ person, state, stress, familyId, active, onClick }) {
   );
 }
 
-function MessagePanel({ event, game, onChoice, onContinue, onTravelPlan }) {
+function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop, onOpenSocialFeed, onOpenSupplyShop, onChoice, onContinue, onTravelPlan }) {
   const travelPlanRequired = requiresTravelPlan(game);
   return (
     <aside className="messages-panel" aria-label="Messages and decisions">
@@ -202,6 +217,18 @@ function MessagePanel({ event, game, onChoice, onContinue, onTravelPlan }) {
           </article>
         ))}
       </div>
+
+      {socialFeed && (
+        <SocialFeedTrigger
+          compact
+          feed={socialFeed}
+          climate={game.socialClimate}
+          resolved={socialFeedResolved}
+          onOpen={onOpenSocialFeed}
+        />
+      )}
+
+      {supplyStop && <SupplyStopTrigger compact stop={supplyStop} onOpen={onOpenSupplyShop} />}
 
       {game.phase === "decision" ? (
         <div className="decision-stack" aria-label="Decision options">
@@ -305,7 +332,7 @@ function DetailDrawer({ person, personState, relationshipNote, route, medicine, 
       <button className="drawer-close" onClick={onClose} aria-label="Close details" data-sound="dismiss"><X weight="bold" /></button>
       {person ? (
         <>
-          <img src={getPortraitImage(person, personState, stress, familyId)} alt={`Portrait of ${person.name}`} style={{ objectPosition: person.focus }} />
+          <Portrait person={person} state={personState} stress={stress} family={familyId} alt={`Portrait of ${person.name}`} />
           <div className="drawer-copy">
             <small>Group member</small>
             <h2>{person.name}</h2>
@@ -444,7 +471,7 @@ function EndingModal({ game, onRestart }) {
         <div className="ending-people">
           {people.map((person) => (
             <div key={person.id}>
-              <img src={getPortraitImage(person, game.people[person.id], game.resources.stress, game)} alt="" style={{ objectPosition: person.focus }} />
+              <Portrait person={person} state={game.people[person.id]} stress={game.resources.stress} family={game} />
               <span><strong>{person.name}</strong><small>{game.people[person.id].alive === false ? "Remembered" : `${game.people[person.id].health}% health`}</small></span>
             </div>
           ))}
@@ -464,7 +491,7 @@ function RestartModal({ onCancel, onConfirm }) {
         <h2 id="restart-title">Begin a new journey?</h2>
         <p>Your current route and decision history will be replaced with a fresh run.</p>
         <div className="modal-actions">
-          <button className="back-button" onClick={onCancel} data-sound="dismiss">Keep this journey</button>
+          <button className="back-button" onClick={onCancel} data-sound="dismiss" autoFocus>Keep this journey</button>
           <button className="confirm-button danger" onClick={onConfirm} data-sound="warning">Start over<ArrowCounterClockwise weight="bold" /></button>
         </div>
       </section>
@@ -480,6 +507,8 @@ export function App() {
   const [pendingChoice, setPendingChoice] = useState(null);
   const [showLog, setShowLog] = useState(false);
   const [showRestart, setShowRestart] = useState(false);
+  const [showSocialFeed, setShowSocialFeed] = useState(false);
+  const [showSupplyShop, setShowSupplyShop] = useState(false);
   const [soundtrackOn, setSoundtrackOn] = useState(false);
   const [soundtrackError, setSoundtrackError] = useState(false);
   const soundtrackRef = useRef(null);
@@ -488,6 +517,13 @@ export function App() {
   const family = getFamilyPreset(game);
   const people = getPeople(game);
   const event = getEvent(game);
+  const socialFeed = getSocialFeed(game);
+  const socialFeedResolved = hasRespondedToSocialFeed(game);
+  const socialOutcome = socialFeedResolved && game.lastSocialOutcome?.eventId === game.eventId
+    ? game.lastSocialOutcome
+    : null;
+  const socialOptions = getSocialResponseOptions(game);
+  const supplyStop = getSupplyStop(game);
   const selectedPerson = people.find((person) => person.id === selectedPersonId) ?? null;
 
   useEffect(() => {
@@ -498,6 +534,8 @@ export function App() {
     setSelectedRoute(game.route);
     setDrawerOpen(false);
     setSelectedPersonId(null);
+    setShowSocialFeed(false);
+    setShowSupplyShop(false);
   }, [game.eventId, game.route]);
 
   useEffect(() => () => soundtrackRef.current?.dispose(), []);
@@ -555,6 +593,8 @@ export function App() {
     setPendingChoice(null);
     setShowRestart(false);
     setShowLog(false);
+    setShowSocialFeed(false);
+    setShowSupplyShop(false);
   };
 
   const toggleSoundtrack = async () => {
@@ -585,6 +625,11 @@ export function App() {
     sounds.play(button.dataset.sound ?? "tap");
   };
 
+  const continueWithIncidents = () => {
+    const incidentRolls = [Math.random(), Math.random(), Math.random()];
+    setGame((current) => continueJourney(current, { incidents: true, incidentRolls }));
+  };
+
   return (
     <main className="game-shell" onClickCapture={playInteractionSound}>
       <header className="game-header">
@@ -598,36 +643,36 @@ export function App() {
             <small>{game.history.length ? `${game.history.length} choices saved` : "Different paths. A more human tomorrow."}</small>
           </div>
           <span className="header-actions">
-            <a className="guided-return" href="/">Guided view</a>
+            <a className="guided-return" href="/" data-tooltip="Switch to the simpler story view">Guided view</a>
             <button
               className={`soundtrack-toggle ${soundtrackOn ? `is-playing theme-${soundtrackTheme.id}` : ""}`}
               onClick={toggleSoundtrack}
               aria-label={soundtrackOn ? `Pause soundtrack — ${soundtrackTheme.label}` : "Play soundtrack"}
               aria-pressed={soundtrackOn}
-              title={soundtrackOn ? `${soundtrackTheme.label} playing · pause soundtrack` : "Play the journey soundtrack"}
+              data-tooltip={soundtrackOn ? `${soundtrackTheme.label} playing · pause soundtrack` : "Play the journey soundtrack"}
               data-sound="tap"
             >
               {soundtrackOn ? <SpeakerHigh weight="fill" /> : <MusicNotes weight="duotone" />}
             </button>
-            <button onClick={() => setShowLog(true)} aria-label="Open journey log" title="Journey log" data-sound="tap"><BookOpenText weight="duotone" /></button>
-            <button onClick={() => setShowRestart(true)} aria-label="Begin a new journey" title="Begin a new journey" data-sound="warning"><ArrowCounterClockwise weight="duotone" /></button>
+            <button onClick={() => setShowLog(true)} aria-label="Open journey log" data-tooltip="Journey log" data-sound="tap"><BookOpenText weight="duotone" /></button>
+            <button onClick={() => setShowRestart(true)} aria-label="Reset journey" data-tooltip="Reset journey · confirmation required" data-tooltip-align="right" data-sound="warning"><ArrowCounterClockwise weight="duotone" /></button>
           </span>
           {soundtrackError && <span className="soundtrack-error" role="status">Sound is unavailable in this browser.</span>}
         </div>
         <div className="status-strip" aria-label="Group resources">
-          <StatusMetric icon={Wallet} value={metrics.cash} label="Cash" tone="safe" />
-          <StatusMetric icon={ForkKnife} value={metrics.supplies} label="Supplies" tone={getResourceTone("supplies", game.resources.supplies)} />
-          <StatusMetric icon={Drop} value={metrics.water} label="Water" tone={getResourceTone("water", game.resources.water)} />
-          <StatusMetric icon={BatteryMedium} value={metrics.battery} label="Phone" tone={getResourceTone("battery", game.resources.battery)} />
-          <StatusMetric icon={Pill} value={game.resources.medicine} label="Medicine" tone={getResourceTone("medicine", game.resources.medicine)} />
-          <StatusMetric icon={ShieldWarning} value={`${metrics.stress}%`} label="Stress" tone={getResourceTone("stress", game.resources.stress)} />
-          <StatusMetric icon={Eye} value={`${metrics.exposure}%`} label="Exposure" tone={getResourceTone("exposure", game.resources.exposure)} />
+          <StatusMetric key={`cash-${metrics.cash}`} icon={Wallet} value={metrics.cash} label="Cash" tone="safe" tooltip="Money available for transport, shelter, food, and official fees." />
+          <StatusMetric key={`supplies-${metrics.supplies}`} icon={ForkKnife} value={metrics.supplies} label="Supplies" tone={getResourceTone("supplies", game.resources.supplies)} tooltip="Food for the group. Reaching zero harms health and raises stress." />
+          <StatusMetric key={`water-${metrics.water}`} icon={Drop} value={metrics.water} label="Water" tone={getResourceTone("water", game.resources.water)} tooltip="Drinking water carried by the group. Reaching zero causes dehydration." />
+          <StatusMetric key={`battery-${metrics.battery}`} icon={BatteryMedium} value={metrics.battery} label="Phone" tone={getResourceTone("battery", game.resources.battery)} tooltip="Phone charge used for verification, calls, maps, and support." />
+          <StatusMetric key={`medicine-${game.resources.medicine}`} icon={Pill} value={game.resources.medicine} label="Medicine" tone={getResourceTone("medicine", game.resources.medicine)} tooltip="Doses that can restore an injured or exhausted traveler’s health." />
+          <StatusMetric key={`stress-${metrics.stress}`} icon={ShieldWarning} value={`${metrics.stress}%`} label="Stress" tone={getResourceTone("stress", game.resources.stress)} tooltip="Shared emotional strain. At 100%, the group cannot safely continue." />
+          <StatusMetric key={`exposure-${metrics.exposure}`} icon={Eye} value={`${metrics.exposure}%`} label="Exposure" tone={getResourceTone("exposure", game.resources.exposure)} tooltip="How visible the group is to danger or enforcement. At 100%, the run ends." />
         </div>
       </header>
 
       <div className="game-grid">
         <section className="map-stage" aria-label="The Undocumented Trail schematic route map">
-          <div className="map-image" style={{ backgroundImage: `url("${family.mapImage}")` }} aria-hidden="true" />
+          <div key={`${game.familyId}-${game.eventId}`} className="map-image" style={{ backgroundImage: `url("${family.mapImage}")` }} aria-hidden="true" />
           <div className="map-vignette" aria-hidden="true" />
 
           <div className="weather-card">
@@ -641,7 +686,7 @@ export function App() {
             <div><i style={{ width: `${game.progress}%` }} /></div>
           </div>
 
-          <button className="current-location" onClick={() => inspectRoute(game.route)} data-sound="tap">
+          <button key={`location-${game.eventId}`} className="current-location" onClick={() => inspectRoute(game.route)} data-sound="tap">
             <Crosshair weight="fill" aria-hidden="true" />
             <span><strong>{event.location}</strong><small>{event.region}</small></span>
           </button>
@@ -697,10 +742,16 @@ export function App() {
         </section>
 
         <MessagePanel
+          key={`${game.eventId}-${game.phase}-${game.currentOutcome?.id ?? "decision"}`}
           event={event}
           game={game}
+          socialFeed={socialFeed}
+          socialFeedResolved={socialFeedResolved}
+          supplyStop={supplyStop}
+          onOpenSocialFeed={() => setShowSocialFeed(true)}
+          onOpenSupplyShop={() => setShowSupplyShop(true)}
           onChoice={setPendingChoice}
-          onContinue={() => setGame((current) => continueJourney(current))}
+          onContinue={continueWithIncidents}
           onTravelPlan={(strategyId) => setGame((current) => planTravelLeg(current, strategyId))}
         />
       </div>
@@ -708,6 +759,25 @@ export function App() {
       <ChoiceModal choice={pendingChoice} game={game} onCancel={() => setPendingChoice(null)} onConfirm={confirmChoice} />
       {showLog && <JourneyLog game={game} onClose={() => setShowLog(false)} />}
       {showRestart && <RestartModal onCancel={() => setShowRestart(false)} onConfirm={restart} />}
+      {showSocialFeed && socialFeed && (
+        <SocialFeedModal
+          feed={socialFeed}
+          climate={game.socialClimate}
+          options={socialOptions}
+          outcome={socialOutcome}
+          resolved={socialFeedResolved}
+          onRespond={(responseId) => setGame((current) => respondToSocialFeed(current, responseId))}
+          onClose={() => setShowSocialFeed(false)}
+        />
+      )}
+      {showSupplyShop && supplyStop && (
+        <SupplyShop
+          game={game}
+          onBuy={(itemId) => setGame((current) => buySupply(current, itemId))}
+          onClose={() => setShowSupplyShop(false)}
+        />
+      )}
+      {game.pendingIncident && <TravelIncident game={game} onResolve={(responseId) => setGame((current) => resolveTravelIncident(current, responseId))} />}
       {game.phase === "ended" && <EndingModal game={game} onRestart={restart} />}
     </main>
   );
