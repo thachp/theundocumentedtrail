@@ -8,6 +8,12 @@ Play the game at [theundocumentedtrail.org](https://theundocumentedtrail.org).
 
 Players choose a family or traveling group and make decisions about routes, shelter, work, health, documents, money, medicine, and trust. The available journeys currently include people traveling from Honduras, Syria, Senegal, Vietnam, and India toward destinations in North America or Europe.
 
+### Why I made this
+
+I developed **The Undocumented Trail** as an Oregon Trail–inspired game because I wanted to create something that shares the struggles faced by undocumented migrants. I do not approach this project with a fixed political position on immigration policy. Instead, I wanted to look at migration through a human lens: compassion from one person to another.
+
+Undocumented migrants are often reduced to statistics, slogans, or political arguments. They are also people carrying fear, hope, responsibility, grief, and love. Their stories deserve to be heard.
+
 The game includes:
 
 - Distinct families, routes, resources, events, and endings
