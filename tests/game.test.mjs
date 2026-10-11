@@ -78,7 +78,7 @@ test("starts the Haddad family in Syria with a distinct journey preset", () => {
   assert.equal(game.resources.cash, 2400);
   assert.deepEqual(Object.keys(game.people), ["kareem", "nadia", "sami", "mariam"]);
   assert.equal(getPeople(game)[0].name, "Kareem");
-  assert.equal(FAMILY_PRESETS.haddad.origin, "Syria · Present day");
+  assert.equal(FAMILY_PRESETS.haddad.origin, "Syria · Conflict displacement");
   assert.match(FAMILY_PRESETS.haddad.context, /return/i);
   assert.equal(FAMILY_PRESETS.haddad.destination, "Asylum registration");
   assert.equal(FAMILY_PRESETS.haddad.heroImage, "/assets/haddad-journey-hero.webp");
@@ -126,6 +126,19 @@ test("starts the Punjab work group in India with a distinct Ireland journey", ()
   assert.equal(getPeople(game)[3].age, 22);
   assert.equal(FAMILY_PRESETS.punjab.destination, "Irish employment review");
   assert.equal(FAMILY_PRESETS.punjab.heroImage, "/assets/punjab-journey-hero.webp");
+});
+
+test("journey choices describe the pressure behind each departure", () => {
+  assert.deepEqual(
+    Object.fromEntries(Object.entries(FAMILY_PRESETS).map(([id, family]) => [id, family.origin])),
+    {
+      ramirez: "Honduras · Gang threats",
+      haddad: "Syria · Conflict displacement",
+      diop: "Senegal · Debt and lost livelihoods",
+      nguyen: "Vietnam · Recruitment debt",
+      punjab: "India · Job-recruitment fraud",
+    },
+  );
 });
 
 test("every family begins at a resupply stop and later reaches another one", () => {
