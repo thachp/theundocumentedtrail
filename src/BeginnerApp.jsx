@@ -21,13 +21,14 @@ import {
   Question,
   SpeakerHigh,
   Sparkle,
+  UsersThree,
   Wallet,
   WarningCircle,
   X,
 } from "@phosphor-icons/react";
 import {
   GAME_SAVE_KEY,
-  PEOPLE,
+  FAMILY_PRESETS,
   ROUTES,
   chooseOption,
   continueJourney,
@@ -35,7 +36,9 @@ import {
   getChoiceBonuses,
   getCondition,
   getEvent,
+  getFamilyPreset,
   getJourneyScore,
+  getPeople,
   getPortraitImage,
   getPortraitMood,
   getRequirementFailure,
@@ -54,6 +57,7 @@ import "./beginner.css";
 
 const CONTENT_MODE_KEY = "the-long-road-content-mode-v1";
 const TUTORIAL_COMPLETE_KEY = "the-undocumented-trail-tutorial-v2";
+const FAMILY_SELECTION_KEY = "the-undocumented-trail-family-v1";
 
 const TUTORIAL_STEPS = [
   {
@@ -108,6 +112,8 @@ const reducedDescriptions = {
   blueDoorShelter: "The shelter is caring for a survivor of violence. Details are not shown. The family decides how long to stay and how to help.",
   riverCrossing: "The boat is visibly unsafe, and the crossing carries a risk of death. Further details are shortened.",
   memorial: "The family is grieving Daniela's death. The memorial remains part of the story without detailed description.",
+  haddadAegean: "The family must decide whether to attempt a dangerous sea crossing. The risks are stated without graphic detail.",
+  haddadMemorial: "The family is grieving Mariam's death. The memorial remains part of the story without detailed description.",
 };
 
 const storyTitles = {
@@ -126,6 +132,15 @@ const storyTitles = {
   riverCrossing: "The boat is smaller than promised.",
   memorial: "There is an empty place in the circle.",
   detention: "The lights never turn off.",
+  haddadHome: "The workshop is gone. The apartment key remains.",
+  haddadBorder: "A border crossed is not a place secured.",
+  haddadTurkey: "Work buys time, but not certainty.",
+  haddadAegean: "The sea is shorter than the list of risks.",
+  haddadMemorial: "The key belongs to an empty hand.",
+  haddadGreece: "Every name enters another system.",
+  haddadBalkans: "The route closes while people are already on it.",
+  haddadEuropeNews: "A border speech fills every phone.",
+  haddadGermany: "Arrival begins another kind of waiting.",
 };
 
 const toneLabels = {
@@ -150,6 +165,10 @@ function loadContentMode() {
 
 function hasCompletedTutorial() {
   return localStorage.getItem(TUTORIAL_COMPLETE_KEY) === "complete";
+}
+
+function hasChosenFamily() {
+  return Boolean(FAMILY_PRESETS[localStorage.getItem(FAMILY_SELECTION_KEY)]);
 }
 
 function StatusItem({ icon: Icon, label, value, tone = "" }) {
@@ -240,7 +259,7 @@ function CareDialog({ game, person, onUseMedicine, onClose }) {
       <section className="cinematic-care-dialog" role="dialog" aria-modal="true" aria-labelledby="care-dialog-title" onMouseDown={(event) => event.stopPropagation()}>
         <button className="cinematic-work-close" onClick={onClose} aria-label="Close traveler details" data-sound="dismiss"><X weight="bold" /></button>
         <div className="cinematic-care-heading">
-          <img src={getPortraitImage(state, game.resources.stress)} alt="" style={{ objectPosition: person.focus }} />
+          <img src={getPortraitImage(person, state, game.resources.stress, game)} alt="" style={{ objectPosition: person.focus }} />
           <span><small>Traveling together</small><h2 id="care-dialog-title">{person.name}</h2><strong className={condition.tone}>{condition.label} · {state.health}% health</strong></span>
         </div>
         <p>{person.story}</p>
@@ -308,6 +327,40 @@ function JourneyLog({ game, onClose }) {
   );
 }
 
+function FamilySelection({ currentFamilyId, required, onSelect, onClose }) {
+  return (
+    <div className="cinematic-family-backdrop">
+      <section className="cinematic-family-dialog" role="dialog" aria-modal="true" aria-labelledby="family-selection-title">
+        {!required && <button className="cinematic-work-close" onClick={onClose} aria-label="Close family selection" data-sound="dismiss"><X weight="bold" /></button>}
+        <span className="cinematic-family-symbol"><UsersThree weight="duotone" /></span>
+        <small>Choose a journey</small>
+        <h2 id="family-selection-title">Whose road will you follow?</h2>
+        <p>Each family is a fictional composite grounded in documented experiences. Their people, starting resources, route, risks, and possible endings are different.</p>
+        <div className="cinematic-family-options">
+          {Object.values(FAMILY_PRESETS).map((family) => (
+            <button
+              className={currentFamilyId === family.id ? "selected" : ""}
+              key={family.id}
+              onClick={() => onSelect(family.id)}
+              data-sound="confirm"
+            >
+              <img src={family.portraitStrips.healthy} alt={`Portraits of ${family.name}`} />
+              <span>
+                <small>{family.origin}</small>
+                <strong>{family.name}</strong>
+                <p>{family.context}</p>
+                <em><MapPin weight="fill" />{family.journey}</em>
+              </span>
+              <ArrowRight weight="bold" />
+            </button>
+          ))}
+        </div>
+        <footer>Stories include displacement, exploitation, detention, family loss, and uncertain legal outcomes. Difficult events remain non-graphic.</footer>
+      </section>
+    </div>
+  );
+}
+
 function ContentSettings({ currentMode, onSelect, onClose }) {
   return (
     <div className="cinematic-work-backdrop cinematic-content-backdrop">
@@ -367,8 +420,9 @@ function Tutorial({ step, onBack, onNext, onFinish }) {
 function Ending({ game, onRestart }) {
   const won = game.status === "won";
   const score = getJourneyScore(game);
-  const survivors = PEOPLE.filter((person) => game.people[person.id].alive !== false);
-  const losses = PEOPLE.filter((person) => game.people[person.id].alive === false);
+  const people = getPeople(game);
+  const survivors = people.filter((person) => game.people[person.id].alive !== false);
+  const losses = people.filter((person) => game.people[person.id].alive === false);
   const reachedDestination = won && game.progress >= 100;
   return (
     <div className={`cinematic-ending-backdrop ${won ? "arrival" : "journey-stopped"}`}>
@@ -391,17 +445,17 @@ function Ending({ game, onRestart }) {
         <div className="cinematic-ending-stats" aria-label="Journey results">
           <div><strong>{score}</strong><span>Journey score</span></div>
           <div><strong>{Math.max(1, game.day - 1)}</strong><span>Days traveled</span></div>
-          <div><strong>{survivors.length}/{PEOPLE.length}</strong><span>Survived</span></div>
+          <div><strong>{survivors.length}/{people.length}</strong><span>Survived</span></div>
           <div><strong>{game.history.length}</strong><span>Decisions</span></div>
         </div>
 
         <div className="cinematic-ending-people" aria-label="Family at the end of the journey">
-          {PEOPLE.map((person) => {
+          {people.map((person) => {
             const state = game.people[person.id];
             const alive = state.alive !== false;
             return (
               <div className={alive ? "survived" : "remembered"} key={person.id}>
-                <img src={getPortraitImage(state, game.resources.stress)} alt="" style={{ objectPosition: person.focus }} />
+                <img src={getPortraitImage(person, state, game.resources.stress, game)} alt="" style={{ objectPosition: person.focus }} />
                 <span><strong>{person.name}</strong><small>{alive ? `${state.health}% health` : "Remembered"}</small></span>
               </div>
             );
@@ -423,6 +477,8 @@ function Ending({ game, onRestart }) {
 
 export function BeginnerApp() {
   const [game, setGame] = useState(loadGame);
+  const [familySelectionRequired, setFamilySelectionRequired] = useState(() => !hasChosenFamily());
+  const [showFamilySelection, setShowFamilySelection] = useState(() => !hasChosenFamily());
   const [soundtrackOn, setSoundtrackOn] = useState(false);
   const [showRoadsideWork, setShowRoadsideWork] = useState(false);
   const [selectedPersonId, setSelectedPersonId] = useState(null);
@@ -433,6 +489,8 @@ export function BeginnerApp() {
   const [showTutorial, setShowTutorial] = useState(() => !hasCompletedTutorial());
   const soundtrackRef = useRef(null);
   const interactionSoundsRef = useRef(null);
+  const family = getFamilyPreset(game);
+  const people = getPeople(game);
   const event = getEvent(game);
   const route = ROUTES[game.route];
   const roadsideOpportunity = getRoadsideOpportunity(game);
@@ -440,14 +498,14 @@ export function BeginnerApp() {
   const roadsideOutcome = roadsideWorkCompleted && game.lastRoadsideOutcome?.eventId === game.eventId
     ? game.lastRoadsideOutcome
     : null;
-  const selectedPerson = PEOPLE.find((person) => person.id === selectedPersonId) ?? null;
+  const selectedPerson = people.find((person) => person.id === selectedPersonId) ?? null;
   const travelPlanRequired = requiresTravelPlan(game);
   const storyCopy = game.phase === "decision"
     ? (contentMode === "reduced" && reducedDescriptions[event.id]
       ? reducedDescriptions[event.id]
       : event.messages.map((message) => message.body).join(" "))
-    : (contentMode === "reduced" && game.currentOutcome?.id === "boardOverloaded"
-      ? "The crossing ends with Daniela's death. The event is not described in detail."
+    : (contentMode === "reduced" && ["boardOverloaded", "haddadOverloadedBoat"].includes(game.currentOutcome?.id)
+      ? `The crossing ends with ${game.familyId === "haddad" ? "Mariam" : "Daniela"}'s death. The event is not described in detail.`
       : game.currentOutcome.copy);
 
   useEffect(() => {
@@ -503,14 +561,19 @@ export function BeginnerApp() {
     setSoundtrackOn(true);
   };
 
-  const restart = () => {
-    const fresh = createInitialGame();
+  const selectFamily = (familyId) => {
+    const fresh = createInitialGame(familyId);
+    localStorage.setItem(FAMILY_SELECTION_KEY, familyId);
     localStorage.setItem(GAME_SAVE_KEY, JSON.stringify(fresh));
     setGame(fresh);
+    setFamilySelectionRequired(false);
+    setShowFamilySelection(false);
     setShowRoadsideWork(false);
     setSelectedPersonId(null);
     setShowJourneyLog(false);
   };
+
+  const restart = () => setShowFamilySelection(true);
 
   const choose = (choice) => setGame((current) => chooseOption(current, choice.id));
   const takeWork = (choiceId) => setGame((current) => takeRoadsideJob(current, choiceId));
@@ -543,6 +606,7 @@ export function BeginnerApp() {
           <small>Family<br />Safety<br />Tomorrow</small>
         </div>
         <div className="cinematic-header-actions">
+          <button className="cinematic-music" onClick={() => setShowFamilySelection(true)} aria-label="Choose family journey" title={`Playing ${family.name}`} data-sound="tap"><UsersThree weight="duotone" /></button>
           <button className="cinematic-music" onClick={replayTutorial} aria-label="Open tutorial" title="How to play" data-sound="tap"><Question weight="duotone" /></button>
           <button className="cinematic-music" onClick={() => setShowContentSettings(true)} aria-label="Open content settings" data-sound="tap"><WarningCircle weight="duotone" /></button>
           <button className="cinematic-music" onClick={() => setShowJourneyLog(true)} aria-label="Open journey log" data-sound="tap"><BookOpenText weight="duotone" /></button>
@@ -550,7 +614,7 @@ export function BeginnerApp() {
             className={`cinematic-music ${soundtrackOn ? `playing ${soundtrackTheme.id}` : ""}`}
             onClick={toggleSoundtrack}
             aria-pressed={soundtrackOn}
-            aria-label={soundtrackOn ? `Pause music — ${soundtrackTheme.label}` : "Play adaptive music"}
+            aria-label={soundtrackOn ? `Pause music — ${soundtrackTheme.label}` : "Play soundtrack"}
             data-sound="tap"
           >
             {soundtrackOn ? <SpeakerHigh weight="fill" /> : <MusicNotes weight="duotone" />}
@@ -560,13 +624,13 @@ export function BeginnerApp() {
       </header>
 
       <section className="cinematic-stage">
-        <div className="cinematic-scene" style={{ backgroundImage: `url("${sceneByEvent[event.id]}")` }} aria-hidden="true" />
+        <div className="cinematic-scene" style={{ backgroundImage: `url("${sceneByEvent[event.id] ?? family.heroImage}")` }} aria-hidden="true" />
 
         <aside className="cinematic-map" aria-label={`Journey map, ${game.progress}% complete`}>
-          <img src="/assets/long-road-route-map.webp" alt="Schematic illustrated journey map from a fictional Honduran home toward a United States border process" />
+          <img src={family.mapImage} alt={family.mapAlt} />
           <div className="cinematic-map-destination">
             <HouseLine weight="fill" />
-            <span><strong>Border process</strong><small>{100 - game.progress}% remains</small></span>
+            <span><strong>{family.destination}</strong><small>{100 - game.progress}% remains</small></span>
           </div>
           <div className="cinematic-map-location" style={{ bottom: `${8 + (game.progress * 0.68)}%` }}>
             <Crosshair weight="fill" />
@@ -686,9 +750,9 @@ export function BeginnerApp() {
         </section>
 
         <section className="cinematic-people" aria-label="People traveling together">
-          {PEOPLE.map((person) => (
+          {people.map((person) => (
             <button className={`cinematic-person mood-${getPortraitMood(game.people[person.id], game.resources.stress)} ${game.people[person.id].alive === false ? "lost" : ""}`} key={person.id} onClick={() => setSelectedPersonId(person.id)} data-sound="tap">
-              <img src={getPortraitImage(game.people[person.id], game.resources.stress)} alt="" style={{ objectPosition: person.focus }} />
+              <img src={getPortraitImage(person, game.people[person.id], game.resources.stress, game)} alt="" style={{ objectPosition: person.focus }} />
               <span><strong>{person.name}</strong><small>{game.people[person.id].alive === false ? "Remembered" : `${person.age} · ${person.skills[0]}`}</small></span>
             </button>
           ))}
@@ -709,7 +773,15 @@ export function BeginnerApp() {
       {selectedPerson && <CareDialog game={game} person={selectedPerson} onUseMedicine={(personId) => setGame((current) => useMedicine(current, personId))} onClose={() => setSelectedPersonId(null)} />}
       {showJourneyLog && <JourneyLog game={game} onClose={() => setShowJourneyLog(false)} />}
       {showContentSettings && <ContentSettings currentMode={contentMode} onSelect={selectContentMode} onClose={() => setShowContentSettings(false)} />}
-      {showTutorial && !showContentSettings && (
+      {showFamilySelection && (
+        <FamilySelection
+          currentFamilyId={game.familyId}
+          required={familySelectionRequired}
+          onSelect={selectFamily}
+          onClose={() => setShowFamilySelection(false)}
+        />
+      )}
+      {showTutorial && !showContentSettings && !showFamilySelection && (
         <Tutorial
           step={tutorialStep}
           onBack={() => setTutorialStep((current) => Math.max(0, current - 1))}

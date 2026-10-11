@@ -19,6 +19,8 @@ const RECIPES = {
   ],
 };
 
+export const INTERACTION_SOUND_GAIN = 2.6;
+
 function scheduleTone(context, destination, tone) {
   const now = context.currentTime + (tone.delay ?? 0);
   const oscillator = context.createOscillator();
@@ -50,7 +52,7 @@ export function createInteractionSounds() {
     if (!AudioContextClass) return;
     context = new AudioContextClass();
     output = context.createGain();
-    output.gain.value = 0.72;
+    output.gain.value = INTERACTION_SOUND_GAIN;
     output.connect(context.destination);
   };
 

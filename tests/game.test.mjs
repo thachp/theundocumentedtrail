@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   EVENTS,
+  FAMILY_PRESETS,
   ROADSIDE_OPPORTUNITIES,
   chooseOption,
   continueJourney,
@@ -11,6 +12,7 @@ import {
   getRequirementFailure,
   getTravelPlanOptions,
   getJourneyScore,
+  getPeople,
   getPortraitImage,
   getPortraitMood,
   hasCompletedRoadsideWork,
@@ -41,6 +43,18 @@ test("starts the Ramirez family at home with journey resources", () => {
   assert.deepEqual(game.storyThreads, {});
   assert.deepEqual(game.flags, {});
   assert.deepEqual(Object.keys(game.people), ["marisol", "edwin", "daniela", "aurelia"]);
+});
+
+test("starts the Haddad family in Syria with a distinct journey preset", () => {
+  const game = createInitialGame("haddad");
+
+  assert.equal(game.familyId, "haddad");
+  assert.equal(game.eventId, "haddadHome");
+  assert.equal(game.resources.cash, 2400);
+  assert.deepEqual(Object.keys(game.people), ["kareem", "nadia", "sami", "mariam"]);
+  assert.equal(getPeople(game)[0].name, "Kareem");
+  assert.equal(FAMILY_PRESETS.haddad.destination, "Asylum registration");
+  assert.equal(FAMILY_PRESETS.haddad.heroImage, "/assets/haddad-journey-hero.png");
 });
 
 test("short-term work can be completed once without replacing the main decision", () => {
@@ -116,7 +130,42 @@ test("portrait expressions respond to personal health and group stress", () => {
   assert.equal(getPortraitMood({ health: 90, alive: true }, 85), "critical");
   assert.equal(getPortraitMood({ health: 40, alive: true }, 10), "critical");
   assert.equal(getPortraitMood({ health: 0, alive: false }, 0), "critical");
-  assert.match(getPortraitImage({ health: 90, alive: true }, 60), /strained\.webp$/);
+  const game = createInitialGame();
+  const person = getPeople(game)[0];
+  assert.match(getPortraitImage(person, { health: 90, alive: true }, 60, game), /strained\.webp$/);
+});
+
+test("the Haddad family can reach asylum registration through the documented route", () => {
+  let game = createInitialGame("haddad");
+  game = chooseAndContinue(game, "haddadNeighborConvoy");
+  game = chooseAndContinue(game, "haddadRegisterTurkey");
+  game = chooseAndContinue(game, "haddadRepairWork");
+  game = chooseAndContinue(game, "haddadLaterBoat");
+  game = chooseAndContinue(game, "haddadGreekRegistration");
+  game = chooseAndContinue(game, "haddadAidTransfer");
+  game = chooseAndContinue(game, "haddadVerifyRules");
+  game = chooseOption(game, "haddadRegisterGermany");
+  game = continueJourney(game);
+
+  assert.equal(game.status, "won");
+  assert.equal(game.progress, 100);
+  assert.equal(game.ending.type, "asylum_pending");
+});
+
+test("the Haddad boat-loss branch records Mariam and continues to a memorial", () => {
+  let game = createInitialGame("haddad");
+  game = chooseAndContinue(game, "haddadNeighborConvoy");
+  game = chooseAndContinue(game, "haddadRegisterTurkey");
+  game = chooseAndContinue(game, "haddadRepairWork");
+  game = chooseOption(game, "haddadOverloadedBoat");
+
+  assert.equal(game.people.mariam.alive, false);
+  assert.ok(game.losses.includes("mariam"));
+  assert.match(game.activityLog.at(-1).title, /Mariam is remembered/);
+
+  game = continueJourney(game);
+  assert.equal(game.eventId, "haddadMemorial");
+  assert.equal(game.status, "playing");
 });
 
 test("skills and earlier preparation change later outcomes", () => {

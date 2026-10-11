@@ -43,14 +43,15 @@ import {
 import {
   EVENTS,
   GAME_SAVE_KEY,
-  PEOPLE,
   ROUTES,
   chooseOption,
   continueJourney,
   createInitialGame,
   getCondition,
   getEvent,
+  getFamilyPreset,
   getJourneyScore,
+  getPeople,
   getPortraitImage,
   getPortraitMood,
   getRequirementFailure,
@@ -141,7 +142,7 @@ function RouteMarker({ route, className, active, onClick }) {
   );
 }
 
-function CharacterCard({ person, state, stress, active, onClick }) {
+function CharacterCard({ person, state, stress, familyId, active, onClick }) {
   const condition = getCondition(state.health, state.alive !== false);
   const portraitMood = getPortraitMood(state, stress);
   return (
@@ -151,7 +152,7 @@ function CharacterCard({ person, state, stress, active, onClick }) {
       aria-pressed={active}
       data-sound="tap"
     >
-      <img src={getPortraitImage(state, stress)} alt="" style={{ objectPosition: person.focus }} />
+      <img src={getPortraitImage(person, state, stress, familyId)} alt="" style={{ objectPosition: person.focus }} />
       <span className="character-copy">
         <span className="character-heading">
           <strong>{person.name}</strong>
@@ -296,7 +297,7 @@ function MessagePanel({ event, game, onChoice, onContinue, onTravelPlan }) {
   );
 }
 
-function DetailDrawer({ person, personState, relationshipNote, route, medicine, stress, onUseMedicine, onClose }) {
+function DetailDrawer({ person, personState, relationshipNote, route, medicine, stress, familyId, onUseMedicine, onClose }) {
   const selectedRoute = route ? ROUTES[route] : null;
   const condition = personState ? getCondition(personState.health, personState.alive !== false) : null;
   return (
@@ -304,7 +305,7 @@ function DetailDrawer({ person, personState, relationshipNote, route, medicine, 
       <button className="drawer-close" onClick={onClose} aria-label="Close details" data-sound="dismiss"><X weight="bold" /></button>
       {person ? (
         <>
-          <img src={getPortraitImage(personState, stress)} alt={`Portrait of ${person.name}`} style={{ objectPosition: person.focus }} />
+          <img src={getPortraitImage(person, personState, stress, familyId)} alt={`Portrait of ${person.name}`} style={{ objectPosition: person.focus }} />
           <div className="drawer-copy">
             <small>Group member</small>
             <h2>{person.name}</h2>
@@ -414,6 +415,7 @@ function JourneyLog({ game, onClose }) {
 
 function EndingModal({ game, onRestart }) {
   const score = getJourneyScore(game);
+  const people = getPeople(game);
   const livingPeople = Object.values(game.people).filter((person) => person.alive !== false);
   const won = game.status === "won";
   const reachedDestination = won && game.progress >= 100;
@@ -440,9 +442,9 @@ function EndingModal({ game, onRestart }) {
           <div><strong>{game.history.length}</strong><span>Choices made</span></div>
         </div>
         <div className="ending-people">
-          {PEOPLE.map((person) => (
+          {people.map((person) => (
             <div key={person.id}>
-              <img src={getPortraitImage(game.people[person.id], game.resources.stress)} alt="" style={{ objectPosition: person.focus }} />
+              <img src={getPortraitImage(person, game.people[person.id], game.resources.stress, game)} alt="" style={{ objectPosition: person.focus }} />
               <span><strong>{person.name}</strong><small>{game.people[person.id].alive === false ? "Remembered" : `${game.people[person.id].health}% health`}</small></span>
             </div>
           ))}
@@ -483,8 +485,10 @@ export function App() {
   const soundtrackRef = useRef(null);
   const interactionSoundsRef = useRef(null);
 
+  const family = getFamilyPreset(game);
+  const people = getPeople(game);
   const event = getEvent(game);
-  const selectedPerson = PEOPLE.find((person) => person.id === selectedPersonId) ?? null;
+  const selectedPerson = people.find((person) => person.id === selectedPersonId) ?? null;
 
   useEffect(() => {
     localStorage.setItem(GAME_SAVE_KEY, JSON.stringify(game));
@@ -545,7 +549,7 @@ export function App() {
   };
 
   const restart = () => {
-    const fresh = createInitialGame();
+    const fresh = createInitialGame(game.familyId);
     localStorage.setItem(GAME_SAVE_KEY, JSON.stringify(fresh));
     setGame(fresh);
     setPendingChoice(null);
@@ -598,9 +602,9 @@ export function App() {
             <button
               className={`soundtrack-toggle ${soundtrackOn ? `is-playing theme-${soundtrackTheme.id}` : ""}`}
               onClick={toggleSoundtrack}
-              aria-label={soundtrackOn ? `Pause soundtrack — ${soundtrackTheme.label}` : "Play adaptive soundtrack"}
+              aria-label={soundtrackOn ? `Pause soundtrack — ${soundtrackTheme.label}` : "Play soundtrack"}
               aria-pressed={soundtrackOn}
-              title={soundtrackOn ? `${soundtrackTheme.label} playing · pause soundtrack` : "Play adaptive hopeful, reflective, and difficulty themes"}
+              title={soundtrackOn ? `${soundtrackTheme.label} playing · pause soundtrack` : "Play the journey soundtrack"}
               data-sound="tap"
             >
               {soundtrackOn ? <SpeakerHigh weight="fill" /> : <MusicNotes weight="duotone" />}
@@ -623,7 +627,7 @@ export function App() {
 
       <div className="game-grid">
         <section className="map-stage" aria-label="The Undocumented Trail schematic route map">
-          <div className="map-image" aria-hidden="true" />
+          <div className="map-image" style={{ backgroundImage: `url("${family.mapImage}")` }} aria-hidden="true" />
           <div className="map-vignette" aria-hidden="true" />
 
           <div className="weather-card">
@@ -633,7 +637,7 @@ export function App() {
           </div>
 
           <div className="journey-progress" aria-label={`${game.progress}% journey progress`}>
-            <span><strong>Border process</strong><small>{100 - game.progress}% remaining</small></span>
+            <span><strong>{family.destination}</strong><small>{100 - game.progress}% remaining</small></span>
             <div><i style={{ width: `${game.progress}%` }} /></div>
           </div>
 
@@ -665,6 +669,7 @@ export function App() {
               route={selectedPerson ? null : selectedRoute}
               medicine={game.resources.medicine}
               stress={game.resources.stress}
+              familyId={game.familyId}
               onUseMedicine={(personId) => setGame((current) => useMedicine(current, personId))}
               onClose={() => setDrawerOpen(false)}
             />
@@ -677,12 +682,13 @@ export function App() {
             <div><strong>Traveling together</strong><small>Select a person to review health, trust, and skills</small></div>
           </header>
           <div className="team-grid">
-            {PEOPLE.map((person) => (
+            {people.map((person) => (
               <CharacterCard
                 key={person.id}
                 person={person}
                 state={game.people[person.id]}
                 stress={game.resources.stress}
+                familyId={game.familyId}
                 active={selectedPersonId === person.id && drawerOpen}
                 onClick={inspectPerson}
               />

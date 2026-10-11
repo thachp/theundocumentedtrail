@@ -1,20 +1,26 @@
-export const GAME_VERSION = 9;
-export const GAME_SAVE_KEY = "the-long-road-save-v9";
+export const GAME_VERSION = 10;
+export const GAME_SAVE_KEY = "the-long-road-save-v10";
 
-const PORTRAIT_STRIP = "/assets/ramirez-family-portraits.webp";
-const PORTRAIT_STRIPS = {
-  healthy: PORTRAIT_STRIP,
+const RAMIREZ_PORTRAIT_STRIP = "/assets/ramirez-family-portraits.webp";
+const RAMIREZ_PORTRAIT_STRIPS = {
+  healthy: RAMIREZ_PORTRAIT_STRIP,
   strained: "/assets/ramirez-family-portraits-strained.webp",
   critical: "/assets/ramirez-family-portraits-critical.webp",
 };
+const HADDAD_PORTRAIT_STRIP = "/assets/haddad-family-portraits.png";
+const HADDAD_PORTRAIT_STRIPS = {
+  healthy: HADDAD_PORTRAIT_STRIP,
+  strained: HADDAD_PORTRAIT_STRIP,
+  critical: HADDAD_PORTRAIT_STRIP,
+};
 
-export const PEOPLE = [
+const RAMIREZ_PEOPLE = [
   {
     id: "marisol",
     name: "Marisol",
     pronouns: "she/her",
     age: 34,
-    image: PORTRAIT_STRIP,
+    image: RAMIREZ_PORTRAIT_STRIP,
     focus: "0% 40%",
     skills: ["Former teacher", "Planning"],
     story: "A former primary-school teacher. She sold the family's home and small plot for far less than they were worth after a gang threatened Edwin.",
@@ -24,7 +30,7 @@ export const PEOPLE = [
     name: "Edwin",
     pronouns: "he/him",
     age: 15,
-    image: PORTRAIT_STRIP,
+    image: RAMIREZ_PORTRAIT_STRIP,
     focus: "33% 40%",
     skills: ["Observation", "Some English"],
     story: "He wants to study electrical repair. Recruitment pressure from a neighborhood gang is the reason the family cannot safely stay.",
@@ -34,7 +40,7 @@ export const PEOPLE = [
     name: "Daniela",
     pronouns: "she/her",
     age: 7,
-    image: PORTRAIT_STRIP,
+    image: RAMIREZ_PORTRAIT_STRIP,
     focus: "67% 40%",
     skills: ["Curious", "Asthma"],
     story: "She carries a stuffed rabbit named Nube and counts every bus she sees. Her inhaler has twelve doses left.",
@@ -44,12 +50,115 @@ export const PEOPLE = [
     name: "Aurelia",
     pronouns: "she/her",
     age: 61,
-    image: PORTRAIT_STRIP,
+    image: RAMIREZ_PORTRAIT_STRIP,
     focus: "100% 40%",
     skills: ["Devout", "Cooking"],
     story: "Marisol's mother. Her knee slows the group, but she remembers names, favors, and which promises people kept.",
   },
 ];
+
+const HADDAD_PEOPLE = [
+  {
+    id: "kareem",
+    name: "Kareem",
+    pronouns: "he/him",
+    age: 44,
+    image: HADDAD_PORTRAIT_STRIP,
+    focus: "0% 42%",
+    skills: ["Machine repair", "Negotiation"],
+    story: "He repaired bakery equipment outside Aleppo. After shelling destroyed the workshop and an armed group demanded that he report for service, he sold what tools remained.",
+  },
+  {
+    id: "nadia",
+    name: "Nadia",
+    pronouns: "she/her",
+    age: 41,
+    image: HADDAD_PORTRAIT_STRIP,
+    focus: "33% 42%",
+    skills: ["Former teacher", "Documents"],
+    story: "A former Arabic teacher. She keeps school records, identity papers, and the deed to a damaged apartment wrapped inside a plastic folder.",
+  },
+  {
+    id: "sami",
+    name: "Sami",
+    pronouns: "he/him",
+    age: 16,
+    image: HADDAD_PORTRAIT_STRIP,
+    focus: "67% 42%",
+    skills: ["Electronics", "Some English"],
+    story: "He fixes phones from discarded parts and follows every border rumor online. He is old enough to understand why checkpoints frighten his parents.",
+  },
+  {
+    id: "mariam",
+    name: "Mariam",
+    pronouns: "she/her",
+    age: 9,
+    image: HADDAD_PORTRAIT_STRIP,
+    focus: "100% 42%",
+    skills: ["Drawing", "Asthma"],
+    story: "She carries the brass key to the family's damaged apartment and draws every temporary room as if the walls might help her remember it.",
+  },
+];
+
+export const PEOPLE = RAMIREZ_PEOPLE;
+
+export const FAMILY_PRESETS = Object.freeze({
+  ramirez: {
+    id: "ramirez",
+    name: "The Ramírez family",
+    shortName: "Ramírez",
+    origin: "Honduras · Present day",
+    context: "Gang threats force a teacher, her children, and their grandmother to leave after the family home is sold under pressure.",
+    journey: "Honduras to a United States border process",
+    startEventId: "home",
+    startRoute: "elmstead",
+    destination: "Border process",
+    heroImage: "/assets/long-road-theft-night.webp",
+    mapImage: "/assets/long-road-route-map.webp",
+    mapAlt: "Schematic illustrated map from a fictional Honduran home toward a United States border process",
+    portraitStrips: RAMIREZ_PORTRAIT_STRIPS,
+    people: RAMIREZ_PEOPLE,
+    resources: { cash: 1800, supplies: 5, water: 18, medicine: 1, battery: 82, stress: 42, exposure: 12 },
+    peopleState: {
+      marisol: { health: 84, trust: 4, alive: true },
+      edwin: { health: 86, trust: 4, alive: true },
+      daniela: { health: 78, trust: 5, alive: true },
+      aurelia: { health: 65, trust: 4, alive: true },
+    },
+  },
+  haddad: {
+    id: "haddad",
+    name: "The Haddad family",
+    shortName: "Haddad",
+    origin: "Syria · 2015",
+    context: "War destroys the family's livelihood near Aleppo. They leave for Türkiye and face the dangerous, uncertain route toward protection in Europe.",
+    journey: "Northern Syria to an asylum process in Germany",
+    startEventId: "haddadHome",
+    startRoute: "elmstead",
+    destination: "Asylum registration",
+    heroImage: "/assets/haddad-journey-hero.png",
+    mapImage: "/assets/haddad-route-map.png",
+    mapAlt: "Non-navigational illustrated story map from Syria through Türkiye, Greece, and the Balkans toward Germany",
+    portraitStrips: HADDAD_PORTRAIT_STRIPS,
+    people: HADDAD_PEOPLE,
+    resources: { cash: 2400, supplies: 6, water: 16, medicine: 1, battery: 68, stress: 54, exposure: 18 },
+    peopleState: {
+      kareem: { health: 81, trust: 4, alive: true },
+      nadia: { health: 84, trust: 4, alive: true },
+      sami: { health: 88, trust: 4, alive: true },
+      mariam: { health: 74, trust: 5, alive: true },
+    },
+  },
+});
+
+export function getFamilyPreset(gameOrId = "ramirez") {
+  const familyId = typeof gameOrId === "string" ? gameOrId : gameOrId?.familyId;
+  return FAMILY_PRESETS[familyId] ?? FAMILY_PRESETS.ramirez;
+}
+
+export function getPeople(gameOrId = "ramirez") {
+  return getFamilyPreset(gameOrId).people;
+}
 
 export const ROUTES = {
   elmstead: {
@@ -139,6 +248,26 @@ const CHOICE_REACTIONS = {
   lightCandle: [{ personId: "edwin", trustDelta: 1, text: "I want them to remember more than how Daniela died." }],
   recordName: [{ personId: "marisol", trustDelta: 1, text: "Her name is in a record that cannot pretend she was never here." }],
   requestLawyer: [{ personId: "edwin", trustDelta: 1, text: "All the papers we carried finally tell the same story." }],
+  haddadNeighborConvoy: [{ personId: "sami", trustDelta: 1, text: "I know the people in the car ahead. That matters right now." }],
+  haddadWaitForUncle: [{ personId: "mariam", trustDelta: -1, text: "Every time the phone rings, I think we are leaving." }],
+  haddadFirstBroker: [{ personId: "nadia", trustDelta: -1, text: "He learned how much we fear staying, then raised the price." }],
+  haddadRegisterTurkey: [{ personId: "mariam", trustDelta: 1, text: "The nurse wrote my name next to the medicine." }],
+  haddadCousinRoom: [{ personId: "sami", trustDelta: 1, text: "Cousin Fadi opened the door before asking what we could pay." }],
+  haddadBorderDriver: [{ personId: "nadia", trustDelta: -1, text: "We traded names on paper for another stranger's word." }],
+  haddadRepairWork: [{ personId: "sami", trustDelta: 1, text: "Baba let me test the motor before they paid us." }],
+  haddadGarmentRoom: [{ personId: "nadia", trustDelta: -1, text: "A document in someone else's drawer is not protection." }],
+  haddadBorrowForBoat: [{ personId: "kareem", trustDelta: -1, text: "Our relatives borrowed against their own rent for this." }],
+  haddadTurkeyProtection: [{ personId: "nadia", trustDelta: 1, text: "Changing the destination does not mean we abandoned the children." }],
+  haddadLaterBoat: [{ personId: "sami", trustDelta: 1, text: "Waiting felt unbearable. The life jackets were still worth it." }],
+  haddadOverloadedBoat: [{ personId: "nadia", trustDelta: -1, text: "He called the boat safe because he knew we wanted to believe him." }],
+  haddadRecordMariam: [{ personId: "sami", trustDelta: 1, text: "Write that she drew windows in every room." }],
+  haddadGreekRegistration: [{ personId: "sami", trustDelta: 1, text: "For once, all our names are on the same page." }],
+  haddadPrivateVan: [{ personId: "kareem", trustDelta: -1, text: "The price bought a ride, not the truth." }],
+  haddadAidTransfer: [{ personId: "nadia", trustDelta: 1, text: "Slow is easier to bear when someone signs their name." }],
+  haddadFalsePapers: [{ personId: "sami", trustDelta: -1, text: "The seller knew the scanner would reject them." }],
+  haddadVerifyRules: [{ personId: "sami", trustDelta: 1, text: "The loudest post was not the official notice." }],
+  haddadArgueOnline: [{ personId: "nadia", trustDelta: -1, text: "They wanted our faces for their argument, not our story." }],
+  haddadRegisterGermany: [{ personId: "kareem", trustDelta: 1, text: "A case number is not a home, but it is a place to begin." }],
 };
 
 const STORY_THREAD_UPDATES = {
@@ -169,6 +298,22 @@ const STORY_THREAD_UPDATES = {
     { id: "legalPacket", title: "The dry legal folder", status: "resolved", requiresThread: "legalPacket", summary: "The organized evidence helped the lawyer begin the case." },
     { id: "legalAdvice", title: "Verified legal advice", status: "resolved", requiresThread: "legalAdvice", summary: "The family recognized the process and asked for counsel." },
   ],
+  haddadNeighborConvoy: [{ id: "apartmentKey", title: "The apartment key", status: "active", summary: "Mariam carries the key to a damaged home the family cannot safely remain in." }],
+  haddadWaitForUncle: [{ id: "receptionContact", title: "The reception-center message", status: "active", summary: "Nadia's brother shared the name of a humanitarian reception center." }],
+  haddadFirstBroker: [{ id: "brokerDebt", title: "The broker's changing price", status: "setback", summary: "The first payment bought a new demand instead of a clear route." }],
+  haddadRegisterTurkey: [{ id: "temporaryPapers", title: "Temporary protection papers", status: "active", summary: "The family's names and medical needs are recorded in Türkiye." }],
+  haddadRepairWork: [{ id: "verifiedWages", title: "The posted wage", status: "active", summary: "A written rate and Kareem's skill produced money the family can account for." }],
+  haddadBorrowForBoat: [{ id: "familyDebt", title: "Money borrowed from three homes", status: "active", summary: "Relatives sacrificed rent and savings to finance the next leg." }],
+  haddadOverloadedBoat: [{ id: "mariamMemory", title: "Mariam's key", status: "active", summary: "Mariam died during the crossing. Her brass apartment key remains in the document folder." }],
+  haddadRecordMariam: [{ id: "mariamMemory", title: "Mariam's key", status: "active", requiresThread: "mariamMemory", summary: "Family tracing records Mariam's name, asthma, drawings, and brass key." }],
+  haddadGreekRegistration: [{ id: "greekRegistration", title: "The island registration paper", status: "active", summary: "The family's arrival and names are recorded together." }],
+  haddadVerifyRules: [{ id: "germanLegalAdvice", title: "The written registration address", status: "active", summary: "A legal volunteer separated a viral slogan from the official process." }],
+  haddadRegisterGermany: [
+    { id: "apartmentKey", title: "The apartment key", status: "active", requiresThread: "apartmentKey", summary: "The key reaches Germany even though it no longer opens a safe home." },
+    { id: "temporaryPapers", title: "Temporary protection papers", status: "resolved", requiresThread: "temporaryPapers", summary: "The earlier record helps establish names, dates, and medical needs." },
+    { id: "greekRegistration", title: "The island registration paper", status: "resolved", requiresThread: "greekRegistration", summary: "The transit record helps the legal clinic reconstruct the route." },
+    { id: "germanLegalAdvice", title: "The written registration address", status: "resolved", requiresThread: "germanLegalAdvice", summary: "The family reaches the correct office before the intake window closes." },
+  ],
 };
 
 const sources = {
@@ -195,6 +340,22 @@ const sources = {
   missing: {
     label: "IOM Missing Migrants: deaths and disappearances in the Americas",
     url: "https://missingmigrants.iom.int/",
+  },
+  syria: {
+    label: "UNHCR: the Syria emergency and prolonged displacement crisis",
+    url: "https://www.unhcr.org/emergencies/syria-emergency",
+  },
+  mediterranean: {
+    label: "UNHCR: sea crossings carry risks of exploitation, pushbacks, and shipwreck",
+    url: "https://www.unhcr.org/europe/publications/sea-arrivals-overview-europe-region-august-2025",
+  },
+  europeBorders: {
+    label: "UNHCR: border restrictions can drive refugees toward more dangerous routes",
+    url: "https://www.unhcr.org/us/news/news-releases/refugees-and-migrants-face-heightened-risks-while-trying-reach-europe-unhcr",
+  },
+  europeAsylum: {
+    label: "EUAA: asylum decisions and conditions for Syrians can change with the political situation",
+    url: "https://www.euaa.europa.eu/latest-asylum-trends-annual-analysis/applications",
   },
 };
 
@@ -1742,35 +1903,788 @@ export const EVENTS = {
       },
     ],
   },
+
+  haddadHome: {
+    id: "haddadHome",
+    region: "Northern Syria · 2015",
+    location: "The Haddad apartment",
+    time: "04:40",
+    weather: "Dust before dawn",
+    weatherDetail: "The electricity has been out since yesterday",
+    route: "elmstead",
+    contentNote: "War, bombardment, and forced displacement",
+    source: sources.syria,
+    messages: [
+      {
+        sender: "Nadia",
+        initial: "N",
+        role: "Family conversation",
+        time: "04:32",
+        trusted: true,
+        body: "The workshop is gone. The school is closed. Kareem was ordered to report to an armed unit, and the next street was hit last night. We have four bags, the document folder, and one apartment key.",
+      },
+    ],
+    known: [
+      "The workshop that supported the family was destroyed.",
+      "The children cannot safely return to school.",
+      "A neighbor plans to leave for the Turkish border before sunrise.",
+    ],
+    assumed: [
+      "The apartment will still be standing next month.",
+      "The neighbor knows which roads remain open.",
+      "Leaving today means the family will never return.",
+    ],
+    choices: [
+      {
+        id: "haddadNeighborConvoy",
+        title: "Leave with the neighbor's convoy",
+        hint: "Stay with people the family knows, but leave immediately",
+        icon: "car",
+        tone: "trusted",
+        route: "elmstead",
+        days: 2,
+        next: "haddadBorder",
+        effects: { supplies: -1, water: -3, stress: 5, exposure: 4, progress: 7 },
+        consequence: "Food -1 day · Water -3 L · The family stays together",
+        outcomeTitle: "The apartment key turns once more",
+        outcome: "Nadia locks a door that may no longer protect anything. The convoy travels slowly and stops whenever aircraft are heard.",
+        setFlags: { keptDocuments: true },
+      },
+      {
+        id: "haddadWaitForUncle",
+        title: "Wait for Nadia's brother to call",
+        hint: "Seek better information while supplies and time run down",
+        icon: "wait",
+        tone: "uncertain",
+        route: "quarry",
+        days: 4,
+        next: "haddadBorder",
+        effects: { supplies: -2, water: -4, battery: -24, stress: 11, exposure: 7, progress: 5 },
+        consequence: "Four days pass · Phone -24% · Food -2 days",
+        outcomeTitle: "A short message arrives through static",
+        outcome: "Her brother confirms a reception center across the border, but cannot confirm whether the road to it is open.",
+        setFlags: { receptionContact: true },
+      },
+      {
+        id: "haddadFirstBroker",
+        title: "Pay a broker to leave tonight",
+        hint: "Buy speed from someone who refuses to give his full name",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 1,
+        next: "haddadBorder",
+        requires: { cash: 600 },
+        effects: { cash: -600, stress: 13, exposure: 15, progress: 9, trustAll: -1 },
+        consequence: "Cash -$600 · Risk +15 · Trust falls",
+        outcomeTitle: "The first promise changes at the first stop",
+        outcome: "The broker moves the family to an unfinished house and demands another payment before explaining when they will leave.",
+        setFlags: { brokerDebt: true },
+      },
+    ],
+  },
+
+  haddadBorder: {
+    id: "haddadBorder",
+    region: "Türkiye–Syria border region · 2015",
+    location: "A crowded reception town",
+    time: "16:10",
+    weather: "Cold rain",
+    weatherDetail: "Families wait beneath plastic sheeting",
+    route: "elmstead",
+    contentNote: "Border controls and exploitation risk",
+    source: sources.syria,
+    messages: [
+      {
+        sender: "Aid desk volunteer",
+        initial: "A",
+        role: "Registered humanitarian worker",
+        time: "15:55",
+        trusted: true,
+        body: "Registration can connect you with temporary protection and health care here. It does not guarantee travel onward or a place in Europe.",
+      },
+    ],
+    known: [
+      "Mariam's breathing is worse in the wet weather.",
+      "Registration is free at the marked aid desk.",
+      "A cousin has offered one room several hours away.",
+    ],
+    assumed: [
+      "Registering will prevent every future detention.",
+      "The cousin can host four people indefinitely.",
+      "A paid driver can bypass every document check.",
+    ],
+    choices: [
+      {
+        id: "haddadRegisterTurkey",
+        title: "Register at the humanitarian desk",
+        hint: "Wait, document every name, and request medical care",
+        icon: "aid",
+        tone: "trusted",
+        route: "elmstead",
+        days: 5,
+        next: "haddadTurkey",
+        effects: { supplies: 2, medicine: 1, stress: -10, exposure: -8, progress: 10, people: { mariam: 8 } },
+        consequence: "Medicine +1 · Mariam health +8 · Risk falls",
+        outcomeTitle: "Every name is written twice",
+        outcome: "The family receives temporary papers, blankets, and an asthma check. The document explains protection in Türkiye, not passage to Europe.",
+        setFlags: { turkeyRegistration: true },
+      },
+      {
+        id: "haddadCousinRoom",
+        title: "Travel to the cousin's room",
+        hint: "Avoid the camp and rely on family support",
+        icon: "car",
+        tone: "uncertain",
+        route: "quarry",
+        days: 3,
+        next: "haddadTurkey",
+        effects: { cash: -140, supplies: -1, stress: -2, exposure: 5, progress: 12 },
+        consequence: "Cash -$140 · A locked room · No registration",
+        outcomeTitle: "Eight people share two rooms",
+        outcome: "The cousin makes space on the floor and refuses payment. The family is safe tonight, but remains outside formal support.",
+        setFlags: { cousinSupport: true },
+      },
+      {
+        id: "haddadBorderDriver",
+        title: "Pay the driver waiting outside",
+        hint: "Move quickly without registration or a written destination",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 2,
+        next: "haddadTurkey",
+        requires: { cash: 800 },
+        effects: { cash: -800, battery: -12, stress: 14, exposure: 18, progress: 16, peopleAll: -3 },
+        consequence: "Cash -$800 · Risk +18 · Health falls",
+        outcomeTitle: "The van stops far from the address",
+        outcome: "The driver unloads everyone beside a highway and leaves. Kareem recognizes none of the landmarks he was promised.",
+      },
+    ],
+  },
+
+  haddadTurkey: {
+    id: "haddadTurkey",
+    region: "Western Türkiye · 2015",
+    location: "A basement room near İzmir",
+    time: "21:20",
+    weather: "Warm night",
+    weatherDetail: "The rent is due again in six days",
+    route: "quarry",
+    contentNote: "Informal labor and wage theft",
+    source: sources.europeBorders,
+    messages: [
+      {
+        sender: "Cousin Fadi",
+        initial: "F",
+        role: "Family contact",
+        time: "20:58",
+        trusted: true,
+        body: "The repair shop posts its daily wage. The garment room pays more but keeps passports until the week ends. A broker says the sea crossing leaves as soon as the cash is ready.",
+      },
+    ],
+    known: [
+      "The repair shop wage is posted and paid daily.",
+      "The garment-room owner asks to hold identity documents.",
+      "The family does not have enough cash for four promised boat places.",
+    ],
+    assumed: [
+      "Working longer will make the next route safer.",
+      "The broker's price will not change.",
+      "Keeping documents always prevents exploitation.",
+    ],
+    choices: [
+      {
+        id: "haddadRepairWork",
+        title: "Take the posted repair work",
+        hint: "Kareem repairs mixers and refrigeration motors for a modest wage",
+        icon: "work",
+        tone: "trusted",
+        route: "elmstead",
+        days: 14,
+        next: "haddadAegean",
+        effects: { cash: 520, supplies: -3, water: -5, stress: 2, progress: 12, people: { kareem: -8 } },
+        consequence: "Cash +$520 · 14 days pass · Kareem health -8",
+        outcomeTitle: "The owner counts the wage in front of everyone",
+        outcome: "The work is exhausting, but the amount matches the posted rate. Kareem keeps every identity paper in his own pocket.",
+        skillBonus: {
+          personId: "kareem",
+          skill: "Machine repair",
+          label: "Kareem's repair experience earns a completion bonus",
+          effects: { cash: 120, stress: -2 },
+        },
+        setFlags: { verifiedWages: true },
+      },
+      {
+        id: "haddadGarmentRoom",
+        title: "Accept the garment-room offer",
+        hint: "Nadia can earn more, but the owner wants the document folder",
+        icon: "work",
+        tone: "uncertain",
+        route: "quarry",
+        days: 10,
+        next: "haddadAegean",
+        effects: { cash: 650, supplies: -2, stress: 15, exposure: 8, progress: 10, people: { nadia: -10 } },
+        consequence: "Cash +$650 · Nadia health -10 · Stress +15",
+        outcomeTitle: "Only part of the wage is returned",
+        outcome: "Nadia works long nights. The owner returns the documents but keeps two days of pay for a fee that was never mentioned.",
+      },
+      {
+        id: "haddadBorrowForBoat",
+        title: "Borrow the difference from relatives",
+        hint: "Leave sooner with a debt no one can comfortably afford",
+        icon: "phone",
+        tone: "danger",
+        route: "ridge",
+        days: 4,
+        next: "haddadAegean",
+        effects: { cash: 900, battery: -26, stress: 17, exposure: 10, progress: 14, trustAll: -1 },
+        consequence: "Cash +$900 · Phone -26% · A family debt begins",
+        outcomeTitle: "Three households send what they can",
+        outcome: "The transfers arrive in small amounts. The broker raises his price when he learns the family now has the money.",
+        setFlags: { familyDebt: true },
+      },
+    ],
+  },
+
+  haddadAegean: {
+    id: "haddadAegean",
+    region: "Aegean coast · 2015",
+    location: "A rented room near the sea",
+    time: "02:15",
+    weather: "Wind rising",
+    weatherDetail: "The operator says the departure cannot wait",
+    route: "ridge",
+    contentNote: "Dangerous sea crossing and risk of child death",
+    source: sources.mediterranean,
+    messages: [
+      {
+        sender: "Boat operator",
+        initial: "?",
+        role: "Unverified message",
+        time: "01:47",
+        trusted: false,
+        body: "Four places. Pay now. The sea is short and the weather is fine. Do not bring bags. There is no refund if you walk away.",
+      },
+    ],
+    known: [
+      "The small boat has fewer life jackets than passengers.",
+      "A humanitarian office can review protection options in Türkiye tomorrow.",
+      "Another operator claims to have a less crowded boat later in the week.",
+    ],
+    assumed: [
+      "A short distance means a safe crossing.",
+      "The later boat will match its photograph.",
+      "Seeking protection in Türkiye ends every danger.",
+    ],
+    choices: [
+      {
+        id: "haddadTurkeyProtection",
+        title: "Walk away and seek protection in Türkiye",
+        hint: "End the sea route and accept an uncertain life where the family is",
+        icon: "aid",
+        tone: "trusted",
+        route: "elmstead",
+        days: 18,
+        next: null,
+        effects: { cash: -280, stress: -12, exposure: -22, progress: 58, trustAll: 1 },
+        consequence: "The sea crossing ends · A local protection process begins",
+        outcomeTitle: "The family keeps all four names together",
+        outcome: "A legal clinic helps the family renew temporary papers and enter a housing waitlist. Work and school remain uncertain, but nobody boards tonight.",
+        ending: {
+          type: "local_protection",
+          status: "won",
+          title: "A different safe place",
+          copy: "The Haddads stop moving west and begin again in Türkiye. Safety is incomplete, but choosing another destination is not failure.",
+        },
+      },
+      {
+        id: "haddadLaterBoat",
+        title: "Wait for the less crowded crossing",
+        hint: "Spend more time and money for a boat with life jackets",
+        icon: "wait",
+        tone: "uncertain",
+        route: "quarry",
+        days: 6,
+        next: "haddadGreece",
+        requires: { cash: 900 },
+        effects: { cash: -900, supplies: -2, water: -3, stress: 12, exposure: 20, progress: 18, peopleAll: -6 },
+        consequence: "Cash -$900 · Health -6 each · The family reaches Greece",
+        outcomeTitle: "A rescue crew meets the boat before dawn",
+        outcome: "The crossing is cold and frightening. A rescue crew brings every passenger ashore and directs families toward registration.",
+      },
+      {
+        id: "haddadOverloadedBoat",
+        title: "Board the overloaded boat now",
+        hint: "Accept the operator's deadline despite the missing life jackets",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 2,
+        next: "haddadMemorial",
+        effects: { cash: -700, water: -3, stress: 40, exposure: 34, progress: 16, peopleAll: -17, fatality: "mariam" },
+        consequence: "Mariam dies · Stress +40 · The family continues with loss",
+        outcomeTitle: "The boat takes on water in the dark",
+        outcome: "Passengers are thrown into the water before rescue lights arrive. Kareem, Nadia, and Sami are pulled aboard. Mariam is not found. The loss is recorded without graphic detail.",
+        deferThresholdEnding: true,
+      },
+    ],
+  },
+
+  haddadMemorial: {
+    id: "haddadMemorial",
+    region: "Eastern Aegean · 2015",
+    location: "A temporary reception room",
+    time: "18:05",
+    weather: "Salt wind",
+    weatherDetail: "The search ended before sunset",
+    route: "ridge",
+    contentNote: "Death of a child and grief",
+    source: sources.mediterranean,
+    messages: [
+      {
+        sender: "Family notebook",
+        initial: "M",
+        role: "Memorial entry",
+        time: "17:50",
+        trusted: true,
+        body: "Mariam's apartment key is inside Nadia's document folder. The family tells the tracing worker how she drew every room they slept in.",
+      },
+    ],
+    known: [
+      "Mariam died during the crossing.",
+      "The surviving family members reached the same reception center.",
+      "A family-tracing worker can create a formal record.",
+    ],
+    assumed: [
+      "Continuing means forgetting Mariam.",
+      "Returning will restore the life the family lost.",
+      "Any official record can answer their grief.",
+    ],
+    choices: [
+      {
+        id: "haddadRecordMariam",
+        title: "Record Mariam's name with family tracing",
+        hint: "Create a case record before continuing",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 2,
+        next: "haddadGreece",
+        effects: { stress: -7, exposure: -8, progress: 4, trustAll: 1 },
+        consequence: "A formal record is created · Cohesion rises",
+        outcomeTitle: "The worker repeats her name carefully",
+        outcome: "The record includes Mariam's drawing habit, her asthma, and the brass key. It does not reduce her to a number from a boat.",
+      },
+      {
+        id: "haddadShoreVigil",
+        title: "Join the shoreline vigil",
+        hint: "Pause with other survivors before the next decision",
+        icon: "rest",
+        tone: "uncertain",
+        route: "quarry",
+        days: 3,
+        next: "haddadGreece",
+        effects: { supplies: -1, stress: -10, progress: 3, trustAll: 1 },
+        consequence: "Three days pass · Mariam is remembered",
+        outcomeTitle: "Four names are spoken into the wind",
+        outcome: "Other families add names of people they lost. Nobody calls the gathering closure.",
+      },
+      {
+        id: "haddadReturnAfterLoss",
+        title: "Return to Türkiye",
+        hint: "End the westward journey after Mariam's death",
+        icon: "wait",
+        tone: "danger",
+        route: "ridge",
+        days: 8,
+        next: null,
+        effects: { stress: 10, exposure: -30, progress: 45 },
+        consequence: "The journey ends after Mariam's death",
+        outcomeTitle: "The ferry carries an empty seat",
+        outcome: "The surviving family accepts return assistance and begins another protection process in Türkiye.",
+        ending: {
+          type: "returned",
+          status: "stopped",
+          title: "Returned with an empty place",
+          copy: "The family returns to Türkiye without Mariam. The war that forced them from Syria and the debt from the journey remain unresolved.",
+        },
+      },
+    ],
+  },
+
+  haddadGreece: {
+    id: "haddadGreece",
+    region: "Greece · 2015",
+    location: "Island reception center",
+    time: "11:25",
+    weather: "Hard sunlight",
+    weatherDetail: "Registration lines fill the courtyard",
+    route: "elmstead",
+    contentNote: "Detention, fingerprinting, and family separation risk",
+    source: sources.europeBorders,
+    messages: [
+      {
+        sender: "Legal volunteer",
+        initial: "L",
+        role: "Verified aid organization",
+        time: "11:03",
+        trusted: true,
+        body: "Keep your documents and registration paper. Rules about where an asylum claim is examined are complex, and no volunteer can promise which country will accept the case.",
+      },
+    ],
+    known: [
+      "The official line keeps the family registered together.",
+      "People outside the gate sell transport without receipts.",
+      "A ferry ticket requires documents the family may not have.",
+    ],
+    assumed: [
+      "Registration guarantees travel to Germany.",
+      "Avoiding the camp prevents all detention.",
+      "The private driver knows every changing border rule.",
+    ],
+    choices: [
+      {
+        id: "haddadGreekRegistration",
+        title: "Complete registration together",
+        hint: "Accept a longer wait and keep an official record",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 8,
+        next: "haddadBalkans",
+        effects: { cash: -120, supplies: 2, medicine: 1, stress: -5, exposure: -12, progress: 13 },
+        consequence: "Eight days pass · Medicine +1 · Risk falls",
+        outcomeTitle: "Four names stay on one file",
+        outcome: "The family receives registration papers and a referral to a mainland shelter. The papers record arrival; they do not decide asylum.",
+        setFlags: { greekRegistration: true },
+      },
+      {
+        id: "haddadLeaveCamp",
+        title: "Leave with families from the same bus",
+        hint: "Follow shared information without waiting for every paper",
+        icon: "walk",
+        tone: "uncertain",
+        route: "quarry",
+        days: 5,
+        next: "haddadBalkans",
+        effects: { cash: -220, supplies: -2, water: -4, stress: 12, exposure: 12, progress: 17, peopleAll: -5 },
+        consequence: "Cash -$220 · Risk +12 · Health -5 each",
+        outcomeTitle: "The group reaches the mainland exhausted",
+        outcome: "Families share food and watch the children in shifts. Nobody can confirm which northern border will still be open.",
+      },
+      {
+        id: "haddadPrivateVan",
+        title: "Pay the private van driver",
+        hint: "Trade most remaining cash for an unverified shortcut",
+        icon: "car",
+        tone: "danger",
+        route: "ridge",
+        days: 3,
+        next: "haddadBalkans",
+        requires: { cash: 700 },
+        effects: { cash: -700, battery: -18, stress: 18, exposure: 24, progress: 20, peopleAll: -4 },
+        consequence: "Cash -$700 · Risk +24 · Phone -18%",
+        outcomeTitle: "The van leaves everyone beside a closed station",
+        outcome: "The driver keeps the fare and points north. The station has not served passengers for months.",
+      },
+    ],
+  },
+
+  haddadBalkans: {
+    id: "haddadBalkans",
+    region: "Western Balkans · 2015",
+    location: "A closed transit station",
+    time: "06:30",
+    weather: "Freezing fog",
+    weatherDetail: "A new barrier went up overnight",
+    route: "quarry",
+    contentNote: "Border closure, pushback risk, and exposure",
+    source: sources.europeBorders,
+    messages: [
+      {
+        sender: "Station announcement",
+        initial: "i",
+        role: "Official notice",
+        time: "06:15",
+        trusted: true,
+        body: "Transit is suspended. Families requiring medical assistance should report to the marked tent. No reopening time has been announced.",
+      },
+    ],
+    known: [
+      "The humanitarian tent confirms names before moving families.",
+      "A large group plans to walk toward the next town.",
+      "A document seller promises papers that cannot be verified.",
+    ],
+    assumed: [
+      "The border will reopen today.",
+      "A larger group cannot be pushed back.",
+      "A convincing document will survive database checks.",
+    ],
+    choices: [
+      {
+        id: "haddadAidTransfer",
+        title: "Wait for the verified family transfer",
+        hint: "Lose time but keep names and documents together",
+        icon: "aid",
+        tone: "trusted",
+        route: "elmstead",
+        days: 12,
+        next: "haddadEuropeNews",
+        effects: { cash: -180, supplies: 1, water: 2, stress: -8, exposure: -10, progress: 15 },
+        consequence: "12 days pass · Risk falls · Food +1 day",
+        outcomeTitle: "A manifest lists the whole family",
+        outcome: "The transfer moves slowly through formal reception points. Volunteers explain that each border can still make a different decision.",
+      },
+      {
+        id: "haddadWalkNorth",
+        title: "Walk north with the larger group",
+        hint: "Move despite the closure and worsening weather",
+        icon: "walk",
+        tone: "uncertain",
+        route: "quarry",
+        days: 7,
+        next: "haddadEuropeNews",
+        effects: { supplies: -3, water: -4, stress: 16, exposure: 18, progress: 18, peopleAll: -12 },
+        consequence: "Food -3 days · Health -12 each · Risk +18",
+        outcomeTitle: "The group turns back from the fence",
+        outcome: "Police block the road and redirect families toward an aid station. The walking gains little distance and costs nearly all remaining food.",
+      },
+      {
+        id: "haddadFalsePapers",
+        title: "Buy the seller's transit papers",
+        hint: "Risk detention for documents that may be false",
+        icon: "legal",
+        tone: "danger",
+        route: "ridge",
+        days: 4,
+        next: "haddadEuropeNews",
+        requires: { cash: 500 },
+        effects: { cash: -500, stress: 23, exposure: 30, progress: 20, trustAll: -1 },
+        consequence: "Cash -$500 · Risk +30 · Trust falls",
+        outcomeTitle: "The first scanner rejects every page",
+        outcome: "The family spends a night in a holding room before being released to the official reception line. The seller is gone.",
+      },
+    ],
+  },
+
+  haddadEuropeNews: {
+    id: "haddadEuropeNews",
+    region: "Central Europe · 2015",
+    location: "A temporary rail shelter",
+    time: "20:10",
+    weather: "Rain on metal roofing",
+    weatherDetail: "Phones replay the same border speech",
+    route: "quarry",
+    contentNote: "Anti-refugee rhetoric and dehumanizing social media",
+    source: sources.europeBorders,
+    messages: [
+      {
+        sender: "Shared social post",
+        initial: "!",
+        role: "Fictional anti-refugee influencer",
+        time: "19:42",
+        trusted: false,
+        body: "Close every border. Turn the trains around. Tonight's removals prove pressure works. Share if you want Europe protected from people like them.",
+      },
+      {
+        sender: "Shelter legal desk",
+        initial: "L",
+        role: "Verified information",
+        time: "19:55",
+        trusted: true,
+        body: "A viral post is not an official notice. Registration remains open in the destination city, but processing rules and wait times can change.",
+      },
+    ],
+    known: [
+      "The legal desk has tomorrow's official registration address.",
+      "The influencer does not identify the people shown in removal footage.",
+      "Posting publicly can expose the family's location and account.",
+    ],
+    assumed: [
+      "A viral slogan describes the law accurately.",
+      "Arguing online will change the influencer's audience.",
+      "Reaching Germany guarantees a positive asylum decision.",
+    ],
+    choices: [
+      {
+        id: "haddadVerifyRules",
+        title: "Ask the legal desk to verify the rules",
+        hint: "Separate public rhetoric from the process the family will face",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 2,
+        next: "haddadGermany",
+        effects: { battery: -6, stress: -8, exposure: -12, progress: 10, trustAll: 1 },
+        consequence: "Phone -6% · Stress -8 · Risk falls",
+        outcomeTitle: "The volunteer writes the address on paper",
+        outcome: "The family learns what documents to present and which parts of the process remain uncertain. The post continues circulating without them.",
+        setFlags: { germanLegalAdvice: true },
+      },
+      {
+        id: "haddadCloseFeed",
+        title: "Close the feed and rest together",
+        hint: "Protect the family's attention before the final leg",
+        icon: "rest",
+        tone: "uncertain",
+        route: "quarry",
+        days: 1,
+        next: "haddadGermany",
+        effects: { battery: 8, stress: -5, progress: 9 },
+        consequence: "Stress -5 · Phone +8%",
+        outcomeTitle: "The shelter roof replaces the shouting",
+        outcome: "Nadia puts the phone away. The family reviews names, documents, and the morning meeting place instead.",
+      },
+      {
+        id: "haddadArgueOnline",
+        title: "Reply from the family account",
+        hint: "Challenge the post while exposing identity and location",
+        icon: "talk",
+        tone: "danger",
+        route: "ridge",
+        days: 1,
+        next: "haddadGermany",
+        effects: { battery: -22, stress: 14, exposure: 22, progress: 9 },
+        consequence: "Phone -22% · Stress +14 · Risk +22",
+        outcomeTitle: "The reply is copied without its context",
+        outcome: "Some strangers offer support. Others repost the family's profile beside slurs and demands for removal.",
+      },
+    ],
+  },
+
+  haddadGermany: {
+    id: "haddadGermany",
+    region: "Germany · 2015",
+    location: "Regional arrival center",
+    time: "09:05",
+    weather: "Clear cold morning",
+    weatherDetail: "Numbers are called in several languages",
+    route: "elmstead",
+    contentNote: "Asylum registration and uncertain legal status",
+    source: sources.europeAsylum,
+    messages: [
+      {
+        sender: "Arrival-center interpreter",
+        initial: "i",
+        role: "Official information",
+        time: "08:48",
+        trusted: true,
+        body: "Registration begins the asylum process. It is not a promise of protection, permanent residence, family housing, or a quick decision.",
+      },
+    ],
+    known: [
+      "The center can register the surviving family members together.",
+      "A legal clinic can review their Syrian and transit documents.",
+      "A relative in another country cannot transfer the case by invitation alone.",
+    ],
+    assumed: [
+      "Arrival means the family has already won asylum.",
+      "Avoiding registration preserves every option.",
+      "One missing document decides the entire case.",
+    ],
+    choices: [
+      {
+        id: "haddadRegisterGermany",
+        title: "Register and request legal review",
+        hint: "Enter the asylum process with every document and recorded name",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 21,
+        next: null,
+        effects: { cash: -160, stress: 9, exposure: -28, progress: 100, trustAll: 1 },
+        consequence: "21 days pass · The asylum case begins · Route complete",
+        outcomeTitle: "A case number is read back to the family",
+        outcome: "The Haddads move to temporary family accommodation while their claim is reviewed. Arrival has ended the route, not the uncertainty.",
+        contextBonuses: [
+          {
+            flag: "keptDocuments",
+            kind: "payoff",
+            label: "The protected document folder supports the family timeline",
+            effects: { stress: -4, exposure: -5 },
+          },
+          {
+            flag: "greekRegistration",
+            kind: "payoff",
+            label: "Earlier registration records explain the route clearly",
+            effects: { exposure: -4 },
+          },
+          {
+            flag: "germanLegalAdvice",
+            kind: "payoff",
+            label: "The verified legal address prevents another missed queue",
+            effects: { stress: -4 },
+          },
+        ],
+        ending: {
+          type: "asylum_pending",
+          status: "won",
+          title: "Registered while the case continues",
+          copy: "The Haddads reach temporary accommodation with a case number, debt, grief, and no guarantee of protection. Their new chapter begins with another wait.",
+        },
+      },
+      {
+        id: "haddadFamilySponsor",
+        title: "Ask the clinic about family sponsorship",
+        hint: "Delay registration while a lawful transfer is reviewed",
+        icon: "phone",
+        tone: "uncertain",
+        route: "quarry",
+        days: 35,
+        next: null,
+        requires: { battery: 5 },
+        effects: { battery: -8, cash: -260, supplies: -2, stress: 18, exposure: -18, progress: 96, peopleAll: -4 },
+        consequence: "35 days pass · The transfer remains unresolved",
+        outcomeTitle: "The family waits under temporary protection",
+        outcome: "The clinic files an inquiry, but the family cannot move based on a relative's promise alone. They remain housed while options are reviewed.",
+        ending: {
+          type: "transfer_pending",
+          status: "won",
+          title: "Safe, with the destination undecided",
+          copy: "The immediate journey ends in temporary protection. The legal destination remains unresolved, and safety does not erase the cost of reaching it.",
+        },
+      },
+      {
+        id: "haddadAvoidRegistration",
+        title: "Leave before registration",
+        hint: "Avoid the system and rely on informal shelter and work",
+        icon: "walk",
+        tone: "danger",
+        route: "ridge",
+        days: 12,
+        next: null,
+        effects: { cash: -420, supplies: -3, stress: 25, exposure: 34, progress: 91, peopleAll: -8 },
+        consequence: "The family remains undocumented and without stable shelter",
+        outcomeTitle: "Every knock sounds official",
+        outcome: "The family finds temporary work and a crowded room, but avoids health care and school enrollment because they fear detection.",
+        ending: {
+          type: "undocumented",
+          status: "stopped",
+          title: "Arrival without stability",
+          copy: "The map says the family reached Germany. Their lives remain hidden, precarious, and outside a protection process.",
+        },
+      },
+    ],
+  },
 };
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
-export function createInitialGame() {
+export function createInitialGame(familyId = "ramirez") {
+  const family = getFamilyPreset(familyId);
   return {
     version: GAME_VERSION,
+    familyId: family.id,
     runId: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
     phase: "decision",
     status: "playing",
     day: 1,
     progress: 0,
-    eventId: "home",
-    route: "elmstead",
-    resources: {
-      cash: 1800,
-      supplies: 5,
-      water: 18,
-      medicine: 1,
-      battery: 82,
-      stress: 42,
-      exposure: 12,
-    },
-    people: {
-      marisol: { health: 84, trust: 4, alive: true },
-      edwin: { health: 86, trust: 4, alive: true },
-      daniela: { health: 78, trust: 5, alive: true },
-      aurelia: { health: 65, trust: 4, alive: true },
-    },
+    eventId: family.startEventId,
+    route: family.startRoute,
+    resources: { ...family.resources },
+    people: Object.fromEntries(Object.entries(family.peopleState).map(([id, state]) => [id, { ...state }])),
     losses: [],
     history: [],
     activityLog: [],
@@ -1814,8 +2728,9 @@ export function getPortraitMood(personState, groupStress = 0) {
   return "healthy";
 }
 
-export function getPortraitImage(personState, groupStress = 0) {
-  return PORTRAIT_STRIPS[getPortraitMood(personState, groupStress)];
+export function getPortraitImage(person, personState, groupStress = 0, gameOrFamilyId = "ramirez") {
+  const family = getFamilyPreset(gameOrFamilyId);
+  return family.portraitStrips[getPortraitMood(personState, groupStress)] ?? person?.image;
 }
 
 export function getResourceTone(resource, value) {
@@ -1918,7 +2833,7 @@ function applyStoryThreadUpdates(game, updates, choiceId, day = game.day) {
 function recordRelationshipReactions(game, applied, reactions, choiceId, day = game.day) {
   const relationshipNotes = { ...(game.relationshipNotes ?? {}) };
   const entries = reactions.map((reaction) => {
-    const person = PEOPLE.find((traveler) => traveler.id === reaction.personId);
+    const person = getPeople(game).find((traveler) => traveler.id === reaction.personId);
     const trustDelta = applied.people[reaction.personId].trust - game.people[reaction.personId].trust;
     const entry = {
       ...reaction,
@@ -2053,7 +2968,7 @@ function getNewLossEntries(previousGame, nextGame, day = previousGame.day) {
   return (nextGame.losses ?? [])
     .filter((id) => !previousLosses.has(id))
     .map((id) => {
-      const person = PEOPLE.find((traveler) => traveler.id === id);
+      const person = getPeople(previousGame).find((traveler) => traveler.id === id);
       return {
         day,
         kind: "remembrance",
@@ -2241,7 +3156,7 @@ export function planTravelLeg(game, strategyId) {
 export function useMedicine(game, personId) {
   const traveler = game.people[personId];
   if (game.status !== "playing" || !traveler || traveler.alive === false || traveler.health >= 100 || game.resources.medicine < 1) return game;
-  const person = PEOPLE.find((item) => item.id === personId);
+  const person = getPeople(game).find((item) => item.id === personId);
   const applied = applyEffects(game, { medicine: -1, stress: -2, people: { [personId]: 15 } });
   const nextGame = {
     ...game,
@@ -2309,12 +3224,14 @@ export function isSavedGameValid(value) {
   return Boolean(
     value
       && value.version === GAME_VERSION
+      && FAMILY_PRESETS[value.familyId]
       && EVENTS[value.eventId]
       && value.resources
       && value.people
       && value.activityLog
       && value.flags
       && value.completedRoadsideWork
+      && getPeople(value).every((person) => value.people[person.id])
       && ["decision", "outcome", "ended"].includes(value.phase),
   );
 }
