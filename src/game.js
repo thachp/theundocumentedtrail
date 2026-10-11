@@ -1,0 +1,6984 @@
+export const GAME_VERSION = 14;
+export const GAME_SAVE_KEY = "the-long-road-save-v14";
+
+const RAMIREZ_PORTRAIT_STRIP = "/assets/ramirez-family-portraits.webp";
+const RAMIREZ_PORTRAIT_STRIPS = {
+  healthy: RAMIREZ_PORTRAIT_STRIP,
+  strained: "/assets/ramirez-family-portraits-strained.webp",
+  critical: "/assets/ramirez-family-portraits-critical.webp",
+};
+const HADDAD_PORTRAIT_STRIP = "/assets/haddad-family-portraits.webp";
+const HADDAD_PORTRAIT_STRIPS = {
+  healthy: HADDAD_PORTRAIT_STRIP,
+  strained: HADDAD_PORTRAIT_STRIP,
+  critical: HADDAD_PORTRAIT_STRIP,
+};
+const DIOP_PORTRAIT_STRIP = "/assets/diop-group-portraits.webp";
+const DIOP_PORTRAIT_STRIPS = {
+  healthy: DIOP_PORTRAIT_STRIP,
+  strained: DIOP_PORTRAIT_STRIP,
+  critical: DIOP_PORTRAIT_STRIP,
+};
+const NGUYEN_PORTRAIT_STRIP = "/assets/nguyen-family-portraits.webp";
+const NGUYEN_PORTRAIT_STRIPS = {
+  healthy: NGUYEN_PORTRAIT_STRIP,
+  strained: NGUYEN_PORTRAIT_STRIP,
+  critical: NGUYEN_PORTRAIT_STRIP,
+};
+const PUNJAB_PORTRAIT_STRIP = "/assets/punjab-group-portraits.webp";
+const PUNJAB_PORTRAIT_STRIPS = {
+  healthy: PUNJAB_PORTRAIT_STRIP,
+  strained: PUNJAB_PORTRAIT_STRIP,
+  critical: PUNJAB_PORTRAIT_STRIP,
+};
+
+const RAMIREZ_PEOPLE = [
+  {
+    id: "marisol",
+    name: "Marisol",
+    pronouns: "she/her",
+    age: 34,
+    image: RAMIREZ_PORTRAIT_STRIP,
+    focus: "0% 40%",
+    skills: ["Former teacher", "Planning"],
+    story: "A former primary-school teacher. She sold the family's home and small plot for far less than they were worth after a gang threatened Edwin.",
+  },
+  {
+    id: "edwin",
+    name: "Edwin",
+    pronouns: "he/him",
+    age: 15,
+    image: RAMIREZ_PORTRAIT_STRIP,
+    focus: "33.333% 40%",
+    skills: ["Observation", "Some English"],
+    story: "He wants to study electrical repair. Recruitment pressure from a neighborhood gang is the reason the family cannot safely stay.",
+  },
+  {
+    id: "daniela",
+    name: "Daniela",
+    pronouns: "she/her",
+    age: 7,
+    image: RAMIREZ_PORTRAIT_STRIP,
+    focus: "66.667% 40%",
+    skills: ["Curious", "Asthma"],
+    story: "She carries a stuffed rabbit named Nube and counts every bus she sees. Her inhaler has twelve doses left.",
+  },
+  {
+    id: "aurelia",
+    name: "Aurelia",
+    pronouns: "she/her",
+    age: 61,
+    image: RAMIREZ_PORTRAIT_STRIP,
+    focus: "100% 40%",
+    skills: ["Devout", "Cooking"],
+    story: "Marisol's mother. Her knee slows the group, but she remembers names, favors, and which promises people kept.",
+  },
+];
+
+const HADDAD_PEOPLE = [
+  {
+    id: "kareem",
+    name: "Kareem",
+    pronouns: "he/him",
+    age: 44,
+    image: HADDAD_PORTRAIT_STRIP,
+    focus: "0% 42%",
+    skills: ["Machine repair", "Negotiation"],
+    story: "He repaired bakery equipment during years of displacement. After the family returned near Aleppo, he found the workshop stripped and unsafe while a local armed faction began asking about his teenage son.",
+  },
+  {
+    id: "nadia",
+    name: "Nadia",
+    pronouns: "she/her",
+    age: 41,
+    image: HADDAD_PORTRAIT_STRIP,
+    focus: "33.333% 42%",
+    skills: ["Former teacher", "Documents"],
+    story: "A former Arabic teacher. She keeps school records, identity papers, an old displacement card, and the deed to their damaged apartment wrapped inside a plastic folder.",
+  },
+  {
+    id: "sami",
+    name: "Sami",
+    pronouns: "he/him",
+    age: 16,
+    image: HADDAD_PORTRAIT_STRIP,
+    focus: "66.667% 42%",
+    skills: ["Electronics", "Some English"],
+    story: "He fixes phones from discarded parts and follows conflicting posts about return, recruitment, and European asylum rules. An armed faction has twice asked when he will report to them.",
+  },
+  {
+    id: "mariam",
+    name: "Mariam",
+    pronouns: "she/her",
+    age: 9,
+    image: HADDAD_PORTRAIT_STRIP,
+    focus: "100% 42%",
+    skills: ["Drawing", "Asthma"],
+    story: "She carries the brass key to the apartment the family tried to reclaim and draws every temporary room as if the walls might help her remember where home is.",
+  },
+];
+
+const DIOP_PEOPLE = [
+  {
+    id: "ibrahima",
+    name: "Ibrahima",
+    pronouns: "he/him",
+    age: 29,
+    image: DIOP_PORTRAIT_STRIP,
+    focus: "0% 42%",
+    skills: ["Motorcycle repair", "Negotiation"],
+    story: "The older Diop brother kept a small motorcycle-repair stall near Mbour. Months of irregular work and family debt turned every tool into collateral.",
+  },
+  {
+    id: "mamadou",
+    name: "Mamadou",
+    pronouns: "he/him",
+    age: 24,
+    image: DIOP_PORTRAIT_STRIP,
+    focus: "33.333% 42%",
+    skills: ["Artisanal fishing", "Navigation"],
+    story: "The younger brother worked on different fishing crews whenever a captain needed another pair of hands. He knows the coast, but not the open-ocean route being sold to them.",
+  },
+  {
+    id: "cheikh",
+    name: "Cheikh",
+    pronouns: "he/him",
+    age: 19,
+    image: DIOP_PORTRAIT_STRIP,
+    focus: "66.667% 42%",
+    skills: ["Welding", "French"],
+    story: "Their cousin left a welding apprenticeship after the shop stopped paying regularly. He promised his aunt that Lamine would never be left alone.",
+  },
+  {
+    id: "lamine",
+    name: "Lamine",
+    pronouns: "he/him",
+    age: 12,
+    image: DIOP_PORTRAIT_STRIP,
+    focus: "100% 42%",
+    skills: ["Schoolwork", "Observation"],
+    story: "Cheikh's younger brother carries a blue school notebook, his report card, and two family phone numbers written inside the cover.",
+  },
+];
+
+const NGUYEN_PEOPLE = [
+  {
+    id: "minh",
+    name: "Minh",
+    pronouns: "he/him",
+    age: 46,
+    image: NGUYEN_PORTRAIT_STRIP,
+    focus: "0% 42%",
+    skills: ["Engine repair", "Problem solving"],
+    story: "A mechanic from Nghệ An whose workshop income never recovered after a factory closed. He signed the family-home papers as collateral after a recruiter promised legal work in Britain.",
+  },
+  {
+    id: "lan",
+    name: "Lan",
+    pronouns: "she/her",
+    age: 43,
+    image: NGUYEN_PORTRAIT_STRIP,
+    focus: "33.333% 42%",
+    skills: ["Garment sewing", "Budgeting"],
+    story: "She sewed piecework at home and kept every loan receipt. The advertised wage could repay the debt in a year, but the recruiter will not put that promise in writing.",
+  },
+  {
+    id: "mai",
+    name: "Mai",
+    pronouns: "she/her",
+    age: 20,
+    image: NGUYEN_PORTRAIT_STRIP,
+    focus: "66.667% 42%",
+    skills: ["English", "Bookkeeping"],
+    story: "Their daughter paused college to help with the debt. She carries a transparent folder containing copies of every document and translates the messages the recruiter sends in English.",
+  },
+  {
+    id: "bao",
+    name: "Bảo",
+    pronouns: "he/him",
+    age: 15,
+    image: NGUYEN_PORTRAIT_STRIP,
+    focus: "100% 42%",
+    skills: ["Schoolwork", "Phone repair"],
+    story: "Their son was told the trip would end before the next school term. He saved emergency numbers inside a calculator app after Mai warned that phones might be searched.",
+  },
+];
+
+const PUNJAB_PEOPLE = [
+  {
+    id: "gurpreet",
+    name: "Gurpreet",
+    pronouns: "he/him",
+    age: 31,
+    image: PUNJAB_PORTRAIT_STRIP,
+    focus: "0% 42%",
+    skills: ["Farm machinery", "Welding"],
+    story: "The oldest cousin maintained tractors and irrigation pumps near Jalandhar. His family leased out part of its field to cover a recruiter's placement fee for an Irish food-processing job.",
+  },
+  {
+    id: "simran",
+    name: "Simran",
+    pronouns: "she/her",
+    age: 28,
+    image: PUNJAB_PORTRAIT_STRIP,
+    focus: "33.333% 42%",
+    skills: ["Care work", "First aid"],
+    story: "Gurpreet's sister trained as a care assistant. The recruiter says her permit can be changed after arrival, but the contract names a packing line instead of a care home.",
+  },
+  {
+    id: "arjun",
+    name: "Arjun",
+    pronouns: "he/him",
+    age: 24,
+    image: PUNJAB_PORTRAIT_STRIP,
+    focus: "66.667% 42%",
+    skills: ["Diesel repair", "Driving"],
+    story: "Their cousin left a diesel-mechanic apprenticeship after months of irregular pay. He keeps screenshots of every permit number even when the agent orders the group to delete them.",
+  },
+  {
+    id: "neha",
+    name: "Neha",
+    pronouns: "she/her",
+    age: 22,
+    image: PUNJAB_PORTRAIT_STRIP,
+    focus: "100% 42%",
+    skills: ["Bookkeeping", "English"],
+    story: "The youngest cousin finished a commerce degree and records every fee paid by all four households. Her notebook already contains three different totals for the same journey.",
+  },
+];
+
+export const PEOPLE = RAMIREZ_PEOPLE;
+
+export const FAMILY_PRESETS = Object.freeze({
+  ramirez: {
+    id: "ramirez",
+    name: "The Ramírez family",
+    shortName: "Ramírez",
+    origin: "Honduras · Present day",
+    context: "Gang threats force a teacher, her children, and their grandmother to leave after the family home is sold under pressure.",
+    journey: "Honduras to a United States border process",
+    startEventId: "home",
+    startRoute: "elmstead",
+    destination: "Border process",
+    heroImage: "/assets/long-road-theft-night.webp",
+    mapImage: "/assets/long-road-route-map.webp",
+    mapAlt: "Schematic illustrated map from a fictional Honduran home toward a United States border process",
+    portraitStrips: RAMIREZ_PORTRAIT_STRIPS,
+    portraitSheet: { width: 2172, height: 724 },
+    people: RAMIREZ_PEOPLE,
+    resources: { cash: 1800, supplies: 5, water: 18, medicine: 1, battery: 82, stress: 42, exposure: 12 },
+    peopleState: {
+      marisol: { health: 84, trust: 4, alive: true },
+      edwin: { health: 86, trust: 4, alive: true },
+      daniela: { health: 78, trust: 5, alive: true },
+      aurelia: { health: 65, trust: 4, alive: true },
+    },
+  },
+  haddad: {
+    id: "haddad",
+    name: "The Haddad family",
+    shortName: "Haddad",
+    origin: "Syria · Present day",
+    context: "After years of displacement, the family returns near Aleppo and finds a damaged home, little work, explosive-remnant warnings, and new pressure on Sami. They are forced to leave again.",
+    journey: "Northern Syria to an asylum process in Germany",
+    startEventId: "haddadHome",
+    startRoute: "elmstead",
+    destination: "Asylum registration",
+    heroImage: "/assets/haddad-journey-hero.webp",
+    mapImage: "/assets/haddad-route-map.webp",
+    mapAlt: "Non-navigational illustrated story map from Syria through Türkiye, Greece, and the Balkans toward Germany",
+    portraitStrips: HADDAD_PORTRAIT_STRIPS,
+    portraitSheet: { width: 2046, height: 768 },
+    people: HADDAD_PEOPLE,
+    resources: { cash: 2400, supplies: 6, water: 20, medicine: 1, battery: 68, stress: 54, exposure: 18 },
+    peopleState: {
+      kareem: { health: 81, trust: 4, alive: true },
+      nadia: { health: 84, trust: 4, alive: true },
+      sami: { health: 88, trust: 4, alive: true },
+      mariam: { health: 74, trust: 5, alive: true },
+    },
+  },
+  diop: {
+    id: "diop",
+    name: "The Diop brothers & cousins",
+    shortName: "Diop group",
+    origin: "Senegal · Present day",
+    context: "Two brothers and their two cousins leave after unstable coastal work and family debt close off choices at home. Twelve-year-old Lamine travels under the older cousins' care.",
+    journey: "Senegal and Mauritania to the Canary Islands",
+    startEventId: "diopHome",
+    startRoute: "elmstead",
+    destination: "Canary Islands reception",
+    heroImage: "/assets/diop-journey-hero.webp",
+    mapImage: "/assets/diop-route-map.webp",
+    mapAlt: "Non-navigational illustrated story map from Senegal through Mauritania and across the Atlantic toward the Canary Islands",
+    portraitStrips: DIOP_PORTRAIT_STRIPS,
+    portraitSheet: { width: 2046, height: 768 },
+    people: DIOP_PEOPLE,
+    resources: { cash: 2100, supplies: 6, water: 20, medicine: 1, battery: 75, stress: 38, exposure: 8 },
+    peopleState: {
+      ibrahima: { health: 88, trust: 4, alive: true },
+      mamadou: { health: 91, trust: 4, alive: true },
+      cheikh: { health: 90, trust: 4, alive: true },
+      lamine: { health: 82, trust: 5, alive: true },
+    },
+  },
+  nguyen: {
+    id: "nguyen",
+    name: "The Nguyễn family",
+    shortName: "Nguyễn",
+    origin: "Vietnam · Present day",
+    context: "A recruiter promises legal British jobs after the family home is pledged against a large migration debt. The contract, route, and visas remain deliberately vague.",
+    journey: "Nghệ An, Vietnam to a United Kingdom safeguarding process",
+    startEventId: "nguyenHome",
+    startRoute: "elmstead",
+    destination: "United Kingdom review",
+    heroImage: "/assets/nguyen-journey-hero.webp",
+    mapImage: "/assets/nguyen-route-map.webp",
+    mapAlt: "Non-navigational illustrated story map from Vietnam through continental Europe and France toward the United Kingdom",
+    portraitStrips: NGUYEN_PORTRAIT_STRIPS,
+    portraitSheet: { width: 2048, height: 768 },
+    people: NGUYEN_PEOPLE,
+    resources: { cash: 3200, supplies: 6, water: 14, medicine: 1, battery: 84, stress: 44, exposure: 9 },
+    peopleState: {
+      minh: { health: 83, trust: 4, alive: true },
+      lan: { health: 81, trust: 4, alive: true },
+      mai: { health: 88, trust: 5, alive: true },
+      bao: { health: 86, trust: 5, alive: true },
+    },
+  },
+  punjab: {
+    id: "punjab",
+    name: "The Punjab work group",
+    shortName: "Punjab group",
+    origin: "India · Present day",
+    context: "Four relatives pool loans and family assets after a recruiter promises valid Irish employment permits. The permit numbers may be real, but the fees, job descriptions, and housing deductions keep changing.",
+    journey: "Punjab, India to an employment and immigration review in Ireland",
+    startEventId: "punjabHome",
+    startRoute: "elmstead",
+    destination: "Irish employment review",
+    heroImage: "/assets/punjab-journey-hero.webp",
+    mapImage: "/assets/punjab-route-map.webp",
+    mapAlt: "Non-navigational illustrated story map from Punjab through Delhi and an international transit hub toward Ireland",
+    portraitStrips: PUNJAB_PORTRAIT_STRIPS,
+    portraitSheet: { width: 2048, height: 768 },
+    people: PUNJAB_PEOPLE,
+    resources: { cash: 3600, supplies: 7, water: 15, medicine: 1, battery: 88, stress: 36, exposure: 7 },
+    peopleState: {
+      gurpreet: { health: 90, trust: 4, alive: true },
+      simran: { health: 87, trust: 5, alive: true },
+      arjun: { health: 92, trust: 4, alive: true },
+      neha: { health: 89, trust: 5, alive: true },
+    },
+  },
+});
+
+export const JOURNEY_STAGES = Object.freeze([
+  { id: "home", label: "Home" },
+  { id: "transit", label: "Transit" },
+  { id: "arrival", label: "Arrival" },
+  { id: "review", label: "Review" },
+]);
+
+const JOURNEY_STAGE_BY_EVENT = Object.freeze({
+  home: "home",
+  haddadHome: "home",
+  diopHome: "home",
+  nguyenHome: "home",
+  punjabHome: "home",
+  borderCity: "arrival",
+  riverCrossing: "arrival",
+  memorial: "arrival",
+  haddadEuropeNews: "arrival",
+  diopCanaryLanding: "arrival",
+  nguyenUKArrival: "arrival",
+  nguyenPolicy: "arrival",
+  punjabDublin: "arrival",
+  punjabWorksite: "arrival",
+  detention: "review",
+  haddadGermany: "review",
+  diopIslandWait: "review",
+  diopFinal: "review",
+  nguyenFinal: "review",
+  punjabInspection: "review",
+  punjabPolicy: "review",
+  punjabFinal: "review",
+});
+
+export function getJourneyStage(game) {
+  const stageId = game.progress >= 100 ? "review" : (JOURNEY_STAGE_BY_EVENT[game.eventId] ?? "transit");
+  return JOURNEY_STAGES.find((stage) => stage.id === stageId);
+}
+
+export function getFamilyPreset(gameOrId = "ramirez") {
+  const familyId = typeof gameOrId === "string" ? gameOrId : gameOrId?.familyId;
+  return FAMILY_PRESETS[familyId] ?? FAMILY_PRESETS.ramirez;
+}
+
+export function getPeople(gameOrId = "ramirez") {
+  return getFamilyPreset(gameOrId).people;
+}
+
+export const ROUTES = {
+  elmstead: {
+    title: "Shelter Network",
+    kicker: "Verified support",
+    duration: "Slower",
+    confidence: "Higher confidence",
+    tone: "trusted",
+    detail: "Church shelters, legal clinics, and family contacts",
+  },
+  quarry: {
+    title: "Road North",
+    kicker: "Mixed information",
+    duration: "Uncertain",
+    confidence: "Medium confidence",
+    tone: "uncertain",
+    detail: "Buses, large groups, waiting towns, and changing rumors",
+  },
+  ridge: {
+    title: "Paid Guide",
+    kicker: "High-risk promises",
+    duration: "Faster if true",
+    confidence: "Low confidence",
+    tone: "danger",
+    detail: "Fictional prices and an abstract route; promises may be false",
+  },
+};
+
+export const TRAVEL_STRATEGIES = [
+  {
+    id: "conserve",
+    title: "Stretch what remains",
+    hint: "Spend almost nothing, but accept hunger and fatigue",
+    tone: "danger",
+  },
+  {
+    id: "steady",
+    title: "Keep a steady pace",
+    hint: "Pay for water and simple meals along the way",
+    tone: "uncertain",
+  },
+  {
+    id: "recover",
+    title: "Pause to recover",
+    hint: "Spend more for rest, meals, and safer shelter",
+    tone: "trusted",
+  },
+];
+
+export const TRAVEL_INCIDENTS = [
+  {
+    id: "cold",
+    kind: "illness",
+    title: "A cold takes hold",
+    summary: "A cough, chills, and exhaustion begin after another night without proper shelter.",
+    healthLoss: 7,
+    stress: 3,
+  },
+  {
+    id: "influenza",
+    kind: "illness",
+    title: "A sudden fever",
+    summary: "Fever and body aches make the next day of travel difficult. The group cannot confirm the cause without a clinic.",
+    healthLoss: 11,
+    stress: 5,
+  },
+  {
+    id: "covid",
+    kind: "illness",
+    title: "A possible COVID infection",
+    summary: "A persistent cough and fever resemble COVID-19. Without a test, the group treats it as a contagious respiratory illness.",
+    healthLoss: 13,
+    stress: 6,
+  },
+  {
+    id: "leg-injury",
+    kind: "injury",
+    title: "A fall injures a leg",
+    summary: "A fall on uneven ground leaves severe swelling and a possible fracture. Moving without support could make it worse.",
+    healthLoss: 16,
+    stress: 7,
+  },
+];
+
+const CHOICE_REACTIONS = {
+  leaveDawn: [{ personId: "edwin", trustDelta: 1, text: "If we leave now, they cannot make me join them tonight." }],
+  safeHouse: [{ personId: "aurelia", trustDelta: 1, text: "A verified door is worth losing two days." }],
+  collectPapers: [{ personId: "aurelia", trustDelta: -1, text: "The papers matter, but I wish you had not gone back alone." }],
+  churchBus: [{ personId: "daniela", trustDelta: 1, text: "The driver knows our names. I think that is good." }],
+  hireCoyote: [{ personId: "edwin", trustDelta: -1, text: "He keeps changing the promise whenever we ask a question." }],
+  largeGroup: [{ personId: "aurelia", trustDelta: 1, text: "Strangers are watching out for the children too." }],
+  handCash: [{ personId: "aurelia", trustDelta: 1, text: "Money can be replaced. Four people cannot." }],
+  offerPhone: [{ personId: "edwin", trustDelta: -1, text: "Every address and photograph was on that phone." }],
+  callForHelp: [{ personId: "edwin", trustDelta: 1, text: "I was scared, but the lights made them run." }],
+  callShelter: [{ personId: "aurelia", trustDelta: 1, text: "The number in my prayer book brought a real van." }],
+  walkTown: [{ personId: "aurelia", trustDelta: -1, text: "I can keep walking. I need you to hear when I say it hurts." }],
+  replacementDriver: [{ personId: "edwin", trustDelta: 1, text: "You opened the door before he could separate us." }],
+  stayShelter: [{ personId: "daniela", trustDelta: 1, text: "Tonight the door locks from our side." }],
+  helpKitchen: [{ personId: "edwin", trustDelta: 1, text: "Fixing the fans made me useful again." }],
+  leaveMorning: [{ personId: "aurelia", trustDelta: -1, text: "One night was not enough for my knee or her cough." }],
+  rentWhileWaiting: [{ personId: "edwin", trustDelta: 1, text: "I can study if I know where we sleep tomorrow." }],
+  shelterRotation: [{ personId: "daniela", trustDelta: -1, text: "Which bed is ours tonight?" }],
+  resellerTicket: [{ personId: "edwin", trustDelta: -1, text: "The station warned us that the ticket could not be checked." }],
+  waitForClinic: [{ personId: "daniela", trustDelta: 1, text: "The nurse wrote the medicine name where we cannot lose it." }],
+  buyPharmacyRefill: [{ personId: "daniela", trustDelta: 1, text: "I can breathe better before the bus comes." }],
+  continueWithoutCare: [{ personId: "daniela", trustDelta: -1, text: "I said I could walk. I did not say I could breathe." }],
+  busNorth: [{ personId: "edwin", trustDelta: 1, text: "A ticket with a company name feels like something we can prove." }],
+  freightTrain: [{ personId: "aurelia", trustDelta: -1, text: "My hands cannot hold this metal forever." }],
+  secondGuide: [{ personId: "edwin", trustDelta: -1, text: "We are paying another stranger to explain nothing." }],
+  remainWithBus: [{ personId: "edwin", trustDelta: 1, text: "The announcement was confusing, but at least it was public." }],
+  waitForShelterVan: [{ personId: "aurelia", trustDelta: 1, text: "Waiting is easier when someone gives their real name." }],
+  payCheckpointGuide: [{ personId: "edwin", trustDelta: -1, text: "He held our documents like they belonged to him." }],
+  callLegalAid: [{ personId: "edwin", trustDelta: 1, text: "Now we know which part was policy and which part was rumor." }],
+  comfortChildren: [{ personId: "daniela", trustDelta: 1, text: "Tell me what you know. Do not leave the video talking." }],
+  argueOnline: [{ personId: "aurelia", trustDelta: -1, text: "Those strangers wanted a fight, not the truth about Mateo." }],
+  verifiedWaitlist: [{ personId: "aurelia", trustDelta: 1, text: "A slow list is still better than a purchased lie." }],
+  rentNorthernRoom: [{ personId: "edwin", trustDelta: 1, text: "For one month, I can leave a book on a table." }],
+  payAppointmentBroker: [{ personId: "edwin", trustDelta: -1, text: "The clinic told us appointments were not for sale." }],
+  officialAppointment: [{ personId: "edwin", trustDelta: 1, text: "At least the lawyer explained what the wristbands might mean." }],
+  boatOffer: [{ personId: "aurelia", trustDelta: -1, text: "There are more children than life jackets." }],
+  stayMexico: [{ personId: "aurelia", trustDelta: 1, text: "A different safe place can still become home." }],
+  lightCandle: [{ personId: "edwin", trustDelta: 1, text: "I want them to remember more than how Daniela died." }],
+  recordName: [{ personId: "marisol", trustDelta: 1, text: "Her name is in a record that cannot pretend she was never here." }],
+  requestLawyer: [{ personId: "edwin", trustDelta: 1, text: "All the papers we carried finally tell the same story." }],
+  haddadNeighborConvoy: [{ personId: "sami", trustDelta: 1, text: "I know the people in the car ahead. That matters right now." }],
+  haddadWaitForUncle: [{ personId: "mariam", trustDelta: -1, text: "Every time the phone rings, I think we are leaving." }],
+  haddadFirstBroker: [{ personId: "nadia", trustDelta: -1, text: "He learned how much we fear staying, then raised the price." }],
+  haddadRegisterTurkey: [{ personId: "mariam", trustDelta: 1, text: "The nurse wrote my name next to the medicine." }],
+  haddadCousinRoom: [{ personId: "sami", trustDelta: 1, text: "Cousin Fadi opened the door before asking what we could pay." }],
+  haddadBorderDriver: [{ personId: "nadia", trustDelta: -1, text: "We traded names on paper for another stranger's word." }],
+  haddadRepairWork: [{ personId: "sami", trustDelta: 1, text: "Baba let me test the motor before they paid us." }],
+  haddadGarmentRoom: [{ personId: "nadia", trustDelta: -1, text: "A document in someone else's drawer is not protection." }],
+  haddadBorrowForBoat: [{ personId: "kareem", trustDelta: -1, text: "Our relatives borrowed against their own rent for this." }],
+  haddadTurkeyProtection: [{ personId: "nadia", trustDelta: 1, text: "Changing the destination does not mean we abandoned the children." }],
+  haddadLaterBoat: [{ personId: "sami", trustDelta: 1, text: "Waiting felt unbearable. The life jackets were still worth it." }],
+  haddadOverloadedBoat: [{ personId: "nadia", trustDelta: -1, text: "He called the boat safe because he knew we wanted to believe him." }],
+  haddadRecordMariam: [{ personId: "sami", trustDelta: 1, text: "Write that she drew windows in every room." }],
+  haddadGreekRegistration: [{ personId: "sami", trustDelta: 1, text: "For once, all our names are on the same page." }],
+  haddadPrivateVan: [{ personId: "kareem", trustDelta: -1, text: "The price bought a ride, not the truth." }],
+  haddadAidTransfer: [{ personId: "nadia", trustDelta: 1, text: "Slow is easier to bear when someone signs their name." }],
+  haddadFalsePapers: [{ personId: "sami", trustDelta: -1, text: "The seller knew the scanner would reject them." }],
+  haddadVerifyRules: [{ personId: "sami", trustDelta: 1, text: "The loudest post was not the official notice." }],
+  haddadArgueOnline: [{ personId: "nadia", trustDelta: -1, text: "They wanted our faces for their argument, not our story." }],
+  haddadRegisterGermany: [{ personId: "kareem", trustDelta: 1, text: "A case number is not a home, but it is a place to begin." }],
+  diopVerifyOffice: [{ personId: "lamine", trustDelta: 1, text: "The counselor wrote down what was real and crossed out what the recruiter invented." }],
+  diopSellMotorbike: [{ personId: "ibrahima", trustDelta: -1, text: "The repair-stall key weighs less now that there is no motorcycle beside it." }],
+  diopPayRecruiter: [{ personId: "cheikh", trustDelta: -1, text: "He called us family until the money changed hands." }],
+  diopRepairShift: [{ personId: "lamine", trustDelta: 1, text: "Ibrahima showed me how to sort every bolt before the shop paid him." }],
+  diopFishingCrew: [{ personId: "mamadou", trustDelta: 1, text: "At least this captain said the wage in front of everyone." }],
+  diopNightVan: [{ personId: "lamine", trustDelta: -1, text: "The driver would not say where we were sleeping." }],
+  diopLicensedCoach: [{ personId: "lamine", trustDelta: 1, text: "Our names are on four tickets, one after another." }],
+  diopCoastalTruck: [{ personId: "cheikh", trustDelta: -1, text: "We paid to hide under tarps from people who never asked for our names." }],
+  diopBorderBroker: [{ personId: "ibrahima", trustDelta: -1, text: "The broker kept the copies and asked for the originals." }],
+  diopForecastWait: [{ personId: "mamadou", trustDelta: 1, text: "Knowing the sea does not make this route safe, but the forecast still matters." }],
+  diopRepairDeposit: [{ personId: "ibrahima", trustDelta: 1, text: "The engine owner paid in front of the whole yard." }],
+  diopBorrowFare: [{ personId: "cheikh", trustDelta: -1, text: "Every voice message from home now carries somebody else's debt." }],
+  diopTurnBack: [{ personId: "lamine", trustDelta: 1, text: "I can go back to school. That is still a future." }],
+  diopSmallerPirogue: [{ personId: "mamadou", trustDelta: -1, text: "We waited for calmer water. The ocean still overturned us." }],
+  diopNightPirogue: [{ personId: "ibrahima", trustDelta: -1, text: "The operator used our fear of losing the money to make us board." }],
+  diopRecordLamine: [{ personId: "cheikh", trustDelta: 1, text: "Write that he corrected my spelling in every message home." }],
+  diopDeckVigil: [{ personId: "mamadou", trustDelta: 1, text: "We spoke his name before anyone counted the survivors." }],
+  diopReturnAfterLoss: [{ personId: "ibrahima", trustDelta: -1, text: "Going home cannot return Lamine, but it can stop this route here." }],
+  diopRegisterArrival: [{ personId: "cheikh", trustDelta: 1, text: "The interpreter read every name back, including Lamine's." }],
+  diopLeaveReception: [{ personId: "mamadou", trustDelta: -1, text: "The island is Europe, but sleeping outside is not arrival." }],
+  diopPayDocumentFixer: [{ personId: "ibrahima", trustDelta: -1, text: "The paper looked official until the number led nowhere." }],
+  diopVerifySpainRules: [{ personId: "cheikh", trustDelta: 1, text: "The legal worker explained the difference between arrival, asylum, and permission to work." }],
+  diopCloseFeed: [{ personId: "mamadou", trustDelta: 1, text: "The video wanted our anger more than it wanted the truth." }],
+  diopReplyInfluencer: [{ personId: "ibrahima", trustDelta: -1, text: "They copied our photograph and deleted every word about Lamine." }],
+  diopLegalReview: [{ personId: "ibrahima", trustDelta: 1, text: "We told the truth even when it did not sound like the story people expected." }],
+  diopAssistedReturn: [{ personId: "mamadou", trustDelta: 1, text: "Returning alive is not the same as returning unchanged." }],
+  diopInformalWork: [{ personId: "cheikh", trustDelta: -1, text: "A hidden room and cash work leave every promise in someone else's hands." }],
+  nguyenVerifyOffer: [{ personId: "mai", trustDelta: 1, text: "The official checklist contains everything the recruiter refused to write down." }],
+  nguyenSignLoan: [{ personId: "lan", trustDelta: -1, text: "The lender keeps the house papers. We keep one photograph of every page." }],
+  nguyenPayRecruiter: [{ personId: "minh", trustDelta: -1, text: "The receipt says consulting. The voice message promised four jobs." }],
+  nguyenDemandContract: [{ personId: "mai", trustDelta: 1, text: "A real employer should not be frightened by a translated contract." }],
+  nguyenSewingShift: [{ personId: "lan", trustDelta: 1, text: "The cooperative pays less than Britain was supposed to pay, but every number is real." }],
+  nguyenFollowItinerary: [{ personId: "bao", trustDelta: -1, text: "They told me to say I was on holiday, but nobody told me where we were staying." }],
+  nguyenKeepPassports: [{ personId: "lan", trustDelta: 1, text: "We can lose money and still move. Without our names, somebody else controls the road." }],
+  nguyenCallHotline: [{ personId: "mai", trustDelta: 1, text: "The counselor called it coercion before asking us to prove anything." }],
+  nguyenBoardVan: [{ personId: "bao", trustDelta: -1, text: "The windows were covered before the driver collected our phones." }],
+  nguyenReportThreats: [{ personId: "mai", trustDelta: 1, text: "The advocate asked what I wanted recorded and did not make me repeat the threat." }],
+  nguyenWorkDebt: [{ personId: "lan", trustDelta: -1, text: "Every shift reduces the debt on one page and increases it on another." }],
+  nguyenLeaveWarehouse: [{ personId: "minh", trustDelta: 1, text: "We left together. That matters more than the bags still inside." }],
+  nguyenShelterFrance: [{ personId: "bao", trustDelta: 1, text: "The shelter writes our four names on one room card." }],
+  nguyenTruck: [{ personId: "minh", trustDelta: -1, text: "The driver locks the trailer from outside and calls that protection." }],
+  nguyenChannelCamp: [{ personId: "mai", trustDelta: 1, text: "Waiting gives us time to hear what the boat seller left out." }],
+  nguyenFranceProcess: [{ personId: "lan", trustDelta: 1, text: "Stopping in France does not restore the house, but it stops someone else choosing the next vehicle." }],
+  nguyenSmallBoat: [{ personId: "bao", trustDelta: -1, text: "The sea was colder than every warning, and the boat had no space left to sit." }],
+  nguyenLorry: [{ personId: "mai", trustDelta: -1, text: "The pounding outside was an officer opening the trailer, not the driver returning." }],
+  nguyenTellTruth: [{ personId: "mai", trustDelta: 1, text: "The interpreter writes down the job promise, the debt, the passports, and the threats as separate facts." }],
+  nguyenRepeatScript: [{ personId: "minh", trustDelta: -1, text: "The recruiter's story collapses when the officer asks where the supposed hotel is." }],
+  nguyenAvoidScreening: [{ personId: "bao", trustDelta: -1, text: "We reached Britain and immediately started hiding from every door." }],
+  nguyenLegalAdvice: [{ personId: "lan", trustDelta: 1, text: "The adviser separates trafficking support from the immigration decision. Neither is a promise." }],
+  nguyenCloseFeed: [{ personId: "bao", trustDelta: 1, text: "Turning off the video does not change the law, but it lets us sleep." }],
+  nguyenPostReply: [{ personId: "mai", trustDelta: -1, text: "They cropped out the debt ledger and kept our faces." }],
+  nguyenSafeguardingReview: [{ personId: "mai", trustDelta: 1, text: "For the first time, the interview begins with what happened to us instead of what the recruiter promised." }],
+  nguyenVoluntaryReturn: [{ personId: "minh", trustDelta: 1, text: "Returning together is not the future I bought, but it is a decision we make ourselves." }],
+  nguyenCashWork: [{ personId: "lan", trustDelta: -1, text: "The new employer knows our debt and our fear. That is how the first promise began." }],
+  punjabVerifyPermits: [{ personId: "neha", trustDelta: 1, text: "The official fee is written once. The agent's fee changes whenever we ask." }],
+  punjabLeaseField: [{ personId: "gurpreet", trustDelta: -1, text: "The field will be worked by someone else before any of us reaches Ireland." }],
+  punjabPayAgent: [{ personId: "arjun", trustDelta: -1, text: "The receipt names training, but nobody has shown us a classroom." }],
+  punjabWaitPortal: [{ personId: "neha", trustDelta: 1, text: "A real permit can be checked without the agent standing beside us." }],
+  punjabLocalWork: [{ personId: "gurpreet", trustDelta: 1, text: "The repair yard pays less than Ireland promised and more honestly than the recruiter." }],
+  punjabTakePDF: [{ personId: "simran", trustDelta: -1, text: "My PDF says food processing. The agent still tells my family I will work in care." }],
+  punjabPresentDocuments: [{ personId: "neha", trustDelta: 1, text: "We answer with the contracts we have, not the story the agent rehearsed." }],
+  punjabTouristStory: [{ personId: "arjun", trustDelta: -1, text: "The officer asks why tourists carry factory contracts and steel-toed boots." }],
+  punjabReportAgent: [{ personId: "simran", trustDelta: 1, text: "Losing a flight is not the same as losing our future." }],
+  punjabRegisterDublin: [{ personId: "neha", trustDelta: 1, text: "The registration record gives us a date that the agent cannot rewrite." }],
+  punjabAgentShuttle: [{ personId: "gurpreet", trustDelta: -1, text: "The driver collects passports before he gives us the housing address." }],
+  punjabCallEmployer: [{ personId: "simran", trustDelta: 1, text: "The named employer confirms the job, but not the extra fees or the crowded house." }],
+  punjabDocumentWork: [{ personId: "neha", trustDelta: 1, text: "A photograph of every roster makes it harder to erase our hours." }],
+  punjabAcceptDeductions: [{ personId: "arjun", trustDelta: -1, text: "The payslip subtracts transport, bedding, permits, and a fee nobody explained." }],
+  punjabLeaveHousing: [{ personId: "simran", trustDelta: 1, text: "Leaving the room does not mean surrendering the wages already earned." }],
+  punjabContactReactivation: [{ personId: "gurpreet", trustDelta: 1, text: "The adviser says falling out of status through exploitation is not the same as choosing to disappear." }],
+  punjabCashJobs: [{ personId: "neha", trustDelta: -1, text: "Every cash shift makes the old payslips harder to use and the new employer harder to leave." }],
+  punjabAgentTransfer: [{ personId: "arjun", trustDelta: -1, text: "The replacement company exists only as a logo on the agent's phone." }],
+  punjabLegalAdvice: [{ personId: "neha", trustDelta: 1, text: "Workplace rights, immigration permission, and the permit application are three different files." }],
+  punjabCloseFeed: [{ personId: "simran", trustDelta: 1, text: "The video wants panic. The appointment letter asks for documents." }],
+  punjabReplyVideo: [{ personId: "gurpreet", trustDelta: -1, text: "They turn four workers into a photograph for strangers to punish." }],
+  punjabReactivationReview: [{ personId: "gurpreet", trustDelta: 1, text: "The new application is not a guarantee, but this time the permit belongs in our hands." }],
+  punjabVoluntaryReturn: [{ personId: "simran", trustDelta: 1, text: "Returning does not make the recruiter honest. It gives us a safer place to challenge the debt." }],
+  punjabHiddenWork: [{ personId: "neha", trustDelta: -1, text: "The new boss knows our permission has expired before he asks our names." }],
+};
+
+const STORY_THREAD_UPDATES = {
+  leaveDawn: [{ id: "homeLight", title: "The porch light", status: "active", summary: "The family left without saying when they would return." }],
+  safeHouse: [{ id: "shelterNetwork", title: "The verified shelter list", status: "active", summary: "A volunteer recorded every name and shared verified contacts." }],
+  collectPapers: [{ id: "landEvidence", title: "Proof of home", status: "active", summary: "The land deed and school records survived the departure." }],
+  hireCoyote: [{ id: "coyotePromise", title: "The coyote's promise", status: "active", summary: "Most of the land money was exchanged for an unverified promise." }],
+  callShelter: [{ id: "coyotePromise", title: "The coyote's promise", status: "setback", requiresThread: "coyotePromise", summary: "The paid guide vanished; a verified shelter helped the family leave together." }],
+  walkTown: [{ id: "coyotePromise", title: "The coyote's promise", status: "setback", requiresThread: "coyotePromise", summary: "The family abandoned the paid route and walked toward town." }],
+  replacementDriver: [{ id: "coyotePromise", title: "The coyote's promise", status: "setback", requiresThread: "coyotePromise", summary: "A second driver demanded separation and kept more of the family's money." }],
+  handCash: [{ id: "emergencyMoney", title: "Aurelia's emergency bills", status: "active", summary: "Aurelia kept a small amount of cash hidden inside her skirt." }],
+  offerPhone: [{ id: "lostContacts", title: "The lost phone", status: "setback", summary: "Contact numbers, document photographs, and the offline shelter map were stolen." }],
+  stayShelter: [
+    { id: "shelterNetwork", title: "The verified shelter list", status: "resolved", requiresThread: "shelterNetwork", summary: "The list led to a locked room, medical care, and a legal clinic." },
+    { id: "lostContacts", title: "The lost phone", status: "resolved", requiresThread: "lostContacts", summary: "Shelter volunteers helped rebuild the contact list and restore phone access." },
+    { id: "legalPacket", title: "The dry legal folder", status: "active", summary: "A lawyer organized the deed, school records, and threat evidence." },
+  ],
+  communityChildcare: [{ id: "communityFavor", title: "The community-center favor", status: "active", summary: "Marisol helped with childcare while other parents attended appointments." }],
+  rentWhileWaiting: [{ id: "emergencyMoney", title: "Aurelia's emergency bills", status: "resolved", requiresThread: "emergencyMoney", summary: "The hidden bills helped keep one locked room during the long delay." }],
+  waitForShelterVan: [{ id: "communityFavor", title: "The community-center favor", status: "resolved", requiresThread: "communityFavor", summary: "A known contact confirmed the shelter pickup before the family boarded." }],
+  callLegalAid: [{ id: "legalAdvice", title: "Verified legal advice", status: "active", summary: "A lawyer separated policy, rumor, and the possible border outcomes." }],
+  officialAppointment: [{ id: "legalAdvice", title: "Verified legal advice", status: "active", requiresThread: "legalAdvice", summary: "The earlier call helped the family prepare for processing and detention risk." }],
+  boardOverloaded: [{ id: "danielaMemory", title: "Daniela's name", status: "active", summary: "Daniela died during the river crossing. Her name remains with the family." }],
+  lightCandle: [{ id: "danielaMemory", title: "Daniela's name", status: "active", requiresThread: "danielaMemory", summary: "The family made space for memories of Daniela beyond the crossing." }],
+  recordName: [{ id: "danielaMemory", title: "Daniela's name", status: "active", requiresThread: "danielaMemory", summary: "Family tracing recorded Daniela's name and issued a case number." }],
+  requestLawyer: [
+    { id: "landEvidence", title: "Proof of home", status: "resolved", requiresThread: "landEvidence", summary: "The deed and school records supported the family's timeline." },
+    { id: "legalPacket", title: "The dry legal folder", status: "resolved", requiresThread: "legalPacket", summary: "The organized evidence helped the lawyer begin the case." },
+    { id: "legalAdvice", title: "Verified legal advice", status: "resolved", requiresThread: "legalAdvice", summary: "The family recognized the process and asked for counsel." },
+  ],
+  haddadNeighborConvoy: [{ id: "apartmentKey", title: "The apartment key", status: "active", summary: "Mariam carries the key to a damaged home the family cannot safely remain in." }],
+  haddadWaitForUncle: [{ id: "receptionContact", title: "The reception-center message", status: "active", summary: "Nadia's brother shared the name of a humanitarian reception center." }],
+  haddadFirstBroker: [{ id: "brokerDebt", title: "The broker's changing price", status: "setback", summary: "The first payment bought a new demand instead of a clear route." }],
+  haddadRegisterTurkey: [{ id: "temporaryPapers", title: "Temporary protection papers", status: "active", summary: "The family's names and medical needs are recorded in Türkiye." }],
+  haddadRepairWork: [{ id: "verifiedWages", title: "The posted wage", status: "active", summary: "A written rate and Kareem's skill produced money the family can account for." }],
+  haddadBorrowForBoat: [{ id: "familyDebt", title: "Money borrowed from three homes", status: "active", summary: "Relatives sacrificed rent and savings to finance the next leg." }],
+  haddadOverloadedBoat: [{ id: "mariamMemory", title: "Mariam's key", status: "active", summary: "Mariam died during the crossing. Her brass apartment key remains in the document folder." }],
+  haddadRecordMariam: [{ id: "mariamMemory", title: "Mariam's key", status: "active", requiresThread: "mariamMemory", summary: "Family tracing records Mariam's name, asthma, drawings, and brass key." }],
+  haddadGreekRegistration: [{ id: "greekRegistration", title: "The island registration paper", status: "active", summary: "The family's arrival and names are recorded together." }],
+  haddadVerifyRules: [{ id: "germanLegalAdvice", title: "The written registration address", status: "active", summary: "A legal volunteer separated a viral slogan from the official process." }],
+  haddadRegisterGermany: [
+    { id: "apartmentKey", title: "The apartment key", status: "active", requiresThread: "apartmentKey", summary: "The key reaches Germany even though it no longer opens a safe home." },
+    { id: "temporaryPapers", title: "Temporary protection papers", status: "resolved", requiresThread: "temporaryPapers", summary: "The earlier record helps establish names, dates, and medical needs." },
+    { id: "greekRegistration", title: "The island registration paper", status: "resolved", requiresThread: "greekRegistration", summary: "The transit record helps the legal clinic reconstruct the route." },
+    { id: "germanLegalAdvice", title: "The written registration address", status: "resolved", requiresThread: "germanLegalAdvice", summary: "The family reaches the correct office before the intake window closes." },
+  ],
+  diopVerifyOffice: [{ id: "verifiedWarning", title: "The counselor's warning", status: "active", summary: "A migration counselor documented that the recruiter could not guarantee work, papers, or a safe crossing." }],
+  diopSellMotorbike: [{ id: "repairKey", title: "The repair-stall key", status: "active", summary: "Ibrahima sold the motorcycle that anchored his repair work but kept the stall key." }],
+  diopPayRecruiter: [{ id: "recruiterPromise", title: "The recruiter's voice note", status: "setback", summary: "A large payment bought a location pin and another demand for money." }],
+  diopRepairShift: [{ id: "postedWage", title: "The posted repair wage", status: "active", summary: "A Dakar cooperative paid the amount written on its board." }],
+  diopLicensedCoach: [{ id: "groupTickets", title: "Four named tickets", status: "active", summary: "The group kept four receipts and crossed through the declared checkpoint together." }],
+  diopForecastWait: [{ id: "weatherAdvice", title: "The written marine forecast", status: "active", summary: "Mamadou copied the forecast even though no prediction could make the crossing safe." }],
+  diopSmallerPirogue: [{ id: "lamineNotebook", title: "Lamine's blue notebook", status: "active", summary: "Lamine died after the pirogue overturned. His school notebook was recovered inside a sealed bag." }],
+  diopNightPirogue: [{ id: "lamineNotebook", title: "Lamine's blue notebook", status: "active", summary: "Lamine died after the overloaded pirogue overturned. His school notebook was recovered inside a sealed bag." }],
+  diopRecordLamine: [{ id: "lamineNotebook", title: "Lamine's blue notebook", status: "active", requiresThread: "lamineNotebook", summary: "The rescue record preserves Lamine's name, age, school, and the notebook he carried." }],
+  diopRegisterArrival: [{ id: "arrivalRecord", title: "The arrival interview", status: "active", summary: "An interpreter recorded the three survivors, their route, and Lamine's death." }],
+  diopVerifySpainRules: [{ id: "spainLegalAdvice", title: "The free legal appointment", status: "active", summary: "A legal worker explained that landing in Spain does not itself grant asylum, residence, or work authorization." }],
+  diopLegalReview: [
+    { id: "groupTickets", title: "Four named tickets", status: "resolved", requiresThread: "groupTickets", summary: "The coach receipts help reconstruct the route without relying on the broker's story." },
+    { id: "arrivalRecord", title: "The arrival interview", status: "resolved", requiresThread: "arrivalRecord", summary: "The intake record keeps the survivors' account and Lamine's name together." },
+    { id: "spainLegalAdvice", title: "The free legal appointment", status: "resolved", requiresThread: "spainLegalAdvice", summary: "The group reaches the official review without paying an appointment broker." },
+  ],
+  nguyenVerifyOffer: [{ id: "recruitmentWarning", title: "The recruitment warning", status: "active", summary: "An official checklist records that the offer has no named employer, valid work visa, or enforceable wage." }],
+  nguyenSignLoan: [{ id: "homeCollateral", title: "The family-home collateral", status: "active", summary: "The lender holds the original home papers; Lan keeps photographs of every signed page." }],
+  nguyenPayRecruiter: [{ id: "recruiterDebt", title: "The recruiter's changing debt", status: "setback", summary: "A consulting receipt replaces the promised job contract, and new travel fees begin immediately." }],
+  nguyenDemandContract: [{ id: "falseContract", title: "The unverifiable contract", status: "active", summary: "Mai saves the document and the British company number that does not match its supposed employer." }],
+  nguyenKeepPassports: [{ id: "documentCopies", title: "Copies kept apart", status: "active", summary: "The family keeps its passports and stores encrypted copies with a relative at home." }],
+  nguyenCallHotline: [{ id: "exploitationRecord", title: "The trafficking-service call", status: "active", summary: "A counselor records the debt, threats, withheld documents, and location without promising immigration status." }],
+  nguyenReportThreats: [{ id: "maiStatement", title: "Mai's confidential statement", status: "active", summary: "A specialist advocate records the sexual threats and workplace coercion without graphic detail." }],
+  nguyenWorkDebt: [{ id: "laborDebt", title: "The warehouse debt ledger", status: "setback", summary: "Unpaid shifts are recorded as deductions while invented housing and transport charges keep growing." }],
+  nguyenShelterFrance: [{ id: "franceReferral", title: "The French shelter referral", status: "active", summary: "A recognized organization records the family together and explains protection options in France." }],
+  nguyenSmallBoat: [{ id: "channelRescue", title: "The Channel rescue record", status: "active", summary: "The rescue record lists all four family members and the medical treatment provided after the crossing." }],
+  nguyenLorry: [{ id: "lorryInterception", title: "The sealed-trailer record", status: "active", summary: "Border officials record the family together after opening the trailer and providing medical checks." }],
+  nguyenTellTruth: [{ id: "traffickingDisclosure", title: "The first truthful screening", status: "active", summary: "The family discloses the recruitment debt, document control, forced work, and threats with an interpreter." }],
+  nguyenLegalAdvice: [{ id: "ukLegalAdvice", title: "Independent UK legal advice", status: "active", summary: "A regulated adviser explains that trafficking identification, asylum, immigration status, and return are separate decisions." }],
+  nguyenSafeguardingReview: [
+    { id: "recruitmentWarning", title: "The recruitment warning", status: "resolved", requiresThread: "recruitmentWarning", summary: "The early checklist supports the timeline of deception before departure." },
+    { id: "exploitationRecord", title: "The trafficking-service call", status: "resolved", requiresThread: "exploitationRecord", summary: "The earlier call helps corroborate the account of coercion in transit." },
+    { id: "traffickingDisclosure", title: "The first truthful screening", status: "resolved", requiresThread: "traffickingDisclosure", summary: "The screening record keeps the four accounts connected without treating them as identical." },
+    { id: "ukLegalAdvice", title: "Independent UK legal advice", status: "resolved", requiresThread: "ukLegalAdvice", summary: "The family enters review knowing that support and immigration outcomes remain uncertain." },
+  ],
+  punjabVerifyPermits: [{ id: "permitCheck", title: "The official permit check", status: "active", summary: "The group records the genuine application IDs, official fee, named employer, and mismatches in the agent's promises." }],
+  punjabLeaseField: [{ id: "fieldLease", title: "The leased family field", status: "active", summary: "Gurpreet's household leases part of its field for three years to finance recruitment charges." }],
+  punjabPayAgent: [{ id: "agentFees", title: "The placement-fee receipts", status: "setback", summary: "Large payments are labeled as training and consulting rather than employment-permit charges." }],
+  punjabWaitPortal: [{ id: "permitOriginals", title: "Four verified permit records", status: "active", summary: "The official portal shows each named employer, occupation, salary, and application status before departure." }],
+  punjabTakePDF: [{ id: "permitScreenshots", title: "The agent's permit PDFs", status: "setback", summary: "The group travels with screenshots whose job descriptions and dates do not match the promises at home." }],
+  punjabPresentDocuments: [{ id: "truthfulDeparture", title: "The truthful departure interview", status: "active", summary: "The group presents its actual purpose of travel and preserves the questions asked before boarding." }],
+  punjabRegisterDublin: [{ id: "irishRegistration", title: "The Irish registration records", status: "active", summary: "The four workers register their residence permissions and keep dated copies outside employer housing." }],
+  punjabDocumentWork: [{ id: "workRecords", title: "The copied rosters and payslips", status: "active", summary: "Neha preserves hours, deductions, housing charges, and the wages actually received." }],
+  punjabAcceptDeductions: [{ id: "housingDeductions", title: "The employer-controlled deductions", status: "setback", summary: "Pay slips show permit, transport, bedding, and housing charges deducted without clear agreement." }],
+  punjabContactReactivation: [{ id: "reactivationAdvice", title: "The reactivation eligibility letter", status: "active", summary: "An adviser records that the group entered on permits and fell out of the system after exploitation and dismissal." }],
+  punjabCashJobs: [{ id: "cashWork", title: "The unrecorded cash shifts", status: "setback", summary: "The group takes unauthorized work without payslips while its immigration permission becomes less secure." }],
+  punjabLegalAdvice: [{ id: "irelandLegalAdvice", title: "Independent Irish legal advice", status: "active", summary: "The adviser separates wage claims, temporary immigration permission, and reactivation-permit applications." }],
+  punjabReactivationReview: [
+    { id: "permitCheck", title: "The official permit check", status: "resolved", requiresThread: "permitCheck", summary: "The early verification shows what the recruiter knew before the group left India." },
+    { id: "irishRegistration", title: "The Irish registration records", status: "resolved", requiresThread: "irishRegistration", summary: "The dated registration copies establish that the group originally entered the labor market lawfully." },
+    { id: "workRecords", title: "The copied rosters and payslips", status: "resolved", requiresThread: "workRecords", summary: "The saved records support the account of unpaid hours and prohibited deductions." },
+    { id: "reactivationAdvice", title: "The reactivation eligibility letter", status: "resolved", requiresThread: "reactivationAdvice", summary: "The group reaches the correct temporary-permission and employment-permit process." },
+    { id: "irelandLegalAdvice", title: "Independent Irish legal advice", status: "resolved", requiresThread: "irelandLegalAdvice", summary: "Each worker receives advice about an individual application rather than a group guarantee." },
+  ],
+};
+
+const sources = {
+  honduras: {
+    label: "UNHCR: forced displacement and land loss in Honduras",
+    url: "https://www.unhcr.org/us/news/stories/gangs-drive-hondurans-their-homes-and-land",
+  },
+  routes: {
+    label: "IOM: risks on Central America-Mexico migration routes",
+    url: "https://publications.iom.int/books/risks-and-protection-through-most-dangerous-zones-along-transit-migration-routes-central",
+  },
+  smugglers: {
+    label: "IOM/WFP: adverse drivers and use of smugglers in Northern Central America",
+    url: "https://publications.iom.int/system/files/pdf/WFP-IOM-El-Salvador-Guatemala-Honduras.pdf",
+  },
+  gbv: {
+    label: "UNHCR/HIAS: gender-based violence during forced displacement",
+    url: "https://www.unhcr.org/asia/news/joint-press-release-forcibly-displaced-women-high-risk-gender-based-violence-latin-america",
+  },
+  policy: {
+    label: "White House: January 2025 immigration enforcement order",
+    url: "https://www.whitehouse.gov/presidential-actions/2025/01/protecting-the-american-people-against-invasion/",
+  },
+  missing: {
+    label: "IOM Missing Migrants: deaths and disappearances in the Americas",
+    url: "https://missingmigrants.iom.int/",
+  },
+  syria: {
+    label: "UNHCR: large-scale returns coexist with displacement, damaged homes, and persistent humanitarian need",
+    url: "https://www.unhcr.org/sites/default/files/2026-04/unhcr-syria-operational-update-march.pdf",
+  },
+  turkeyProtection: {
+    label: "UNHCR Türkiye: Syrian registration is handled by migration authorities and assessed individually",
+    url: "https://help.unhcr.org/turkiye/information-for-syrians/reception-and-registration-with-the-turkish-authorities/",
+  },
+  mediterranean: {
+    label: "UNHCR: sea crossings carry risks of exploitation, pushbacks, and shipwreck",
+    url: "https://www.unhcr.org/europe/publications/sea-arrivals-overview-europe-region-august-2025",
+  },
+  europeBorders: {
+    label: "UNHCR: border restrictions can drive refugees toward more dangerous routes",
+    url: "https://www.unhcr.org/us/news/news-releases/refugees-and-migrants-face-heightened-risks-while-trying-reach-europe-unhcr",
+  },
+  europeAsylum: {
+    label: "EUAA: current protection needs for Syrians require an individual assessment",
+    url: "https://www.euaa.europa.eu/country-guidance-syria",
+  },
+  senegalAtlantic: {
+    label: "IOM: departures from Senegal toward the Canary Islands remain active",
+    url: "https://dtm.iom.int/reports/senegal-monitoring-departure-areas-movements-canary-islands-december-2025-january-2026",
+  },
+  atlanticRisk: {
+    label: "IOM: the West African Atlantic route recorded shipwrecks, deaths, and disappearances in 2025",
+    url: "https://dtm.iom.int/reports/west-and-central-africa-irregular-migration-routes-europe-western-african-atlantic-route-9",
+  },
+  spainAsylum: {
+    label: "UNHCR Spain: arrival and asylum are separate legal processes",
+    url: "https://help.unhcr.org/spain/en/topics/asylum/",
+  },
+  spainReception: {
+    label: "Spain's Ministry of Inclusion: state reception and transfers from the Canary Islands",
+    url: "https://www.inclusion.gob.es/documents/20121/0/20260205%2BNdP-balance-SistemaAcogidaEstatal_2025.pdf/b7042be5-bd3e-55bd-53aa-fa9228ad3a11",
+  },
+  vietnamRecruitment: {
+    label: "ILO: high recruitment fees can create debt bondage and trafficking risk",
+    url: "https://www.ilo.org/projects-and-partnerships/projects/first-fair-international-recruitment-against-slavery-and-trafficking",
+  },
+  vietnamTrafficking: {
+    label: "UK Home Office: Vietnamese adults and children can face trafficking and labor exploitation",
+    url: "https://www.gov.uk/government/publications/vietnam-country-policy-and-information-notes/country-policy-and-information-note-trafficking-vietnam-february-2025-accessible",
+  },
+  vietnamRoute: {
+    label: "IOM: research on deception, debt, and transit routes used by Vietnamese migrants to the UK",
+    url: "https://www.iom.int/sites/g/files/tmzbdl486/files/documents/between-two-fires-report-ct-2019.pdf",
+  },
+  ukVietnamReturns: {
+    label: "UK government: the UK and Vietnam expanded cooperation on irregular migration and returns in 2025",
+    url: "https://www.gov.uk/government/news/vietnamese-migrants-with-no-right-to-be-here-will-be-fast-tracked-out-of-the-uk-under-tough-new-migration-agreement",
+  },
+  irelandPermits: {
+    label: "Ireland DETE: employment permits require a signed contract and verifiable application",
+    url: "https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/employment-permits/",
+  },
+  irelandMigrantRights: {
+    label: "Ireland DETE: migrant workers have written-contract, wage, and permit-fee protections",
+    url: "https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/economic-migration-policy/protection-of-migrant-workers.html",
+  },
+  irelandReactivation: {
+    label: "Ireland DETE: exploited workers who fall out of the permit system may qualify for a Reactivation Employment Permit",
+    url: "https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/employment-permits/permit-types/reactivation-employment-permit/",
+  },
+  irelandWorkerRights: {
+    label: "Ireland WRC: people working without valid permission are especially vulnerable to exploitation",
+    url: "https://workplacerelations.ie/en/what_you_should_know/coming_to_work_in_ireland/",
+  },
+  irelandReturns: {
+    label: "Ireland Immigration Service: voluntary return and deportation are different processes",
+    url: "https://www.irishimmigration.ie/voluntary-returns/",
+  },
+  irelandDeportations: {
+    label: "Ireland Department of Justice: chartered deportation flights resumed in 2025",
+    url: "https://www.gov.ie/en/department-of-justice-home-affairs-and-migration/news/chartered-deportation-flights-recommence/",
+  },
+};
+
+export const ROADSIDE_OPPORTUNITIES = {
+  guideOffer: {
+    id: "terminalCafe",
+    eyebrow: "Work between departures",
+    title: "A bus-station café needs help",
+    copy: "The owner offers Marisol a short shift and lets the family wait together near the kitchen. The next bus may leave before the work is finished.",
+    choices: [
+      {
+        id: "washDishes",
+        title: "Wash dishes until noon",
+        hint: "Earn $55 and share the staff meal",
+        tone: "trusted",
+        days: 1,
+        effects: { cash: 55, supplies: 1, stress: 3, people: { marisol: -2 } },
+        consequence: "Cash +$55 · Food +1 day · One day passes",
+        outcomeTitle: "The last pot is stacked before closing",
+        outcome: "The owner pays the amount promised and wraps rice and beans for the road. Marisol's hands ache from the hot water.",
+      },
+      {
+        id: "packBread",
+        title: "Pack bread for the morning buses",
+        hint: "Take less cash and more food",
+        tone: "uncertain",
+        days: 1,
+        effects: { cash: 30, supplies: 2, stress: 1, people: { marisol: -1 } },
+        consequence: "Cash +$30 · Food +2 days · One day passes",
+        outcomeTitle: "The family leaves with a paper sack",
+        outcome: "The pay is small, but the owner adds yesterday's bread and fruit that would otherwise be discarded.",
+      },
+    ],
+  },
+  blueDoorShelter: {
+    id: "shelterExchange",
+    eyebrow: "Shelter work exchange",
+    title: "The blue-door shelter needs another pair of hands",
+    copy: "Nobody is required to work for a bed. The coordinator offers extra supplies in exchange for an optional shift while the family rests.",
+    choices: [
+      {
+        id: "cookDinner",
+        title: "Cook the evening meal",
+        hint: "Aurelia helps feed forty people",
+        tone: "trusted",
+        days: 1,
+        effects: { supplies: 2, water: 3, stress: -5, trustAll: 1, people: { aurelia: -1 } },
+        consequence: "Food +2 days · Water +3 L · Cohesion rises",
+        outcomeTitle: "Aurelia stretches one pot into forty bowls",
+        outcome: "Other families wash the dishes. The coordinator packs dry food for the Ramírez family and refuses to call the exchange a debt.",
+        skillBonus: {
+          personId: "aurelia",
+          skill: "Cooking",
+          label: "Aurelia's cooking stretches the donated food",
+          effects: { supplies: 1, stress: -2 },
+        },
+      },
+      {
+        id: "mendClothes",
+        title: "Mend donated clothing",
+        hint: "Earn a small stipend in a quiet room",
+        tone: "trusted",
+        days: 1,
+        effects: { cash: 40, stress: -3, battery: 18, people: { marisol: -1 } },
+        consequence: "Cash +$40 · Phone +18% · Stress -3",
+        outcomeTitle: "Torn sleeves become usable again",
+        outcome: "Marisol works beside two other mothers while the phone charges from a wall outlet. The shelter pays a small, posted stipend.",
+      },
+    ],
+  },
+  transport: {
+    id: "dayLaborCorner",
+    eyebrow: "One-day labor",
+    title: "Two crews are hiring near the station",
+    copy: "A worker center posts a modest wage for cleanup. An unknown driver promises almost twice as much cash but will not name the employer.",
+    choices: [
+      {
+        id: "workerCenterShift",
+        title: "Take the posted cleanup shift",
+        hint: "Lower pay through a verified worker center",
+        tone: "trusted",
+        days: 1,
+        effects: { cash: 75, water: -2, stress: 2, exposure: -2, people: { marisol: -3 } },
+        consequence: "Cash +$75 · Water -2 L · Marisol health -3",
+        outcomeTitle: "The wage envelope matches the notice",
+        outcome: "The work is tiring and the pay is modest. A coordinator records the hours and makes sure everyone is paid before the van leaves.",
+      },
+      {
+        id: "unknownCrew",
+        title: "Take the unknown driver's offer",
+        hint: "Higher promised wage, no written terms",
+        tone: "danger",
+        days: 1,
+        effects: { cash: 65, water: -3, stress: 10, exposure: 10, people: { marisol: -5 } },
+        consequence: "Only half the promised wage · Stress +10 · Risk +10",
+        outcomeTitle: "The driver returns with half the promised pay",
+        outcome: "After ten hours of cleaning a warehouse, the crew is told the rest was taken for transport. Nobody was given an employer's name or receipt.",
+      },
+    ],
+  },
+  policyNews: {
+    id: "clinicPaperwork",
+    eyebrow: "Waiting-room notice",
+    title: "The legal clinic has a paid paperwork shift",
+    copy: "Marisol's teaching experience is useful. The clinic needs someone to copy appointment lists clearly and help organize translated information sheets.",
+    choices: [
+      {
+        id: "copyForms",
+        title: "Copy and organize forms",
+        hint: "Earn a stipend and hear verified information",
+        tone: "trusted",
+        days: 1,
+        effects: { cash: 45, battery: 12, stress: -4, exposure: -4, people: { marisol: -1 } },
+        consequence: "Cash +$45 · Phone +12% · Risk -4",
+        outcomeTitle: "Every name is copied twice",
+        outcome: "The stipend is small, but Marisol leaves with a charged phone and a clearer explanation of which notices are official.",
+        skillBonus: {
+          personId: "marisol",
+          skill: "Former teacher",
+          label: "Marisol's classroom experience makes the work faster",
+          effects: { cash: 15, exposure: -2 },
+        },
+      },
+      {
+        id: "nightFoodStall",
+        title: "Wash dishes at a night stall",
+        hint: "Earn more cash, lose sleep",
+        tone: "uncertain",
+        days: 1,
+        effects: { cash: 80, supplies: 1, stress: 6, people: { marisol: -4 } },
+        consequence: "Cash +$80 · Food +1 day · Stress +6",
+        outcomeTitle: "The stall closes long after midnight",
+        outcome: "The owner pays in cash and includes a meal. Marisol sleeps for two hours before the waiting room opens again.",
+      },
+    ],
+  },
+  waitingTown: {
+    id: "waitingTownWork",
+    eyebrow: "Work while the buses are stalled",
+    title: "The market cooperative has two short shifts",
+    copy: "Travel north has slowed, but rent and food have not. A cooperative offers posted terms while a community center needs help with younger children.",
+    choices: [
+      {
+        id: "labelProduce",
+        title: "Label produce crates",
+        hint: "Earn cash and take home unsold fruit",
+        tone: "trusted",
+        days: 1,
+        effects: { cash: 60, supplies: 1, stress: 2, people: { marisol: -2 } },
+        consequence: "Cash +$60 · Food +1 day · Marisol health -2",
+        outcomeTitle: "The cooperative pays before the gates close",
+        outcome: "Marisol writes prices and destinations on boxes. The supervisor pays the posted wage and adds bruised fruit that cannot be shipped.",
+      },
+      {
+        id: "communityChildcare",
+        title: "Help at the community playroom",
+        hint: "A smaller stipend and a calmer day",
+        tone: "trusted",
+        days: 1,
+        effects: { cash: 35, stress: -4, trustAll: 1, people: { marisol: -1 } },
+        consequence: "Cash +$35 · Stress -4 · Cohesion rises",
+        outcomeTitle: "For one afternoon, the children only play",
+        outcome: "Marisol reads aloud while parents attend legal appointments. Daniela draws their old house with the porch light still on.",
+        setFlags: { communityFavor: true },
+      },
+    ],
+  },
+  northernWait: {
+    id: "northernWaitWork",
+    eyebrow: "Work during the long wait",
+    title: "The shelter board lists temporary work",
+    copy: "The appointment queue may take weeks. The family can use one day for paid laundry work or sort donations in exchange for supplies.",
+    choices: [
+      {
+        id: "cooperativeLaundry",
+        title: "Join the laundry cooperative",
+        hint: "Earn cash through a group with posted wages",
+        tone: "trusted",
+        days: 1,
+        effects: { cash: 95, water: -2, stress: 3, people: { marisol: -3, aurelia: -2 } },
+        consequence: "Cash +$95 · Water -2 L · Health falls slightly",
+        outcomeTitle: "Every worker signs the payment sheet",
+        outcome: "The shift is hot and repetitive, but the cooperative pays everyone the same rate before they leave.",
+      },
+      {
+        id: "sortDonations",
+        title: "Sort shelter donations",
+        hint: "Receive supplies and charge the phone",
+        tone: "trusted",
+        days: 1,
+        effects: { supplies: 2, battery: 22, stress: -3, people: { aurelia: -1 } },
+        consequence: "Food +2 days · Phone +22% · Stress -3",
+        outcomeTitle: "A shelf becomes a small storehouse",
+        outcome: "Aurelia sorts sizes and dates while the phone charges. The coordinator offers supplies without deducting them from anyone else's share.",
+      },
+    ],
+  },
+  borderCity: {
+    id: "borderShelterWork",
+    eyebrow: "Last money before the decision",
+    title: "The shelter posts two short shifts",
+    copy: "The family can delay one day to rebuild supplies. Neither job changes their legal options or guarantees what happens next.",
+    choices: [
+      {
+        id: "pantryInventory",
+        title: "Count and sort pantry boxes",
+        hint: "Receive food and medicine instead of cash",
+        tone: "trusted",
+        days: 1,
+        effects: { supplies: 2, medicine: 1, stress: -3, people: { aurelia: -1 } },
+        consequence: "Food +2 days · Medicine +1 · Stress -3",
+        outcomeTitle: "The coordinator sets aside an inhaler refill",
+        outcome: "Aurelia checks dates and sorts boxes. The shelter offers food for the family and replaces one of Daniela's medicine doses.",
+      },
+      {
+        id: "motelLaundry",
+        title: "Fold laundry at a nearby motel",
+        hint: "Earn cash before the next decision",
+        tone: "uncertain",
+        days: 1,
+        effects: { cash: 85, stress: 4, exposure: 3, people: { marisol: -3, aurelia: -2 } },
+        consequence: "Cash +$85 · Stress +4 · Risk +3",
+        outcomeTitle: "The manager pays at the end of the shift",
+        outcome: "Marisol and Aurelia return after dark with sore backs and enough cash for several meals. The border decision is still waiting.",
+      },
+    ],
+  },
+  diopDakar: {
+    id: "diopDakarWork",
+    eyebrow: "Work before the road north",
+    title: "A cooperative posts two one-day shifts",
+    copy: "The wages are modest and written on a chalkboard. Taking either shift delays the group without changing what the recruiter promised.",
+    choices: [
+      {
+        id: "diopRepairBikes",
+        title: "Repair delivery motorcycles",
+        hint: "Use Ibrahima's trade for a posted wage",
+        tone: "trusted",
+        days: 1,
+        effects: { cash: 110, battery: 14, stress: -2, people: { ibrahima: -2 } },
+        consequence: "Cash +$110 · Phone +14% · Ibrahima health -2",
+        outcomeTitle: "Three engines start before sunset",
+        outcome: "The cooperative pays the posted amount and lets the group charge their phone. Ibrahima leaves with grease under his nails and cash he can account for.",
+        skillBonus: {
+          personId: "ibrahima",
+          skill: "Motorcycle repair",
+          label: "Ibrahima diagnoses the electrical faults quickly",
+          effects: { cash: 35, stress: -2 },
+        },
+      },
+      {
+        id: "diopUnloadIce",
+        title: "Unload ice for the fish market",
+        hint: "Earn more food but lose strength",
+        tone: "uncertain",
+        days: 1,
+        effects: { cash: 65, supplies: 2, water: -2, people: { mamadou: -3, cheikh: -3 } },
+        consequence: "Cash +$65 · Food +2 days · Health falls slightly",
+        outcomeTitle: "The last insulated box reaches the stall",
+        outcome: "The wholesaler pays less cash than the repair shop but adds rice, bread, and canned fish for the road.",
+      },
+    ],
+  },
+  diopNouakchott: {
+    id: "diopNouakchottWork",
+    eyebrow: "Work while the operator delays",
+    title: "The boatyard needs repairs before the tide changes",
+    copy: "A foreman offers a posted rate for welding. Another crew offers fast cash for cleaning fuel drums without protective equipment.",
+    choices: [
+      {
+        id: "diopWeldGate",
+        title: "Weld the boatyard gate",
+        hint: "Use Cheikh's apprenticeship for verified pay",
+        tone: "trusted",
+        days: 1,
+        effects: { cash: 130, supplies: 1, stress: 2, people: { cheikh: -3 } },
+        consequence: "Cash +$130 · Food +1 day · Cheikh health -3",
+        outcomeTitle: "The foreman signs the wage slip",
+        outcome: "Cheikh works under an experienced welder and is paid in front of the rest of the crew. The foreman adds a meal for all four relatives.",
+        skillBonus: {
+          personId: "cheikh",
+          skill: "Welding",
+          label: "Cheikh's apprenticeship reduces the repair time",
+          effects: { cash: 35, stress: -2 },
+        },
+      },
+      {
+        id: "diopCleanDrums",
+        title: "Clean fuel drums overnight",
+        hint: "Higher cash, unsafe conditions, no written terms",
+        tone: "danger",
+        days: 1,
+        effects: { cash: 170, water: -3, stress: 9, exposure: 8, people: { ibrahima: -5, mamadou: -5, cheikh: -5 } },
+        consequence: "Cash +$170 · Stress +9 · Health -5 for the older three",
+        outcomeTitle: "The crew is paid after arguing at dawn",
+        outcome: "The work happens without masks or written terms. The supervisor withholds part of the promised wage for transport.",
+      },
+    ],
+  },
+  nguyenRecruiter: {
+    id: "nguyenCityWork",
+    eyebrow: "Work before departure",
+    title: "Two cooperatives post one-day shifts",
+    copy: "The recruiter calls every delay a lost opportunity. The posted jobs offer smaller, accountable wages and keep the family together.",
+    choices: [
+      {
+        id: "nguyenRepairScooters",
+        title: "Repair delivery scooters",
+        hint: "Use Minh's trade for a written daily rate",
+        tone: "trusted",
+        days: 1,
+        effects: { cash: 125, battery: 16, stress: -2, people: { minh: -3 } },
+        consequence: "Cash +$125 · Phone +16% · Minh health -3",
+        outcomeTitle: "The workshop pays beside the time sheet",
+        outcome: "Minh repairs two ignition systems while the family charges its phones. The supervisor pays the posted amount without asking for travel documents.",
+        skillBonus: {
+          personId: "minh",
+          skill: "Engine repair",
+          label: "Minh's repair experience earns a completion bonus",
+          effects: { cash: 35, stress: -2 },
+        },
+      },
+      {
+        id: "nguyenSewUniforms",
+        title: "Finish a uniform order",
+        hint: "Lan and Mai take a measured, documented shift",
+        tone: "trusted",
+        days: 1,
+        effects: { cash: 95, supplies: 1, stress: 1, people: { lan: -3, mai: -2 } },
+        consequence: "Cash +$95 · Food +1 day · Lan and Mai tire",
+        outcomeTitle: "Every finished bundle receives a count",
+        outcome: "The cooperative records each bundle, pays the written rate, and adds a meal for all four travelers.",
+        skillBonus: {
+          personId: "lan",
+          skill: "Garment sewing",
+          label: "Lan's sewing experience prevents rejected work",
+          effects: { cash: 25, people: { lan: 1 } },
+        },
+      },
+    ],
+  },
+  nguyenSafeHouse: {
+    id: "nguyenTransitWork",
+    eyebrow: "A debt disguised as work",
+    title: "The warehouse offers two ways to earn food",
+    copy: "The supervisor calls both jobs voluntary, but keeps the exit key and changes the deductions. Taking either shift does not make the debt legitimate.",
+    choices: [
+      {
+        id: "nguyenInventoryShift",
+        title: "Record warehouse inventory together",
+        hint: "Use Mai's bookkeeping while preserving a copy of the hours",
+        tone: "uncertain",
+        days: 1,
+        effects: { cash: 45, supplies: 2, stress: 7, people: { mai: -3, minh: -2 } },
+        consequence: "Cash +$45 · Food +2 days · Stress +7",
+        outcomeTitle: "Mai photographs the completed count",
+        outcome: "The supervisor deducts a housing charge, but Mai preserves the hours, quantities, and promised rate before the paper disappears.",
+        skillBonus: {
+          personId: "mai",
+          skill: "Bookkeeping",
+          label: "Mai's records preserve evidence of unpaid wages",
+          effects: { stress: -2, exposure: -3 },
+        },
+      },
+      {
+        id: "nguyenNightPacking",
+        title: "Pack boxes through the night",
+        hint: "More cash, unsafe hours, and no written terms",
+        tone: "danger",
+        days: 1,
+        effects: { cash: 105, supplies: 1, stress: 13, exposure: 7, peopleAll: -5 },
+        consequence: "Cash +$105 · Stress +13 · Health -5 each",
+        outcomeTitle: "The shift ends after the doors reopen",
+        outcome: "The family works through the night. The supervisor withholds most of the promised cash for transport and calls the remainder an advance.",
+      },
+    ],
+  },
+  nguyenFrance: {
+    id: "nguyenFranceWork",
+    eyebrow: "Work while deciding whether to cross",
+    title: "A community kitchen posts two short shifts",
+    copy: "Neither shift buys passage or changes legal status. Both are public, written, and paid without surrendering identity documents.",
+    choices: [
+      {
+        id: "nguyenKitchenPrep",
+        title: "Prepare vegetables for the evening meal",
+        hint: "Earn a small wage and eat with the volunteers",
+        tone: "trusted",
+        days: 1,
+        effects: { cash: 80, supplies: 2, stress: -3, people: { lan: -2, mai: -2 } },
+        consequence: "Cash +$80 · Food +2 days · Stress -3",
+        outcomeTitle: "The posted shift ends with a shared meal",
+        outcome: "Lan and Mai finish at the stated hour. The coordinator pays them openly and gives the family the same meal served to volunteers.",
+      },
+      {
+        id: "nguyenRepairGenerator",
+        title: "Help repair the shelter generator",
+        hint: "Use Minh's mechanical experience for supplies",
+        tone: "trusted",
+        days: 1,
+        effects: { supplies: 2, battery: 28, stress: -4, people: { minh: -3 } },
+        consequence: "Food +2 days · Phone +28% · Stress -4",
+        outcomeTitle: "The lights remain on after sunset",
+        outcome: "Minh replaces a damaged belt under the caretaker's supervision. The shelter provides food and lets every phone charge overnight.",
+        skillBonus: {
+          personId: "minh",
+          skill: "Engine repair",
+          label: "Minh recognizes the failing belt before the motor is damaged",
+          effects: { supplies: 1, people: { minh: 1 } },
+        },
+      },
+    ],
+  },
+  punjabDelhi: {
+    id: "punjabDelhiWork",
+    eyebrow: "Work while the permits are checked",
+    title: "A repair yard and clinic post short shifts",
+    copy: "The official portal may take days to update. Both local jobs state the wage and hours before anyone begins.",
+    choices: [
+      {
+        id: "punjabRepairPump",
+        title: "Repair irrigation pumps",
+        hint: "Use Gurpreet and Arjun's mechanical skills",
+        tone: "trusted",
+        days: 1,
+        effects: { cash: 145, battery: 12, stress: -2, people: { gurpreet: -2, arjun: -2 } },
+        consequence: "Cash +$145 · Phone +12% · Gurpreet and Arjun tire",
+        outcomeTitle: "Two pumps run before the yard closes",
+        outcome: "The foreman signs the work sheet and pays the posted rate. Nobody asks to hold a passport or subtract a recruitment fee.",
+        skillBonus: {
+          personId: "gurpreet",
+          skill: "Farm machinery",
+          label: "Gurpreet recognizes the damaged impeller",
+          effects: { cash: 35, stress: -2 },
+        },
+      },
+      {
+        id: "punjabClinicRecords",
+        title: "Organize clinic supply records",
+        hint: "Use Neha's bookkeeping and Simran's care experience",
+        tone: "trusted",
+        days: 1,
+        effects: { cash: 95, supplies: 1, stress: -3, people: { simran: -2, neha: -2 } },
+        consequence: "Cash +$95 · Food +1 day · Stress -3",
+        outcomeTitle: "Every missing box receives a line",
+        outcome: "Neha reconciles the inventory while Simran checks first-aid dates. The clinic pays both at the end of the shift.",
+        skillBonus: {
+          personId: "neha",
+          skill: "Bookkeeping",
+          label: "Neha finds duplicate charges in the supply ledger",
+          effects: { cash: 25, people: { neha: 1 } },
+        },
+      },
+    ],
+  },
+  punjabDublin: {
+    id: "punjabDublinSupport",
+    eyebrow: "Use the arrival day carefully",
+    title: "A migrant center offers two voluntary tasks",
+    copy: "These are not paid jobs and do not change immigration status. The center offers meals, phone charging, and rights information without taking documents.",
+    choices: [
+      {
+        id: "punjabKitchenVolunteer",
+        title: "Help prepare the evening meal",
+        hint: "Receive supplies and meet other permit workers",
+        tone: "trusted",
+        days: 1,
+        effects: { supplies: 2, battery: 16, stress: -4, people: { simran: -1, neha: -1 } },
+        consequence: "Food +2 days · Phone +16% · Stress -4",
+        outcomeTitle: "The table fills before the worker shuttle arrives",
+        outcome: "The group helps prepare food and hears other workers explain the difference between employer housing and immigration registration.",
+      },
+      {
+        id: "punjabTranslateLeaflets",
+        title: "Check Punjabi rights leaflets",
+        hint: "Use the afternoon to learn where wage complaints go",
+        tone: "trusted",
+        days: 1,
+        effects: { battery: 22, stress: -5, exposure: -4, people: { neha: -1 } },
+        consequence: "Phone +22% · Stress -5 · Risk falls",
+        outcomeTitle: "The hotline numbers enter all four phones",
+        outcome: "Neha compares the English and Punjabi text. Every traveler saves the Workplace Relations Commission contact separately.",
+        setFlags: { wrcContacts: true },
+      },
+    ],
+  },
+  punjabWorksite: {
+    id: "punjabWorksiteShift",
+    eyebrow: "One shift outside the recruiter ledger",
+    title: "The plant posts two authorized overtime tasks",
+    copy: "The tasks fall within the named workplace and are recorded on the official roster. The supervisor still controls whether every hour reaches the payslip.",
+    choices: [
+      {
+        id: "punjabRepairConveyor",
+        title: "Assist with the conveyor repair",
+        hint: "Use mechanical experience for documented overtime",
+        tone: "trusted",
+        days: 1,
+        effects: { cash: 120, stress: 3, people: { gurpreet: -3, arjun: -3 } },
+        consequence: "Cash +$120 · Gurpreet and Arjun health -3",
+        outcomeTitle: "The maintenance lead signs the overtime sheet",
+        outcome: "Gurpreet and Arjun work beside the plant mechanic. Neha photographs the signed hours before the sheet reaches payroll.",
+        skillBonus: {
+          personId: "arjun",
+          skill: "Diesel repair",
+          label: "Arjun identifies the motor fault before parts are replaced",
+          effects: { cash: 30, stress: -2 },
+        },
+      },
+      {
+        id: "punjabFirstAidInventory",
+        title: "Check first-aid stations",
+        hint: "Use Simran's training for a shorter shift",
+        tone: "trusted",
+        days: 1,
+        effects: { cash: 75, medicine: 1, stress: -2, people: { simran: -2 } },
+        consequence: "Cash +$75 · Medicine +1 · Stress -2",
+        outcomeTitle: "Expired supplies are replaced before night shift",
+        outcome: "Simran logs missing bandages and expired eyewash. The safety officer adds the approved hours to her roster.",
+        skillBonus: {
+          personId: "simran",
+          skill: "First aid",
+          label: "Simran's training finds a damaged emergency kit",
+          effects: { medicine: 1, people: { simran: 1 } },
+        },
+      },
+    ],
+  },
+};
+
+export const SOCIAL_FEEDS = {
+  policyNews: {
+    id: "border-rumor",
+    eyebrow: "Trending near the border",
+    headline: "A raid rumor outruns the official notice",
+    location: "Northern Mexico · United States",
+    posts: [
+      {
+        id: "border-alarm",
+        author: "Border Alarm Live",
+        handle: "@borderalarm",
+        initials: "BA",
+        label: "Influencer commentary",
+        tone: "hostile",
+        body: "A recycled video claims every shelter bus is hiding criminals and demands immediate deportations. The post gives no date, location, or source.",
+        reach: "18K reposts",
+      },
+      {
+        id: "civic-desk",
+        author: "Civic Desk",
+        handle: "@civicdesk",
+        initials: "CD",
+        label: "Verified local reporting",
+        tone: "verified",
+        body: "The enforcement announcement is real. Individual notices and hearings still differ, and the viral bus video is from an unrelated event.",
+        reach: "Source links attached",
+      },
+      {
+        id: "shelter-network",
+        author: "Shelter Network",
+        handle: "@safecontact",
+        initials: "SN",
+        label: "Community notice",
+        tone: "support",
+        body: "Do not post guest locations. Send screenshots privately to the legal hotline so threats and false claims can be documented.",
+        reach: "Shared by 14 shelters",
+      },
+    ],
+    evidence: [
+      "The enforcement announcement can be confirmed through an official notice.",
+      "The most-shared video is old and does not show the shelter named in the caption.",
+      "Publishing a shelter location could expose unrelated families to harassment.",
+    ],
+    voice: {
+      personId: "edwin",
+      verify: "The same bus appears in an older upload. The caption changed, not the video.",
+      support: "Sending it privately feels slower, but at least nobody learns where we sleep.",
+      ignore: "I closed the app, but everyone else in the room is still watching it.",
+      respond: "Now strangers are replying to my account as if they know who I am.",
+    },
+    outcomes: {
+      verify: "Reverse searches and the original upload separate the real policy notice from a recycled video.",
+      support: "The legal hotline records the threat without publishing the family's location.",
+      ignore: "The family saves its battery, but the rumor keeps circulating through the shelter.",
+      respond: "The correction reaches supportive readers, while hostile accounts begin sharing the reply and profile.",
+    },
+  },
+  haddadEuropeNews: {
+    id: "syria-safe-debate",
+    eyebrow: "Trending across Europe",
+    headline: "A political transition becomes a claim that every Syrian is safe",
+    location: "Central Europe",
+    posts: [
+      {
+        id: "asylum-brief",
+        author: "Asylum Brief",
+        handle: "@asylumbrief",
+        initials: "AB",
+        label: "Verified policy reporting",
+        tone: "verified",
+        body: "European authorities have resumed many Syrian case decisions after the fall of the former government. Current guidance still requires each person's risks and circumstances to be assessed individually.",
+        reach: "Official guidance linked",
+      },
+      {
+        id: "return-them-now",
+        author: "Return Them Now",
+        handle: "@returnthemnow",
+        initials: "RN",
+        label: "Influencer commentary",
+        tone: "hostile",
+        body: "The account posts celebration graphics over return-convoy footage and claims the change of government proves that every Syrian case should be rejected immediately.",
+        reach: "46K reposts",
+      },
+      {
+        id: "legal-route",
+        author: "Legal Route Network",
+        handle: "@legalroute",
+        initials: "LR",
+        label: "Legal support notice",
+        tone: "support",
+        body: "Do not rely on viral claims about automatic approval or automatic return. Bring evidence about recruitment threats, housing, medical needs, and prior displacement to an accredited adviser.",
+        reach: "Clinic locations attached",
+      },
+    ],
+    evidence: [
+      "The political situation in Syria has changed, but protection decisions still examine individual circumstances.",
+      "Return-convoy footage does not show whether every destination is safe or whether each return was voluntary.",
+      "The family has records of displacement, a damaged home, Mariam's medical needs, and threats toward Sami.",
+    ],
+    voice: {
+      personId: "sami",
+      verify: "The official page says individual assessment. The post turns that into one sentence about all Syrians.",
+      support: "The adviser asks about the men who came for me, not just the country name on my papers.",
+      ignore: "I close the feed, but the celebration music keeps playing from other phones in the shelter.",
+      respond: "I post photographs of our street. Strangers answer that damaged walls do not prove danger.",
+    },
+    outcomes: {
+      verify: "The family saves the current guidance and separates an individual legal assessment from a viral political slogan.",
+      support: "An accredited adviser begins organizing the family's documents around their specific risks and losses.",
+      ignore: "The phones go dark, but uncertainty about return policy keeps the family awake.",
+      respond: "The public reply attracts some support and a wave of strangers challenging the family's account of home.",
+    },
+  },
+  diopIslandWait: {
+    id: "deportation-celebration",
+    eyebrow: "Trending on the island",
+    headline: "A deportation clip is edited like a victory video",
+    location: "Canary Islands",
+    posts: [
+      {
+        id: "send-them-back",
+        author: "Send Them Back TV",
+        handle: "@sendthembacktv",
+        initials: "ST",
+        label: "Influencer commentary",
+        tone: "hostile",
+        body: "A creator adds cheering music to footage of people boarding a removal flight and asks followers to celebrate every empty reception bed.",
+        reach: "42K reposts",
+      },
+      {
+        id: "island-wire",
+        author: "Island Wire",
+        handle: "@islandwire",
+        initials: "IW",
+        label: "Verified local reporting",
+        tone: "verified",
+        body: "The flight carried people with different cases and histories. The edited clip omits legal appeals, families, and where people will sleep after landing.",
+        reach: "Reporter notes attached",
+      },
+      {
+        id: "harbor-aid",
+        author: "Harbor Aid Collective",
+        handle: "@harboraid",
+        initials: "HA",
+        label: "Community response",
+        tone: "support",
+        body: "Reception residents can bring removal notices to the afternoon legal clinic. Do not share names or faces publicly.",
+        reach: "Clinic opens at 14:00",
+      },
+    ],
+    evidence: [
+      "The video is authentic but edited to remove individual legal circumstances.",
+      "Several visible faces belong to people whose cases are not public.",
+      "A legal clinic can check notices without exposing identities online.",
+    ],
+    voice: {
+      personId: "cheikh",
+      verify: "The video calls them a number. The report gives back enough detail to remember they are people.",
+      support: "We take our papers to someone who will not film our faces.",
+      ignore: "Everyone has already seen the cheering. Silence does not make the room quieter.",
+      respond: "I asked who celebrates another family's fear. Now my picture is in their replies.",
+    },
+    outcomes: {
+      verify: "Independent reporting restores the individual cases that the celebration clip deliberately removed.",
+      support: "The group contacts a legal clinic privately and avoids adding names or faces to the viral thread.",
+      ignore: "No battery is spent, but the cheering clip deepens fear inside the reception center.",
+      respond: "The reply attracts support and makes Cheikh visible to accounts that celebrate removals.",
+    },
+  },
+  nguyenPolicy: {
+    id: "drug-ring-rumor",
+    eyebrow: "Trending in the county",
+    headline: "A trafficking investigation becomes an accusation against a whole community",
+    location: "United Kingdom",
+    posts: [
+      {
+        id: "county-police",
+        author: "County Police Update",
+        handle: "@countypolice",
+        initials: "CP",
+        label: "Official statement",
+        tone: "verified",
+        body: "An organized drug network is accused of coercing indebted workers to carry packages. Organizers and two alleged couriers have been arrested; the investigation continues.",
+        reach: "Case reference attached",
+      },
+      {
+        id: "street-truth",
+        author: "Street Truth UK",
+        handle: "@streettruthuk",
+        initials: "ST",
+        label: "Influencer commentary",
+        tone: "hostile",
+        body: "The account removes the alleged coercion from the story and claims Vietnamese migrants are bringing drugs into every neighborhood.",
+        reach: "27K reposts",
+      },
+      {
+        id: "worker-line",
+        author: "Migrant Worker Line",
+        handle: "@workerline",
+        initials: "MW",
+        label: "Safeguarding notice",
+        tone: "support",
+        body: "Anyone forced to carry packages or threatened over recruitment debt can seek confidential trafficking support without posting publicly.",
+        reach: "Vietnamese interpretation available",
+      },
+    ],
+    evidence: [
+      "The investigation distinguishes organizers, alleged offenders, and people acting under coercion.",
+      "The viral post removes that distinction and generalizes from a small number of arrests.",
+      "Confidential safeguarding support is available in Vietnamese.",
+    ],
+    voice: {
+      personId: "mai",
+      verify: "The official statement says coercion. The viral caption deletes that word.",
+      support: "The interpreter asks what happened before asking what papers we have.",
+      ignore: "The post sounds like the threats in the warehouse, even with the phone face down.",
+      respond: "I explain recruitment debt. The replies call explanation an excuse.",
+    },
+    outcomes: {
+      verify: "The original statement distinguishes an organized network, alleged offenders, and workers threatened through debt.",
+      support: "A confidential worker line records the family's exploitation and connects them to an interpreter.",
+      ignore: "The family avoids a public trace, while the simplified accusation continues to spread.",
+      respond: "Mai's explanation reaches advocates but also attracts hostile attention to the family's profile.",
+    },
+  },
+  punjabPolicy: {
+    id: "integration-clip",
+    eyebrow: "Trending near the worksite",
+    headline: "A wage protest is relabeled as refusal to integrate",
+    location: "Ireland",
+    posts: [
+      {
+        id: "irish-real-talk",
+        author: "Irish Real Talk",
+        handle: "@irishrealtalk",
+        initials: "IR",
+        label: "Influencer commentary",
+        tone: "hostile",
+        body: "A cropped street argument is captioned as proof that foreign workers reject local culture. The clip starts after the supervisor takes the workers' payslips.",
+        reach: "22K reposts",
+      },
+      {
+        id: "town-desk",
+        author: "Town Desk",
+        handle: "@towndesk",
+        initials: "TD",
+        label: "Verified local reporting",
+        tone: "verified",
+        body: "Longer footage shows workers protesting housing and transport deductions. Gardaí reported no arrests, injuries, or religious dispute.",
+        reach: "Full video reviewed",
+      },
+      {
+        id: "welcome-room",
+        author: "The Welcome Room",
+        handle: "@welcomeroom",
+        initials: "WR",
+        label: "Community response",
+        tone: "support",
+        body: "Tonight's language exchange and workers' rights clinic remain open. Integration does not require silence about unpaid wages.",
+        reach: "Local meeting · 18:30",
+      },
+    ],
+    evidence: [
+      "The longer recording begins before the wage dispute and contradicts the viral caption.",
+      "No official report describes the event as a cultural or religious confrontation.",
+      "A local group offers both language practice and independent workplace advice.",
+    ],
+    voice: {
+      personId: "neha",
+      verify: "The missing minute shows the supervisor taking the payslips. That is what we were arguing about.",
+      support: "The language teacher says learning the town and challenging theft can happen at the same time.",
+      ignore: "The clip keeps defining us while we say nothing about the wages.",
+      respond: "I post the longer video. People who wanted the shorter story start searching my name.",
+    },
+    outcomes: {
+      verify: "The full recording changes the event from a culture-war clip back into a documented wage dispute.",
+      support: "A local center combines language exchange with confidential employment-rights advice.",
+      ignore: "The family avoids immediate attention, but the false caption becomes the version most people see.",
+      respond: "The longer video corrects part of the story and makes Neha's account newly visible to hostile users.",
+    },
+  },
+};
+
+const SOCIAL_RESPONSE_OPTIONS = [
+  {
+    id: "verify",
+    title: "Verify before sharing",
+    hint: "Compare the original post, independent reporting, and official notices",
+    tone: "trusted",
+    requires: { battery: 8 },
+    effects: { battery: -8, stress: -4, exposure: -5, climate: 6, trustAll: 1 },
+    consequence: "Phone -8% · Stress -4 · Public climate +6",
+    outcomeTitle: "The claim separates into evidence and framing",
+  },
+  {
+    id: "support",
+    title: "Contact trusted support privately",
+    hint: "Share screenshots without publishing names or locations",
+    tone: "trusted",
+    requires: { battery: 6 },
+    effects: { battery: -6, stress: -7, exposure: -3, climate: 4, trustAll: 1 },
+    consequence: "Phone -6% · Stress -7 · Public climate +4",
+    outcomeTitle: "A private message creates a safer next step",
+  },
+  {
+    id: "ignore",
+    title: "Put the phone away",
+    hint: "Protect attention and battery without challenging the post",
+    tone: "uncertain",
+    effects: { stress: 4, climate: -5 },
+    consequence: "Stress +4 · Public climate -5",
+    outcomeTitle: "The family looks away; the feed does not",
+  },
+  {
+    id: "respond",
+    title: "Answer publicly",
+    hint: "Correct the claim where others can see it, accepting greater visibility",
+    tone: "danger",
+    requires: { battery: 12 },
+    effects: { battery: -12, stress: 5, exposure: 12, climate: 2 },
+    consequence: "Phone -12% · Stress +5 · Risk +12 · Public climate +2",
+    outcomeTitle: "The reply reaches allies and hostile accounts",
+  },
+];
+
+export const EVENTS = {
+  home: {
+    id: "home",
+    region: "Northern Honduras",
+    location: "The family home",
+    time: "05:10",
+    weather: "Humid dawn",
+    weatherDetail: "The bus leaves after sunrise",
+    route: "elmstead",
+    contentNote: "Threats against a child; forced displacement",
+    source: sources.honduras,
+    messages: [
+      {
+        sender: "Marisol",
+        initial: "M",
+        role: "Family notebook",
+        time: "04:48",
+        trusted: true,
+        body: "The family home and its small plot were sold for a quarter of what they were worth. The men who tried to recruit Edwin said they would return tonight. Four bags are by the door. There is no choice that feels like a choice.",
+      },
+    ],
+    known: [
+      "The threat against Edwin named tonight as a deadline.",
+      "The family has $1,800 from the rushed sale of their home.",
+      "A church safe house can receive them for two nights.",
+    ],
+    assumed: [
+      "The gang will not watch the bus terminal.",
+      "The land papers will matter later.",
+      "The cousin in Houston can still help.",
+    ],
+    choices: [
+      {
+        id: "leaveDawn",
+        title: "Leave before sunrise",
+        hint: "Take the first bus and do not return",
+        icon: "navigate",
+        tone: "uncertain",
+        route: "quarry",
+        days: 1,
+        next: "guideOffer",
+        effects: { battery: -3, stress: 8, exposure: 5, progress: 6 },
+        consequence: "Stress +8 · Risk +5 · Progress +6%",
+        outcomeTitle: "The porch light stays on",
+        outcome: "Aurelia locks the door even though they no longer own it. Daniela waves to the dog. Nobody says when they will come back.",
+      },
+      {
+        id: "safeHouse",
+        title: "Go through the church safe house",
+        hint: "Trade two days and some money for verified help",
+        icon: "aid",
+        tone: "trusted",
+        route: "elmstead",
+        days: 2,
+        next: "guideOffer",
+        effects: { cash: -80, supplies: -1, stress: -8, exposure: -6, progress: 4, trustAll: 1 },
+        consequence: "Cash -$80 · Food -1 day · Risk -6",
+        outcomeTitle: "A volunteer writes down every name",
+        outcome: "The family sleeps in one room and receives a list of shelters. The list is not a promise, but it is verified.",
+        setFlags: { shelterContacts: true },
+      },
+      {
+        id: "collectPapers",
+        title: "Return for the land papers",
+        hint: "Keep proof of what was lost, but risk being seen",
+        icon: "wait",
+        tone: "danger",
+        route: "ridge",
+        days: 1,
+        next: "guideOffer",
+        effects: { stress: 12, exposure: 18, progress: 3, people: { aurelia: -4 } },
+        consequence: "Stress +12 · Risk +18 · Aurelia health -4",
+        outcomeTitle: "The papers are under the flour tin",
+        outcome: "Marisol retrieves the deed and Edwin's school records. A motorcycle idles at the end of the road as they leave.",
+        setFlags: { landPapers: true },
+        skillBonus: {
+          personId: "marisol",
+          skill: "Planning",
+          label: "Marisol remembers a back path away from the main road",
+          effects: { exposure: -4, stress: -2 },
+        },
+      },
+    ],
+  },
+
+  guideOffer: {
+    id: "guideOffer",
+    region: "Guatemala transit corridor",
+    location: "Regional bus terminal",
+    time: "11:35",
+    weather: "Heavy heat",
+    weatherDetail: "Rumors change by the hour",
+    route: "quarry",
+    contentNote: "Smuggling, fraud, and family separation risk",
+    source: sources.smugglers,
+    messages: [
+      {
+        sender: "Unknown contact",
+        initial: "?",
+        role: "Calls himself a coyote; identity unverified",
+        time: "11:22",
+        trusted: false,
+        body: "I take families north. Pay most now, the rest when you arrive. Fast buses, safe houses, no waiting. Decide before noon.",
+      },
+      {
+        sender: "Sister Beatriz",
+        initial: "B",
+        role: "Shelter network volunteer",
+        time: "11:29",
+        trusted: true,
+        body: "We cannot promise a route. A church bus reaches the next shelter tonight. Keep the family together and do not hand anyone your documents.",
+      },
+    ],
+    known: [
+      "The church bus and destination shelter are verified.",
+      "The coyote uses a name no traveler recognizes.",
+      "A larger group plans to leave on foot this afternoon.",
+    ],
+    assumed: [
+      "The paid guide controls what happens farther north.",
+      "A large group will be safer from robbery.",
+      "The church bus will pass every checkpoint.",
+    ],
+    choices: [
+      {
+        id: "churchBus",
+        title: "Take the shelter bus",
+        hint: "Slower, verified, and still not risk-free",
+        icon: "car",
+        tone: "trusted",
+        route: "elmstead",
+        days: 2,
+        next: "roadRobbery",
+        requires: { cash: 120 },
+        effects: { cash: -120, supplies: -1, stress: -4, exposure: -5, progress: 11 },
+        consequence: "Cash -$120 · Food -1 day · Progress +11%",
+        outcomeTitle: "Names are checked before anyone boards",
+        outcome: "The driver knows the next shelter, but a road closure pushes the bus onto a quieter highway after dark.",
+      },
+      {
+        id: "hireCoyote",
+        title: "Hire the coyote",
+        hint: "Spend half the land money on an unverified promise",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 2,
+        next: "guideAbandon",
+        requires: { cash: 900 },
+        effects: { cash: -900, battery: -8, stress: 12, exposure: 12, progress: 18, trustAll: -1 },
+        consequence: "Cash -$900 · Stress +12 · Progress +18%",
+        outcomeTitle: "The guide takes the deposit",
+        outcome: "The first vehicle arrives as promised. The second does not. The family waits in a roadside room with no address and no receipt.",
+      },
+      {
+        id: "largeGroup",
+        title: "Join the larger group",
+        hint: "Keep the money, accept slower and more visible travel",
+        icon: "walk",
+        tone: "uncertain",
+        route: "quarry",
+        days: 3,
+        next: "roadRobbery",
+        effects: { supplies: -2, water: -4, stress: 5, exposure: 18, progress: 14, peopleAll: -4 },
+        consequence: "Food -2 days · Water -4 L · Risk +18",
+        outcomeTitle: "Forty people leave together",
+        outcome: "There are more eyes on the children and more footsteps on the road. By the third evening, water and patience are both low.",
+      },
+    ],
+  },
+
+  roadRobbery: {
+    id: "roadRobbery",
+    region: "Southern Mexico",
+    location: "Road outside a market town",
+    time: "20:15",
+    weather: "Warm night",
+    weatherDetail: "The last shops are closing",
+    route: "quarry",
+    contentNote: "Threat of robbery; weapon mentioned without graphic violence",
+    source: sources.routes,
+    messages: [
+      {
+        sender: "Family notebook",
+        initial: "M",
+        role: "Recorded later",
+        time: "20:15",
+        trusted: true,
+        body: "Two thieves step from behind a parked truck. One holds a machete low and asks for every pocket. Daniela's hand closes around Marisol's fingers.",
+      },
+    ],
+    known: [
+      "Other people are still within shouting distance.",
+      "Most of the cash is in Marisol's bag.",
+      "The phone contains every contact and document photo.",
+    ],
+    assumed: [
+      "The thieves will leave after taking one valuable item.",
+      "Calling attention will make bystanders intervene.",
+      "Hidden money has not been noticed.",
+    ],
+    choices: [
+      {
+        id: "handCash",
+        title: "Hand over the cash pouch",
+        hint: "Lose most savings and keep everyone together",
+        icon: "wait",
+        tone: "uncertain",
+        route: "elmstead",
+        days: 1,
+        next: "blueDoorShelter",
+        effects: { cash: -1200, stress: 16, exposure: -3, progress: 8 },
+        consequence: "Cash heavily reduced · Stress +16",
+        outcomeTitle: "They take the pouch and leave",
+        outcome: "Aurelia waits until the men are gone before showing Marisol the folded emergency bills sewn inside her skirt.",
+        setFlags: { emergencyMoney: true },
+      },
+      {
+        id: "offerPhone",
+        title: "Offer the phone instead",
+        hint: "Keep money, lose contacts and navigation",
+        icon: "phone",
+        tone: "danger",
+        route: "ridge",
+        days: 1,
+        next: "blueDoorShelter",
+        effects: { battery: -100, stress: 18, exposure: 8, progress: 7, trustAll: -1 },
+        consequence: "Phone lost · Stress +18 · Risk +8",
+        outcomeTitle: "The screen disappears into a pocket",
+        outcome: "The money remains, but the family loses the cousin's number, document photos, and the shelter map saved offline.",
+        setFlags: { phoneLost: true },
+      },
+      {
+        id: "callForHelp",
+        title: "Call toward the open shops",
+        hint: "Make the confrontation public",
+        icon: "talk",
+        tone: "trusted",
+        route: "elmstead",
+        days: 1,
+        next: "blueDoorShelter",
+        effects: { cash: -260, battery: -4, stress: 12, exposure: 10, progress: 8, people: { edwin: -6 } },
+        consequence: "Cash -$260 · Edwin health -6 · Risk +10",
+        outcomeTitle: "A shopkeeper switches on every light",
+        outcome: "The thieves grab loose bills and run. The shopkeeper locks the family inside until a shelter van arrives.",
+      },
+    ],
+  },
+
+  guideAbandon: {
+    id: "guideAbandon",
+    region: "Unknown transit town",
+    location: "Roadside rooms",
+    time: "06:30",
+    weather: "Dry morning",
+    weatherDetail: "The guide's phone is disconnected",
+    route: "ridge",
+    contentNote: "Fraud, abandonment, and coercion risk",
+    source: sources.routes,
+    messages: [
+      {
+        sender: "Edwin",
+        initial: "E",
+        role: "Family notebook",
+        time: "06:22",
+        trusted: true,
+        body: "The coyote is gone. So are the deposit and the copies of our names. A different driver says the price changed and Marisol must ride in front, alone.",
+      },
+    ],
+    known: [
+      "The original guide cannot be reached.",
+      "A verified shelter number is written inside Aurelia's prayer book.",
+      "The replacement driver refuses to keep the family in one vehicle.",
+    ],
+    assumed: [
+      "The new driver is connected to the first guide.",
+      "Walking to town is safe in daylight.",
+      "The shelter can arrange transport.",
+    ],
+    choices: [
+      {
+        id: "callShelter",
+        title: "Call the shelter number",
+        hint: "Ask for a public pickup and refuse separation",
+        icon: "phone",
+        tone: "trusted",
+        route: "elmstead",
+        days: 1,
+        next: "blueDoorShelter",
+        requires: { battery: 12 },
+        effects: { battery: -12, stress: -8, exposure: -8, progress: 5, trustAll: 1 },
+        consequence: "Phone -12% · Stress -8 · Risk -8",
+        outcomeTitle: "The volunteer asks for a landmark, not a route",
+        outcome: "A marked shelter van arrives in daylight. The family leaves the rooms together and the driver does not follow.",
+      },
+      {
+        id: "walkTown",
+        title: "Walk toward the town",
+        hint: "Abandon the paid route and stay together",
+        icon: "walk",
+        tone: "uncertain",
+        route: "quarry",
+        days: 1,
+        next: "blueDoorShelter",
+        effects: { water: -3, supplies: -1, stress: 9, exposure: 8, progress: 7, people: { aurelia: -8 } },
+        consequence: "Water -3 L · Aurelia health -8 · Risk +8",
+        outcomeTitle: "The highway takes most of the day",
+        outcome: "Aurelia's knee swells, but a mechanic points them toward a shelter with blue doors before sunset.",
+      },
+      {
+        id: "replacementDriver",
+        title: "Accept the replacement driver",
+        hint: "Keep moving despite a demand to split up",
+        icon: "car",
+        tone: "danger",
+        route: "ridge",
+        days: 1,
+        next: "blueDoorShelter",
+        effects: { cash: -300, stress: 28, exposure: 30, progress: 13, trustAll: -1, people: { marisol: -10 } },
+        consequence: "Cash -$300 · Marisol health -10 · Risk +30",
+        outcomeTitle: "Marisol refuses to be isolated",
+        outcome: "She opens the door at a fuel stop and calls the children out with her. The driver keeps their money and leaves them there.",
+      },
+    ],
+  },
+
+  blueDoorShelter: {
+    id: "blueDoorShelter",
+    region: "Chiapas",
+    location: "Shelter with blue doors",
+    time: "18:40",
+    weather: "Rain on the roof",
+    weatherDetail: "The legal clinic comes Thursday",
+    route: "elmstead",
+    contentNote: "Non-graphic reference to rape and survivor care",
+    source: sources.gbv,
+    messages: [
+      {
+        sender: "Shelter counselor",
+        initial: "C",
+        role: "Private intake note",
+        time: "18:32",
+        trusted: true,
+        body: "A woman traveling with another group arrived after being raped on the road. The assault is not shown. A nurse asks what care she wants; nobody asks her to retell it for the room. Marisol helps watch her children while she decides.",
+      },
+      {
+        sender: "Aurelia",
+        initial: "A",
+        role: "At dinner",
+        time: "19:05",
+        trusted: true,
+        body: "The soup is mostly beans. It is also hot, and every person at this table has a name.",
+      },
+    ],
+    known: [
+      "The shelter offers confidential medical and legal referrals.",
+      "The family may stay for three nights.",
+      "A verified bus company travels north from the next city.",
+    ],
+    assumed: [
+      "Three nights will not exhaust the remaining money.",
+      "The bus route will remain open.",
+      "The phone can be repaired nearby.",
+    ],
+    choices: [
+      {
+        id: "stayShelter",
+        title: "Stay for three nights",
+        hint: "Rest, seek care, and attend the legal clinic",
+        icon: "rest",
+        tone: "trusted",
+        route: "elmstead",
+        days: 3,
+        next: "waitingTown",
+        effects: { cash: -90, supplies: 2, water: 6, battery: 100, stress: -20, exposure: -12, progress: 7, peopleAll: 12, trustAll: 1 },
+        consequence: "Health +12 each · Phone charged · Risk -12",
+        outcomeTitle: "Three nights with a locked door",
+        outcome: "Daniela's cough eases. A lawyer organizes the land deed, school records, and written threat into one dry folder.",
+        setFlags: { legalPacket: true },
+        contextBonuses: [
+          {
+            flag: "shelterContacts",
+            kind: "payoff",
+            label: "The verified list leads directly to the blue-door shelter",
+            effects: { cash: 20, exposure: -3 },
+          },
+        ],
+      },
+      {
+        id: "helpKitchen",
+        title: "Help the shelter while you rest",
+        hint: "Trade time and labor for food and reliable information",
+        icon: "work",
+        tone: "trusted",
+        route: "elmstead",
+        days: 4,
+        next: "waitingTown",
+        effects: { supplies: 3, water: 8, battery: 80, stress: -15, exposure: -14, progress: 6, peopleAll: 8, trustAll: 1 },
+        consequence: "Food +3 days · Water +8 L · Cohesion rises",
+        outcomeTitle: "The family works the dinner shift",
+        outcome: "Edwin repairs two fans. Aurelia teaches Daniela and three other children a card game that requires no shared language.",
+      },
+      {
+        id: "leaveMorning",
+        title: "Leave after one night",
+        hint: "Keep the travel window, give up more recovery",
+        icon: "navigate",
+        tone: "uncertain",
+        route: "quarry",
+        days: 1,
+        next: "waitingTown",
+        effects: { supplies: 1, water: 3, battery: 35, stress: -4, exposure: -4, progress: 10, peopleAll: 3 },
+        consequence: "Food +1 day · Phone partly charged · Progress +10%",
+        outcomeTitle: "Breakfast is wrapped for the road",
+        outcome: "The counselor writes two verified addresses on paper in case the phone fails again.",
+      },
+    ],
+  },
+
+  waitingTown: {
+    id: "waitingTown",
+    region: "Southern Mexico",
+    location: "Room above a mechanic's shop",
+    time: "17:25",
+    weather: "Afternoon rain",
+    weatherDetail: "Northbound departures have been suspended again",
+    route: "quarry",
+    contentNote: "Housing insecurity, fraud, and prolonged uncertainty",
+    source: sources.routes,
+    messages: [
+      {
+        sender: "Marisol",
+        initial: "M",
+        role: "Family notebook · Day twelve",
+        time: "17:12",
+        trusted: true,
+        body: "The room is paid by the week. The landlord wants the next payment tomorrow. Every morning someone says the buses will move; every evening the same bags are still against the wall.",
+      },
+      {
+        sender: "Shelter noticeboard",
+        initial: "i",
+        role: "Verified local update",
+        time: "16:50",
+        trusted: true,
+        body: "Travel has slowed after new inspections. Families can join the shelter rotation, remain in private rooms, or verify tickets only at the official station window.",
+      },
+    ],
+    known: [
+      "The landlord will provide a receipt for another twelve days.",
+      "The shelter rotation includes meals but little privacy.",
+      "A street reseller's tickets cannot be verified at the station.",
+    ],
+    assumed: [
+      "The delay will end before the next rent payment.",
+      "A private room is always safer than a crowded shelter.",
+      "The reseller has access to seats the station is hiding.",
+    ],
+    choices: [
+      {
+        id: "rentWhileWaiting",
+        title: "Pay for twelve more days",
+        hint: "Keep one locked room and wait for verified transport",
+        icon: "rest",
+        tone: "trusted",
+        route: "elmstead",
+        days: 12,
+        next: "clinicQueue",
+        requires: { cash: 180 },
+        effects: { cash: -180, supplies: -1, water: -3, stress: -3, exposure: -5, progress: 4, peopleAll: 2 },
+        consequence: "Cash -$180 · 12 days pass · Risk -5",
+        outcomeTitle: "The bags remain packed for twelve days",
+        outcome: "Marisol takes posted day work when it appears. Edwin studies repair diagrams borrowed from the mechanic. Waiting becomes its own kind of travel.",
+        skillBonus: {
+          personId: "marisol",
+          skill: "Planning",
+          label: "Marisol budgets the room and finds posted day work",
+          effects: { cash: 30, stress: -2 },
+        },
+        contextBonuses: [
+          {
+            flag: "emergencyMoney",
+            kind: "payoff",
+            label: "Aurelia's hidden emergency bills cover part of the room",
+            effects: { cash: 60, stress: -2 },
+          },
+        ],
+      },
+      {
+        id: "shelterRotation",
+        title: "Join the shelter rotation",
+        hint: "Save rent, accept crowds and changing beds",
+        icon: "aid",
+        tone: "uncertain",
+        route: "quarry",
+        days: 9,
+        next: "clinicQueue",
+        effects: { cash: -45, supplies: 1, water: 2, stress: 6, exposure: -8, progress: 3, peopleAll: -1 },
+        consequence: "9 days pass · Food +1 day · Stress +6",
+        outcomeTitle: "Every third night brings a different room",
+        outcome: "The family keeps their bags under one blanket. Volunteers provide meals and reliable updates, but sleep comes in short pieces.",
+      },
+      {
+        id: "resellerTicket",
+        title: "Buy the reseller's ticket",
+        hint: "Try to leave sooner with an unverified ticket",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 3,
+        next: "clinicQueue",
+        requires: { cash: 160 },
+        effects: { cash: -160, stress: 14, exposure: 10, progress: 7, trustAll: -1 },
+        consequence: "Cash -$160 · Stress +14 · Risk +10",
+        outcomeTitle: "The barcode belongs to another date",
+        outcome: "The station rejects the ticket. The reseller is gone, and Daniela's cough worsens during three days spent moving between waiting rooms.",
+      },
+    ],
+  },
+
+  clinicQueue: {
+    id: "clinicQueue",
+    region: "Southern Mexico",
+    location: "Community clinic courtyard",
+    time: "06:45",
+    weather: "Cool morning",
+    weatherDetail: "Forty-three names are ahead of Daniela",
+    route: "elmstead",
+    contentNote: "Child illness and breathing distress",
+    source: sources.routes,
+    messages: [
+      {
+        sender: "Marisol",
+        initial: "M",
+        role: "Family notebook",
+        time: "06:32",
+        trusted: true,
+        body: "Daniela has four inhaler doses left. She says she can breathe if she sits still. The clinic is free, the pharmacy is not, and the next verified bus leaves tomorrow.",
+      },
+    ],
+    known: [
+      "The humanitarian clinic will see children, but the queue may take three days.",
+      "A licensed pharmacy has the prescribed refill in stock.",
+      "Continuing without care risks a more serious breathing crisis.",
+    ],
+    assumed: [
+      "The clinic queue will move in the order names were written.",
+      "The bus company will honor tomorrow's ticket after a delay.",
+      "Daniela will remain stable if the family leaves now.",
+    ],
+    choices: [
+      {
+        id: "waitForClinic",
+        title: "Wait for the clinic",
+        hint: "Spend three days and receive supervised care",
+        icon: "aid",
+        tone: "trusted",
+        route: "elmstead",
+        days: 3,
+        next: "transport",
+        effects: { cash: -20, supplies: 1, medicine: 1, stress: -5, exposure: -3, progress: 2, people: { daniela: 9, aurelia: 3 } },
+        consequence: "Medicine +1 · Daniela health +9 · 3 days pass",
+        outcomeTitle: "Daniela's name is called on the third morning",
+        outcome: "A clinician checks her breathing, replaces the inhaler, and writes the medicine name on paper in case the phone is lost.",
+        contextBonuses: [
+          {
+            flag: "phoneLost",
+            kind: "setback",
+            label: "Without the saved map, local travel to find the clinic costs $25",
+            effects: { cash: -25, stress: 3 },
+          },
+        ],
+      },
+      {
+        id: "buyPharmacyRefill",
+        title: "Buy the pharmacy refill",
+        hint: "Spend more and keep tomorrow's bus",
+        icon: "medical",
+        tone: "uncertain",
+        route: "quarry",
+        days: 1,
+        next: "transport",
+        requires: { cash: 95 },
+        effects: { cash: -95, medicine: 1, stress: -4, progress: 4, people: { daniela: 7 } },
+        consequence: "Cash -$95 · Medicine +1 · Daniela health +7",
+        outcomeTitle: "The pharmacist seals the refill in a plastic bag",
+        outcome: "The family keeps the bus ticket. Marisol also keeps the receipt and the printed instructions, knowing another refill may be harder to find.",
+      },
+      {
+        id: "continueWithoutCare",
+        title: "Keep the travel window",
+        hint: "Leave now with four doses and no medical review",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 1,
+        next: "transport",
+        effects: { stress: 15, exposure: 5, progress: 7, trustAll: -1, people: { daniela: -14 } },
+        consequence: "Daniela health -14 · Stress +15 · Progress +7%",
+        outcomeTitle: "Every cough changes the rhythm of the trip",
+        outcome: "The family boards without knowing when the next clinic will appear. Marisol counts inhaler doses instead of kilometers.",
+      },
+    ],
+  },
+
+  transport: {
+    id: "transport",
+    region: "Central Mexico",
+    location: "Freight and bus corridor",
+    time: "07:20",
+    weather: "Bright heat",
+    weatherDetail: "Checkpoints reported on the highway",
+    route: "elmstead",
+    contentNote: "Injury, extortion, and exploitation risk",
+    source: sources.routes,
+    messages: [
+      {
+        sender: "Shelter noticeboard",
+        initial: "i",
+        role: "Information from three recent groups",
+        time: "07:00",
+        trusted: true,
+        body: "Buses cost most of what many families have left. Freight trains are cheaper and far more dangerous. A second paid guide is asking for cash with no receipt.",
+      },
+    ],
+    known: [
+      "The bus company is licensed, but document checks are possible.",
+      "People have been injured riding freight trains.",
+      "The paid guide's reputation cannot be verified.",
+    ],
+    assumed: [
+      "The bus will complete the full trip.",
+      "The family can board and leave the train safely.",
+      "The new guide is unrelated to the first.",
+    ],
+    choices: [
+      {
+        id: "busNorth",
+        title: "Buy bus tickets",
+        hint: "Spend heavily for a seat and a public route",
+        icon: "car",
+        tone: "trusted",
+        route: "elmstead",
+        days: 4,
+        next: "checkpointDelay",
+        requires: { cash: 260 },
+        effects: { cash: -260, supplies: -2, water: -4, stress: 4, exposure: 14, progress: 18 },
+        consequence: "Cash -$260 · Risk +14 · Progress +18%",
+        outcomeTitle: "The bus moves north in daylight",
+        outcome: "The family sleeps sitting up. At each stop, Marisol counts four heads before the driver closes the door.",
+      },
+      {
+        id: "freightTrain",
+        title: "Ride the freight corridor",
+        hint: "Faster and cheaper, with serious fall and extortion risk",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 3,
+        next: "checkpointDelay",
+        effects: { cash: -80, supplies: -2, water: -5, stress: 18, exposure: 18, progress: 23, peopleAll: -10, people: { aurelia: -8 } },
+        consequence: "Health falls · Stress +18 · Progress +23%",
+        outcomeTitle: "Every movement requires both hands",
+        outcome: "No one sleeps. Aurelia's knee buckles during a stop, and strangers lift her down before the train moves again.",
+      },
+      {
+        id: "secondGuide",
+        title: "Pay another guide",
+        hint: "Faster if the promises are true",
+        icon: "walk",
+        tone: "danger",
+        route: "ridge",
+        days: 3,
+        next: "checkpointDelay",
+        requires: { cash: 450 },
+        effects: { cash: -450, supplies: -1, water: -3, stress: 14, exposure: 10, progress: 21, trustAll: -1 },
+        consequence: "Cash -$450 · Stress +14 · Progress +21%",
+        outcomeTitle: "This guide keeps the first promise",
+        outcome: "The family reaches the northern corridor. The guide then asks for more money to continue and refuses to explain the next vehicle.",
+      },
+    ],
+  },
+
+  checkpointDelay: {
+    id: "checkpointDelay",
+    region: "Central-northern Mexico",
+    location: "Interior bus checkpoint",
+    time: "14:15",
+    weather: "White midday heat",
+    weatherDetail: "The buses have not moved since morning",
+    route: "quarry",
+    contentNote: "Immigration enforcement, detention fear, and extortion risk",
+    source: sources.routes,
+    messages: [
+      {
+        sender: "Bus driver",
+        initial: "D",
+        role: "Public announcement",
+        time: "13:48",
+        trusted: true,
+        body: "The vehicle may remain here for several days while permits and passenger documents are reviewed. Nobody can promise who will be allowed to continue.",
+      },
+      {
+        sender: "Unknown guide",
+        initial: "?",
+        role: "Unverified voice message",
+        time: "14:02",
+        trusted: false,
+        body: "Pay today and I will move your family around the delay. No documents needed. Do not ask where the next vehicle waits.",
+      },
+    ],
+    known: [
+      "The licensed bus company is contesting the delay.",
+      "A verified shelter van can collect families from the public station.",
+      "The guide will not provide a name, receipt, or destination.",
+    ],
+    assumed: [
+      "Staying on the bus guarantees permission to continue.",
+      "Leaving for the shelter will invalidate every ticket.",
+      "The unknown guide controls the inspection schedule.",
+    ],
+    choices: [
+      {
+        id: "remainWithBus",
+        title: "Remain with the licensed bus",
+        hint: "Keep the ticket and accept document review",
+        icon: "wait",
+        tone: "uncertain",
+        route: "quarry",
+        days: 4,
+        next: "policyNews",
+        effects: { cash: -70, supplies: -1, water: -2, stress: 10, exposure: 12, progress: 5 },
+        consequence: "4 days pass · Stress +10 · Risk +12",
+        outcomeTitle: "The bus moves on the fourth evening",
+        outcome: "Officers copy names and return the shelter letters. The family continues, but nobody explains why this bus was released and another was not.",
+        skillBonus: {
+          personId: "edwin",
+          skill: "Some English",
+          label: "Edwin follows the announcements and avoids a false line",
+          effects: { stress: -4, exposure: -3 },
+        },
+      },
+      {
+        id: "waitForShelterVan",
+        title: "Wait for the shelter van",
+        hint: "Leave the bus for a verified public pickup",
+        icon: "aid",
+        tone: "trusted",
+        route: "elmstead",
+        days: 6,
+        next: "policyNews",
+        effects: { cash: -50, supplies: 1, water: 3, stress: 3, exposure: -5, progress: 3, trustAll: 1 },
+        consequence: "6 days pass · Food +1 day · Risk -5",
+        outcomeTitle: "Six days pass under the shelter's address",
+        outcome: "The van arrives in daylight. The family loses the original tickets but receives meals, a receipt, and places on a later bus.",
+        contextBonuses: [
+          {
+            flag: "communityFavor",
+            kind: "payoff",
+            label: "A community-center contact confirms the pickup",
+            effects: { cash: 20, stress: -2 },
+          },
+        ],
+      },
+      {
+        id: "payCheckpointGuide",
+        title: "Pay the unknown guide",
+        hint: "Move sooner through an unverified arrangement",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 2,
+        next: "policyNews",
+        requires: { cash: 220 },
+        effects: { cash: -220, water: -2, stress: 18, exposure: 20, progress: 9, trustAll: -1 },
+        consequence: "Cash -$220 · Stress +18 · Risk +20",
+        outcomeTitle: "The family is transferred twice without explanation",
+        outcome: "They reach the next city, but the guide keeps their documents until the last vehicle stops. Marisol gets the papers back only after refusing another payment.",
+      },
+    ],
+  },
+
+  policyNews: {
+    id: "policyNews",
+    region: "Northern Mexico",
+    location: "Crowded waiting room",
+    time: "21:05",
+    weather: "Dust outside",
+    weatherDetail: "Rules at the border changed again",
+    route: "quarry",
+    contentNote: "Hostile political rhetoric and deportation",
+    source: sources.policy,
+    messages: [
+      {
+        sender: "News alert",
+        initial: "N",
+        role: "Verified public policy report",
+        time: "20:48",
+        trusted: true,
+        body: "A clip of President Donald Trump plays beside a White House order calling for broader enforcement, detention capacity, and removals. The legal volunteer says the policy is real; the group-chat explanation is not reliable.",
+      },
+      {
+        sender: "Liberty Stream",
+        initial: "L",
+        role: "Fictional MAGA-style influencer · unverified commentary",
+        time: "20:56",
+        trusted: false,
+        body: "The streamer cheers over footage of people boarding a deportation flight. Edwin recognizes cousin Mateo in the line. The video treats his removal as entertainment.",
+      },
+    ],
+    known: [
+      "The enforcement order and expanded detention policy are public documents.",
+      "The influencer is commentary, not legal information.",
+      "Cousin Mateo's phone no longer connects.",
+    ],
+    assumed: [
+      "Mateo has already reached Honduras.",
+      "Every family at the border will face the same process.",
+      "Arguing online can correct the false claims.",
+    ],
+    choices: [
+      {
+        id: "callLegalAid",
+        title: "Save the clip and call legal aid",
+        hint: "Verify what changed before making the next decision",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 1,
+        next: "northernWait",
+        requires: { battery: 12 },
+        effects: { battery: -12, stress: -6, exposure: -10, progress: 5, trustAll: 1 },
+        consequence: "Phone -12% · Stress -6 · Risk -10",
+        outcomeTitle: "The lawyer separates policy from rumor",
+        outcome: "She cannot promise entry or release. She explains the appointment, detention, and return possibilities in plain language.",
+        setFlags: { legalAdvice: true },
+      },
+      {
+        id: "comfortChildren",
+        title: "Turn off the video",
+        hint: "Tell the children what is known and what is not",
+        icon: "rest",
+        tone: "uncertain",
+        route: "quarry",
+        days: 1,
+        next: "northernWait",
+        effects: { stress: -9, exposure: -3, progress: 4, trustAll: 1 },
+        consequence: "Stress -9 · Cohesion rises",
+        outcomeTitle: "Aurelia says Mateo's name",
+        outcome: "The family refuses to let a stranger's celebration become the last word about someone they love.",
+      },
+      {
+        id: "argueOnline",
+        title: "Reply to the influencer",
+        hint: "Defend Mateo publicly, revealing the family's account",
+        icon: "talk",
+        tone: "danger",
+        route: "ridge",
+        days: 1,
+        next: "northernWait",
+        effects: { battery: -16, stress: 12, exposure: 22, progress: 4 },
+        consequence: "Phone -16% · Stress +12 · Risk +22",
+        outcomeTitle: "The replies multiply faster than facts",
+        outcome: "Strangers repost the family profile and call them criminals. Marisol deletes the thread, but screenshots remain.",
+      },
+    ],
+  },
+
+  northernWait: {
+    id: "northernWait",
+    region: "Northern Mexico",
+    location: "Migrant shelter waiting list",
+    time: "09:30",
+    weather: "Cold desert morning",
+    weatherDetail: "The appointment system has failed twice this week",
+    route: "elmstead",
+    contentNote: "Prolonged displacement, unstable housing, and appointment fraud",
+    source: sources.policy,
+    messages: [
+      {
+        sender: "Shelter coordinator",
+        initial: "S",
+        role: "Verified morning briefing",
+        time: "09:08",
+        trusted: true,
+        body: "The family may remain on the verified list, but the wait could be weeks. A local landlord offers a monthly room. A broker outside claims he can sell an earlier appointment; the clinic says appointments are not for sale.",
+      },
+      {
+        sender: "Edwin",
+        initial: "E",
+        role: "Family notebook · Day forty-one",
+        time: "09:19",
+        trusted: true,
+        body: "I thought the road would be walking. Mostly it is waiting with shoes on, afraid the one time you sleep will be the time your name is called.",
+      },
+    ],
+    known: [
+      "The shelter list is verified but has no guaranteed date.",
+      "A monthly room allows the family to stay together and seek temporary work.",
+      "The legal clinic says the broker cannot sell official appointments.",
+    ],
+    assumed: [
+      "The verified list will move within three weeks.",
+      "A longer local stay will make the eventual process harder.",
+      "The broker has a contact inside the appointment system.",
+    ],
+    choices: [
+      {
+        id: "verifiedWaitlist",
+        title: "Remain on the verified list",
+        hint: "Wait three weeks with the shelter network",
+        icon: "wait",
+        tone: "trusted",
+        route: "elmstead",
+        days: 21,
+        next: "borderCity",
+        effects: { cash: -210, supplies: 1, water: 2, stress: 10, exposure: -8, progress: 4, peopleAll: -2 },
+        consequence: "21 days pass · Cash -$210 · Risk -8",
+        outcomeTitle: "Three weeks are crossed out one square at a time",
+        outcome: "The family rotates between two shelters. On the twenty-first day, the clinic confirms a place in the next stage of the official process.",
+      },
+      {
+        id: "rentNorthernRoom",
+        title: "Rent a room for one month",
+        hint: "Pause, work locally, and keep checking the list",
+        icon: "rest",
+        tone: "uncertain",
+        route: "quarry",
+        days: 30,
+        next: "borderCity",
+        requires: { cash: 260 },
+        effects: { cash: -260, supplies: 2, water: 4, stress: -6, exposure: 3, progress: 3, peopleAll: 5, trustAll: 1 },
+        consequence: "30 days pass · Health +5 each · Cash -$260",
+        outcomeTitle: "For one month, the key belongs to the family",
+        outcome: "Marisol works temporary shifts, Edwin studies with borrowed books, and Daniela learns the walk to the corner shop. The appointment still decides when they leave.",
+      },
+      {
+        id: "payAppointmentBroker",
+        title: "Pay the appointment broker",
+        hint: "Risk savings on a promise the clinic says is false",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 5,
+        next: "borderCity",
+        requires: { cash: 350 },
+        effects: { cash: -350, battery: -12, stress: 20, exposure: 16, progress: 6, trustAll: -1 },
+        consequence: "Cash -$350 · Stress +20 · Risk +16",
+        outcomeTitle: "The confirmation page disappears",
+        outcome: "The broker blocks Marisol's number. The appointment code never works, and the family returns to the shelter list with less money and five lost days.",
+      },
+    ],
+  },
+
+  borderCity: {
+    id: "borderCity",
+    region: "U.S.-Mexico border region",
+    location: "Border-city shelter",
+    time: "16:10",
+    weather: "Dry wind",
+    weatherDetail: "Appointment access is restricted",
+    route: "elmstead",
+    contentNote: "Detention, deportation, and child endangerment",
+    source: sources.routes,
+    messages: [
+      {
+        sender: "Legal clinic",
+        initial: "J",
+        role: "Verified adviser",
+        time: "15:44",
+        trusted: true,
+        body: "You may ask for protection through the official process, but detention is possible and the outcome is uncertain. A coyote outside is offering a crowded river boat. We cannot tell you what to choose.",
+      },
+    ],
+    known: [
+      "The official process may involve detention and an interview.",
+      "The boat is visibly overloaded and has too few life jackets.",
+      "Remaining in Mexico is possible, though work and housing are uncertain.",
+    ],
+    assumed: [
+      "The official appointment will keep the family together.",
+      "The boat operator will return for anyone left behind.",
+      "A transit-country asylum claim will be accepted.",
+    ],
+    choices: [
+      {
+        id: "officialAppointment",
+        title: "Present through the official process",
+        hint: "Accept detention risk and ask for protection",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 8,
+        next: "detention",
+        effects: { cash: -160, supplies: -2, water: -3, stress: 16, exposure: -18, progress: 18 },
+        consequence: "8 days pass · Stress +16 · Progress +18%",
+        outcomeTitle: "The family receives numbered wristbands",
+        outcome: "Their phones and shoelaces are taken for storage. They are moved to a processing room where the lights stay on all night.",
+        contextBonuses: [
+          {
+            flag: "legalAdvice",
+            kind: "payoff",
+            label: "The earlier legal call helps the family prepare",
+            effects: { stress: -4, exposure: -3 },
+          },
+        ],
+      },
+      {
+        id: "boatOffer",
+        title: "Pay for the river boat",
+        hint: "A shorter path with an overloaded boat and no guarantees",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 1,
+        next: "riverCrossing",
+        requires: { cash: 500 },
+        effects: { cash: -500, stress: 20, exposure: 28, progress: 12, trustAll: -1 },
+        consequence: "Cash -$500 · Stress +20 · Risk +28",
+        outcomeTitle: "The boat is smaller than promised",
+        outcome: "The operator keeps counting passengers after every safe space is gone. Daniela asks why there are only three life jackets.",
+      },
+      {
+        id: "stayMexico",
+        title: "Stop and seek protection in Mexico",
+        hint: "End this journey together in a transit country",
+        icon: "rest",
+        tone: "uncertain",
+        route: "quarry",
+        days: 14,
+        next: null,
+        effects: { cash: -280, supplies: -2, stress: -14, exposure: -20, progress: 76, peopleAll: 6 },
+        consequence: "The northbound journey ends · Family remains together",
+        outcomeTitle: "A different future becomes possible",
+        outcome: "The family enters a local protection process. Work, school, and housing are uncertain, but nobody boards the boat today.",
+        ending: {
+          type: "transit",
+          status: "won",
+          title: "A life in the transit country",
+          copy: "The family stops moving north and begins again in Mexico. This is not framed as failure; safety and stability can take more than one form.",
+        },
+      },
+    ],
+  },
+
+  riverCrossing: {
+    id: "riverCrossing",
+    region: "Border river",
+    location: "Unmarked riverbank",
+    time: "02:20",
+    weather: "Cold current",
+    weatherDetail: "The boat sits low in the water",
+    route: "ridge",
+    contentNote: "Child death and drowning risk; no graphic depiction",
+    source: sources.missing,
+    messages: [
+      {
+        sender: "Family notebook",
+        initial: "M",
+        role: "Written before boarding",
+        time: "02:14",
+        trusted: true,
+        body: "The operator says there is no time to wait. Another family refuses to board. A rescue light is visible downstream, but the phone has almost no signal.",
+      },
+    ],
+    known: [
+      "The boat is overloaded.",
+      "There are not enough life jackets.",
+      "The family can still turn back together.",
+    ],
+    assumed: [
+      "The crossing takes only a few minutes.",
+      "The operator can control the boat in the current.",
+      "The distant light belongs to a rescue team.",
+    ],
+    choices: [
+      {
+        id: "callRescue",
+        title: "Call for rescue and wait",
+        hint: "Use the remaining signal and accept apprehension",
+        icon: "phone",
+        tone: "trusted",
+        route: "elmstead",
+        days: 1,
+        next: "detention",
+        requires: { battery: 20 },
+        effects: { battery: -20, stress: 8, exposure: 24, progress: 10, peopleAll: -3 },
+        consequence: "Phone -20% · Risk +24 · Family remains together",
+        outcomeTitle: "A patrol boat answers the call",
+        outcome: "The family is taken to processing. They are cold, exhausted, and alive. Detention is still possible.",
+      },
+      {
+        id: "turnBackRiver",
+        title: "Refuse the boat and turn back",
+        hint: "Lose the payment and return to the legal clinic",
+        icon: "walk",
+        tone: "uncertain",
+        route: "quarry",
+        days: 2,
+        next: "detention",
+        effects: { supplies: -1, water: -2, stress: 6, exposure: -8, progress: 4, people: { aurelia: -5 } },
+        consequence: "Food -1 day · Progress slows · Family remains together",
+        outcomeTitle: "The operator leaves without them",
+        outcome: "Marisol listens to the motor fade. At dawn, the legal clinic helps the family present at the official process.",
+      },
+      {
+        id: "boardOverloaded",
+        title: "Board before the current rises",
+        hint: "The fastest option carries an extreme, irreversible risk",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 1,
+        next: "memorial",
+        effects: { supplies: -1, water: -4, stress: 40, exposure: 35, progress: 15, peopleAll: -18, fatality: "daniela" },
+        consequence: "Daniela dies · Stress +40 · The journey continues with loss",
+        outcomeTitle: "The boat turns sideways",
+        outcome: "The current throws everyone into the dark water. Marisol reaches Edwin and Aurelia. Daniela slips from her grasp. Search lights move across the river until dawn, but do not find her.",
+        deferThresholdEnding: true,
+      },
+    ],
+  },
+
+  memorial: {
+    id: "memorial",
+    region: "Border processing zone",
+    location: "Temporary family room",
+    time: "19:30",
+    weather: "Wind against glass",
+    weatherDetail: "Search operations ended at dusk",
+    route: "ridge",
+    contentNote: "Death of a child and grief",
+    source: sources.missing,
+    messages: [
+      {
+        sender: "Family notebook",
+        initial: "M",
+        role: "Memorial entry",
+        time: "19:30",
+        trusted: true,
+        body: "Daniela's stuffed rabbit is on the chair. The game pauses here. There is no score for surviving someone you love.",
+      },
+    ],
+    known: [
+      "Daniela died during the crossing.",
+      "The surviving family members are together.",
+      "A Red Cross family-tracing worker has recorded her name.",
+    ],
+    assumed: [
+      "Continuing means leaving Daniela behind.",
+      "Returning home will make grief easier.",
+      "Any ending can repair what happened.",
+    ],
+    choices: [
+      {
+        id: "lightCandle",
+        title: "Light a candle and say her name",
+        hint: "Create a private memorial before the interview",
+        icon: "rest",
+        tone: "trusted",
+        route: "elmstead",
+        days: 1,
+        next: "detention",
+        effects: { stress: -10, exposure: -6, progress: 4, trustAll: 1 },
+        consequence: "Daniela is remembered · Cohesion rises",
+        outcomeTitle: "Nube sits beside the candle",
+        outcome: "Each person tells one true thing about Daniela. Nobody calls the moment closure.",
+      },
+      {
+        id: "recordName",
+        title: "Record her name with family tracing",
+        hint: "Preserve the record and ask for the search report",
+        icon: "legal",
+        tone: "uncertain",
+        route: "quarry",
+        days: 1,
+        next: "detention",
+        effects: { battery: -5, stress: 2, exposure: -8, progress: 4 },
+        consequence: "A formal record is created",
+        outcomeTitle: "The worker spells every name back",
+        outcome: "Marisol receives a case number and a promise that any future information will be shared. It is a process, not an answer.",
+      },
+      {
+        id: "returnAfterLoss",
+        title: "End the journey and return",
+        hint: "Choose grief at home over another institution",
+        icon: "wait",
+        tone: "danger",
+        route: "ridge",
+        days: 6,
+        next: null,
+        effects: { stress: 8, exposure: -30, progress: 58 },
+        consequence: "The journey ends after Daniela's death",
+        outcomeTitle: "The road turns south",
+        outcome: "The surviving family accepts return assistance. They go home without the land and without Daniela.",
+        ending: {
+          type: "returned",
+          status: "stopped",
+          title: "Returned with an empty place",
+          copy: "The family returns to Honduras after Daniela's death. The threats that forced them out have not disappeared, and neither has her name.",
+        },
+      },
+    ],
+  },
+
+  detention: {
+    id: "detention",
+    region: "United States processing system",
+    location: "Family detention facility",
+    time: "03:05",
+    weather: "Fluorescent light",
+    weatherDetail: "No one knows when the next interview begins",
+    route: "elmstead",
+    contentNote: "Civil detention and deportation",
+    source: sources.policy,
+    messages: [
+      {
+        sender: "Facility notice",
+        initial: "i",
+        role: "Translated by a volunteer",
+        time: "02:40",
+        trusted: true,
+        body: "The family may request legal counsel, but none is automatically provided for this civil immigration process. They may contest removal, remain detained while the case continues, or accept a removal order.",
+      },
+    ],
+    known: [
+      "A legal-aid lawyer can review the land deed and threat evidence.",
+      "Detention can continue while a case is pending.",
+      "A removal order sends the family back to Honduras.",
+    ],
+    assumed: [
+      "Requesting counsel guarantees release.",
+      "Accepting removal reunites the family quickly.",
+      "The case outcome can be predicted from one interview.",
+    ],
+    choices: [
+      {
+        id: "requestLawyer",
+        title: "Request the legal-aid lawyer",
+        hint: "Present the threat evidence and accept a longer wait",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 18,
+        next: null,
+        requires: { battery: 5 },
+        effects: { battery: -5, cash: -120, supplies: -1, stress: 8, exposure: -20, progress: 100, trustAll: 1 },
+        consequence: "18 days pass · Case continues · Journey reaches an ending",
+        outcomeTitle: "The lawyer starts at the beginning",
+        outcome: "The family is released to a sponsor while the protection case proceeds. Release is not asylum, and the next hearing is months away.",
+        contextBonuses: [
+          {
+            flag: "landPapers",
+            kind: "payoff",
+            label: "The recovered land deed supports the family timeline",
+            effects: { stress: -4, exposure: -5 },
+          },
+          {
+            flag: "legalPacket",
+            kind: "payoff",
+            label: "The shelter's organized evidence packet saves time",
+            effects: { exposure: -5 },
+          },
+          {
+            flag: "legalAdvice",
+            kind: "payoff",
+            label: "Earlier legal advice helps Marisol explain the case",
+            effects: { stress: -3 },
+          },
+        ],
+        ending: {
+          type: "released",
+          status: "won",
+          title: "Released while the case continues",
+          copy: "The family reaches a cousin's apartment with a court date, debt, and no guarantee of protection. Arrival is the start of another uncertain chapter.",
+        },
+      },
+      {
+        id: "contestDetained",
+        title: "Contest removal while detained",
+        hint: "Keep the case open and remain in institutional limbo",
+        icon: "wait",
+        tone: "uncertain",
+        route: "quarry",
+        days: 30,
+        next: null,
+        effects: { cash: -240, supplies: -2, stress: 26, exposure: -15, progress: 92, peopleAll: -5 },
+        consequence: "30 days pass · Health falls · The case remains unresolved",
+        outcomeTitle: "Another month is marked on the wall",
+        outcome: "The family stays together, but the facility becomes their whole world. The game ends while they are still waiting.",
+        ending: {
+          type: "detained",
+          status: "stopped",
+          title: "Detained in legal limbo",
+          copy: "The case has not been decided. The family remains detained, counting hearings and phone calls rather than miles.",
+        },
+      },
+      {
+        id: "acceptRemoval",
+        title: "Accept the removal order",
+        hint: "End detention by returning to the danger that began the journey",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 9,
+        next: null,
+        effects: { stress: 24, exposure: -40, progress: 84, trustAll: -1 },
+        consequence: "The family is deported to Honduras",
+        outcomeTitle: "Their names are called for the flight",
+        outcome: "A social-media clip celebrates the removal numbers. It does not show where the family will sleep after landing.",
+        ending: {
+          type: "deported",
+          status: "stopped",
+          title: "Deported to the place they fled",
+          copy: "The family returns without the money from the forced sale of their home and with the original threat unresolved. Deportation ends the route, not the reasons they left.",
+        },
+      },
+    ],
+  },
+
+  haddadHome: {
+    id: "haddadHome",
+    region: "Northern Syria · Present day",
+    location: "The family's damaged apartment near Aleppo",
+    time: "04:40",
+    weather: "Dust before dawn",
+    weatherDetail: "One room has power from a shared generator",
+    route: "elmstead",
+    contentNote: "Renewed displacement, recruitment pressure, and explosive remnants",
+    source: sources.syria,
+    messages: [
+      {
+        sender: "Nadia",
+        initial: "N",
+        role: "Family conversation",
+        time: "04:32",
+        trusted: true,
+        body: "We returned because every broadcast said rebuilding had begun. The apartment has one usable room, the workshop is stripped, clearance workers marked the end of our street, and the men asking for Sami came back tonight. We have four bags, the document folder, and the same apartment key.",
+      },
+    ],
+    known: [
+      "The family returned to a damaged home after years of displacement.",
+      "Suspected explosive remnants have been marked at the end of the street.",
+      "An armed faction has twice asked when sixteen-year-old Sami will report to them.",
+      "A neighbor plans to leave for the Turkish border before sunrise.",
+    ],
+    assumed: [
+      "A change of government has made every part of Syria safe.",
+      "The apartment deed guarantees that the family can rebuild soon.",
+      "The neighbor knows which roads remain open.",
+    ],
+    choices: [
+      {
+        id: "haddadNeighborConvoy",
+        title: "Leave with the neighbor's convoy",
+        hint: "Stay with people the family knows, but leave immediately",
+        icon: "car",
+        tone: "trusted",
+        route: "elmstead",
+        days: 2,
+        next: "haddadBorder",
+        effects: { supplies: -1, water: -3, stress: 5, exposure: 4, progress: 7 },
+        consequence: "Food -1 day · Water -3 L · The family stays together",
+        outcomeTitle: "The apartment key turns once more",
+        outcome: "Nadia locks the only usable room. The convoy travels slowly, stopping at clearance markers and checkpoints that answer to different authorities.",
+        setFlags: { keptDocuments: true },
+      },
+      {
+        id: "haddadWaitForUncle",
+        title: "Wait for Nadia's brother to call",
+        hint: "Seek better information while supplies and time run down",
+        icon: "wait",
+        tone: "uncertain",
+        route: "quarry",
+        days: 4,
+        next: "haddadBorder",
+        effects: { supplies: -2, water: -4, battery: -24, stress: 11, exposure: 7, progress: 5 },
+        consequence: "Four days pass · Phone -24% · Food -2 days",
+        outcomeTitle: "A short message arrives through static",
+        outcome: "Her brother confirms where Turkish migration authorities are directing newly arrived families, but cannot confirm whether the road or crossing will remain open.",
+        setFlags: { receptionContact: true },
+      },
+      {
+        id: "haddadFirstBroker",
+        title: "Pay a broker to leave tonight",
+        hint: "Buy speed from someone who refuses to give his full name",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 1,
+        next: "haddadBorder",
+        requires: { cash: 600 },
+        effects: { cash: -600, stress: 13, exposure: 15, progress: 9, trustAll: -1 },
+        consequence: "Cash -$600 · Risk +15 · Trust falls",
+        outcomeTitle: "The first promise changes at the first stop",
+        outcome: "The broker moves the family to an unfinished house and demands another payment before explaining when they will leave.",
+        setFlags: { brokerDebt: true },
+      },
+    ],
+  },
+
+  haddadBorder: {
+    id: "haddadBorder",
+    region: "Türkiye–Syria border region · Present day",
+    location: "A crowded reception town",
+    time: "16:10",
+    weather: "Cold rain",
+    weatherDetail: "Families wait beneath plastic sheeting",
+    route: "elmstead",
+    contentNote: "Border controls and exploitation risk",
+    source: sources.turkeyProtection,
+    messages: [
+      {
+        sender: "Protection counselor",
+        initial: "A",
+        role: "Registered humanitarian worker",
+        time: "15:55",
+        trusted: true,
+        body: "Only Türkiye's migration authorities can decide registration. New arrivals may be referred to a temporary accommodation center for assessment. Registration can provide legal stay and access to services; it does not guarantee onward travel or resettlement.",
+      },
+    ],
+    known: [
+      "Mariam's breathing is worse in the wet weather.",
+      "Official registration is free and handled by Turkish migration authorities.",
+      "A cousin has offered one room several hours away.",
+    ],
+    assumed: [
+      "A counselor can promise how the authorities will decide the family's case.",
+      "The cousin can host four people indefinitely.",
+      "A paid driver can bypass every document check.",
+    ],
+    choices: [
+      {
+        id: "haddadRegisterTurkey",
+        title: "Request an official registration referral",
+        hint: "Document every name and medical need for migration authorities",
+        icon: "aid",
+        tone: "trusted",
+        route: "elmstead",
+        days: 5,
+        next: "haddadTurkey",
+        effects: { supplies: 2, medicine: 1, stress: -10, exposure: -8, progress: 10, people: { mariam: 8 } },
+        consequence: "Medicine +1 · Mariam health +8 · Risk falls",
+        outcomeTitle: "Every name and need is recorded",
+        outcome: "The counselor helps the family reach the designated authority. After an individual assessment, they receive registration documents, blankets, and an asthma referral. The papers concern protection in Türkiye, not passage to Europe.",
+        setFlags: { turkeyRegistration: true },
+      },
+      {
+        id: "haddadCousinRoom",
+        title: "Travel to the cousin's room",
+        hint: "Avoid the camp and rely on family support",
+        icon: "car",
+        tone: "uncertain",
+        route: "quarry",
+        days: 3,
+        next: "haddadTurkey",
+        effects: { cash: -140, supplies: -1, stress: -2, exposure: 5, progress: 12 },
+        consequence: "Cash -$140 · A locked room · No registration",
+        outcomeTitle: "Eight people share two rooms",
+        outcome: "The cousin makes space on the floor and refuses payment. The family is safe tonight, but remains outside formal support.",
+        setFlags: { cousinSupport: true },
+      },
+      {
+        id: "haddadBorderDriver",
+        title: "Pay the driver waiting outside",
+        hint: "Move quickly without registration or a written destination",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 2,
+        next: "haddadTurkey",
+        requires: { cash: 800 },
+        effects: { cash: -800, battery: -12, stress: 14, exposure: 18, progress: 16, peopleAll: -3 },
+        consequence: "Cash -$800 · Risk +18 · Health falls",
+        outcomeTitle: "The van stops far from the address",
+        outcome: "The driver unloads everyone beside a highway and leaves. Kareem recognizes none of the landmarks he was promised.",
+      },
+    ],
+  },
+
+  haddadTurkey: {
+    id: "haddadTurkey",
+    region: "Western Türkiye · Present day",
+    location: "A basement room near İzmir",
+    time: "21:20",
+    weather: "Warm night",
+    weatherDetail: "The rent is due again in six days",
+    route: "quarry",
+    contentNote: "Informal labor and wage theft",
+    source: sources.europeBorders,
+    messages: [
+      {
+        sender: "Cousin Fadi",
+        initial: "F",
+        role: "Family contact",
+        time: "20:58",
+        trusted: true,
+        body: "Temporary protection still exists, but rent and food keep rising. The repair shop posts its daily wage. The garment room pays more but keeps passports until the week ends. A broker says the sea crossing leaves as soon as the cash is ready.",
+      },
+    ],
+    known: [
+      "The repair shop wage is posted and paid daily.",
+      "The garment-room owner asks to hold identity documents.",
+      "The family does not have enough cash for four promised boat places.",
+    ],
+    assumed: [
+      "Working longer will make the next route safer.",
+      "The broker's price will not change.",
+      "Keeping documents always prevents exploitation.",
+    ],
+    choices: [
+      {
+        id: "haddadRepairWork",
+        title: "Take the posted repair work",
+        hint: "Kareem repairs mixers and refrigeration motors for a modest wage",
+        icon: "work",
+        tone: "trusted",
+        route: "elmstead",
+        days: 14,
+        next: "haddadAegean",
+        effects: { cash: 520, supplies: -3, water: -5, stress: 2, progress: 12, people: { kareem: -8 } },
+        consequence: "Cash +$520 · 14 days pass · Kareem health -8",
+        outcomeTitle: "The owner counts the wage in front of everyone",
+        outcome: "The work is exhausting, but the amount matches the posted rate. Kareem keeps every identity paper in his own pocket.",
+        skillBonus: {
+          personId: "kareem",
+          skill: "Machine repair",
+          label: "Kareem's repair experience earns a completion bonus",
+          effects: { cash: 120, stress: -2 },
+        },
+        setFlags: { verifiedWages: true },
+      },
+      {
+        id: "haddadGarmentRoom",
+        title: "Accept the garment-room offer",
+        hint: "Nadia can earn more, but the owner wants the document folder",
+        icon: "work",
+        tone: "uncertain",
+        route: "quarry",
+        days: 10,
+        next: "haddadAegean",
+        effects: { cash: 650, supplies: -2, stress: 15, exposure: 8, progress: 10, people: { nadia: -10 } },
+        consequence: "Cash +$650 · Nadia health -10 · Stress +15",
+        outcomeTitle: "Only part of the wage is returned",
+        outcome: "Nadia works long nights. The owner returns the documents but keeps two days of pay for a fee that was never mentioned.",
+      },
+      {
+        id: "haddadBorrowForBoat",
+        title: "Borrow the difference from relatives",
+        hint: "Leave sooner with a debt no one can comfortably afford",
+        icon: "phone",
+        tone: "danger",
+        route: "ridge",
+        days: 4,
+        next: "haddadAegean",
+        effects: { cash: 900, battery: -26, stress: 17, exposure: 10, progress: 14, trustAll: -1 },
+        consequence: "Cash +$900 · Phone -26% · A family debt begins",
+        outcomeTitle: "Three households send what they can",
+        outcome: "The transfers arrive in small amounts. The broker raises his price when he learns the family now has the money.",
+        setFlags: { familyDebt: true },
+      },
+    ],
+  },
+
+  haddadAegean: {
+    id: "haddadAegean",
+    region: "Aegean coast · Present day",
+    location: "A rented room near the sea",
+    time: "02:15",
+    weather: "Wind rising",
+    weatherDetail: "The operator says the departure cannot wait",
+    route: "ridge",
+    contentNote: "Dangerous sea crossing and risk of child death",
+    source: sources.mediterranean,
+    messages: [
+      {
+        sender: "Boat operator",
+        initial: "?",
+        role: "Unverified message",
+        time: "01:47",
+        trusted: false,
+        body: "Four places. Pay now. The sea is short and the weather is fine. Do not bring bags. There is no refund if you walk away.",
+      },
+    ],
+    known: [
+      "The small boat has fewer life jackets than passengers.",
+      "A legal office can review their still-active protection options in Türkiye tomorrow.",
+      "Another operator claims to have a less crowded boat later in the week.",
+    ],
+    assumed: [
+      "A short distance means a safe crossing.",
+      "The later boat will match its photograph.",
+      "Seeking protection in Türkiye ends every danger.",
+    ],
+    choices: [
+      {
+        id: "haddadTurkeyProtection",
+        title: "Walk away and seek protection in Türkiye",
+        hint: "End the sea route and accept an uncertain life where the family is",
+        icon: "aid",
+        tone: "trusted",
+        route: "elmstead",
+        days: 18,
+        next: null,
+        effects: { cash: -280, stress: -12, exposure: -22, progress: 58, trustAll: 1 },
+        consequence: "The sea crossing ends · A local protection process begins",
+        outcomeTitle: "The family keeps all four names together",
+        outcome: "A legal clinic confirms that temporary protection remains in effect and helps the family update their papers and seek housing support. Work and school remain uncertain, but nobody boards tonight.",
+        ending: {
+          type: "local_protection",
+          status: "won",
+          title: "A different safe place",
+          copy: "The Haddads stop moving west and begin again in Türkiye. Safety is incomplete, but choosing another destination is not failure.",
+        },
+      },
+      {
+        id: "haddadLaterBoat",
+        title: "Wait for the less crowded crossing",
+        hint: "Spend more time and money for a boat with life jackets",
+        icon: "wait",
+        tone: "uncertain",
+        route: "quarry",
+        days: 6,
+        next: "haddadGreece",
+        requires: { cash: 900 },
+        effects: { cash: -900, supplies: -2, water: -3, stress: 12, exposure: 20, progress: 18, peopleAll: -6 },
+        consequence: "Cash -$900 · Health -6 each · The family reaches Greece",
+        outcomeTitle: "A rescue crew meets the boat before dawn",
+        outcome: "The crossing is cold and frightening. A rescue crew brings every passenger ashore and directs families toward registration.",
+      },
+      {
+        id: "haddadOverloadedBoat",
+        title: "Board the overloaded boat now",
+        hint: "Accept the operator's deadline despite the missing life jackets",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 2,
+        next: "haddadMemorial",
+        effects: { cash: -700, water: -3, stress: 40, exposure: 34, progress: 16, peopleAll: -17, fatality: "mariam" },
+        consequence: "Mariam dies · Stress +40 · The family continues with loss",
+        outcomeTitle: "The boat takes on water in the dark",
+        outcome: "Passengers are thrown into the water before rescue lights arrive. Kareem, Nadia, and Sami are pulled aboard. Mariam is not found. The loss is recorded without graphic detail.",
+        deferThresholdEnding: true,
+      },
+    ],
+  },
+
+  haddadMemorial: {
+    id: "haddadMemorial",
+    region: "Eastern Aegean · Present day",
+    location: "A temporary reception room",
+    time: "18:05",
+    weather: "Salt wind",
+    weatherDetail: "The search ended before sunset",
+    route: "ridge",
+    contentNote: "Death of a child and grief",
+    source: sources.mediterranean,
+    messages: [
+      {
+        sender: "Family notebook",
+        initial: "M",
+        role: "Memorial entry",
+        time: "17:50",
+        trusted: true,
+        body: "Mariam's apartment key is inside Nadia's document folder. The family tells the tracing worker how she drew every room they slept in.",
+      },
+    ],
+    known: [
+      "Mariam died during the crossing.",
+      "The surviving family members reached the same reception center.",
+      "A family-tracing worker can create a formal record.",
+    ],
+    assumed: [
+      "Continuing means forgetting Mariam.",
+      "Returning will restore the life the family lost.",
+      "Any official record can answer their grief.",
+    ],
+    choices: [
+      {
+        id: "haddadRecordMariam",
+        title: "Record Mariam's name with family tracing",
+        hint: "Create a case record before continuing",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 2,
+        next: "haddadGreece",
+        effects: { stress: -7, exposure: -8, progress: 4, trustAll: 1 },
+        consequence: "A formal record is created · Cohesion rises",
+        outcomeTitle: "The worker repeats her name carefully",
+        outcome: "The record includes Mariam's drawing habit, her asthma, and the brass key. It does not reduce her to a number from a boat.",
+      },
+      {
+        id: "haddadShoreVigil",
+        title: "Join the shoreline vigil",
+        hint: "Pause with other survivors before the next decision",
+        icon: "rest",
+        tone: "uncertain",
+        route: "quarry",
+        days: 3,
+        next: "haddadGreece",
+        effects: { supplies: -1, stress: -10, progress: 3, trustAll: 1 },
+        consequence: "Three days pass · Mariam is remembered",
+        outcomeTitle: "Four names are spoken into the wind",
+        outcome: "Other families add names of people they lost. Nobody calls the gathering closure.",
+      },
+      {
+        id: "haddadReturnAfterLoss",
+        title: "Return to Türkiye",
+        hint: "End the westward journey after Mariam's death",
+        icon: "wait",
+        tone: "danger",
+        route: "ridge",
+        days: 8,
+        next: null,
+        effects: { stress: 10, exposure: -30, progress: 45 },
+        consequence: "The journey ends after Mariam's death",
+        outcomeTitle: "The ferry carries an empty seat",
+        outcome: "The surviving family accepts return assistance and begins another protection process in Türkiye.",
+        ending: {
+          type: "returned",
+          status: "stopped",
+          title: "Returned with an empty place",
+          copy: "The family returns to Türkiye without Mariam. The failed return to Syria, the threats that displaced them again, and the debt from the journey remain unresolved.",
+        },
+      },
+    ],
+  },
+
+  haddadGreece: {
+    id: "haddadGreece",
+    region: "Greece · Present day",
+    location: "Island reception center",
+    time: "11:25",
+    weather: "Hard sunlight",
+    weatherDetail: "Registration lines fill the courtyard",
+    route: "elmstead",
+    contentNote: "Detention, fingerprinting, and family separation risk",
+    source: sources.europeBorders,
+    messages: [
+      {
+        sender: "Legal volunteer",
+        initial: "L",
+        role: "Verified aid organization",
+        time: "11:03",
+        trusted: true,
+        body: "Keep your documents and registration paper. Rules about where an asylum claim is examined are complex, and no volunteer can promise which country will accept the case.",
+      },
+    ],
+    known: [
+      "The official line keeps the family registered together.",
+      "People outside the gate sell transport without receipts.",
+      "A ferry ticket requires documents the family may not have.",
+    ],
+    assumed: [
+      "Registration guarantees travel to Germany.",
+      "Avoiding the camp prevents all detention.",
+      "The private driver knows every changing border rule.",
+    ],
+    choices: [
+      {
+        id: "haddadGreekRegistration",
+        title: "Complete registration together",
+        hint: "Accept a longer wait and keep an official record",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 8,
+        next: "haddadBalkans",
+        effects: { cash: -120, supplies: 2, medicine: 1, stress: -5, exposure: -12, progress: 13 },
+        consequence: "Eight days pass · Medicine +1 · Risk falls",
+        outcomeTitle: "Four names stay on one file",
+        outcome: "The family receives registration papers and a referral to a mainland shelter. The papers record arrival; they do not decide asylum.",
+        setFlags: { greekRegistration: true },
+      },
+      {
+        id: "haddadLeaveCamp",
+        title: "Leave with families from the same bus",
+        hint: "Follow shared information without waiting for every paper",
+        icon: "walk",
+        tone: "uncertain",
+        route: "quarry",
+        days: 5,
+        next: "haddadBalkans",
+        effects: { cash: -220, supplies: -2, water: -4, stress: 12, exposure: 12, progress: 17, peopleAll: -5 },
+        consequence: "Cash -$220 · Risk +12 · Health -5 each",
+        outcomeTitle: "The group reaches the mainland exhausted",
+        outcome: "Families share food and watch the children in shifts. Nobody can confirm which northern border will still be open.",
+      },
+      {
+        id: "haddadPrivateVan",
+        title: "Pay the private van driver",
+        hint: "Trade most remaining cash for an unverified shortcut",
+        icon: "car",
+        tone: "danger",
+        route: "ridge",
+        days: 3,
+        next: "haddadBalkans",
+        requires: { cash: 700 },
+        effects: { cash: -700, battery: -18, stress: 18, exposure: 24, progress: 20, peopleAll: -4 },
+        consequence: "Cash -$700 · Risk +24 · Phone -18%",
+        outcomeTitle: "The van leaves everyone beside a closed station",
+        outcome: "The driver keeps the fare and points north. The station has not served passengers for months.",
+      },
+    ],
+  },
+
+  haddadBalkans: {
+    id: "haddadBalkans",
+    region: "Western Balkans · Present day",
+    location: "A closed transit station",
+    time: "06:30",
+    weather: "Freezing fog",
+    weatherDetail: "A new barrier went up overnight",
+    route: "quarry",
+    contentNote: "Border closure, pushback risk, and exposure",
+    source: sources.europeBorders,
+    messages: [
+      {
+        sender: "Station announcement",
+        initial: "i",
+        role: "Official notice",
+        time: "06:15",
+        trusted: true,
+        body: "Transit is suspended. Families requiring medical assistance should report to the marked tent. No reopening time has been announced.",
+      },
+    ],
+    known: [
+      "The humanitarian tent confirms names before moving families.",
+      "A large group plans to walk toward the next town.",
+      "A document seller promises papers that cannot be verified.",
+    ],
+    assumed: [
+      "The border will reopen today.",
+      "A larger group cannot be pushed back.",
+      "A convincing document will survive database checks.",
+    ],
+    choices: [
+      {
+        id: "haddadAidTransfer",
+        title: "Wait for the verified family transfer",
+        hint: "Lose time but keep names and documents together",
+        icon: "aid",
+        tone: "trusted",
+        route: "elmstead",
+        days: 12,
+        next: "haddadEuropeNews",
+        effects: { cash: -180, supplies: 1, water: 2, stress: -8, exposure: -10, progress: 15 },
+        consequence: "12 days pass · Risk falls · Food +1 day",
+        outcomeTitle: "A manifest lists the whole family",
+        outcome: "The transfer moves slowly through formal reception points. Volunteers explain that each border can still make a different decision.",
+      },
+      {
+        id: "haddadWalkNorth",
+        title: "Walk north with the larger group",
+        hint: "Move despite the closure and worsening weather",
+        icon: "walk",
+        tone: "uncertain",
+        route: "quarry",
+        days: 7,
+        next: "haddadEuropeNews",
+        effects: { supplies: -3, water: -4, stress: 16, exposure: 18, progress: 18, peopleAll: -12 },
+        consequence: "Food -3 days · Health -12 each · Risk +18",
+        outcomeTitle: "The group turns back from the fence",
+        outcome: "Police block the road and redirect families toward an aid station. The walking gains little distance and costs nearly all remaining food.",
+      },
+      {
+        id: "haddadFalsePapers",
+        title: "Buy the seller's transit papers",
+        hint: "Risk detention for documents that may be false",
+        icon: "legal",
+        tone: "danger",
+        route: "ridge",
+        days: 4,
+        next: "haddadEuropeNews",
+        requires: { cash: 500 },
+        effects: { cash: -500, stress: 23, exposure: 30, progress: 20, trustAll: -1 },
+        consequence: "Cash -$500 · Risk +30 · Trust falls",
+        outcomeTitle: "The first scanner rejects every page",
+        outcome: "The family spends a night in a holding room before being released to the official reception line. The seller is gone.",
+      },
+    ],
+  },
+
+  haddadEuropeNews: {
+    id: "haddadEuropeNews",
+    region: "Central Europe · Present day",
+    location: "A temporary rail shelter",
+    time: "20:10",
+    weather: "Rain on metal roofing",
+    weatherDetail: "Phones replay the same return-convoy celebration",
+    route: "quarry",
+    contentNote: "Anti-refugee rhetoric and dehumanizing social media",
+    source: sources.europeBorders,
+    messages: [
+      {
+        sender: "Shared social post",
+        initial: "!",
+        role: "Fictional anti-refugee influencer",
+        time: "19:42",
+        trusted: false,
+        body: "Syria has changed, so reject every claim and send them all back. Tonight's return convoy proves the country is safe. Share if you want the removals to move faster.",
+      },
+      {
+        sender: "Shelter legal desk",
+        initial: "L",
+        role: "Verified information",
+        time: "19:55",
+        trusted: true,
+        body: "A viral post is not an official decision. Syrian claims are being examined under updated guidance, but each person's risks and circumstances still require an individual assessment.",
+      },
+    ],
+    known: [
+      "The legal desk has tomorrow's official registration address.",
+      "The influencer does not say whether the people shown returned voluntarily or what conditions awaited them.",
+      "Posting publicly can expose the family's location and account.",
+    ],
+    assumed: [
+      "A political transition makes every Syrian case identical.",
+      "Arguing online will change the influencer's audience.",
+      "Reaching Germany guarantees a positive asylum decision.",
+    ],
+    choices: [
+      {
+        id: "haddadVerifyRules",
+        title: "Ask the legal desk to verify the rules",
+        hint: "Separate public rhetoric from the process the family will face",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 2,
+        next: "haddadGermany",
+        effects: { battery: -6, stress: -8, exposure: -12, progress: 10, trustAll: 1 },
+        consequence: "Phone -6% · Stress -8 · Risk falls",
+        outcomeTitle: "The adviser writes two lists on paper",
+        outcome: "One list names current procedures; the other names the family's own evidence: repeated displacement, the damaged home, recruitment pressure on Sami, and Mariam's medical history. The post continues circulating without them.",
+        setFlags: { germanLegalAdvice: true },
+      },
+      {
+        id: "haddadCloseFeed",
+        title: "Close the feed and rest together",
+        hint: "Protect the family's attention before the final leg",
+        icon: "rest",
+        tone: "uncertain",
+        route: "quarry",
+        days: 1,
+        next: "haddadGermany",
+        effects: { battery: 8, stress: -5, progress: 9 },
+        consequence: "Stress -5 · Phone +8%",
+        outcomeTitle: "The shelter roof replaces the shouting",
+        outcome: "Nadia puts the phone away. The family reviews names, documents, evidence from their attempted return, and the morning meeting place instead.",
+      },
+      {
+        id: "haddadArgueOnline",
+        title: "Reply from the family account",
+        hint: "Challenge the post while exposing identity and location",
+        icon: "talk",
+        tone: "danger",
+        route: "ridge",
+        days: 1,
+        next: "haddadGermany",
+        effects: { battery: -22, stress: 14, exposure: 22, progress: 9 },
+        consequence: "Phone -22% · Stress +14 · Risk +22",
+        outcomeTitle: "The reply is copied without its context",
+        outcome: "Some strangers offer support. Others repost photographs of the family's damaged street beside claims that the images are old or fabricated.",
+      },
+    ],
+  },
+
+  haddadGermany: {
+    id: "haddadGermany",
+    region: "Germany · Present day",
+    location: "Regional arrival center",
+    time: "09:05",
+    weather: "Clear cold morning",
+    weatherDetail: "Numbers are called in several languages",
+    route: "elmstead",
+    contentNote: "Asylum registration and uncertain legal status",
+    source: sources.europeAsylum,
+    messages: [
+      {
+        sender: "Arrival-center interpreter",
+        initial: "i",
+        role: "Official information",
+        time: "08:48",
+        trusted: true,
+        body: "Registration begins the asylum process. Political change in Syria may affect the assessment, but it is not an automatic approval or refusal. Your family's circumstances and current risks must be examined individually.",
+      },
+    ],
+    known: [
+      "The center can register the surviving family members together.",
+      "A legal clinic can review their Syrian documents, attempted return, transit records, and evidence concerning Sami.",
+      "A relative in another country cannot transfer the case by invitation alone.",
+    ],
+    assumed: [
+      "The fall of the former government automatically ends every Syrian protection claim.",
+      "Avoiding registration preserves every option.",
+      "One missing document decides the entire case.",
+    ],
+    choices: [
+      {
+        id: "haddadRegisterGermany",
+        title: "Register and request individual review",
+        hint: "Enter the asylum process with every document, recorded name, and current risk",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 21,
+        next: null,
+        effects: { cash: -160, stress: 9, exposure: -28, progress: 100, trustAll: 1 },
+        consequence: "21 days pass · The asylum case begins · Route complete",
+        outcomeTitle: "A case number is read back to the family",
+        outcome: "The Haddads move to temporary family accommodation while officials assess the conditions they faced after returning to Syria and the risks each survivor describes. Arrival has ended the route, not the uncertainty.",
+        contextBonuses: [
+          {
+            flag: "keptDocuments",
+            kind: "payoff",
+            label: "The protected document folder supports the family timeline",
+            effects: { stress: -4, exposure: -5 },
+          },
+          {
+            flag: "greekRegistration",
+            kind: "payoff",
+            label: "Earlier registration records explain the route clearly",
+            effects: { exposure: -4 },
+          },
+          {
+            flag: "germanLegalAdvice",
+            kind: "payoff",
+            label: "The verified legal address prevents another missed queue",
+            effects: { stress: -4 },
+          },
+        ],
+        ending: {
+          type: "asylum_pending",
+          status: "won",
+          title: "Registered while the case continues",
+          copy: "The Haddads reach temporary accommodation with a case number, evidence from a failed return, debt, grief, and no guarantee of protection. Their new chapter begins with an individual review.",
+        },
+      },
+      {
+        id: "haddadFamilySponsor",
+        title: "Ask the clinic about family sponsorship",
+        hint: "Delay registration while a lawful transfer is reviewed",
+        icon: "phone",
+        tone: "uncertain",
+        route: "quarry",
+        days: 35,
+        next: null,
+        requires: { battery: 5 },
+        effects: { battery: -8, cash: -260, supplies: -2, stress: 18, exposure: -18, progress: 96, peopleAll: -4 },
+        consequence: "35 days pass · The transfer remains unresolved",
+        outcomeTitle: "The family waits under temporary protection",
+        outcome: "The clinic files an inquiry, but the family cannot move based on a relative's promise alone. They remain housed while options are reviewed.",
+        ending: {
+          type: "transfer_pending",
+          status: "won",
+          title: "Safe, with the destination undecided",
+          copy: "The immediate journey ends in temporary protection. The legal destination remains unresolved, and safety does not erase the cost of reaching it.",
+        },
+      },
+      {
+        id: "haddadAvoidRegistration",
+        title: "Leave before registration",
+        hint: "Avoid the system and rely on informal shelter and work",
+        icon: "walk",
+        tone: "danger",
+        route: "ridge",
+        days: 12,
+        next: null,
+        effects: { cash: -420, supplies: -3, stress: 25, exposure: 34, progress: 91, peopleAll: -8 },
+        consequence: "The family remains undocumented and without stable shelter",
+        outcomeTitle: "Every knock sounds official",
+        outcome: "The family finds temporary work and a crowded room, but avoids health care and school enrollment because they fear detection.",
+        ending: {
+          type: "undocumented",
+          status: "stopped",
+          title: "Arrival without stability",
+          copy: "The map says the family reached Germany. Their lives remain hidden, precarious, and outside a protection process.",
+        },
+      },
+    ],
+  },
+
+  diopHome: {
+    id: "diopHome",
+    region: "Mbour, Senegal · Present day",
+    location: "The repair-stall courtyard",
+    time: "06:20",
+    weather: "Salt haze at dawn",
+    weatherDetail: "The recruiter wants an answer before noon",
+    route: "elmstead",
+    contentNote: "Child migration, family debt, and unsafe recruitment",
+    source: sources.senegalAtlantic,
+    messages: [
+      {
+        sender: "Ibrahima",
+        initial: "I",
+        role: "Group notebook",
+        time: "06:02",
+        trusted: true,
+        body: "The repair stall has opened twelve days this month. Mamadou's fishing crew owes him two weeks of pay. A recruiter says four places are waiting north, but the price changes every time he calls. Lamine's blue school notebook is inside the smallest bag.",
+      },
+    ],
+    known: [
+      "The recruiter cannot provide a company name, contract, or lawful travel document.",
+      "A community migration office will review the offer without charging a fee.",
+      "Selling Ibrahima's motorcycle would remove the group's most reliable local income.",
+    ],
+    assumed: [
+      "A cousin's successful arrival means the same route will work again.",
+      "The recruiter has reserved four real places.",
+      "Debt will disappear once anyone reaches Europe.",
+    ],
+    choices: [
+      {
+        id: "diopVerifyOffice",
+        title: "Take the offer to the migration office",
+        hint: "Lose two days and compare the promise with verified information",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 2,
+        next: "diopDakar",
+        effects: { cash: -40, stress: -6, exposure: -3, progress: 6, trustAll: 1 },
+        consequence: "Cash -$40 · Stress -6 · The promise is checked",
+        outcomeTitle: "The counselor finds no job behind the voice note",
+        outcome: "The office cannot make the group's choices for them, but it confirms that the recruiter controls no legal job or visa. They leave with emergency contacts and the risks written plainly.",
+        setFlags: { verifiedWarning: true },
+      },
+      {
+        id: "diopSellMotorbike",
+        title: "Sell Ibrahima's motorcycle",
+        hint: "Raise money by giving up the tool that keeps the stall open",
+        icon: "work",
+        tone: "uncertain",
+        route: "quarry",
+        days: 1,
+        next: "diopDakar",
+        effects: { cash: 850, stress: 10, progress: 7, trustAll: -1 },
+        consequence: "Cash +$850 · Stress +10 · Local income is gone",
+        outcomeTitle: "The buyer takes the motorcycle before sunset",
+        outcome: "The sale pays less than Ibrahima hoped. He locks the empty stall and keeps its brass key even though there is no engine left to repair.",
+        setFlags: { soldMotorbike: true },
+      },
+      {
+        id: "diopPayRecruiter",
+        title: "Pay the recruiter for four places",
+        hint: "Trade most available cash for a location pin and an unverified promise",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 1,
+        next: "diopDakar",
+        requires: { cash: 650 },
+        effects: { cash: -650, battery: -10, stress: 15, exposure: 18, progress: 9, trustAll: -1 },
+        consequence: "Cash -$650 · Risk +18 · Trust falls",
+        outcomeTitle: "The promised driver becomes another payment",
+        outcome: "The recruiter sends a Dakar location and says transport north now costs extra. His earlier voice notes disappear from the account.",
+        setFlags: { recruiterPaid: true },
+      },
+    ],
+  },
+
+  diopDakar: {
+    id: "diopDakar",
+    region: "Dakar, Senegal · Present day",
+    location: "A workers' cooperative in Pikine",
+    time: "07:40",
+    weather: "Hot morning traffic",
+    weatherDetail: "Every delay spends food and rent",
+    route: "elmstead",
+    contentNote: "Precarious work and wage exploitation",
+    source: sources.senegalAtlantic,
+    messages: [
+      {
+        sender: "Cooperative board",
+        initial: "W",
+        role: "Posted work notice",
+        time: "07:25",
+        trusted: true,
+        body: "Short repair and loading shifts are paid at the posted rate. No worker pays a recruiter. Northbound transport is separate, and no employer can promise entry to Spain.",
+      },
+    ],
+    known: [
+      "The cooperative records hours and pays workers directly.",
+      "A licensed coach sells named tickets north through a declared crossing.",
+      "An unmarked van offers a faster overnight ride with no destination address.",
+    ],
+    assumed: [
+      "Any work delay will cause the route to close.",
+      "Fishing skill near shore is enough for an Atlantic crossing.",
+      "The van is connected to the original recruiter.",
+    ],
+    choices: [
+      {
+        id: "diopRepairShift",
+        title: "Work six days at the repair cooperative",
+        hint: "Use a known skill and leave with accountable wages",
+        icon: "tools",
+        tone: "trusted",
+        route: "elmstead",
+        days: 6,
+        next: "diopSaintLouis",
+        effects: { cash: 320, supplies: -1, water: -2, stress: 2, progress: 12, people: { ibrahima: -4 } },
+        consequence: "Cash +$320 · Six days pass · Ibrahima health -4",
+        outcomeTitle: "The cooperative pays every recorded hour",
+        outcome: "Ibrahima repairs ignition wiring while the others stay nearby. The money is smaller than the recruiter's promises and real enough to count.",
+        skillBonus: {
+          personId: "ibrahima",
+          skill: "Motorcycle repair",
+          label: "Ibrahima's repair skill earns a completion bonus",
+          effects: { cash: 80, stress: -3 },
+        },
+        setFlags: { postedWage: true },
+      },
+      {
+        id: "diopFishingCrew",
+        title: "Join a four-day coastal fishing crew",
+        hint: "Earn food and cash through Mamadou's contacts",
+        icon: "work",
+        tone: "uncertain",
+        route: "quarry",
+        days: 4,
+        next: "diopSaintLouis",
+        effects: { cash: 240, supplies: 2, water: -3, stress: 5, progress: 11, people: { mamadou: -5 } },
+        consequence: "Cash +$240 · Food +2 days · Mamadou health -5",
+        outcomeTitle: "The captain pays after the catch is sold",
+        outcome: "The work is exhausting but familiar. Mamadou is paid in front of the crew and brings rice and dried fish back to the room.",
+        skillBonus: {
+          personId: "mamadou",
+          skill: "Artisanal fishing",
+          label: "Mamadou's experience protects the crew's gear",
+          effects: { cash: 45, people: { mamadou: 2 } },
+        },
+      },
+      {
+        id: "diopNightVan",
+        title: "Take the unmarked van tonight",
+        hint: "Move quickly with no passenger list or arrival address",
+        icon: "car",
+        tone: "danger",
+        route: "ridge",
+        days: 1,
+        next: "diopSaintLouis",
+        requires: { cash: 380 },
+        effects: { cash: -380, battery: -12, stress: 17, exposure: 22, progress: 14, peopleAll: -4 },
+        consequence: "Cash -$380 · Risk +22 · Health -4 each",
+        outcomeTitle: "The van stops short of the promised town",
+        outcome: "The driver leaves everyone beside a highway junction before dawn. The four relatives remain together but must walk the final distance.",
+      },
+    ],
+  },
+
+  diopSaintLouis: {
+    id: "diopSaintLouis",
+    region: "Saint-Louis, Senegal · Present day",
+    location: "The northern coach yard",
+    time: "16:10",
+    weather: "Dry coastal wind",
+    weatherDetail: "The border rules are repeated differently in every queue",
+    route: "elmstead",
+    contentNote: "Smuggling, document theft, and border interception",
+    source: sources.senegalAtlantic,
+    messages: [
+      {
+        sender: "Coach clerk",
+        initial: "T",
+        role: "Licensed transport office",
+        time: "15:54",
+        trusted: true,
+        body: "A ticket is transport, not permission to remain anywhere. Keep your own identity papers. Nobody at this window sells a sea crossing or guarantees entry to Europe.",
+      },
+    ],
+    known: [
+      "The licensed coach issues a receipt and a passenger name for each seat.",
+      "A coastal truck driver plans to hide passengers under cargo tarps.",
+      "A broker wants to hold original documents before discussing the price.",
+    ],
+    assumed: [
+      "A hidden road crossing cannot be intercepted.",
+      "The broker needs original documents to make valid copies.",
+      "The cheapest route leaves more money for safety later.",
+    ],
+    choices: [
+      {
+        id: "diopLicensedCoach",
+        title: "Buy four named coach tickets",
+        hint: "Use declared transport and keep every document",
+        icon: "car",
+        tone: "trusted",
+        route: "elmstead",
+        days: 3,
+        next: "diopNouakchott",
+        requires: { cash: 180 },
+        effects: { cash: -180, supplies: -1, water: -2, stress: 4, exposure: -3, progress: 13, trustAll: 1 },
+        consequence: "Cash -$180 · Risk falls · Four receipts remain",
+        outcomeTitle: "The clerk reads four names from the manifest",
+        outcome: "The crossing is slow and closely checked. The group reaches Nouakchott with every document and ticket still in its own bag.",
+        setFlags: { groupTickets: true },
+      },
+      {
+        id: "diopCoastalTruck",
+        title: "Hide beneath the coastal truck's tarps",
+        hint: "Pay less for an undeclared ride north",
+        icon: "car",
+        tone: "uncertain",
+        route: "quarry",
+        days: 2,
+        next: "diopNouakchott",
+        requires: { cash: 120 },
+        effects: { cash: -120, water: -4, stress: 14, exposure: 17, progress: 14, peopleAll: -6 },
+        consequence: "Cash -$120 · Water -4 L · Health -6 each",
+        outcomeTitle: "Heat gathers beneath the tarps",
+        outcome: "The driver avoids the main station and leaves the group outside the city. Lamine is weak from the heat but still walking.",
+      },
+      {
+        id: "diopBorderBroker",
+        title: "Give the broker the document folder",
+        hint: "Trust him to arrange transport and copied papers",
+        icon: "legal",
+        tone: "danger",
+        route: "ridge",
+        days: 1,
+        next: "diopNouakchott",
+        requires: { cash: 450 },
+        effects: { cash: -450, battery: -15, stress: 20, exposure: 27, progress: 15, trustAll: -1 },
+        consequence: "Cash -$450 · Risk +27 · Documents are compromised",
+        outcomeTitle: "The originals return with pages missing",
+        outcome: "The broker eventually returns the folder after another payment demand. Photocopies of the identity pages remain on his phone.",
+        setFlags: { documentsCopied: true },
+      },
+    ],
+  },
+
+  diopNouakchott: {
+    id: "diopNouakchott",
+    region: "Nouakchott, Mauritania · Present day",
+    location: "A rented room behind a boatyard",
+    time: "21:30",
+    weather: "Warm Atlantic wind",
+    weatherDetail: "The operator delays departure without returning deposits",
+    route: "quarry",
+    contentNote: "Debt, labor exploitation, and preparation for an unsafe crossing",
+    source: sources.atlanticRisk,
+    messages: [
+      {
+        sender: "Community contact",
+        initial: "C",
+        role: "Verified safety message",
+        time: "21:08",
+        trusted: true,
+        body: "Atlantic crossings can last far longer than promised. Boats may drift without enough fuel, food, or water. A forecast can reduce uncertainty; it cannot make an unseaworthy boat safe.",
+      },
+    ],
+    known: [
+      "The written forecast warns of stronger swell for several nights.",
+      "Ibrahima and Cheikh can earn part of the fare in the boatyard.",
+      "Relatives at home can borrow money but would risk rent and school costs.",
+    ],
+    assumed: [
+      "The operator will refund a deposit if the group refuses a boat.",
+      "A repaired engine means the hull and fuel supply are safe.",
+      "Borrowed fare will be easy to repay after arrival.",
+    ],
+    choices: [
+      {
+        id: "diopForecastWait",
+        title: "Wait for the forecast and buy supplies",
+        hint: "Spend eight days reducing avoidable risk before deciding",
+        icon: "wait",
+        tone: "trusted",
+        route: "elmstead",
+        days: 8,
+        next: "diopAtlantic",
+        effects: { cash: -220, supplies: 3, water: 6, stress: 6, exposure: -6, progress: 13 },
+        consequence: "Cash -$220 · Food +3 days · Water +6 L",
+        outcomeTitle: "The forecast is calmer, not safe",
+        outcome: "The group stores water in sealed containers and refuses two departures during stronger swell. The operator says the next choice must be final.",
+        setFlags: { checkedForecast: true },
+      },
+      {
+        id: "diopRepairDeposit",
+        title: "Repair engines until the deposit is earned",
+        hint: "Work ten days instead of borrowing from home",
+        icon: "tools",
+        tone: "uncertain",
+        route: "quarry",
+        days: 10,
+        next: "diopAtlantic",
+        effects: { cash: 300, supplies: -3, water: -4, stress: 10, progress: 12, people: { ibrahima: -6, cheikh: -5 } },
+        consequence: "Cash +$300 · Ten days pass · Health falls",
+        outcomeTitle: "The yard pays less than the foreman promised",
+        outcome: "Ibrahima and Cheikh repair three motors. The withheld wages are called a housing fee, but enough cash remains for another decision.",
+        setFlags: { earnedDeposit: true },
+      },
+      {
+        id: "diopBorrowFare",
+        title: "Ask three households to borrow the fare",
+        hint: "Raise money quickly by moving the risk back home",
+        icon: "phone",
+        tone: "danger",
+        route: "ridge",
+        days: 3,
+        next: "diopAtlantic",
+        effects: { cash: 650, battery: -22, stress: 18, exposure: 10, progress: 13, trustAll: -1 },
+        consequence: "Cash +$650 · Phone -22% · Family debt grows",
+        outcomeTitle: "The transfers arrive from three crowded homes",
+        outcome: "Every payment comes with a voice message about rent, medicine, or school fees now postponed. The operator raises the fare again.",
+        setFlags: { familyDebt: true },
+      },
+    ],
+  },
+
+  diopAtlantic: {
+    id: "diopAtlantic",
+    region: "Atlantic coast · Present day",
+    location: "A hidden beach before departure",
+    time: "01:35",
+    weather: "Swell building offshore",
+    weatherDetail: "The operator says paid places expire tonight",
+    route: "ridge",
+    contentNote: "Dangerous sea crossing and the death of a 12-year-old child",
+    source: sources.atlanticRisk,
+    messages: [
+      {
+        sender: "Boat operator",
+        initial: "?",
+        role: "Unverified instruction",
+        time: "01:12",
+        trusted: false,
+        body: "Bring one bag each. The smaller pirogue may leave later, but nobody gets a refund. If you turn back, your places are gone.",
+      },
+    ],
+    known: [
+      "The current boat sits low before every passenger has boarded.",
+      "The smaller pirogue has more water and fewer passengers but no rescue guarantee.",
+      "A community contact can help the group return to Senegal without boarding.",
+    ],
+    assumed: [
+      "Money already paid must be protected by continuing.",
+      "A calmer forecast makes an ocean crossing safe.",
+      "The operator will call rescue if the boat drifts or overturns.",
+    ],
+    choices: [
+      {
+        id: "diopTurnBack",
+        title: "Turn back with all four relatives",
+        hint: "Lose the fare and end the Atlantic journey alive",
+        icon: "wait",
+        tone: "trusted",
+        route: "elmstead",
+        days: 12,
+        next: null,
+        effects: { cash: -180, stress: 8, exposure: -32, progress: 55, trustAll: 1 },
+        consequence: "The crossing ends · All four return alive",
+        outcomeTitle: "The pirogue leaves without them",
+        outcome: "The community contact helps the group arrange transport south. Debt and unstable work remain, but Lamine returns to school with his notebook.",
+        ending: {
+          type: "safe_return",
+          status: "won",
+          title: "All four return alive",
+          copy: "The Diop relatives stop the Atlantic journey and return to Senegal. Choosing survival does not erase the debt or the reasons they left, but it keeps every person alive.",
+        },
+      },
+      {
+        id: "diopSmallerPirogue",
+        title: "Wait for the smaller pirogue",
+        hint: "Carry more water and fewer passengers into the same open-ocean risk",
+        icon: "wait",
+        tone: "uncertain",
+        route: "quarry",
+        days: 6,
+        next: "diopMemorial",
+        requires: { cash: 1000 },
+        effects: { cash: -1000, supplies: -3, water: -8, stress: 40, exposure: 33, progress: 19, peopleAll: -15, fatality: "lamine" },
+        consequence: "Lamine dies · Stress +40 · The survivors are rescued",
+        outcomeTitle: "A breaking swell overturns the pirogue",
+        outcome: "The pirogue overturns during the second night. A rescue crew recovers Ibrahima, Mamadou, and Cheikh. Lamine does not survive. The event is recorded without graphic detail.",
+        deferThresholdEnding: true,
+      },
+      {
+        id: "diopNightPirogue",
+        title: "Board the crowded pirogue tonight",
+        hint: "Accept missing life jackets and the operator's deadline",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 3,
+        next: "diopMemorial",
+        requires: { cash: 750 },
+        effects: { cash: -750, supplies: -3, water: -7, stress: 46, exposure: 42, progress: 18, peopleAll: -18, fatality: "lamine" },
+        consequence: "Lamine dies · Stress +46 · The survivors are rescued",
+        outcomeTitle: "The crowded pirogue rolls in the dark",
+        outcome: "The boat overturns before rescue lights arrive. Ibrahima, Mamadou, and Cheikh are pulled from the water. Lamine does not survive. The event is recorded without graphic detail.",
+        deferThresholdEnding: true,
+      },
+    ],
+  },
+
+  diopMemorial: {
+    id: "diopMemorial",
+    region: "Atlantic rescue corridor · Present day",
+    location: "The rescue vessel's quiet deck",
+    time: "18:40",
+    weather: "Cold wind after sunset",
+    weatherDetail: "The survivor list is being checked again",
+    route: "ridge",
+    contentNote: "Death of a 12-year-old child and grief",
+    source: sources.atlanticRisk,
+    messages: [
+      {
+        sender: "Rescue log",
+        initial: "L",
+        role: "Memorial record",
+        time: "18:22",
+        trusted: true,
+        body: "Lamine Diop, age twelve. Blue school notebook recovered in a sealed bag. Three relatives survived and asked that his name remain beside theirs.",
+      },
+    ],
+    known: [
+      "Lamine died after the pirogue overturned.",
+      "The three surviving relatives remain together aboard the rescue vessel.",
+      "The rescue team can preserve his name and belongings in the formal incident record.",
+    ],
+    assumed: [
+      "Continuing means the survivors chose to forget him.",
+      "Returning home will end the family's grief.",
+      "An official record can explain why a child died.",
+    ],
+    choices: [
+      {
+        id: "diopRecordLamine",
+        title: "Record Lamine's name and notebook",
+        hint: "Keep his identity inside the formal rescue record",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 2,
+        next: "diopCanaryLanding",
+        effects: { stress: -7, exposure: -7, progress: 4, trustAll: 1 },
+        consequence: "A formal record is created · Cohesion rises",
+        outcomeTitle: "The interpreter repeats every letter of his name",
+        outcome: "The record includes Lamine's age, school, family phone numbers, and blue notebook. It does not reduce him to a number from a boat.",
+      },
+      {
+        id: "diopDeckVigil",
+        title: "Hold a vigil with other survivors",
+        hint: "Pause before the rescue vessel reaches land",
+        icon: "rest",
+        tone: "uncertain",
+        route: "quarry",
+        days: 2,
+        next: "diopCanaryLanding",
+        effects: { supplies: -1, stress: -10, progress: 3, trustAll: 1 },
+        consequence: "Two days pass · Lamine is remembered",
+        outcomeTitle: "His name is spoken before the survivor count",
+        outcome: "Other passengers add the names of people they lost. Cheikh keeps the notebook closed against his chest.",
+      },
+      {
+        id: "diopReturnAfterLoss",
+        title: "Request return after the rescue",
+        hint: "End the route rather than continue toward Spain",
+        icon: "wait",
+        tone: "danger",
+        route: "ridge",
+        days: 14,
+        next: null,
+        effects: { stress: 12, exposure: -35, progress: 38 },
+        consequence: "The journey ends after Lamine's death",
+        outcomeTitle: "Three relatives carry four names home",
+        outcome: "The survivors accept return assistance and prepare to face the debt, the empty school desk, and the family waiting in Senegal.",
+        ending: {
+          type: "returned_after_loss",
+          status: "stopped",
+          title: "Returned with Lamine's notebook",
+          copy: "Ibrahima, Mamadou, and Cheikh return to Senegal. The route ends, but the loss, debt, and questions surrounding Lamine's death remain.",
+        },
+      },
+    ],
+  },
+
+  diopCanaryLanding: {
+    id: "diopCanaryLanding",
+    region: "Canary Islands, Spain · Present day",
+    location: "An emergency reception dock",
+    time: "10:15",
+    weather: "Bright Atlantic sun",
+    weatherDetail: "Interpreters move between medical and police teams",
+    route: "elmstead",
+    contentNote: "Police registration, legal uncertainty, and grief after rescue",
+    source: sources.spainAsylum,
+    messages: [
+      {
+        sender: "Reception interpreter",
+        initial: "i",
+        role: "Official information",
+        time: "09:58",
+        trusted: true,
+        body: "Medical care comes first. Registration records arrival; it does not itself grant asylum, residence, work authorization, or transfer to mainland Spain. Free legal information is available.",
+      },
+    ],
+    known: [
+      "The three survivors can register together and request an interpreter.",
+      "Leaving the reception site may cut them off from medical and legal referrals.",
+      "Official asylum and reception appointments are not sold by private fixers.",
+    ],
+    assumed: [
+      "Landing in Spain automatically creates legal status.",
+      "Avoiding registration protects the group from every removal process.",
+      "A paid document can guarantee transfer to the mainland.",
+    ],
+    choices: [
+      {
+        id: "diopRegisterArrival",
+        title: "Register together with an interpreter",
+        hint: "Give an accurate account and request legal screening",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 3,
+        next: "diopIslandWait",
+        effects: { stress: 7, exposure: -16, progress: 9, trustAll: 1 },
+        consequence: "Arrival is recorded · Risk falls · Legal screening begins",
+        outcomeTitle: "Four names remain in the same account",
+        outcome: "The interpreter records the three survivors and Lamine's death. A legal organization schedules a private screening without promising an outcome.",
+        setFlags: { arrivalRecorded: true },
+      },
+      {
+        id: "diopLeaveReception",
+        title: "Leave before the interviews",
+        hint: "Avoid the process and rely on informal shelter",
+        icon: "walk",
+        tone: "uncertain",
+        route: "quarry",
+        days: 1,
+        next: "diopIslandWait",
+        effects: { cash: -100, supplies: -2, stress: 16, exposure: 22, progress: 9, trustAll: -1 },
+        consequence: "Cash -$100 · Risk +22 · Official referrals are lost",
+        outcomeTitle: "The promised room has no address",
+        outcome: "A contact stops answering after receiving payment. The group sleeps near the bus station before returning to a drop-in service.",
+      },
+      {
+        id: "diopPayDocumentFixer",
+        title: "Pay a fixer for transfer papers",
+        hint: "Buy a shortcut from someone using copied official logos",
+        icon: "legal",
+        tone: "danger",
+        route: "ridge",
+        days: 2,
+        next: "diopIslandWait",
+        requires: { cash: 300 },
+        effects: { cash: -300, battery: -15, stress: 22, exposure: 31, progress: 10, trustAll: -1 },
+        consequence: "Cash -$300 · Risk +31 · The papers fail verification",
+        outcomeTitle: "The document number belongs to nobody",
+        outcome: "A reception worker identifies the paper as false. The fixer deletes the account and keeps the group's photographs.",
+      },
+    ],
+  },
+
+  diopIslandWait: {
+    id: "diopIslandWait",
+    region: "Canary Islands, Spain · Present day",
+    location: "A temporary reception center",
+    time: "20:30",
+    weather: "Rain against metal roofing",
+    weatherDetail: "Phones repeat a deportation video without context",
+    route: "elmstead",
+    contentNote: "Anti-migrant rhetoric and celebrations of deportation",
+    source: sources.spainReception,
+    messages: [
+      {
+        sender: "Shared influencer video",
+        initial: "!",
+        role: "Fictional anti-migrant account",
+        time: "20:02",
+        trusted: false,
+        body: "Another boat intercepted. Deport them all and celebrate every flight out. Anyone who came illegally should get nothing.",
+      },
+      {
+        sender: "Reception legal desk",
+        initial: "L",
+        role: "Verified information",
+        time: "20:16",
+        trusted: true,
+        body: "A viral video is not a decision in your case. Arrival, asylum, humanitarian reception, return, and removal are different processes. Advice here is free.",
+      },
+    ],
+    known: [
+      "The legal desk offers free individual screening and interpreters.",
+      "The influencer does not know the identities or cases of the people shown.",
+      "Posting publicly can expose the survivors' names, location, and images.",
+    ],
+    assumed: [
+      "The loudest account describes Spanish law accurately.",
+      "Arguing online will protect the group's legal options.",
+      "Any transfer from the islands guarantees residence on the mainland.",
+    ],
+    choices: [
+      {
+        id: "diopVerifySpainRules",
+        title: "Ask the legal desk to explain each process",
+        hint: "Separate political rhetoric from the group's actual options",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 5,
+        next: "diopFinal",
+        effects: { battery: -8, stress: -9, exposure: -12, progress: 8, trustAll: 1 },
+        consequence: "Phone -8% · Stress -9 · Risk falls",
+        outcomeTitle: "The options fit on one handwritten page",
+        outcome: "The legal worker explains that each adult's circumstances require honest individual review and that economic hardship alone does not guarantee asylum.",
+        setFlags: { spainLegalAdvice: true },
+      },
+      {
+        id: "diopCloseFeed",
+        title: "Close the feed and sit together",
+        hint: "Protect the group's attention before the final interview",
+        icon: "rest",
+        tone: "uncertain",
+        route: "quarry",
+        days: 3,
+        next: "diopFinal",
+        effects: { battery: 12, stress: -6, progress: 8 },
+        consequence: "Phone +12% · Stress -6 · Three days pass",
+        outcomeTitle: "The roof replaces the shouting from the phone",
+        outcome: "They read Lamine's notebook and prepare the dates of their journey. The video continues circulating without their reply.",
+      },
+      {
+        id: "diopReplyInfluencer",
+        title: "Reply with the group's story and photograph",
+        hint: "Challenge the post while exposing identity and location",
+        icon: "talk",
+        tone: "danger",
+        route: "ridge",
+        days: 2,
+        next: "diopFinal",
+        effects: { battery: -22, stress: 17, exposure: 23, progress: 8, trustAll: -1 },
+        consequence: "Phone -22% · Stress +17 · Risk +23",
+        outcomeTitle: "The photograph spreads without Lamine's story",
+        outcome: "Some viewers send support. Others repost the image beside demands for deportation and false claims about the survivors.",
+      },
+    ],
+  },
+
+  diopFinal: {
+    id: "diopFinal",
+    region: "Canary Islands, Spain · Present day",
+    location: "A reception and legal-services office",
+    time: "09:20",
+    weather: "Clear morning after rain",
+    weatherDetail: "Each adult receives a separate confidential appointment",
+    route: "elmstead",
+    contentNote: "Asylum screening, possible return, and undocumented work",
+    source: sources.spainAsylum,
+    messages: [
+      {
+        sender: "Legal services interpreter",
+        initial: "i",
+        role: "Official information",
+        time: "09:05",
+        trusted: true,
+        body: "Tell the truth about why each person left and what each fears on return. Reaching Spain does not guarantee asylum. You may also ask about reception, return assistance, and other lawful options.",
+      },
+    ],
+    known: [
+      "Each adult can receive confidential legal screening without paying a broker.",
+      "Assisted return can include planning support but cannot erase debt or grief.",
+      "Leaving reception for hidden work would remove reliable housing and legal contact.",
+    ],
+    assumed: [
+      "The same legal claim fits all three survivors.",
+      "A rejected asylum claim means no lawyer can explain another option.",
+      "Cash work outside the system will quickly repay every family debt.",
+    ],
+    choices: [
+      {
+        id: "diopLegalReview",
+        title: "Request honest individual legal reviews",
+        hint: "Enter the official process without inventing a shared claim",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 30,
+        next: null,
+        effects: { cash: -100, stress: 8, exposure: -28, progress: 100, trustAll: 1 },
+        consequence: "The route is complete · Each case enters review",
+        outcomeTitle: "Three appointments begin with the same four names",
+        outcome: "The survivors enter temporary reception while lawyers assess each case and explain possible outcomes. Lamine's death is recorded separately from their legal claims.",
+        contextBonuses: [
+          {
+            flag: "verifiedWarning",
+            kind: "payoff",
+            label: "The counselor's warning helps separate the recruiter's claims from the group's own account",
+            effects: { stress: -3, exposure: -3 },
+          },
+          {
+            flag: "groupTickets",
+            kind: "payoff",
+            label: "The four named tickets help reconstruct the route",
+            effects: { exposure: -4 },
+          },
+          {
+            flag: "arrivalRecorded",
+            kind: "payoff",
+            label: "The first arrival record preserves the survivors' account and Lamine's name",
+            effects: { stress: -4 },
+          },
+          {
+            flag: "spainLegalAdvice",
+            kind: "payoff",
+            label: "The free legal appointment prevents payment to another fixer",
+            effects: { cash: 80, exposure: -3 },
+          },
+        ],
+        ending: {
+          type: "legal_review_pending",
+          status: "won",
+          title: "Arrived, with every case still uncertain",
+          copy: "Ibrahima, Mamadou, and Cheikh reach temporary reception and individual legal review. Arrival is real; status is unresolved. Lamine's name remains in the rescue record and in every version of their journey.",
+        },
+      },
+      {
+        id: "diopAssistedReturn",
+        title: "Ask about assisted return and reintegration",
+        hint: "End the route through a documented return plan",
+        icon: "wait",
+        tone: "uncertain",
+        route: "quarry",
+        days: 24,
+        next: null,
+        effects: { stress: 5, exposure: -32, progress: 78, trustAll: 1 },
+        consequence: "A return plan begins · Risk falls · The Atlantic route ends",
+        outcomeTitle: "The return plan includes three people and four names",
+        outcome: "The survivors ask for help replacing documents, contacting family, and planning work after return. No program can repay the emotional cost of the route.",
+        ending: {
+          type: "assisted_return",
+          status: "won",
+          title: "A documented return, not a reset",
+          copy: "The three survivors return to Senegal with a reintegration plan and Lamine's notebook. Their safety is immediate; debt, grief, and livelihood remain unfinished work.",
+        },
+      },
+      {
+        id: "diopInformalWork",
+        title: "Leave reception for informal work",
+        hint: "Trade legal contact and housing for an unverified cash job",
+        icon: "work",
+        tone: "danger",
+        route: "ridge",
+        days: 14,
+        next: null,
+        effects: { cash: 260, supplies: -3, stress: 24, exposure: 38, progress: 93, peopleAll: -7, trustAll: -1 },
+        consequence: "Cash +$260 · Risk +38 · Housing and legal contact are lost",
+        outcomeTitle: "The work address changes after the first week",
+        outcome: "The survivors share a crowded room and accept cash shifts without written terms. They remain on the island but outside stable reception and legal support.",
+        ending: {
+          type: "undocumented_island",
+          status: "stopped",
+          title: "Arrival without stability",
+          copy: "The Atlantic crossing is over, but the survivors remain hidden, indebted, and dependent on employers who know they fear the authorities.",
+        },
+      },
+    ],
+  },
+
+  nguyenHome: {
+    id: "nguyenHome",
+    region: "Nghệ An, Vietnam · Present day",
+    location: "The family home",
+    time: "05:50",
+    weather: "Monsoon rain before dawn",
+    weatherDetail: "The recruiter wants the first payment today",
+    route: "elmstead",
+    contentNote: "Recruitment debt, possible trafficking, and loss of the family home",
+    source: sources.vietnamRecruitment,
+    messages: [
+      {
+        sender: "Recruitment agent",
+        initial: "R",
+        role: "Unverified voice message",
+        time: "05:31",
+        trusted: false,
+        body: "Four restaurant jobs are waiting in Britain. Pay the placement fee now and the documents will be handled on the way. The wages will clear your house loan within a year.",
+      },
+    ],
+    known: [
+      "The offer names no British employer and includes no valid work visa.",
+      "A provincial labor office will check overseas recruitment documents without charging the family.",
+      "The lender will take the family home if the migration debt is not repaid.",
+    ],
+    assumed: [
+      "A neighbor's successful trip proves that this recruiter is safe.",
+      "The promised jobs and wages will appear after the first payment.",
+      "Traveling together prevents every form of coercion.",
+    ],
+    choices: [
+      {
+        id: "nguyenVerifyOffer",
+        title: "Ask the labor office to verify the offer",
+        hint: "Delay two days and compare every promise with official requirements",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 2,
+        next: "nguyenRecruiter",
+        effects: { cash: -35, battery: -6, stress: -7, exposure: -4, progress: 6, trustAll: 1 },
+        consequence: "Cash -$35 · Stress -7 · The offer is checked",
+        outcomeTitle: "The checklist has three empty boxes",
+        outcome: "The officer finds no named employer, licensed placement agreement, or British work authorization. The family leaves with hotline numbers and the warning in writing.",
+        setFlags: { recruitmentWarning: true },
+      },
+      {
+        id: "nguyenSignLoan",
+        title: "Pledge the family home as collateral",
+        hint: "Raise the fee while placing the house at risk",
+        icon: "home",
+        tone: "uncertain",
+        route: "quarry",
+        days: 1,
+        next: "nguyenRecruiter",
+        effects: { cash: 2400, stress: 16, exposure: 6, progress: 7, trustAll: -1 },
+        consequence: "Cash +$2,400 · Stress +16 · The home secures the debt",
+        outcomeTitle: "The lender takes the original house papers",
+        outcome: "Lan photographs every page before signing. The family still sleeps under its own roof, but the repayment clock begins immediately.",
+        setFlags: { homeCollateral: true },
+      },
+      {
+        id: "nguyenPayRecruiter",
+        title: "Pay the first recruitment installment",
+        hint: "Trade cash for a vague itinerary and four unverified jobs",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 1,
+        next: "nguyenRecruiter",
+        requires: { cash: 900 },
+        effects: { cash: -900, battery: -8, stress: 14, exposure: 17, progress: 9, trustAll: -1 },
+        consequence: "Cash -$900 · Risk +17 · No employer is named",
+        outcomeTitle: "The job contract becomes a consulting receipt",
+        outcome: "The receipt records advice, not employment. The agent says a second payment is now required for transport through Europe.",
+        setFlags: { recruiterPaid: true },
+      },
+    ],
+  },
+
+  nguyenRecruiter: {
+    id: "nguyenRecruiter",
+    region: "Ho Chi Minh City, Vietnam · Present day",
+    location: "A rented recruitment office",
+    time: "14:10",
+    weather: "Heavy afternoon rain",
+    weatherDetail: "Departure is presented as urgent",
+    route: "quarry",
+    contentNote: "Fraudulent recruitment and deceptive travel documents",
+    source: sources.vietnamRecruitment,
+    messages: [
+      {
+        sender: "Office assistant",
+        initial: "R",
+        role: "Recruiter representative",
+        time: "13:52",
+        trusted: false,
+        body: "Do not show the job messages at the airport. Say the family is visiting friends. The real contracts will be issued after transit, where the employer can meet you.",
+      },
+    ],
+    known: [
+      "The supplied company number does not match the restaurant named in the message.",
+      "A garment cooperative nearby pays written daily rates while the family decides.",
+      "The itinerary ends at a transit airport rather than the United Kingdom.",
+    ],
+    assumed: [
+      "A plane ticket makes the promised job lawful.",
+      "A contract received later will contain the advertised wage.",
+      "Questioning the recruiter will permanently close every migration option.",
+    ],
+    choices: [
+      {
+        id: "nguyenDemandContract",
+        title: "Demand a translated contract and employer check",
+        hint: "Keep copies and refuse to travel on verbal promises alone",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 3,
+        next: "nguyenTransit",
+        effects: { cash: -70, stress: 4, exposure: -5, progress: 10, trustAll: 1 },
+        consequence: "Cash -$70 · Risk falls · The false company number is saved",
+        outcomeTitle: "The document cannot survive one phone call",
+        outcome: "Mai calls the listed company. It has never hired the family or authorized the agent. The recruiter refuses a refund but the evidence remains on two phones.",
+        setFlags: { falseContract: true },
+      },
+      {
+        id: "nguyenSewingShift",
+        title: "Work ten days at the garment cooperative",
+        hint: "Rebuild cash through posted wages before deciding",
+        icon: "work",
+        tone: "uncertain",
+        route: "quarry",
+        days: 10,
+        next: "nguyenTransit",
+        effects: { cash: 430, supplies: -2, water: -2, stress: 5, progress: 10, people: { lan: -6, mai: -4 } },
+        consequence: "Cash +$430 · Ten days pass · Lan and Mai tire",
+        outcomeTitle: "The cooperative pays every recorded bundle",
+        outcome: "Lan and Mai finish a uniform order. The earnings are modest, written down, and paid directly rather than deducted from a migration debt.",
+        skillBonus: {
+          personId: "lan",
+          skill: "Garment sewing",
+          label: "Lan's sewing experience earns a quality bonus",
+          effects: { cash: 80, people: { lan: 2 } },
+        },
+      },
+      {
+        id: "nguyenFollowItinerary",
+        title: "Follow the recruiter's tourist itinerary",
+        hint: "Pay the next installment and conceal the promised work",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 4,
+        next: "nguyenTransit",
+        requires: { cash: 700 },
+        effects: { cash: -700, battery: -14, stress: 16, exposure: 22, progress: 13, trustAll: -1 },
+        consequence: "Cash -$700 · Risk +22 · The family repeats a false cover story",
+        outcomeTitle: "The arrival address changes during the flight",
+        outcome: "A driver meets the family in a continental transit city and asks for every passport before revealing where they will sleep.",
+        setFlags: { falseItinerary: true },
+      },
+    ],
+  },
+
+  nguyenTransit: {
+    id: "nguyenTransit",
+    region: "Continental Europe · Present day",
+    location: "An overnight transit apartment",
+    time: "23:40",
+    weather: "Cold rain on the windows",
+    weatherDetail: "The driver is collecting passports room by room",
+    route: "ridge",
+    contentNote: "Passport confiscation, smuggling, and trafficking indicators",
+    source: sources.vietnamRoute,
+    messages: [
+      {
+        sender: "Transit driver",
+        initial: "?",
+        role: "Unverified instruction",
+        time: "23:18",
+        trusted: false,
+        body: "Give me all four passports. The debt now includes this room and tomorrow's van. Anyone who calls police loses the Britain job and the house money.",
+      },
+    ],
+    known: [
+      "A legitimate employer does not need to hold the family's passports.",
+      "Mai saved a trafficking-service number that can arrange confidential advice.",
+      "The waiting van has covered windows and no written destination.",
+    ],
+    assumed: [
+      "Surrendering passports is a normal border procedure.",
+      "The driver can transfer ownership of the family debt to an employer.",
+      "Calling for help automatically means immediate deportation.",
+    ],
+    choices: [
+      {
+        id: "nguyenKeepPassports",
+        title: "Refuse to surrender the passports",
+        hint: "Keep identity documents even if the paid route collapses",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 3,
+        next: "nguyenSafeHouse",
+        effects: { cash: -160, battery: -8, stress: 9, exposure: -8, progress: 12, trustAll: 1 },
+        consequence: "Cash -$160 · Risk falls · The family keeps its documents",
+        outcomeTitle: "The driver leaves without the document folder",
+        outcome: "The family loses the promised ride and pays for a public coach. Their passports remain with them, and encrypted copies reach a relative in Vietnam.",
+        setFlags: { documentCopies: true },
+      },
+      {
+        id: "nguyenCallHotline",
+        title: "Call the trafficking-service number",
+        hint: "Describe the debt, threats, documents, and locked accommodation",
+        icon: "phone",
+        tone: "trusted",
+        route: "elmstead",
+        days: 2,
+        next: "nguyenSafeHouse",
+        effects: { battery: -18, stress: -5, exposure: -12, progress: 12, trustAll: 1 },
+        consequence: "Phone -18% · Stress -5 · A confidential record begins",
+        outcomeTitle: "The counselor names the warning signs",
+        outcome: "The counselor identifies coercion and possible trafficking, records the location, and explains emergency options without promising immigration status.",
+        setFlags: { exploitationRecord: true },
+      },
+      {
+        id: "nguyenBoardVan",
+        title: "Hand over the passports and board the van",
+        hint: "Protect the recruiter's route while losing control of movement",
+        icon: "car",
+        tone: "danger",
+        route: "ridge",
+        days: 2,
+        next: "nguyenSafeHouse",
+        effects: { cash: -550, battery: -24, stress: 24, exposure: 29, progress: 15, peopleAll: -4, trustAll: -1 },
+        consequence: "Cash -$550 · Risk +29 · Passports are withheld",
+        outcomeTitle: "The covered van stops at a warehouse",
+        outcome: "The driver collects the phones and passports during the ride. At dawn, a supervisor says the family must work before transport continues.",
+        setFlags: { passportsHeld: true },
+      },
+    ],
+  },
+
+  nguyenSafeHouse: {
+    id: "nguyenSafeHouse",
+    region: "Continental Europe · Present day",
+    location: "A warehouse sleeping room",
+    time: "04:25",
+    weather: "Fluorescent light before sunrise",
+    weatherDetail: "The doors open only when a supervisor arrives",
+    route: "ridge",
+    contentNote: "Forced labor and non-graphic sexual threats",
+    source: sources.vietnamTrafficking,
+    messages: [
+      {
+        sender: "Mai",
+        initial: "M",
+        role: "Private family note",
+        time: "04:03",
+        trusted: true,
+        body: "A supervisor blocked the sewing-room door and made sexual threats when I asked for our pay. I got back to the family. I do not want to describe more, but I want the threat recorded in my own words.",
+      },
+    ],
+    known: [
+      "Unpaid work and sexual threats are indicators of exploitation, not repayment terms.",
+      "A specialist service can record Mai's account confidentially and arrange medical support if requested.",
+      "A delivery gate opens at noon, but leaving may mean abandoning luggage and documents.",
+    ],
+    assumed: [
+      "Working another week will produce an honest debt balance.",
+      "Reporting threats requires Mai to repeat graphic details publicly.",
+      "The family cannot leave without the recruiter's permission.",
+    ],
+    choices: [
+      {
+        id: "nguyenReportThreats",
+        title: "Contact a specialist advocate together",
+        hint: "Let Mai choose what is recorded and what care she wants",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 4,
+        next: "nguyenFrance",
+        effects: { battery: -12, stress: -8, exposure: -15, progress: 13, trustAll: 1 },
+        consequence: "Stress -8 · Risk falls · Mai controls her statement",
+        outcomeTitle: "The advocate asks permission before every note",
+        outcome: "A specialist service documents the threats and coercion without requiring graphic detail. The family reaches temporary accommodation and keeps a referral number.",
+        setFlags: { maiStatement: true },
+      },
+      {
+        id: "nguyenWorkDebt",
+        title: "Work fourteen more days against the debt",
+        hint: "Remain together but accept an accounting controlled by the supervisor",
+        icon: "work",
+        tone: "uncertain",
+        route: "quarry",
+        days: 14,
+        next: "nguyenFrance",
+        effects: { cash: 180, supplies: -3, water: -3, stress: 25, exposure: 12, progress: 13, peopleAll: -10, trustAll: -1 },
+        consequence: "Cash +$180 · Fourteen days pass · Health -10 each",
+        outcomeTitle: "The balance grows after every unpaid shift",
+        outcome: "The ledger adds charges for beds, food, transport, and supervision. The family is eventually moved west with less debt on paper and less strength in every body.",
+        setFlags: { laborDebt: true },
+      },
+      {
+        id: "nguyenLeaveWarehouse",
+        title: "Leave together through the delivery gate",
+        hint: "Abandon luggage if necessary and reach a public station",
+        icon: "walk",
+        tone: "uncertain",
+        route: "quarry",
+        days: 3,
+        next: "nguyenFrance",
+        effects: { cash: -210, supplies: -2, stress: 15, exposure: 8, progress: 15, trustAll: 1 },
+        consequence: "Cash -$210 · Food -2 days · The family leaves together",
+        outcomeTitle: "Four people pass the gate before it closes",
+        outcome: "They leave most bags behind and reach a public station. An aid desk finds emergency transport west, but the withheld property and wages are not recovered.",
+        setFlags: { escapedTogether: true },
+      },
+    ],
+  },
+
+  nguyenFrance: {
+    id: "nguyenFrance",
+    region: "Northern France · Present day",
+    location: "A community day center",
+    time: "17:35",
+    weather: "Cold wind from the Channel",
+    weatherDetail: "Boat sellers and shelter workers approach the same queue",
+    route: "quarry",
+    contentNote: "Homelessness, smuggling, and unsafe Channel crossings",
+    source: sources.vietnamRoute,
+    messages: [
+      {
+        sender: "Day-center interpreter",
+        initial: "i",
+        role: "Verified information",
+        time: "17:12",
+        trusted: true,
+        body: "You can ask about protection and trafficking support in France. A person selling a boat place cannot guarantee safety, rescue, entry to Britain, or what happens after arrival.",
+      },
+    ],
+    known: [
+      "A recognized shelter has one family room and free legal orientation.",
+      "A refrigerated truck driver demands payment without revealing when the trailer will reopen.",
+      "Waiting provides time to recover strength but does not make the Channel safe.",
+    ],
+    assumed: [
+      "Britain is the only place where the family can ask for help.",
+      "A lorry crossing is safe because it does not use a boat.",
+      "The recruiter can still recover the promised jobs after all earlier deception.",
+    ],
+    choices: [
+      {
+        id: "nguyenShelterFrance",
+        title: "Take the family shelter room",
+        hint: "Rest, receive legal orientation, and keep all four names together",
+        icon: "home",
+        tone: "trusted",
+        route: "elmstead",
+        days: 8,
+        next: "nguyenChannel",
+        effects: { cash: -120, supplies: 3, water: 5, stress: -10, exposure: -9, progress: 12, peopleAll: 5, trustAll: 1 },
+        consequence: "Cash -$120 · Health +5 each · Stress -10",
+        outcomeTitle: "The room card carries four names",
+        outcome: "The family rests, receives medical checks, and hears French protection options without being pressured to choose one immediately.",
+        setFlags: { franceReferral: true },
+      },
+      {
+        id: "nguyenTruck",
+        title: "Pay for a place in the sealed trailer",
+        hint: "Avoid the boat while accepting suffocation and abandonment risk",
+        icon: "car",
+        tone: "danger",
+        route: "ridge",
+        days: 2,
+        next: "nguyenChannel",
+        requires: { cash: 900 },
+        effects: { cash: -900, water: -5, stress: 28, exposure: 34, progress: 14, peopleAll: -9, trustAll: -1 },
+        consequence: "Cash -$900 · Risk +34 · Health -9 each",
+        outcomeTitle: "The trailer remains locked after the engine stops",
+        outcome: "The driver abandons the attempt before the port and unlocks the trailer hours later. The family returns to the day center dehydrated and without a refund.",
+      },
+      {
+        id: "nguyenChannelCamp",
+        title: "Wait and compare the available choices",
+        hint: "Spend twelve days recovering and verifying information",
+        icon: "wait",
+        tone: "uncertain",
+        route: "quarry",
+        days: 12,
+        next: "nguyenChannel",
+        effects: { cash: -260, supplies: -2, stress: 3, exposure: -4, progress: 12, peopleAll: 2 },
+        consequence: "Cash -$260 · Twelve days pass · Health +2 each",
+        outcomeTitle: "The promises change faster than the weather",
+        outcome: "Two boat sellers disappear and a third doubles the price. The family keeps its money long enough to hear rescue accounts and legal alternatives.",
+      },
+    ],
+  },
+
+  nguyenChannel: {
+    id: "nguyenChannel",
+    region: "French Channel coast · Present day",
+    location: "A rain-soaked departure area",
+    time: "02:15",
+    weather: "Cold water and rising wind",
+    weatherDetail: "The seller says the paid places expire before dawn",
+    route: "ridge",
+    contentNote: "Dangerous Channel crossing, interception, and possible return",
+    source: sources.ukVietnamReturns,
+    messages: [
+      {
+        sender: "Boat seller",
+        initial: "?",
+        role: "Unverified instruction",
+        time: "01:53",
+        trusted: false,
+        body: "Britain is less than an hour away. Children are safer in the middle. Pay now, leave phones off, and do not call rescue unless the motor stops completely.",
+      },
+    ],
+    known: [
+      "The inflatable boat already carries more people than the seller first described.",
+      "A French service can discuss protection, trafficking support, and return without requiring the family to board.",
+      "A second smuggler offers a hidden lorry place but will lock it from outside.",
+    ],
+    assumed: [
+      "Money already paid must be protected by continuing.",
+      "Reaching British water guarantees permission to remain.",
+      "The operator will keep all four family members together after landing.",
+    ],
+    choices: [
+      {
+        id: "nguyenFranceProcess",
+        title: "Leave the beach and seek help in France",
+        hint: "End the UK route and request an official assessment together",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 18,
+        next: null,
+        effects: { stress: -5, exposure: -34, progress: 68, trustAll: 1 },
+        consequence: "The Channel route ends · All four remain together",
+        outcomeTitle: "Dawn arrives without a departure",
+        outcome: "The family returns to the recognized service and requests individual advice in France. The debt and home collateral remain, but nobody enters the water.",
+        ending: {
+          type: "new_destination_france",
+          status: "won",
+          title: "A safer destination replaces the promised one",
+          copy: "The Nguyễn family stops the Channel journey and enters a French support and legal-assessment process. Britain is no longer the destination; safety becomes the next chapter.",
+        },
+      },
+      {
+        id: "nguyenSmallBoat",
+        title: "Board the overcrowded small boat",
+        hint: "Attempt the Channel with inadequate equipment and no guarantee of rescue",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 2,
+        next: "nguyenUKArrival",
+        requires: { cash: 1200 },
+        effects: { cash: -1200, water: -4, stress: 39, exposure: 40, progress: 18, peopleAll: -16, trustAll: -1 },
+        consequence: "Cash -$1,200 · Stress +39 · Health -16 each",
+        outcomeTitle: "A rescue vessel reaches the failing boat",
+        outcome: "The motor fails in rough water. A rescue crew brings every member of the family aboard alive and transfers them to British authorities for medical and identity checks.",
+        setFlags: { channelRescue: true },
+      },
+      {
+        id: "nguyenLorry",
+        title: "Enter the sealed freight trailer",
+        hint: "Avoid open water while accepting confinement and suffocation risk",
+        icon: "car",
+        tone: "danger",
+        route: "ridge",
+        days: 2,
+        next: "nguyenUKArrival",
+        requires: { cash: 950 },
+        effects: { cash: -950, water: -5, stress: 35, exposure: 37, progress: 17, peopleAll: -14, trustAll: -1 },
+        consequence: "Cash -$950 · Stress +35 · Health -14 each",
+        outcomeTitle: "Border officers open the trailer",
+        outcome: "Officers detect the group before the crossing is complete. Medical staff treat dehydration, record all four names, and begin immigration and safeguarding checks.",
+        setFlags: { lorryInterception: true },
+      },
+    ],
+  },
+
+  nguyenUKArrival: {
+    id: "nguyenUKArrival",
+    region: "Southern England · Present day",
+    location: "A border reception facility",
+    time: "11:25",
+    weather: "Gray light through wired glass",
+    weatherDetail: "Screening questions begin after medical checks",
+    route: "elmstead",
+    contentNote: "Detention, trafficking screening, and uncertain immigration status",
+    source: sources.vietnamTrafficking,
+    messages: [
+      {
+        sender: "Vietnamese interpreter",
+        initial: "i",
+        role: "Official information",
+        time: "11:04",
+        trusted: true,
+        body: "Tell the interviewer if anyone controlled documents, debt, work, movement, or threats. Trafficking support and permission to remain are separate questions, and neither outcome is guaranteed by this interview.",
+      },
+    ],
+    known: [
+      "The family can request an interpreter and describe coercion in its own words.",
+      "The recruiter's memorized tourist story conflicts with the journey records.",
+      "Leaving screening for an unknown contact would remove access to shelter and legal referrals.",
+    ],
+    assumed: [
+      "Disclosing exploitation guarantees asylum or residence.",
+      "Repeating the recruiter's story protects the family from detention.",
+      "Every official in the building makes the same legal decision.",
+    ],
+    choices: [
+      {
+        id: "nguyenTellTruth",
+        title: "Describe the recruitment and coercion truthfully",
+        hint: "Request an interpreter and trafficking-informed screening",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 5,
+        next: "nguyenPolicy",
+        effects: { stress: 7, exposure: -18, progress: 9, trustAll: 1 },
+        consequence: "Risk falls · A trafficking referral is considered",
+        outcomeTitle: "The interviewer separates four accounts from one script",
+        outcome: "The family describes the job promise, debt, withheld documents, forced work, and threats. A safeguarding referral begins without guaranteeing the immigration result.",
+        setFlags: { traffickingDisclosure: true },
+      },
+      {
+        id: "nguyenRepeatScript",
+        title: "Repeat the recruiter's tourist story",
+        hint: "Hide the work promise and exploitation behind an inconsistent itinerary",
+        icon: "talk",
+        tone: "uncertain",
+        route: "quarry",
+        days: 7,
+        next: "nguyenPolicy",
+        effects: { battery: -10, stress: 18, exposure: 16, progress: 8, trustAll: -1 },
+        consequence: "Stress +18 · Risk +16 · The accounts conflict",
+        outcomeTitle: "The hotel address belongs to an empty office",
+        outcome: "The scripted explanation conflicts with travel messages and payment records. The family remains in immigration processing while officials investigate the discrepancies.",
+      },
+      {
+        id: "nguyenAvoidScreening",
+        title: "Leave with the recruiter's UK contact",
+        hint: "Avoid interviews and accept another unverified work address",
+        icon: "walk",
+        tone: "danger",
+        route: "ridge",
+        days: 2,
+        next: "nguyenPolicy",
+        effects: { cash: -280, battery: -18, stress: 24, exposure: 35, progress: 10, trustAll: -1 },
+        consequence: "Cash -$280 · Risk +35 · Official support is lost",
+        outcomeTitle: "The contact drives to a locked restaurant room",
+        outcome: "The family is promised cash kitchen work and told never to answer the front door. The new employer already knows the amount of the old debt.",
+        setFlags: { hiddenWorkContact: true },
+      },
+    ],
+  },
+
+  nguyenPolicy: {
+    id: "nguyenPolicy",
+    region: "United Kingdom · Present day",
+    location: "Temporary accommodation",
+    time: "20:45",
+    weather: "Rain against the window",
+    weatherDetail: "A deportation video repeats across several phones",
+    route: "elmstead",
+    contentNote: "Anti-migrant rhetoric and celebrations of deportation",
+    source: sources.ukVietnamReturns,
+    messages: [
+      {
+        sender: "Shared influencer clip",
+        initial: "!",
+        role: "Fictional anti-migrant account",
+        time: "20:21",
+        trusted: false,
+        body: "Close the border. Put every illegal arrival on the next flight and celebrate when the planes leave. No excuses and no appeals.",
+      },
+      {
+        sender: "Independent adviser",
+        initial: "L",
+        role: "Verified legal information",
+        time: "20:32",
+        trusted: true,
+        body: "A political video is not a decision in your case. Trafficking identification, immigration status, asylum, detention, appeals, and return are different processes. Advice here is confidential.",
+      },
+    ],
+    known: [
+      "An independent regulated adviser can explain the family's actual files.",
+      "The influencer has no access to the family's evidence or screening records.",
+      "Posting faces and location publicly can expose the family to recruiters and harassment.",
+    ],
+    assumed: [
+      "The loudest political account describes current law accurately.",
+      "Arguing online will improve an official decision.",
+      "Every trafficking referral prevents detention or return.",
+    ],
+    choices: [
+      {
+        id: "nguyenLegalAdvice",
+        title: "Review every process with the legal adviser",
+        hint: "Separate political rhetoric from the family's real options",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 8,
+        next: "nguyenFinal",
+        effects: { battery: -7, stress: -10, exposure: -14, progress: 8, trustAll: 1 },
+        consequence: "Stress -10 · Risk falls · The options are written down",
+        outcomeTitle: "Five different processes become five separate lines",
+        outcome: "The adviser explains what has begun, what has not, and which deadlines matter. No result is promised, but the family stops treating a viral clip as a legal notice.",
+        setFlags: { ukLegalAdvice: true },
+      },
+      {
+        id: "nguyenCloseFeed",
+        title: "Close the feed and prepare the timeline",
+        hint: "Protect the family's attention before the final interviews",
+        icon: "rest",
+        tone: "uncertain",
+        route: "quarry",
+        days: 5,
+        next: "nguyenFinal",
+        effects: { battery: 10, stress: -6, progress: 8 },
+        consequence: "Phone +10% · Stress -6 · Five days pass",
+        outcomeTitle: "The debt ledger replaces the shouting video",
+        outcome: "Mai arranges dates, receipts, job messages, and document photographs. The political clip keeps circulating without the family's reply.",
+      },
+      {
+        id: "nguyenPostReply",
+        title: "Reply with the family's photograph and story",
+        hint: "Challenge the video while exposing identity and location",
+        icon: "talk",
+        tone: "danger",
+        route: "ridge",
+        days: 3,
+        next: "nguyenFinal",
+        effects: { battery: -24, stress: 19, exposure: 27, progress: 8, trustAll: -1 },
+        consequence: "Phone -24% · Stress +19 · Risk +27",
+        outcomeTitle: "The photograph travels farther than the explanation",
+        outcome: "Supportive messages arrive beside threats and demands for deportation. Other accounts repost the faces without the evidence of recruitment and coercion.",
+      },
+    ],
+  },
+
+  nguyenFinal: {
+    id: "nguyenFinal",
+    region: "United Kingdom · Present day",
+    location: "A safeguarding and immigration office",
+    time: "09:10",
+    weather: "Clear sky after rain",
+    weatherDetail: "Each family member receives an age-appropriate interview",
+    route: "elmstead",
+    contentNote: "Trafficking review, possible return, and renewed labor exploitation",
+    source: sources.vietnamTrafficking,
+    messages: [
+      {
+        sender: "Independent interpreter",
+        initial: "i",
+        role: "Official information",
+        time: "08:55",
+        trusted: true,
+        body: "A safeguarding decision may recognize exploitation without deciding long-term immigration status. Tell the truth, ask questions, and do not pay anyone for a guaranteed result.",
+      },
+    ],
+    known: [
+      "The family can enter trafficking-informed safeguarding and receive separate immigration advice.",
+      "Supported return is available to discuss, but the debt and home collateral require independent planning.",
+      "An unverified cash employer offers immediate work if the family leaves accommodation today.",
+    ],
+    assumed: [
+      "Recognition as a trafficking victim automatically grants permanent residence.",
+      "Returning to Vietnam cancels the private loan on the family home.",
+      "Another cash job will be different because it is already inside Britain.",
+    ],
+    choices: [
+      {
+        id: "nguyenSafeguardingReview",
+        title: "Enter safeguarding and independent legal review",
+        hint: "Complete the route with protection and immigration outcomes still pending",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 35,
+        next: null,
+        effects: { cash: -140, stress: 4, exposure: -32, progress: 100, trustAll: 1 },
+        consequence: "Destination reached · Safeguarding and legal reviews begin",
+        outcomeTitle: "The file begins with four names, not one debt",
+        outcome: "The family enters temporary support while specialists assess exploitation and advisers explain separate immigration possibilities. No permanent status is guaranteed.",
+        contextBonuses: [
+          {
+            flag: "recruitmentWarning",
+            kind: "payoff",
+            label: "The pre-departure warning supports the timeline of deception",
+            effects: { stress: -3, exposure: -3 },
+          },
+          {
+            flag: "documentCopies",
+            kind: "payoff",
+            label: "The stored document copies preserve identity and payment evidence",
+            effects: { exposure: -4 },
+          },
+          {
+            flag: "exploitationRecord",
+            kind: "payoff",
+            label: "The earlier trafficking-service call corroborates the transit account",
+            effects: { stress: -4 },
+          },
+          {
+            flag: "ukLegalAdvice",
+            kind: "payoff",
+            label: "Independent advice prevents payment to another fixer",
+            effects: { cash: 100, exposure: -3 },
+          },
+        ],
+        ending: {
+          type: "uk_safeguarding_review",
+          status: "won",
+          title: "The destination is reached; the decisions continue",
+          copy: "The Nguyễn family reaches temporary safety and trafficking-informed review in the United Kingdom. Their legal status, home debt, education, and recovery remain unresolved.",
+        },
+      },
+      {
+        id: "nguyenVoluntaryReturn",
+        title: "Request supported return planning",
+        hint: "Return together with debt and housing advice rather than disappear",
+        icon: "wait",
+        tone: "uncertain",
+        route: "quarry",
+        days: 28,
+        next: null,
+        effects: { stress: 6, exposure: -36, progress: 82, trustAll: 1 },
+        consequence: "A return plan begins · Risk falls · The UK route ends",
+        outcomeTitle: "The plan includes the home before the flight",
+        outcome: "A return adviser contacts an independent debt service and relatives in Vietnam. The plan cannot guarantee that the family home will be saved.",
+        ending: {
+          type: "supported_return_vietnam",
+          status: "won",
+          title: "Returning together, without pretending to reset",
+          copy: "The family returns to Vietnam with planning support and records of exploitation. They are alive and together; the loan, lost wages, and future of their home remain uncertain.",
+        },
+      },
+      {
+        id: "nguyenCashWork",
+        title: "Leave support for the cash-work address",
+        hint: "Trade shelter and legal contact for another debt-linked promise",
+        icon: "work",
+        tone: "danger",
+        route: "ridge",
+        days: 18,
+        next: null,
+        effects: { cash: 420, supplies: -3, stress: 27, exposure: 39, progress: 94, peopleAll: -8, trustAll: -1 },
+        consequence: "Cash +$420 · Risk +39 · Support and housing are lost",
+        outcomeTitle: "The new debt begins with a room key",
+        outcome: "The employer deducts accommodation and transport from every cash payment. The family remains in Britain but again depends on someone who controls work, housing, and fear.",
+        ending: {
+          type: "uk_hidden_exploitation",
+          status: "stopped",
+          title: "Arrival inside another closed door",
+          copy: "The Nguyễn family reaches Britain but remains undocumented, indebted, and vulnerable to renewed labor exploitation. The promised destination has not become safety.",
+        },
+      },
+    ],
+  },
+
+  punjabHome: {
+    id: "punjabHome",
+    region: "Punjab, India · Present day",
+    location: "A courtyard outside Jalandhar",
+    time: "06:15",
+    weather: "Cool morning haze",
+    weatherDetail: "The recruiter says the Irish quota may close today",
+    route: "elmstead",
+    contentNote: "Recruitment debt and pressure on family assets",
+    source: sources.irelandPermits,
+    messages: [
+      {
+        sender: "Recruitment agent",
+        initial: "R",
+        role: "Unverified group message",
+        time: "05:58",
+        trusted: false,
+        body: "Four Irish permits are reserved for your family. Pay the placement fee today and I will guarantee food-processing work, housing, and later transfers into better jobs.",
+      },
+    ],
+    known: [
+      "An Irish employment-permit application requires a signed contract and a named employer.",
+      "The official permit fee is far smaller than the agent's placement charge.",
+      "A government application ID can be checked without paying the recruiter again.",
+    ],
+    assumed: [
+      "A quota closes whenever the recruiter needs money quickly.",
+      "The permit can be transferred to any job immediately after arrival.",
+      "Employer housing is included because the agent said so in a voice message.",
+    ],
+    choices: [
+      {
+        id: "punjabVerifyPermits",
+        title: "Check every permit number independently",
+        hint: "Delay three days and compare contracts, fees, and employers",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 3,
+        next: "punjabDelhi",
+        effects: { cash: -45, battery: -8, stress: -7, exposure: -4, progress: 6, trustAll: 1 },
+        consequence: "Cash -$45 · Stress -7 · Four applications are checked",
+        outcomeTitle: "The application IDs are real; several promises are not",
+        outcome: "The portal shows four pending applications for one named food processor. It does not show free housing, care work for Simran, or permission to change employers immediately.",
+        setFlags: { permitCheck: true },
+      },
+      {
+        id: "punjabLeaseField",
+        title: "Lease part of the family field for three years",
+        hint: "Raise the placement money by giving up harvest income",
+        icon: "home",
+        tone: "uncertain",
+        route: "quarry",
+        days: 4,
+        next: "punjabDelhi",
+        effects: { cash: 2400, stress: 15, exposure: 5, progress: 7, trustAll: -1 },
+        consequence: "Cash +$2,400 · Stress +15 · Harvest income is pledged",
+        outcomeTitle: "Another family takes the field keys",
+        outcome: "The lease pays less than the agent's newest total. Gurpreet photographs the boundary and signs away three seasons of income.",
+        setFlags: { fieldLease: true },
+      },
+      {
+        id: "punjabPayAgent",
+        title: "Pay the agent's first placement charge",
+        hint: "Trade savings for receipts labeled training and consulting",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 1,
+        next: "punjabDelhi",
+        requires: { cash: 1100 },
+        effects: { cash: -1100, stress: 14, exposure: 17, progress: 8, trustAll: -1 },
+        consequence: "Cash -$1,100 · Risk +17 · The receipt avoids the word permit",
+        outcomeTitle: "One payment becomes four separate charges",
+        outcome: "The agent issues receipts for training, consulting, transport, and accommodation. None identifies the employer responsible for the permit applications.",
+        setFlags: { agentFees: true },
+      },
+    ],
+  },
+
+  punjabDelhi: {
+    id: "punjabDelhi",
+    region: "Delhi, India · Present day",
+    location: "A recruitment office above a travel agency",
+    time: "15:20",
+    weather: "Dust and late-afternoon heat",
+    weatherDetail: "The agent has booked refundable flights before permits issue",
+    route: "quarry",
+    contentNote: "Document fraud and pressure to travel before approval",
+    source: sources.irelandPermits,
+    messages: [
+      {
+        sender: "Permit portal support",
+        initial: "i",
+        role: "Official information",
+        time: "15:04",
+        trusted: true,
+        body: "A pending application is not permission to work or travel for employment. Verify the final permit, employer, occupation, salary, and signed contract before departure.",
+      },
+    ],
+    known: [
+      "The official portal lists each application separately.",
+      "The recruiter has produced PDF copies before all four portal records show a final decision.",
+      "Local repair and clinic work can cover food while the group waits.",
+    ],
+    assumed: [
+      "A professional-looking PDF must be an issued permit.",
+      "Missing salary pages can be added after arrival.",
+      "Waiting for the portal will cause a genuine employer to cancel immediately.",
+    ],
+    choices: [
+      {
+        id: "punjabWaitPortal",
+        title: "Wait for four final portal decisions",
+        hint: "Spend eighteen days verifying original permits and contracts",
+        icon: "wait",
+        tone: "trusted",
+        route: "elmstead",
+        days: 18,
+        next: "punjabAirport",
+        effects: { cash: -320, supplies: -3, stress: 3, exposure: -8, progress: 10, trustAll: 1 },
+        consequence: "Cash -$320 · Eighteen days pass · Risk falls",
+        outcomeTitle: "Four permits appear in four worker accounts",
+        outcome: "Each traveler downloads an original permit naming the employer, occupation, and salary. The agent's fee remains unexplained and far above the official charge.",
+        setFlags: { permitOriginals: true },
+      },
+      {
+        id: "punjabLocalWork",
+        title: "Work locally until the records update",
+        hint: "Rebuild cash through posted wages while checking daily",
+        icon: "work",
+        tone: "uncertain",
+        route: "quarry",
+        days: 12,
+        next: "punjabAirport",
+        effects: { cash: 420, supplies: -2, water: -2, stress: 6, progress: 10, people: { gurpreet: -5, arjun: -5, simran: -3, neha: -3 } },
+        consequence: "Cash +$420 · Twelve days pass · Health falls",
+        outcomeTitle: "The portal updates during the final shift",
+        outcome: "The local jobs pay as written. By departure day, the four official records show issued permits, but the recruiter still refuses to provide the housing contract.",
+        setFlags: { permitOriginals: true },
+      },
+      {
+        id: "punjabTakePDF",
+        title: "Travel with the agent's PDF copies",
+        hint: "Leave before every official portal record is complete",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 3,
+        next: "punjabAirport",
+        requires: { cash: 600 },
+        effects: { cash: -600, battery: -10, stress: 18, exposure: 25, progress: 12, trustAll: -1 },
+        consequence: "Cash -$600 · Risk +25 · The records do not match",
+        outcomeTitle: "Two PDFs carry dates the portal does not show",
+        outcome: "The agent says the portal is slow and sends the group to the airport. Neha keeps screenshots of the conflicting occupation and salary pages.",
+        setFlags: { permitScreenshots: true },
+      },
+    ],
+  },
+
+  punjabAirport: {
+    id: "punjabAirport",
+    region: "Delhi international airport · Present day",
+    location: "The airline document desk",
+    time: "01:30",
+    weather: "Monsoon rain beyond the glass",
+    weatherDetail: "The agent is coaching answers by phone",
+    route: "quarry",
+    contentNote: "Immigration questioning and possible refusal to travel",
+    source: sources.irelandPermits,
+    messages: [
+      {
+        sender: "Recruitment agent",
+        initial: "R",
+        role: "Unverified voice call",
+        time: "01:14",
+        trusted: false,
+        body: "Say you are visiting Ireland and discuss work only after landing. Do not show the fee receipts. If anyone asks about housing, give the hotel address I sent tonight.",
+      },
+    ],
+    known: [
+      "The group can present its employment purpose, permits, and contracts truthfully.",
+      "The new hotel address is not part of any employer document.",
+      "Airport staff can record suspected recruitment fraud before the group decides whether to fly.",
+    ],
+    assumed: [
+      "A tourist story makes valid work documents safer.",
+      "Reporting the agent automatically cancels every issued permit.",
+      "Boarding the plane is the only way to recover money already paid.",
+    ],
+    choices: [
+      {
+        id: "punjabPresentDocuments",
+        title: "Present the real employment purpose",
+        hint: "Show the portal records, contracts, and fee receipts together",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 2,
+        next: "punjabDublin",
+        requires: { cash: 700 },
+        effects: { cash: -700, battery: -9, stress: 9, exposure: -6, progress: 13, trustAll: 1 },
+        consequence: "Cash -$700 · Risk falls · The interview is recorded",
+        outcomeTitle: "The purpose of travel matches the permits",
+        outcome: "Airline staff verify the issued records. The group answers honestly about the jobs and preserves the agent's contradictory housing and fee messages.",
+        setFlags: { truthfulDeparture: true },
+      },
+      {
+        id: "punjabTouristStory",
+        title: "Repeat the agent's tourist story",
+        hint: "Hide the jobs behind a hotel booking that does not match the luggage",
+        icon: "talk",
+        tone: "danger",
+        route: "ridge",
+        days: 3,
+        next: "punjabDublin",
+        requires: { cash: 650 },
+        effects: { cash: -650, battery: -14, stress: 23, exposure: 29, progress: 12, trustAll: -1 },
+        consequence: "Cash -$650 · Stress +23 · Risk +29",
+        outcomeTitle: "The rehearsed story fails at the document desk",
+        outcome: "The group is questioned for hours. Official checks eventually confirm issued work records, but the false explanation follows them into the arrival file.",
+      },
+      {
+        id: "punjabReportAgent",
+        title: "Cancel the flight and report the recruiter",
+        hint: "End the journey before leaving India and preserve every record",
+        icon: "wait",
+        tone: "uncertain",
+        route: "quarry",
+        days: 9,
+        next: null,
+        effects: { cash: -180, stress: 8, exposure: -28, progress: 24, trustAll: 1 },
+        consequence: "The Ireland journey ends · All four remain together",
+        outcomeTitle: "The plane leaves without them",
+        outcome: "Airport staff record the suspected fraud, and the group begins complaints from India. Recovering the placement money and protecting family assets will take much longer.",
+        ending: {
+          type: "recruitment_fraud_reported",
+          status: "won",
+          title: "The journey stops before the debt travels farther",
+          copy: "The Punjab group remains in India and challenges the recruitment scheme. Ireland is no longer the immediate destination, but the four relatives keep their documents, safety, and evidence.",
+        },
+      },
+    ],
+  },
+
+  punjabDublin: {
+    id: "punjabDublin",
+    region: "Dublin, Ireland · Present day",
+    location: "An airport arrivals hall",
+    time: "08:40",
+    weather: "Cold rain outside",
+    weatherDetail: "The recruiter shuttle is already waiting",
+    route: "elmstead",
+    contentNote: "Residence registration and employer-controlled housing",
+    source: sources.irelandMigrantRights,
+    messages: [
+      {
+        sender: "Migrant information desk",
+        initial: "i",
+        role: "Verified information",
+        time: "08:18",
+        trusted: true,
+        body: "Keep the original permit yourself. Employment permits and residence permission are related but separate. Register as required and keep copies outside employer-controlled housing.",
+      },
+    ],
+    known: [
+      "The group can attend the required registration process and retain dated copies.",
+      "The named employer confirms the jobs but not the recruiter's additional charges.",
+      "The shuttle driver wants passports before sharing the housing address.",
+    ],
+    assumed: [
+      "The employer automatically completes every immigration registration step.",
+      "Handing passports to the driver is required by Irish law.",
+      "Free transport proves that housing is included in the contract.",
+    ],
+    choices: [
+      {
+        id: "punjabRegisterDublin",
+        title: "Complete registration before taking the shuttle",
+        hint: "Keep original permits and dated residence records",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 4,
+        next: "punjabWorksite",
+        effects: { cash: -180, battery: -8, stress: 4, exposure: -12, progress: 11, trustAll: 1 },
+        consequence: "Cash -$180 · Risk falls · Four records are copied",
+        outcomeTitle: "Each worker leaves with a separate record",
+        outcome: "The group keeps original permits, contracts, and registration copies in separate bags and encrypted phone folders before traveling to the employer.",
+        setFlags: { irishRegistration: true },
+      },
+      {
+        id: "punjabCallEmployer",
+        title: "Call the named employer directly",
+        hint: "Confirm jobs, wages, housing, and transport before leaving",
+        icon: "phone",
+        tone: "trusted",
+        route: "elmstead",
+        days: 2,
+        next: "punjabWorksite",
+        effects: { battery: -18, cash: -90, stress: -3, exposure: -7, progress: 10, trustAll: 1 },
+        consequence: "Phone -18% · Stress -3 · The terms are compared",
+        outcomeTitle: "The employer confirms jobs, not the agent's promises",
+        outcome: "The employer confirms food-processing roles and a weekly housing charge. Nobody confirms Simran's promised care job or the placement-fee deductions.",
+        setFlags: { employerConfirmed: true },
+      },
+      {
+        id: "punjabAgentShuttle",
+        title: "Board the recruiter's shuttle immediately",
+        hint: "Move quickly while surrendering documents and the housing address",
+        icon: "car",
+        tone: "danger",
+        route: "ridge",
+        days: 1,
+        next: "punjabWorksite",
+        effects: { cash: -240, battery: -12, stress: 17, exposure: 22, progress: 12, trustAll: -1 },
+        consequence: "Cash -$240 · Risk +22 · Passports are collected",
+        outcomeTitle: "The minibus leaves Dublin before anyone sees an address",
+        outcome: "The driver places the passports in an envelope and calls it employer policy. The group reaches a crowded house beside the plant after dark.",
+        setFlags: { passportsWithDriver: true },
+      },
+    ],
+  },
+
+  punjabWorksite: {
+    id: "punjabWorksite",
+    region: "Irish Midlands · Present day",
+    location: "A food-processing plant and worker house",
+    time: "05:05",
+    weather: "Rain over the loading yard",
+    weatherDetail: "The first shift starts before payroll opens",
+    route: "quarry",
+    contentNote: "Wage theft, excessive hours, and employer-controlled housing",
+    source: sources.irelandMigrantRights,
+    messages: [
+      {
+        sender: "Night-shift supervisor",
+        initial: "S",
+        role: "Employer instruction",
+        time: "04:48",
+        trusted: false,
+        body: "The recruiter fees, airport van, bedding, permits, and house deposit come from the first pay. Anyone who leaves the house or complains can lose the job attached to the permit.",
+      },
+    ],
+    known: [
+      "Permit-application expenses cannot simply be recovered through unexplained wage deductions.",
+      "The group can photograph rosters, payslips, rent demands, and actual hours worked.",
+      "A migrant center can help find independent housing and workplace advice.",
+    ],
+    assumed: [
+      "Every deduction is lawful because it appears on a payslip.",
+      "Leaving employer housing automatically cancels the permits.",
+      "The Workplace Relations Commission reports every complaint directly as an immigration offense.",
+    ],
+    choices: [
+      {
+        id: "punjabDocumentWork",
+        title: "Copy every roster, payslip, and deduction",
+        hint: "Build a workplace record while continuing the named jobs",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 21,
+        next: "punjabInspection",
+        effects: { cash: 720, supplies: -3, water: -2, stress: 14, progress: 15, peopleAll: -7, trustAll: 1 },
+        consequence: "Cash +$720 · Twenty-one days pass · Health -7 each",
+        outcomeTitle: "The private ledger and official payslips disagree",
+        outcome: "Neha records unpaid hours and deductions. The group keeps working long enough to preserve three weeks of evidence outside the employer house.",
+        setFlags: { workRecords: true },
+      },
+      {
+        id: "punjabAcceptDeductions",
+        title: "Accept the deductions until the debt shrinks",
+        hint: "Avoid confrontation while the employer controls every calculation",
+        icon: "work",
+        tone: "uncertain",
+        route: "quarry",
+        days: 35,
+        next: "punjabInspection",
+        effects: { cash: 480, supplies: -4, water: -3, stress: 24, exposure: 10, progress: 16, peopleAll: -11, trustAll: -1 },
+        consequence: "Cash +$480 · Thirty-five days pass · Health -11 each",
+        outcomeTitle: "The debt falls on paper and rises at home",
+        outcome: "More deductions appear for transport, utilities, uniforms, and administration. Families in Punjab begin making the loan payments the Irish wages were supposed to cover.",
+        setFlags: { housingDeductions: true },
+      },
+      {
+        id: "punjabLeaveHousing",
+        title: "Leave the employer house and seek advice",
+        hint: "Keep the jobs for now while separating shelter from the supervisor",
+        icon: "home",
+        tone: "trusted",
+        route: "elmstead",
+        days: 12,
+        next: "punjabInspection",
+        effects: { cash: -520, supplies: -2, stress: 8, exposure: -8, progress: 14, trustAll: 1 },
+        consequence: "Cash -$520 · Risk falls · Housing control ends",
+        outcomeTitle: "The new room key does not belong to the employer",
+        outcome: "A migrant center helps the group find temporary shared rooms. The plant keeps them on the roster, but the supervisor begins cutting shifts.",
+        setFlags: { independentHousing: true },
+      },
+    ],
+  },
+
+  punjabInspection: {
+    id: "punjabInspection",
+    region: "Irish Midlands · Present day",
+    location: "The plant car park after closure",
+    time: "18:30",
+    weather: "Cold rain under security lights",
+    weatherDetail: "The employer has ended every shift without notice",
+    route: "quarry",
+    contentNote: "Job loss, expiring status, and risk of undocumented work",
+    source: sources.irelandReactivation,
+    messages: [
+      {
+        sender: "Migrant-rights adviser",
+        initial: "L",
+        role: "Verified information",
+        time: "18:12",
+        trusted: true,
+        body: "Workers who entered on valid permits and fell out of the system through exploitation or circumstances outside their control may be able to request temporary permission and then apply for a Reactivation Employment Permit. Eligibility is individual and not guaranteed.",
+      },
+    ],
+    known: [
+      "The employer has stopped trading and the named jobs no longer exist.",
+      "A reactivation application begins with Immigration Service Delivery and requires a genuine new job offer.",
+      "Cash-work recruiters outside the gate offer immediate jobs without payslips or permission checks.",
+    ],
+    assumed: [
+      "Losing the named job instantly proves deliberate immigration fraud by the workers.",
+      "A new agent can transfer all four permits by changing a company logo.",
+      "Unrecorded work will not affect later applications because it pays in cash.",
+    ],
+    choices: [
+      {
+        id: "punjabContactReactivation",
+        title: "Ask for reactivation and temporary-permission advice",
+        hint: "Document lawful entry, exploitation, closure, and each person's skills",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 12,
+        next: "punjabPolicy",
+        effects: { cash: -260, battery: -10, stress: 4, exposure: -22, progress: 14, trustAll: 1 },
+        consequence: "Cash -$260 · Risk falls · Four individual files begin",
+        outcomeTitle: "The adviser refuses to promise one answer for four people",
+        outcome: "The group records how each worker entered, worked, and lost the named job. Temporary-permission and new-employer steps are explained separately.",
+        setFlags: { reactivationAdvice: true },
+      },
+      {
+        id: "punjabCashJobs",
+        title: "Take unrecorded warehouse shifts",
+        hint: "Earn immediate money while working outside the permit system",
+        icon: "work",
+        tone: "uncertain",
+        route: "quarry",
+        days: 18,
+        next: "punjabPolicy",
+        effects: { cash: 620, supplies: -3, stress: 18, exposure: 28, progress: 15, peopleAll: -6, trustAll: -1 },
+        consequence: "Cash +$620 · Risk +28 · Health -6 each",
+        outcomeTitle: "The shifts move between three loading yards",
+        outcome: "The group receives cash without records and sleeps in rooms controlled by the new supervisor. The old wage claim and immigration deadlines continue.",
+        setFlags: { cashWork: true },
+      },
+      {
+        id: "punjabAgentTransfer",
+        title: "Pay the agent for a replacement-company transfer",
+        hint: "Trust a new PDF instead of the official employer-change process",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 6,
+        next: "punjabPolicy",
+        requires: { cash: 700 },
+        effects: { cash: -700, battery: -16, stress: 22, exposure: 34, progress: 15, trustAll: -1 },
+        consequence: "Cash -$700 · Risk +34 · The replacement record fails",
+        outcomeTitle: "The company number belongs to a dissolved business",
+        outcome: "The new PDF cannot be verified. The agent blocks the group, leaving the workers without a named employer and with less time to regularize their position.",
+        setFlags: { falseTransfer: true },
+      },
+    ],
+  },
+
+  punjabPolicy: {
+    id: "punjabPolicy",
+    region: "Dublin, Ireland · Present day",
+    location: "A migrant-support waiting room",
+    time: "20:10",
+    weather: "Wind and rain after dark",
+    weatherDetail: "A deportation-flight video is playing on several phones",
+    route: "elmstead",
+    contentNote: "Anti-migrant rhetoric and celebrations of deportation",
+    source: sources.irelandDeportations,
+    messages: [
+      {
+        sender: "Shared influencer video",
+        initial: "!",
+        role: "Fictional anti-migrant account",
+        time: "19:48",
+        trusted: false,
+        body: "Another charter flight gone. Celebrate every deportation and send the illegal workers next. Ireland owes them nothing.",
+      },
+      {
+        sender: "Independent adviser",
+        initial: "L",
+        role: "Verified legal information",
+        time: "19:57",
+        trusted: true,
+        body: "A political video is not a decision in your file. Wage claims, temporary permission, reactivation permits, voluntary return, and deportation are different processes.",
+      },
+    ],
+    known: [
+      "The adviser can review the four files and deadlines confidentially.",
+      "The influencer has no access to the permits, payslips, or reason the jobs ended.",
+      "Posting faces and locations could expose the group to the first recruiter and hostile strangers.",
+    ],
+    assumed: [
+      "The charter-flight announcement means the group has already been ordered to leave.",
+      "Replying publicly will improve the permit applications.",
+      "Voluntary return and enforced deportation have the same future consequences.",
+    ],
+    choices: [
+      {
+        id: "punjabLegalAdvice",
+        title: "Review the four files with the adviser",
+        hint: "Separate workplace, permit, immigration, and return questions",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 7,
+        next: "punjabFinal",
+        effects: { battery: -8, stress: -10, exposure: -15, progress: 9, trustAll: 1 },
+        consequence: "Stress -10 · Risk falls · Four deadline lists are written",
+        outcomeTitle: "The group leaves with four different checklists",
+        outcome: "The adviser identifies shared evidence and individual requirements. No video, recruiter, or relative receives access to the confidential files.",
+        setFlags: { irelandLegalAdvice: true },
+      },
+      {
+        id: "punjabCloseFeed",
+        title: "Close the video and organize the evidence",
+        hint: "Use the night for dates, receipts, rosters, and employer messages",
+        icon: "rest",
+        tone: "uncertain",
+        route: "quarry",
+        days: 4,
+        next: "punjabFinal",
+        effects: { battery: 12, stress: -6, progress: 9 },
+        consequence: "Phone +12% · Stress -6 · Four days pass",
+        outcomeTitle: "The timeline becomes louder than the feed",
+        outcome: "Neha matches every payment to a message and every shift to a roster. The deportation video continues circulating without the group's reply.",
+      },
+      {
+        id: "punjabReplyVideo",
+        title: "Reply with the group's photograph and story",
+        hint: "Challenge the celebration while revealing identities and location",
+        icon: "talk",
+        tone: "danger",
+        route: "ridge",
+        days: 2,
+        next: "punjabFinal",
+        effects: { battery: -24, stress: 20, exposure: 28, progress: 9, trustAll: -1 },
+        consequence: "Phone -24% · Stress +20 · Risk +28",
+        outcomeTitle: "The photograph is reposted without the payslips",
+        outcome: "Some viewers offer support. Others publish the group's faces beside false claims, threats, and demands for immediate deportation.",
+      },
+    ],
+  },
+
+  punjabFinal: {
+    id: "punjabFinal",
+    region: "Dublin, Ireland · Present day",
+    location: "An employment and immigration appointment",
+    time: "09:30",
+    weather: "Bright sky between showers",
+    weatherDetail: "Each worker enters a separate appointment",
+    route: "elmstead",
+    contentNote: "Reactivation applications, voluntary return, and undocumented labor",
+    source: sources.irelandReactivation,
+    messages: [
+      {
+        sender: "Permit adviser",
+        initial: "i",
+        role: "Official information",
+        time: "09:12",
+        trusted: true,
+        body: "A Reactivation Employment Permit is intended for eligible workers who entered legally and fell out of the system through no fault of their own or workplace exploitation. Temporary immigration permission and a genuine new job offer must be addressed first. Approval is not guaranteed.",
+      },
+    ],
+    known: [
+      "Each worker can request an individual assessment and search for a genuine new employer.",
+      "Voluntary return can include travel and reintegration assistance without being the same as deportation.",
+      "A cash-work contractor offers immediate shifts without permission, records, or stable housing.",
+    ],
+    assumed: [
+      "One successful application automatically covers all four relatives.",
+      "A workplace complaint guarantees immigration permission.",
+      "Another hidden job will be safe because the group already knows Ireland.",
+    ],
+    choices: [
+      {
+        id: "punjabReactivationReview",
+        title: "Enter temporary-permission and reactivation review",
+        hint: "Complete the route with four individual outcomes still pending",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 42,
+        next: null,
+        effects: { cash: -220, stress: 5, exposure: -34, progress: 100, trustAll: 1 },
+        consequence: "Destination reached · Four reactivation reviews begin",
+        outcomeTitle: "The new applications name workers before employers",
+        outcome: "The group enters temporary support while each person seeks a genuine offer and files the correct permit application. Wage complaints continue separately, and no approval is promised.",
+        contextBonuses: [
+          {
+            flag: "permitCheck",
+            kind: "payoff",
+            label: "The pre-departure check shows the agent knew the real permit terms",
+            effects: { stress: -3, exposure: -3 },
+          },
+          {
+            flag: "irishRegistration",
+            kind: "payoff",
+            label: "The registration copies establish lawful entry and residence dates",
+            effects: { exposure: -4 },
+          },
+          {
+            flag: "workRecords",
+            kind: "payoff",
+            label: "The saved rosters and payslips support the exploitation account",
+            effects: { stress: -4 },
+          },
+          {
+            flag: "irelandLegalAdvice",
+            kind: "payoff",
+            label: "Independent advice prevents another fraudulent agent payment",
+            effects: { cash: 120, exposure: -3 },
+          },
+        ],
+        ending: {
+          type: "ireland_reactivation_pending",
+          status: "won",
+          title: "Back inside a lawful process",
+          copy: "The Punjab group reaches temporary permission and reactivation review in Ireland. Their permit decisions, wage claims, family debts, and long-term residence remain unresolved.",
+        },
+      },
+      {
+        id: "punjabVoluntaryReturn",
+        title: "Request assisted voluntary return",
+        hint: "Return without an enforced deportation and plan how to face the debt",
+        icon: "wait",
+        tone: "uncertain",
+        route: "quarry",
+        days: 30,
+        next: null,
+        effects: { stress: 5, exposure: -38, progress: 84, trustAll: 1 },
+        consequence: "A voluntary return plan begins · Risk falls",
+        outcomeTitle: "The return file includes four workers and four households",
+        outcome: "The group asks for travel and reintegration advice while preserving wage and recruitment evidence. Assistance cannot cancel the field lease or private loans.",
+        ending: {
+          type: "ireland_voluntary_return",
+          status: "won",
+          title: "Returning by choice, with the evidence intact",
+          copy: "The four relatives return to India through a voluntary process rather than enforced deportation. They remain together and alive; debt recovery and complaints become the next journey.",
+        },
+      },
+      {
+        id: "punjabHiddenWork",
+        title: "Leave support for unrecorded cash work",
+        hint: "Trade the permit process for immediate wages and employer-controlled rooms",
+        icon: "work",
+        tone: "danger",
+        route: "ridge",
+        days: 20,
+        next: null,
+        effects: { cash: 520, supplies: -3, stress: 28, exposure: 42, progress: 95, peopleAll: -8, trustAll: -1 },
+        consequence: "Cash +$520 · Risk +42 · Legal contact and housing are lost",
+        outcomeTitle: "The new supervisor begins with the old threat",
+        outcome: "The contractor controls shifts, rooms, and transport while warning that any complaint will expose the group's status. No payslips record the work.",
+        ending: {
+          type: "ireland_hidden_work",
+          status: "stopped",
+          title: "Ireland reached, stability withheld",
+          copy: "The Punjab group remains in Ireland but outside the employment-permit system, dependent on an employer who profits from their fear of detection.",
+        },
+      },
+    ],
+  },
+};
+
+const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+export const SUPPLY_ITEMS = [
+  {
+    id: "medicine",
+    title: "Medicine and first-aid dose",
+    shortTitle: "Medicine",
+    detail: "Basic fever relief, dressings, and pain medicine for one treatment.",
+    resource: "medicine",
+    amount: 1,
+    cap: 4,
+    baseCost: 80,
+    unit: "dose",
+  },
+  {
+    id: "supplies",
+    title: "Food for two days",
+    shortTitle: "Food",
+    detail: "Portable staples shared by the whole group.",
+    resource: "supplies",
+    amount: 2,
+    cap: 12,
+    baseCost: 50,
+    unit: "days",
+  },
+  {
+    id: "water",
+    title: "Five liters of water",
+    shortTitle: "Water",
+    detail: "Sealed drinking water added to the group's carried supply.",
+    resource: "water",
+    amount: 5,
+    cap: 40,
+    baseCost: 30,
+    unit: "L",
+  },
+  {
+    id: "battery",
+    title: "Phone charging",
+    shortTitle: "Phone charge",
+    detail: "A supervised outlet or power-bank charge for maps and calls.",
+    resource: "battery",
+    amount: 25,
+    cap: 100,
+    baseCost: 20,
+    unit: "%",
+  },
+];
+
+export const SUPPLY_STOPS = {
+  home: { title: "Neighborhood market", detail: "Buy essentials before the Ramirez family leaves.", priceMultiplier: 1 },
+  blueDoorShelter: { title: "Shelter supply desk", detail: "Volunteers sell sealed basics at cost.", priceMultiplier: 0.8 },
+  waitingTown: { title: "Town market and pharmacy", detail: "A public market has food, water, charging, and basic medicine.", priceMultiplier: 1 },
+  clinicQueue: { title: "Clinic pharmacy window", detail: "The clinic can provide basic medicine and travel supplies.", priceMultiplier: 0.9 },
+  northernWait: { title: "Community aid kiosk", detail: "A local aid group keeps a small stock of essentials.", priceMultiplier: 0.9 },
+  borderCity: { title: "Bus-station pharmacy", detail: "The prices are posted, but the stock is limited.", priceMultiplier: 1.1 },
+  haddadHome: { title: "Neighborhood pharmacy", detail: "The Haddad family can prepare before leaving Syria.", priceMultiplier: 1 },
+  haddadTurkey: { title: "Registered aid market", detail: "A monitored market sells food, water, and basic health supplies.", priceMultiplier: 0.9 },
+  haddadGreece: { title: "Reception-center shop", detail: "A small kiosk serves people waiting for registration.", priceMultiplier: 1 },
+  haddadBalkans: { title: "Transit-town pharmacy", detail: "The group can replace essentials before the next transfer.", priceMultiplier: 1.1 },
+  haddadGermany: { title: "Station pharmacy", detail: "A public pharmacy is open near the registration office.", priceMultiplier: 1 },
+  diopHome: { title: "Dakar departure market", detail: "The Diop group can prepare before committing to the route.", priceMultiplier: 1 },
+  diopDakar: { title: "Cooperative supply counter", detail: "Workers can buy food, water, and basic medicine at posted prices.", priceMultiplier: 0.9 },
+  diopSaintLouis: { title: "Saint-Louis pharmacy", detail: "A licensed pharmacy and market sit near the transport offices.", priceMultiplier: 1 },
+  diopNouakchott: { title: "Roadside market", detail: "Remote travel supplies cost more this far from the city.", priceMultiplier: 1.25 },
+  diopCanaryLanding: { title: "Reception aid desk", detail: "The desk offers essential supplies while arrivals wait.", priceMultiplier: 0.8 },
+  diopIslandWait: { title: "Island community pharmacy", detail: "A nearby pharmacy is accessible during the wait.", priceMultiplier: 1.1 },
+  nguyenHome: { title: "Local market and pharmacy", detail: "The Nguyen family can prepare before meeting the recruiter.", priceMultiplier: 1 },
+  nguyenTransit: { title: "Transit-station market", detail: "The family can restock before the next connection.", priceMultiplier: 1.1 },
+  nguyenFrance: { title: "Calais aid warehouse", detail: "A volunteer network offers essentials at reduced cost.", priceMultiplier: 0.8 },
+  nguyenUKArrival: { title: "Reception supply desk", detail: "Basic supplies are available while interviews are arranged.", priceMultiplier: 0.9 },
+  nguyenPolicy: { title: "Community pharmacy", detail: "The family can shop near the legal-support office.", priceMultiplier: 1 },
+  punjabHome: { title: "Punjab departure market", detail: "The group can prepare before paying for the journey.", priceMultiplier: 1 },
+  punjabDelhi: { title: "Delhi market and pharmacy", detail: "Posted prices make it possible to compare essentials before departure.", priceMultiplier: 1 },
+  punjabDublin: { title: "Dublin reception shop", detail: "A public shop is available near the registration point.", priceMultiplier: 1.05 },
+  punjabWorksite: { title: "Town pharmacy", detail: "The group can buy essentials away from the contractor's rooms.", priceMultiplier: 1.1 },
+  punjabInspection: { title: "Support-center kiosk", detail: "The worker-support center keeps a small stock of essentials.", priceMultiplier: 0.9 },
+  punjabPolicy: { title: "Community pharmacy", detail: "A pharmacy is open near the employment-rights clinic.", priceMultiplier: 1 },
+  punjabFinal: { title: "Legal-center pharmacy", detail: "One last public shop is available before the appointment.", priceMultiplier: 1 },
+};
+
+export function createInitialGame(familyId = "ramirez") {
+  const family = getFamilyPreset(familyId);
+  return {
+    version: GAME_VERSION,
+    familyId: family.id,
+    runId: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+    phase: "decision",
+    status: "playing",
+    day: 1,
+    progress: 0,
+    eventId: family.startEventId,
+    route: family.startRoute,
+    resources: { ...family.resources },
+    people: Object.fromEntries(Object.entries(family.peopleState).map(([id, state]) => [id, { ...state }])),
+    losses: [],
+    history: [],
+    activityLog: [],
+    relationshipNotes: {},
+    relationshipHistory: [],
+    storyThreads: {},
+    storyThreadHistory: [],
+    flags: {},
+    completedRoadsideWork: {},
+    supplyPurchases: [],
+    resolvedSocialFeeds: {},
+    socialClimate: 50,
+    lastRoadsideOutcome: null,
+    lastSocialOutcome: null,
+    pendingIncident: null,
+    incidentHistory: [],
+    incidentCooldown: 0,
+    incidentDryStreak: 0,
+    currentOutcome: null,
+    pendingNext: null,
+    pendingEnding: null,
+  };
+}
+
+export function getEvent(game) {
+  return EVENTS[game.eventId];
+}
+
+export function getRoadsideOpportunity(game) {
+  return ROADSIDE_OPPORTUNITIES[game.eventId] ?? null;
+}
+
+export function getSupplyStop(game) {
+  if (game.phase !== "decision" || game.status !== "playing" || game.pendingIncident) return null;
+  return SUPPLY_STOPS[game.eventId] ?? null;
+}
+
+export function getSupplyOptions(game) {
+  const stop = getSupplyStop(game);
+  if (!stop) return [];
+
+  return SUPPLY_ITEMS.map((item) => {
+    const current = game.resources[item.resource];
+    const amount = Math.max(0, Math.min(item.amount, item.cap - current));
+    const cost = Math.ceil((item.baseCost * (stop.priceMultiplier ?? 1) * (amount / item.amount)) / 5) * 5;
+    const unavailable = current >= item.cap
+      ? "Already fully stocked"
+      : game.resources.cash < cost
+        ? `Requires $${cost}`
+        : null;
+    return { ...item, amount, cost, unavailable };
+  });
+}
+
+export function buySupply(game, itemId) {
+  const option = getSupplyOptions(game).find((item) => item.id === itemId);
+  if (!option || option.unavailable) return game;
+
+  const current = game.resources[option.resource];
+  const nextValue = Math.min(option.cap, current + option.amount);
+  return {
+    ...game,
+    resources: {
+      ...game.resources,
+      cash: game.resources.cash - option.cost,
+      [option.resource]: nextValue,
+    },
+    supplyPurchases: [
+      ...(game.supplyPurchases ?? []),
+      {
+        day: game.day,
+        eventId: game.eventId,
+        itemId: option.id,
+        title: option.shortTitle,
+        amount: nextValue - current,
+        cost: option.cost,
+      },
+    ],
+    activityLog: [
+      ...(game.activityLog ?? []),
+      {
+        day: game.day,
+        kind: "supplies",
+        title: `${option.shortTitle} purchased`,
+        detail: `${option.title} · $${option.cost}`,
+        tone: "trusted",
+      },
+    ],
+  };
+}
+
+export function hasCompletedRoadsideWork(game) {
+  return Boolean(game.completedRoadsideWork?.[game.eventId]);
+}
+
+export function getSocialFeed(game) {
+  return SOCIAL_FEEDS[game.eventId] ?? null;
+}
+
+export function hasRespondedToSocialFeed(game) {
+  return Boolean(game.resolvedSocialFeeds?.[game.eventId]);
+}
+
+export function getSocialClimateLabel(value) {
+  if (value >= 70) return { label: "Supportive", tone: "supportive" };
+  if (value >= 55) return { label: "Open", tone: "open" };
+  if (value >= 40) return { label: "Tense", tone: "tense" };
+  if (value >= 25) return { label: "Hostile", tone: "hostile" };
+  return { label: "Dangerous", tone: "dangerous" };
+}
+
+export function getSocialResponseOptions(game) {
+  const feed = getSocialFeed(game);
+  if (!feed) return [];
+  return SOCIAL_RESPONSE_OPTIONS.map((option) => ({
+    ...option,
+    outcome: feed.outcomes[option.id],
+    unavailable: getRequirementFailure(game, option),
+  }));
+}
+
+export function getCondition(health, alive = true) {
+  if (!alive) return { label: "Remembered", tone: "danger" };
+  if (health >= 75) return { label: "Good", tone: "safe" };
+  if (health >= 55) return { label: "Tired", tone: "caution" };
+  if (health >= 35) return { label: "Struggling", tone: "danger" };
+  return { label: "Needs urgent care", tone: "danger" };
+}
+
+export function getPortraitMood(personState, groupStress = 0) {
+  if (!personState || personState.alive === false) return "critical";
+  if (personState.health <= 45 || groupStress >= 80 || (100 - personState.health) + (groupStress * 0.5) >= 80) return "critical";
+  if (personState.health <= 70 || groupStress >= 50 || (100 - personState.health) + (groupStress * 0.5) >= 45) return "strained";
+  return "healthy";
+}
+
+export function getPortraitImage(person, personState, groupStress = 0, gameOrFamilyId = "ramirez") {
+  const family = getFamilyPreset(gameOrFamilyId);
+  return family.portraitStrips[getPortraitMood(personState, groupStress)] ?? person?.image;
+}
+
+export function getResourceTone(resource, value) {
+  if (resource === "stress" || resource === "exposure") {
+    if (value >= 80) return "danger";
+    if (value >= 55) return "caution";
+    return "safe";
+  }
+  if (resource === "battery") return value <= 15 ? "danger" : value <= 30 ? "caution" : "default";
+  if (resource === "supplies") return value <= 1 ? "danger" : value <= 2 ? "caution" : "default";
+  if (resource === "water") return value <= 3 ? "danger" : value <= 7 ? "caution" : "default";
+  if (resource === "medicine") return value === 0 ? "danger" : "default";
+  return "safe";
+}
+
+export function getRequirementFailure(game, choice) {
+  if (!choice.requires) return null;
+  for (const [resource, needed] of Object.entries(choice.requires)) {
+    const current = game.resources[resource] ?? 0;
+    if (current < needed) {
+      const labels = {
+        cash: `$${needed}`,
+        battery: `${needed}% phone charge`,
+        medicine: `${needed} medicine dose`,
+        water: `${needed} L water`,
+      };
+      return `Requires ${labels[resource] ?? needed}`;
+    }
+  }
+  return null;
+}
+
+function mergeEffects(...effectSets) {
+  const merged = {};
+  for (const effects of effectSets.filter(Boolean)) {
+    for (const [key, value] of Object.entries(effects)) {
+      if (key === "people" || key === "trust") {
+        merged[key] = { ...(merged[key] ?? {}) };
+        for (const [personId, amount] of Object.entries(value)) {
+          merged[key][personId] = (merged[key][personId] ?? 0) + amount;
+        }
+      } else if (key === "fatality") {
+        const current = merged.fatality ? (Array.isArray(merged.fatality) ? merged.fatality : [merged.fatality]) : [];
+        const incoming = Array.isArray(value) ? value : [value];
+        merged.fatality = [...new Set([...current, ...incoming])];
+      } else if (typeof value === "number") {
+        merged[key] = (merged[key] ?? 0) + value;
+      }
+    }
+  }
+  return merged;
+}
+
+export function getChoiceBonuses(game, choice) {
+  if (!choice) return [];
+  const bonuses = [];
+  if (choice.skillBonus) {
+    const traveler = game.people[choice.skillBonus.personId];
+    if (traveler?.alive !== false) bonuses.push(choice.skillBonus);
+  }
+  for (const bonus of choice.contextBonuses ?? []) {
+    if (game.flags?.[bonus.flag]) bonuses.push(bonus);
+  }
+  return bonuses;
+}
+
+function getChoiceReactions(game, choice) {
+  return (CHOICE_REACTIONS[choice.id] ?? [])
+    .filter((reaction) => game.people[reaction.personId]?.alive !== false);
+}
+
+function getStoryThreadUpdates(game, choice) {
+  return (STORY_THREAD_UPDATES[choice.id] ?? [])
+    .filter((update) => !update.requiresThread || game.storyThreads?.[update.requiresThread]);
+}
+
+function applyStoryThreadUpdates(game, updates, choiceId, day = game.day) {
+  const storyThreads = { ...(game.storyThreads ?? {}) };
+  const historyEntries = [];
+  for (const update of updates) {
+    const previous = storyThreads[update.id];
+    const entry = {
+      ...previous,
+      id: update.id,
+      title: update.title,
+      status: update.status,
+      summary: update.summary,
+      openedDay: previous?.openedDay ?? day,
+      updatedDay: day,
+    };
+    storyThreads[update.id] = entry;
+    historyEntries.push({ ...entry, day, choiceId });
+  }
+  return {
+    storyThreads,
+    storyThreadHistory: [...(game.storyThreadHistory ?? []), ...historyEntries],
+  };
+}
+
+function recordRelationshipReactions(game, applied, reactions, choiceId, day = game.day) {
+  const relationshipNotes = { ...(game.relationshipNotes ?? {}) };
+  const entries = reactions.map((reaction) => {
+    const person = getPeople(game).find((traveler) => traveler.id === reaction.personId);
+    const trustDelta = applied.people[reaction.personId].trust - game.people[reaction.personId].trust;
+    const entry = {
+      ...reaction,
+      personName: person?.name ?? "Traveler",
+      trustDelta,
+      day,
+      choiceId,
+    };
+    relationshipNotes[reaction.personId] = entry;
+    return entry;
+  });
+  return {
+    recordedReactions: entries,
+    relationshipNotes,
+    relationshipHistory: [...(game.relationshipHistory ?? []), ...entries],
+  };
+}
+
+function resolveChoiceEffects(game, choice) {
+  const bonuses = getChoiceBonuses(game, choice);
+  const reactions = getChoiceReactions(game, choice);
+  const reactionTrust = reactions.reduce((trust, reaction) => {
+    trust[reaction.personId] = (trust[reaction.personId] ?? 0) + (reaction.trustDelta ?? 0);
+    return trust;
+  }, {});
+  return {
+    effects: mergeEffects(choice.effects, ...bonuses.map((bonus) => bonus.effects), { trust: reactionTrust }),
+    bonuses,
+    reactions,
+  };
+}
+
+function travelWeeks(game) {
+  return Math.max(1, Math.ceil((game.currentOutcome?.days ?? 1) / 7));
+}
+
+function defersThresholdEnding(game) {
+  const outcomeChoice = getEvent(game)?.choices.find((choice) => choice.id === game.currentOutcome?.id);
+  return Boolean(game.currentOutcome?.deferThresholdEnding ?? outcomeChoice?.deferThresholdEnding);
+}
+
+export function requiresTravelPlan(game) {
+  return Boolean(
+    game.phase === "outcome"
+      && game.status === "playing"
+      && !game.pendingEnding
+      && !defersThresholdEnding(game)
+      && game.pendingNext
+      && (game.currentOutcome?.days ?? 0) >= 3
+      && !game.currentOutcome?.travelPlan,
+  );
+}
+
+export function getTravelPlanOptions(game) {
+  const weeks = travelWeeks(game);
+  const recoverCost = weeks * 25;
+  const planDetails = {
+    conserve: {
+      consequence: `Save cash · Stress +${weeks * 2} · Health -${weeks}`,
+      effects: { water: -weeks, supplies: -Math.floor(weeks / 2), stress: weeks * 2, peopleAll: -weeks },
+    },
+    steady: {
+      consequence: `Cash -$${weeks * 10} · Water -${weeks} L · Stress +${weeks}`,
+      effects: { cash: -(weeks * 10), water: -weeks, stress: weeks },
+    },
+    recover: {
+      consequence: `Cash -$${recoverCost} · Stress -${weeks * 2} · Health +${weeks}`,
+      effects: { cash: -recoverCost, water: -weeks, stress: -(weeks * 2), peopleAll: weeks },
+      unavailable: game.resources.cash < recoverCost ? `Requires $${recoverCost}` : null,
+    },
+  };
+  return TRAVEL_STRATEGIES.map((strategy) => ({ ...strategy, weeks, ...planDetails[strategy.id] }));
+}
+
+function applyEffects(game, effects = {}) {
+  const resources = { ...game.resources };
+  const resourceKeys = ["cash", "supplies", "water", "medicine", "battery", "stress", "exposure"];
+  for (const key of resourceKeys) resources[key] += effects[key] ?? 0;
+
+  resources.cash = Math.max(0, resources.cash);
+  resources.supplies = clamp(resources.supplies, 0, 12);
+  resources.water = clamp(resources.water, 0, 40);
+  resources.medicine = clamp(resources.medicine, 0, 4);
+  resources.battery = clamp(resources.battery, 0, 100);
+  resources.stress = clamp(resources.stress, 0, 100);
+  resources.exposure = clamp(resources.exposure, 0, 100);
+
+  const people = Object.fromEntries(
+    Object.entries(game.people).map(([id, values]) => {
+      if (values.alive === false) return [id, { ...values }];
+      const healthDelta = (effects.peopleAll ?? 0) + (effects.people?.[id] ?? 0);
+      const trustDelta = (effects.trustAll ?? 0) + (effects.trust?.[id] ?? 0);
+      return [id, {
+        ...values,
+        health: clamp(values.health + healthDelta, 0, 100),
+        trust: clamp(values.trust + trustDelta, 1, 5),
+      }];
+    }),
+  );
+
+  const explicitFatalityIds = effects.fatality ? (Array.isArray(effects.fatality) ? effects.fatality : [effects.fatality]) : [];
+  for (const id of explicitFatalityIds) {
+    if (people[id]) people[id] = { ...people[id], health: 0, alive: false };
+  }
+
+  if (resources.supplies === 0) {
+    resources.stress = clamp(resources.stress + 7, 0, 100);
+    for (const person of Object.values(people)) {
+      if (person.alive !== false) person.health = clamp(person.health - 5, 0, 100);
+    }
+  }
+
+  if (resources.water === 0) {
+    resources.stress = clamp(resources.stress + 10, 0, 100);
+    for (const person of Object.values(people)) {
+      if (person.alive !== false) person.health = clamp(person.health - 8, 0, 100);
+    }
+  }
+
+  const healthFatalityIds = Object.entries(people)
+    .filter(([, person]) => person.alive !== false && person.health <= 0)
+    .map(([id]) => id);
+  const fatalityIds = [...new Set([...explicitFatalityIds, ...healthFatalityIds])];
+  for (const id of fatalityIds) {
+    people[id] = { ...people[id], health: 0, alive: false };
+  }
+
+  return {
+    resources,
+    people,
+    losses: [...new Set([...(game.losses ?? []), ...fatalityIds])],
+    progress: clamp(game.progress + (effects.progress ?? 0), 0, 100),
+    socialClimate: clamp((game.socialClimate ?? 50) + (effects.climate ?? 0), 0, 100),
+  };
+}
+
+function getNewLossEntries(previousGame, nextGame, day = previousGame.day) {
+  const previousLosses = new Set(previousGame.losses ?? []);
+  return (nextGame.losses ?? [])
+    .filter((id) => !previousLosses.has(id))
+    .map((id) => {
+      const person = getPeople(previousGame).find((traveler) => traveler.id === id);
+      return {
+        day,
+        kind: "remembrance",
+        title: `${person?.name ?? "A traveler"} is remembered`,
+        detail: `${person?.name ?? "A member of the family"} died during the journey. The loss is recorded without graphic detail.`,
+        tone: "danger",
+      };
+    });
+}
+
+function evaluateEnding(nextGame, choice) {
+  const livingPeople = Object.values(nextGame.people).filter((person) => person.alive !== false);
+  if (livingPeople.length === 0) {
+    return {
+      type: "all_lost",
+      status: "stopped",
+      title: "No one can continue the journey",
+      copy: "Every member of the family has died. Their route ends here, and the journey log preserves their names and the choices that brought them this far.",
+    };
+  }
+  if (choice.ending) return choice.ending;
+  if (choice.deferThresholdEnding) return null;
+  if (nextGame.resources.exposure >= 100) {
+    return {
+      type: "apprehended",
+      status: "stopped",
+      title: "The family is taken into custody",
+      copy: "Their movements have become too visible. The run ends in detention while the legal process remains unresolved.",
+    };
+  }
+  if (nextGame.resources.stress >= 100) {
+    return {
+      type: "stress",
+      status: "stopped",
+      title: "The family cannot keep moving",
+      copy: "Grief, exhaustion, and conflict make another leg unsafe. They stop at a shelter and reconsider the journey.",
+    };
+  }
+  return null;
+}
+
+function incidentRoll(rolls, index) {
+  const value = rolls?.[index];
+  return clamp(Number.isFinite(value) ? value : Math.random(), 0, 0.999999);
+}
+
+function maybeStartTravelIncident(game, rolls) {
+  if (game.pendingIncident || game.status !== "playing") return game;
+  if (game.eventId.toLowerCase().includes("memorial")) return game;
+
+  const cooldown = game.incidentCooldown ?? 0;
+  if (cooldown > 0) return { ...game, incidentCooldown: cooldown - 1 };
+
+  const dryStreak = game.incidentDryStreak ?? 0;
+  const shouldStart = incidentRoll(rolls, 0) < 0.3 || dryStreak >= 2;
+  if (!shouldStart) return { ...game, incidentDryStreak: dryStreak + 1 };
+
+  const livingPeople = getPeople(game).filter((person) => game.people[person.id]?.alive !== false);
+  if (!livingPeople.length) return game;
+
+  const incident = TRAVEL_INCIDENTS[Math.floor(incidentRoll(rolls, 1) * TRAVEL_INCIDENTS.length)];
+  const person = livingPeople[Math.floor(incidentRoll(rolls, 2) * livingPeople.length)];
+  const personState = game.people[person.id];
+  const healthLoss = Math.min(incident.healthLoss, Math.max(0, personState.health - 1));
+  const startedDay = game.day;
+
+  return {
+    ...game,
+    resources: {
+      ...game.resources,
+      stress: clamp(game.resources.stress + incident.stress, 0, 100),
+    },
+    people: {
+      ...game.people,
+      [person.id]: { ...personState, health: Math.max(1, personState.health - healthLoss) },
+    },
+    pendingIncident: {
+      id: `${incident.id}-${startedDay}-${person.id}`,
+      type: incident.id,
+      kind: incident.kind,
+      title: incident.title,
+      summary: incident.summary,
+      personId: person.id,
+      startedDay,
+      healthLoss,
+    },
+    incidentCooldown: 2,
+    incidentDryStreak: 0,
+    activityLog: [
+      ...(game.activityLog ?? []),
+      {
+        day: startedDay,
+        kind: "incident",
+        title: `${person.name}: ${incident.title}`,
+        detail: `${incident.summary} ${person.name}'s health falls by ${healthLoss}.`,
+        tone: "danger",
+      },
+    ],
+  };
+}
+
+export function getTravelIncidentOptions(game) {
+  const incident = game.pendingIncident;
+  if (!incident) return [];
+  const person = getPeople(game).find((traveler) => traveler.id === incident.personId);
+  if (!person) return [];
+  const isInjury = incident.kind === "injury";
+  return [
+    {
+      id: "medicine",
+      title: isInjury ? "Use medicine and immobilize the leg" : "Use medicine and monitor symptoms",
+      hint: isInjury ? "Use pain relief, make a rigid support, and seek professional care" : "Use one dose for symptom relief, fluids, and careful monitoring",
+      tone: "trusted",
+      days: 1,
+      effects: { medicine: -1, stress: -4, people: { [person.id]: isInjury ? 8 : 10 } },
+      consequence: `Medicine -1 · ${person.name} health +${isInjury ? 8 : 10} · 1 day passes`,
+      outcomeTitle: `${person.name} stabilizes before the group moves`,
+      outcome: isInjury
+        ? "The leg is supported and the pain is monitored. The injury still needs professional assessment, but the group avoids forcing weight onto it immediately."
+        : "Rest, fluids, and symptom relief bring the fever down. The group continues to watch for breathing difficulty and seeks a clinic when one becomes available.",
+      unavailable: game.resources.medicine < 1 ? "Requires 1 medicine" : null,
+    },
+    {
+      id: "rest",
+      title: isInjury ? "Stop and make a splint" : "Stop for two days of rest",
+      hint: isInjury ? "Lose time while arranging support and safer transport" : "Recover more slowly without spending medicine",
+      tone: "uncertain",
+      days: 2,
+      effects: { stress: -3, people: { [person.id]: isInjury ? 6 : 5 } },
+      consequence: `${person.name} health +${isInjury ? 6 : 5} · Stress -3 · 2 days pass`,
+      outcomeTitle: `The group changes its pace for ${person.name}`,
+      outcome: isInjury
+        ? "A padded splint and a slower transport plan reduce the immediate pain. The group loses time but avoids making the injury worse on foot."
+        : "The group finds a place away from the road, shares water, and gives the illness time to ease before traveling again.",
+      unavailable: null,
+    },
+    {
+      id: "continue",
+      title: "Keep moving",
+      hint: isInjury ? "Continue without stabilizing the injured leg" : "Travel through the fever and exhaustion",
+      tone: "danger",
+      days: 0,
+      effects: { stress: 8, people: { [person.id]: isInjury ? -12 : -7 } },
+      consequence: `${person.name} health -${isInjury ? 12 : 7} · Stress +8`,
+      outcomeTitle: `${person.name}'s condition worsens on the road`,
+      outcome: isInjury
+        ? "Every transfer puts weight on the injured leg. The group keeps moving, but the swelling and pain become harder to hide or manage."
+        : "The journey continues without enough rest. The fever and exhaustion deepen, and the group will need to watch the next health decision carefully.",
+      unavailable: null,
+    },
+  ];
+}
+
+export function resolveTravelIncident(game, responseId) {
+  if (!game.pendingIncident || game.status !== "playing") return game;
+  const response = getTravelIncidentOptions(game).find((option) => option.id === responseId);
+  if (!response || response.unavailable) return game;
+
+  const incident = game.pendingIncident;
+  const person = getPeople(game).find((traveler) => traveler.id === incident.personId);
+  const applied = applyEffects(game, response.effects);
+  const nextGame = {
+    ...game,
+    ...applied,
+    day: game.day + response.days,
+    pendingIncident: null,
+    incidentHistory: [
+      ...(game.incidentHistory ?? []),
+      {
+        ...incident,
+        resolvedDay: game.day + response.days,
+        responseId: response.id,
+        responseTitle: response.title,
+        outcomeTitle: response.outcomeTitle,
+      },
+    ],
+    activityLog: [
+      ...(game.activityLog ?? []),
+      {
+        day: game.day,
+        kind: "incident-response",
+        title: response.outcomeTitle,
+        detail: `${response.outcome} ${response.consequence}`,
+        tone: response.tone,
+      },
+      ...getNewLossEntries(game, applied, game.day + response.days),
+    ],
+  };
+  const ending = evaluateEnding(nextGame, {});
+  return ending
+    ? { ...nextGame, phase: "ended", status: ending.status ?? "stopped", ending, pendingEnding: null }
+    : nextGame;
+}
+
+export function chooseOption(game, choiceId) {
+  if (game.phase !== "decision" || game.status !== "playing" || game.pendingIncident) return game;
+  const event = getEvent(game);
+  const choice = event.choices.find((item) => item.id === choiceId);
+  if (!choice || getRequirementFailure(game, choice)) return game;
+
+  const resolved = resolveChoiceEffects(game, choice);
+  const applied = applyEffects(game, resolved.effects);
+  const relationshipState = recordRelationshipReactions(game, applied, resolved.reactions, choice.id);
+  const threadUpdates = getStoryThreadUpdates(game, choice);
+  const threadState = applyStoryThreadUpdates(game, threadUpdates, choice.id);
+  const nextGame = {
+    ...game,
+    ...applied,
+    relationshipNotes: relationshipState.relationshipNotes,
+    relationshipHistory: relationshipState.relationshipHistory,
+    ...threadState,
+    phase: "outcome",
+    route: choice.route ?? game.route,
+    currentOutcome: {
+      id: choice.id,
+      title: choice.outcomeTitle,
+      copy: choice.outcome,
+      tone: choice.tone,
+      consequence: choice.consequence,
+      days: choice.days,
+      deferThresholdEnding: Boolean(choice.deferThresholdEnding),
+      appliedBonuses: resolved.bonuses.filter((bonus) => !bonus.kind).map((bonus) => bonus.label),
+      returningConsequences: resolved.bonuses.filter((bonus) => bonus.kind).map((bonus) => ({ label: bonus.label, kind: bonus.kind })),
+      reactions: relationshipState.recordedReactions,
+      threadUpdates,
+      travelPlan: null,
+    },
+    pendingNext: choice.next,
+    flags: { ...(game.flags ?? {}), ...(choice.setFlags ?? {}) },
+    history: [
+      ...game.history,
+      {
+        day: game.day,
+        eventId: game.eventId,
+        location: event.location,
+        choiceId: choice.id,
+        choiceTitle: choice.title,
+        outcomeTitle: choice.outcomeTitle,
+        tone: choice.tone,
+      },
+    ],
+    activityLog: [
+      ...(game.activityLog ?? []),
+      ...getNewLossEntries(game, applied),
+    ],
+  };
+
+  return { ...nextGame, pendingEnding: evaluateEnding(nextGame, choice) };
+}
+
+export function takeRoadsideJob(game, choiceId) {
+  if (game.phase !== "decision" || game.status !== "playing" || hasCompletedRoadsideWork(game)) return game;
+  const opportunity = getRoadsideOpportunity(game);
+  const choice = opportunity?.choices.find((item) => item.id === choiceId);
+  if (!choice || getRequirementFailure(game, choice)) return game;
+
+  const resolved = resolveChoiceEffects(game, choice);
+  const applied = applyEffects(game, resolved.effects);
+  const relationshipState = recordRelationshipReactions(game, applied, resolved.reactions, choice.id);
+  const threadUpdates = getStoryThreadUpdates(game, choice);
+  const threadState = applyStoryThreadUpdates(game, threadUpdates, choice.id);
+  const nextGame = {
+    ...game,
+    ...applied,
+    relationshipNotes: relationshipState.relationshipNotes,
+    relationshipHistory: relationshipState.relationshipHistory,
+    ...threadState,
+    day: game.day + (choice.days ?? 1),
+    flags: { ...(game.flags ?? {}), ...(choice.setFlags ?? {}) },
+    completedRoadsideWork: {
+      ...(game.completedRoadsideWork ?? {}),
+      [game.eventId]: choice.id,
+    },
+    lastRoadsideOutcome: {
+      eventId: game.eventId,
+      id: choice.id,
+      title: choice.outcomeTitle,
+      copy: choice.outcome,
+      tone: choice.tone,
+      consequence: choice.consequence,
+      appliedBonuses: resolved.bonuses.filter((bonus) => !bonus.kind).map((bonus) => bonus.label),
+      returningConsequences: resolved.bonuses.filter((bonus) => bonus.kind).map((bonus) => ({ label: bonus.label, kind: bonus.kind })),
+      reactions: relationshipState.recordedReactions,
+      threadUpdates,
+    },
+    activityLog: [
+      ...(game.activityLog ?? []),
+      {
+        day: game.day,
+        kind: "work",
+        title: choice.title,
+        detail: choice.outcomeTitle,
+        tone: choice.tone,
+      },
+      ...getNewLossEntries(game, applied),
+    ],
+  };
+
+  const pendingEnding = evaluateEnding(nextGame, {});
+  return pendingEnding
+    ? { ...nextGame, phase: "ended", status: pendingEnding.status ?? "stopped", ending: pendingEnding, pendingEnding: null }
+    : nextGame;
+}
+
+export function respondToSocialFeed(game, responseId) {
+  if (game.status !== "playing" || hasRespondedToSocialFeed(game)) return game;
+  const feed = getSocialFeed(game);
+  const response = getSocialResponseOptions(game).find((option) => option.id === responseId);
+  if (!feed || !response || response.unavailable) return game;
+
+  const voiceText = feed.voice?.[response.id];
+  const reaction = voiceText && game.people[feed.voice.personId]?.alive !== false
+    ? [{
+        personId: feed.voice.personId,
+        text: voiceText,
+        trustDelta: response.id === "verify" || response.id === "support" ? 1 : response.id === "ignore" ? -1 : 0,
+      }]
+    : [];
+  const reactionTrust = reaction.reduce((trust, item) => {
+    trust[item.personId] = item.trustDelta;
+    return trust;
+  }, {});
+  const effects = mergeEffects(response.effects, { trust: reactionTrust });
+  const applied = applyEffects(game, effects);
+  const relationshipState = recordRelationshipReactions(game, applied, reaction, `${feed.id}-${response.id}`);
+  const nextGame = {
+    ...game,
+    ...applied,
+    relationshipNotes: relationshipState.relationshipNotes,
+    relationshipHistory: relationshipState.relationshipHistory,
+    resolvedSocialFeeds: {
+      ...(game.resolvedSocialFeeds ?? {}),
+      [game.eventId]: response.id,
+    },
+    lastSocialOutcome: {
+      eventId: game.eventId,
+      feedId: feed.id,
+      responseId: response.id,
+      title: response.outcomeTitle,
+      copy: response.outcome,
+      tone: response.tone,
+      consequence: response.consequence,
+      reactions: relationshipState.recordedReactions,
+    },
+    activityLog: [
+      ...(game.activityLog ?? []),
+      {
+        day: game.day,
+        kind: "social",
+        title: response.title,
+        detail: response.outcomeTitle,
+        tone: response.tone,
+      },
+      ...getNewLossEntries(game, applied),
+    ],
+  };
+
+  const pendingEnding = evaluateEnding(nextGame, {});
+  return pendingEnding
+    ? { ...nextGame, phase: "ended", status: pendingEnding.status ?? "stopped", ending: pendingEnding, pendingEnding: null }
+    : nextGame;
+}
+
+export function planTravelLeg(game, strategyId) {
+  if (!requiresTravelPlan(game)) return game;
+  const strategy = getTravelPlanOptions(game).find((option) => option.id === strategyId);
+  if (!strategy || strategy.unavailable) return game;
+
+  const applied = applyEffects(game, strategy.effects);
+  const nextGame = {
+    ...game,
+    ...applied,
+    currentOutcome: {
+      ...game.currentOutcome,
+      travelPlan: {
+        id: strategy.id,
+        title: strategy.title,
+        consequence: strategy.consequence,
+        tone: strategy.tone,
+      },
+    },
+    activityLog: [
+      ...(game.activityLog ?? []),
+      {
+        day: game.day,
+        kind: "travel",
+        title: strategy.title,
+        detail: `${game.currentOutcome.days} days planned · ${strategy.consequence}`,
+        tone: strategy.tone,
+      },
+      ...getNewLossEntries(game, applied),
+    ],
+  };
+
+  return { ...nextGame, pendingEnding: evaluateEnding(nextGame, {}) };
+}
+
+export function useMedicine(game, personId) {
+  const traveler = game.people[personId];
+  if (game.status !== "playing" || !traveler || traveler.alive === false || traveler.health >= 100 || game.resources.medicine < 1) return game;
+  const person = getPeople(game).find((item) => item.id === personId);
+  const applied = applyEffects(game, { medicine: -1, stress: -2, people: { [personId]: 15 } });
+  const nextGame = {
+    ...game,
+    ...applied,
+    activityLog: [
+      ...(game.activityLog ?? []),
+      {
+        day: game.day,
+        kind: "care",
+        title: `Medicine for ${person.name}`,
+        detail: `${person.name}'s health rises to ${applied.people[personId].health}%.`,
+        tone: "trusted",
+      },
+      ...getNewLossEntries(game, applied),
+    ],
+  };
+  const terminalEnding = evaluateEnding(nextGame, {});
+  return terminalEnding?.type === "all_lost"
+    ? { ...nextGame, phase: "ended", status: terminalEnding.status, ending: terminalEnding, pendingEnding: null }
+    : nextGame;
+}
+
+export function continueJourney(game, options = {}) {
+  if (game.phase !== "outcome" || game.pendingIncident) return game;
+  if (requiresTravelPlan(game)) return game;
+  if (game.pendingEnding) {
+    return {
+      ...game,
+      phase: "ended",
+      status: game.pendingEnding.status ?? "stopped",
+      day: game.day + (game.currentOutcome?.days ?? 1),
+      ending: game.pendingEnding,
+    };
+  }
+  const nextEvent = EVENTS[game.pendingNext];
+  if (!nextEvent) return game;
+  const nextGame = {
+    ...game,
+    phase: "decision",
+    day: game.day + (game.currentOutcome?.days ?? 1),
+    eventId: game.pendingNext,
+    route: nextEvent.route ?? game.route,
+    currentOutcome: null,
+    pendingNext: null,
+    pendingEnding: null,
+  };
+  if (!options.incidents || game.currentOutcome?.deferThresholdEnding) return nextGame;
+  return maybeStartTravelIncident(nextGame, options.incidentRolls);
+}
+
+export function getJourneyScore(game) {
+  const living = Object.values(game.people).filter((person) => person.alive !== false);
+  const averageHealth = living.length
+    ? Math.round(living.reduce((sum, person) => sum + person.health, 0) / living.length)
+    : 0;
+  const averageTrust = living.length
+    ? living.reduce((sum, person) => sum + person.trust, 0) / living.length
+    : 0;
+  return clamp(
+    Math.round(averageHealth * 0.43 + averageTrust * 8 + game.resources.cash * 0.01 + (100 - game.resources.exposure) * 0.1 + (game.socialClimate ?? 50) * 0.06),
+    0,
+    100,
+  );
+}
+
+export function isSavedGameValid(value) {
+  return Boolean(
+    value
+      && value.version === GAME_VERSION
+      && FAMILY_PRESETS[value.familyId]
+      && EVENTS[value.eventId]
+      && value.resources
+      && value.people
+      && value.activityLog
+      && value.flags
+      && value.completedRoadsideWork
+      && value.resolvedSocialFeeds
+      && Number.isFinite(value.socialClimate)
+      && getPeople(value).every((person) => value.people[person.id])
+      && ["decision", "outcome", "ended"].includes(value.phase),
+  );
+}

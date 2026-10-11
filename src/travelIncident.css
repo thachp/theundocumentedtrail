@@ -1,0 +1,127 @@
+.travel-incident-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 140;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background:
+    radial-gradient(circle at 50% 28%, rgba(111, 43, 31, 0.22), transparent 44%),
+    rgba(2, 8, 11, 0.88);
+  backdrop-filter: blur(9px);
+  animation: interface-overlay-in 160ms ease-out both;
+}
+
+.travel-incident-modal {
+  width: min(720px, 100%);
+  max-height: calc(100vh - 40px);
+  overflow: auto;
+  padding: 32px 34px 28px;
+  color: #eee8da;
+  border: 1px solid rgba(229, 131, 114, 0.55);
+  border-radius: 4px;
+  background: rgba(11, 25, 29, 0.98);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.68);
+  animation: interface-dialog-in 220ms ease-out both;
+}
+
+.travel-incident-modal.injury { border-color: rgba(231, 163, 59, 0.6); }
+
+.travel-incident-symbol {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 11px;
+  color: #210d09;
+  border: 1px solid rgba(255, 192, 177, 0.82);
+  border-radius: 50%;
+  background: #e58372;
+  box-shadow: 0 0 32px rgba(229, 131, 114, 0.24);
+}
+
+.travel-incident-modal.injury .travel-incident-symbol {
+  border-color: rgba(255, 220, 151, 0.82);
+  background: #e7a93b;
+}
+
+.travel-incident-symbol svg { width: 29px; height: 29px; }
+.travel-incident-modal > small { display: block; color: #e69b8e; text-align: center; font-size: 9px; text-transform: uppercase; letter-spacing: 0.16em; }
+.travel-incident-modal.injury > small { color: #e7bc6a; }
+.travel-incident-modal h2 { margin: 7px 0 8px; text-align: center; font-family: Georgia, "Times New Roman", serif; font-size: clamp(25px, 4vw, 34px); line-height: 1.08; }
+.travel-incident-modal > p { max-width: 590px; margin: 0 auto 18px; color: #b9c6c3; text-align: center; font-size: 13px; line-height: 1.5; }
+
+.travel-incident-patient {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  text-align: left;
+  border: 1px solid rgba(229, 131, 114, 0.28);
+  background: rgba(77, 29, 25, 0.28);
+}
+
+.travel-incident-patient > img { width: 54px; height: 62px; object-fit: cover; filter: saturate(0.78); }
+.travel-incident-patient > span { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.travel-incident-patient > span > small { color: #9ba9a6; font-size: 8px; text-transform: uppercase; letter-spacing: 0.08em; }
+.travel-incident-patient > span > strong { font-family: Georgia, "Times New Roman", serif; font-size: 15px; }
+.travel-incident-patient > span > em { color: #e7a69b; font-size: 9px; font-style: normal; }
+
+.travel-incident-patient .travel-incident-medicine {
+  min-width: 72px;
+  align-items: center;
+  padding-left: 12px;
+  border-left: 1px solid rgba(229, 131, 114, 0.25);
+}
+
+.travel-incident-medicine svg { width: 20px; height: 20px; color: #7fd9c7; }
+.travel-incident-medicine strong { font-family: inherit; font-size: 19px; }
+.travel-incident-medicine small { font-size: 7px; }
+
+.travel-incident-options { display: grid; gap: 8px; }
+.travel-incident-options button {
+  min-height: 72px;
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) 20px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 13px;
+  color: #e9eee9;
+  text-align: left;
+  border: 1px solid rgba(129, 151, 151, 0.34);
+  border-radius: 2px;
+  background: rgba(14, 35, 40, 0.9);
+  cursor: pointer;
+  transition: transform 150ms ease, border-color 150ms ease, background-color 150ms ease;
+}
+
+.travel-incident-options button:hover:not(:disabled) { transform: translateY(-1px); border-color: rgba(225, 235, 225, 0.68); background: rgba(22, 48, 52, 0.98); }
+.travel-incident-options button:focus-visible { outline: 2px solid #7fd9c7; outline-offset: 2px; }
+.travel-incident-options button:disabled { opacity: 0.42; cursor: not-allowed; }
+.travel-incident-options button.trusted { border-color: rgba(96, 218, 194, 0.62); background: rgba(9, 63, 61, 0.72); }
+.travel-incident-options button.danger { border-color: rgba(229, 131, 114, 0.55); background: rgba(65, 27, 24, 0.58); }
+.travel-incident-options button > svg { width: 23px; height: 23px; }
+.travel-incident-options button > span { display: flex; flex-direction: column; gap: 2px; }
+.travel-incident-options button strong { font-family: Georgia, "Times New Roman", serif; font-size: 14px; font-weight: 600; }
+.travel-incident-options button small { color: #b7c5c2; font-size: 9px; line-height: 1.35; }
+.travel-incident-options button em { color: #e6be70; font-size: 8px; font-style: normal; }
+.travel-incident-options button > svg:last-child { width: 17px; height: 17px; }
+
+.travel-incident-modal > .travel-incident-note { margin: 13px auto 0; color: #7f908d; font-size: 8px; }
+
+@media (max-width: 620px) {
+  .travel-incident-backdrop { padding: 12px; }
+  .travel-incident-modal { padding: 24px 16px 18px; }
+  .travel-incident-patient { grid-template-columns: 46px minmax(0, 1fr); }
+  .travel-incident-patient > img { width: 46px; height: 54px; }
+  .travel-incident-patient .travel-incident-medicine { grid-column: 1 / -1; flex-direction: row; justify-content: center; gap: 6px; padding: 8px 0 0; border-top: 1px solid rgba(229, 131, 114, 0.25); border-left: 0; }
+  .travel-incident-options button { grid-template-columns: 26px minmax(0, 1fr) 17px; padding: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .travel-incident-backdrop,
+  .travel-incident-modal { animation: none; }
+  .travel-incident-options button { transition: none; }
+}

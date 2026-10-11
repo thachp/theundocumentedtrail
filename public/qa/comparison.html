@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Design QA Comparison</title>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 28px; background: #060c10; color: #e7eef0; font: 14px system-ui, sans-serif; }
+      h1 { margin: 0 0 22px; font-size: 20px; }
+      h2 { margin: 32px 0 14px; font-size: 15px; color: #9fb1b8; }
+      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+      figure { margin: 0; min-width: 0; }
+      figcaption { margin: 0 0 8px; color: #68d3e6; font-weight: 600; }
+      .full img { display: block; width: 100%; border: 1px solid #2c4650; }
+      .crop { height: 820px; overflow: hidden; border: 1px solid #2c4650; background: #0a151c; }
+      .crop img { display: block; width: 1536px; height: 1024px; object-fit: none; object-position: right top; transform: translateX(calc(-100% + 730px)); }
+      .note { margin: 18px 0 0; color: #8fa2a9; }
+    </style>
+  </head>
+  <body>
+    <h1>No Fixed Address — visual comparison</h1>
+    <div class="grid full">
+      <figure><figcaption>Source visual · 1536 × 1024</figcaption><img src="./source.png" alt="Selected source design" /></figure>
+      <figure><figcaption>Implementation · 1536 × 1024</figcaption><img src="./implementation.png" alt="Rendered implementation" /></figure>
+    </div>
+    <h2>Focused comparison · decision panel and dense information hierarchy</h2>
+    <div class="grid">
+      <figure><figcaption>Source panel</figcaption><div class="crop"><img src="./source.png" alt="Source decision panel crop" /></div></figure>
+      <figure><figcaption>Implementation panel</figcaption><div class="crop"><img src="./implementation.png" alt="Implementation decision panel crop" /></div></figure>
+    </div>
+    <p class="note">Same initial state. Desktop viewport 1536 × 1024 at device pixel ratio 1.</p>
+  </body>
+</html>
