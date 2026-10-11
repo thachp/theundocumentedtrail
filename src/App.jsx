@@ -42,12 +42,10 @@ import {
 } from "@phosphor-icons/react";
 import {
   EVENTS,
-  GAME_SAVE_KEY,
   ROUTES,
   buySupply,
   chooseOption,
   continueJourney,
-  createInitialGame,
   getCondition,
   getEvent,
   getFamilyPreset,
@@ -60,7 +58,6 @@ import {
   getSocialResponseOptions,
   getSupplyStop,
   getTravelPlanOptions,
-  isSavedGameValid,
   hasRespondedToSocialFeed,
   planTravelLeg,
   requiresTravelPlan,
@@ -68,6 +65,7 @@ import {
   resolveTravelIncident,
   useMedicine,
 } from "./game.js";
+import { loadCurrentGame, saveFamilyGame, selectFamilyGame } from "./saveStore.js";
 import { SocialFeedModal, SocialFeedTrigger } from "./SocialFeed.jsx";
 import { Portrait } from "./Portrait.jsx";
 import { SupplyShop, SupplyStopTrigger } from "./SupplyShop.jsx";
@@ -94,16 +92,6 @@ const choiceIcons = {
   talk: ChatCircleDots,
   rest: Pause,
 };
-
-function loadGame() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(GAME_SAVE_KEY));
-    if (isSavedGameValid(saved)) return saved;
-  } catch {
-    // A corrupt local save should never block a fresh journey.
-  }
-  return createInitialGame();
-}
 
 const IconText = ({ icon: Icon, children }) => (
   <span className="icon-text">
@@ -489,7 +477,7 @@ function RestartModal({ onCancel, onConfirm }) {
         <Warning weight="duotone" aria-hidden="true" />
         <small>Start over</small>
         <h2 id="restart-title">Begin a new journey?</h2>
-        <p>Your current route and decision history will be replaced with a fresh run.</p>
+        <p>This family's current route and decision history will be replaced with a fresh run. Other family saves and completed journey records will remain safe.</p>
         <div className="modal-actions">
           <button className="back-button" onClick={onCancel} data-sound="dismiss" autoFocus>Keep this journey</button>
           <button className="confirm-button danger" onClick={onConfirm} data-sound="warning">Start over<ArrowCounterClockwise weight="bold" /></button>
@@ -500,7 +488,7 @@ function RestartModal({ onCancel, onConfirm }) {
 }
 
 export function App() {
-  const [game, setGame] = useState(loadGame);
+  const [game, setGame] = useState(loadCurrentGame);
   const [selectedRoute, setSelectedRoute] = useState(game.route);
   const [selectedPersonId, setSelectedPersonId] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -527,7 +515,7 @@ export function App() {
   const selectedPerson = people.find((person) => person.id === selectedPersonId) ?? null;
 
   useEffect(() => {
-    localStorage.setItem(GAME_SAVE_KEY, JSON.stringify(game));
+    saveFamilyGame(game);
   }, [game]);
 
   useEffect(() => {
@@ -587,8 +575,7 @@ export function App() {
   };
 
   const restart = () => {
-    const fresh = createInitialGame(game.familyId);
-    localStorage.setItem(GAME_SAVE_KEY, JSON.stringify(fresh));
+    const fresh = selectFamilyGame(game.familyId, { restart: true });
     setGame(fresh);
     setPendingChoice(null);
     setShowRestart(false);

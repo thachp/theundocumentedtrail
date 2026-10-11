@@ -78,8 +78,16 @@ test("starts the Haddad family in Syria with a distinct journey preset", () => {
   assert.equal(game.resources.cash, 2400);
   assert.deepEqual(Object.keys(game.people), ["kareem", "nadia", "sami", "mariam"]);
   assert.equal(getPeople(game)[0].name, "Kareem");
+  assert.equal(FAMILY_PRESETS.haddad.origin, "Syria · Present day");
+  assert.match(FAMILY_PRESETS.haddad.context, /return/i);
   assert.equal(FAMILY_PRESETS.haddad.destination, "Asylum registration");
   assert.equal(FAMILY_PRESETS.haddad.heroImage, "/assets/haddad-journey-hero.png");
+  assert.equal(
+    Object.values(EVENTS)
+      .filter((event) => event.id.startsWith("haddad"))
+      .some((event) => event.region.includes("2015")),
+    false,
+  );
 });
 
 test("starts the Diop brothers and cousins in Senegal as a four-person group", () => {

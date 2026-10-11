@@ -28,14 +28,12 @@ import {
   X,
 } from "@phosphor-icons/react";
 import {
-  GAME_SAVE_KEY,
   FAMILY_PRESETS,
   JOURNEY_STAGES,
   ROUTES,
   buySupply,
   chooseOption,
   continueJourney,
-  createInitialGame,
   getChoiceBonuses,
   getCondition,
   getEvent,
@@ -52,7 +50,6 @@ import {
   getTravelPlanOptions,
   hasCompletedRoadsideWork,
   hasRespondedToSocialFeed,
-  isSavedGameValid,
   planTravelLeg,
   requiresTravelPlan,
   respondToSocialFeed,
@@ -60,6 +57,18 @@ import {
   takeRoadsideJob,
   useMedicine,
 } from "./game.js";
+import {
+  hasSelectedFamily,
+  loadCurrentGame,
+  loadFamilySaves,
+  loadJourneyArchive,
+  saveFamilyGame,
+  selectFamilyGame,
+} from "./saveStore.js";
+import {
+  completeTutorialOverlayState,
+  createInitialOnboardingState,
+} from "./onboarding.js";
 import { SocialFeedModal, SocialFeedTrigger } from "./SocialFeed.jsx";
 import { Portrait } from "./Portrait.jsx";
 import { SupplyShop, SupplyStopTrigger } from "./SupplyShop.jsx";
@@ -70,7 +79,6 @@ import "./beginner.css";
 
 const CONTENT_MODE_KEY = "the-long-road-content-mode-v1";
 const TUTORIAL_COMPLETE_KEY = "the-undocumented-trail-tutorial-v2";
-const FAMILY_SELECTION_KEY = "the-undocumented-trail-family-v1";
 
 const TUTORIAL_STEPS = [
   {
@@ -206,26 +214,12 @@ const toneLabels = {
   danger: "High risk",
 };
 
-function loadGame() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(GAME_SAVE_KEY));
-    if (isSavedGameValid(saved)) return saved;
-  } catch {
-    // A damaged save should never prevent a new guided journey.
-  }
-  return createInitialGame();
-}
-
 function loadContentMode() {
   return localStorage.getItem(CONTENT_MODE_KEY) ?? "standard";
 }
 
 function hasCompletedTutorial() {
   return localStorage.getItem(TUTORIAL_COMPLETE_KEY) === "complete";
-}
-
-function hasChosenFamily() {
-  return Boolean(FAMILY_PRESETS[localStorage.getItem(FAMILY_SELECTION_KEY)]);
 }
 
 function StatusItem({ icon: Icon, label, value, tone = "", tooltip }) {
@@ -431,7 +425,8 @@ function JourneyLog({ game, onClose }) {
   );
 }
 
-function FamilySelection({ currentFamilyId, required, onSelect, onClose }) {
+function FamilySelection({ currentFamilyId, required, saves, archive, onSelect, onRestart, onClose }) {
+  const recentJourneys = archive.slice(0, 6);
   return (
     <div className="cinematic-family-backdrop">
       <section className="cinematic-family-dialog" role="dialog" aria-modal="true" aria-labelledby="family-selection-title">
@@ -439,26 +434,60 @@ function FamilySelection({ currentFamilyId, required, onSelect, onClose }) {
         <span className="cinematic-family-symbol"><UsersThree weight="duotone" /></span>
         <small>Choose a journey</small>
         <h2 id="family-selection-title">Whose road will you follow?</h2>
-        <p>Each traveling group is a fictional composite grounded in documented experiences. Their people, starting resources, route, risks, and possible endings are different.</p>
+        <p>Each traveling group is a fictional composite grounded in documented experiences. Every family now keeps its own progress, so you can leave one road and safely return later.</p>
         <div className="cinematic-family-options">
-          {Object.values(FAMILY_PRESETS).map((family) => (
-            <button
-              className={currentFamilyId === family.id ? "selected" : ""}
-              key={family.id}
-              onClick={() => onSelect(family.id)}
-              data-sound="confirm"
-            >
-              <img src={family.portraitStrips.healthy} alt={`Portraits of ${family.name}`} />
-              <span>
-                <small>{family.origin}</small>
-                <strong>{family.name}</strong>
-                <p>{family.context}</p>
-                <em><MapPin weight="fill" />{family.journey}</em>
-              </span>
-              <ArrowRight weight="bold" />
-            </button>
-          ))}
+          {Object.values(FAMILY_PRESETS).map((family) => {
+            const saved = saves[family.id];
+            const savedStatus = saved?.phase === "ended"
+              ? `${saved.status === "won" ? "Completed" : "Journey stopped"} · Score ${getJourneyScore(saved)}`
+              : saved
+                ? `In progress · Day ${saved.day} · ${saved.progress}%`
+                : "Not started";
+            return (
+              <article className={`cinematic-family-card ${currentFamilyId === family.id ? "selected" : ""}`} key={family.id}>
+                <div className="cinematic-family-portrait">
+                  <img src={family.portraitStrips.healthy} alt={`Portraits of ${family.name}`} />
+                  <span className={saved?.phase === "ended" ? saved.status : saved ? "playing" : "new"}>{savedStatus}</span>
+                </div>
+                <div className="cinematic-family-copy">
+                  <small>{family.origin}</small>
+                  <strong>{family.name}</strong>
+                  <p>{family.context}</p>
+                  <em><MapPin weight="fill" />{family.journey}</em>
+                </div>
+                <div className="cinematic-family-actions">
+                  <button className="continue" onClick={() => onSelect(family.id)} data-sound="confirm">
+                    {saved ? (saved.phase === "ended" ? "View result" : "Continue") : "Start journey"}<ArrowRight weight="bold" />
+                  </button>
+                  {saved && (
+                    <button className="restart" onClick={() => onRestart(family.id)} data-sound="warning">
+                      <ArrowCounterClockwise weight="bold" />Start again
+                    </button>
+                  )}
+                </div>
+              </article>
+            );
+          })}
         </div>
+        {recentJourneys.length > 0 && (
+          <section className="cinematic-journey-archive" aria-label="Completed journey archive">
+            <header><BookOpenText weight="duotone" /><span><small>Journey archive</small><strong>Roads already traveled</strong></span></header>
+            <div>
+              {recentJourneys.map((entry) => {
+                const family = FAMILY_PRESETS[entry.familyId];
+                return (
+                  <article key={entry.runId}>
+                    <span><strong>{family.shortName}</strong><small>{entry.endingTitle}</small></span>
+                    <em>{entry.status === "won" ? "Completed" : "Stopped"}</em>
+                    <span><strong>{entry.score}</strong><small>Score</small></span>
+                    <span><strong>{entry.survivors}/{entry.travelers}</strong><small>Survived</small></span>
+                    <span><strong>Day {entry.day}</strong><small>{entry.decisions} decisions</small></span>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        )}
         <footer>Stories include displacement, exploitation, detention, family loss, and uncertain legal outcomes. Difficult events remain non-graphic.</footer>
       </section>
     </div>
@@ -588,11 +617,11 @@ function RestartConfirmation({ familyName, day, decisions, onCancel, onConfirm }
       <section className="cinematic-reset-dialog" role="dialog" aria-modal="true" aria-labelledby="cinematic-reset-title" onMouseDown={(event) => event.stopPropagation()}>
         <WarningCircle weight="duotone" aria-hidden="true" />
         <small>Reset journey</small>
-        <h2 id="cinematic-reset-title">Leave the {familyName} journey?</h2>
-        <p>Day {day} and {decisions} recorded {decisions === 1 ? "decision" : "decisions"} are saved now. Choosing another family will replace this progress.</p>
+        <h2 id="cinematic-reset-title">Start the {familyName} journey again?</h2>
+        <p>Day {day} and {decisions} recorded {decisions === 1 ? "decision" : "decisions"} for this family will be replaced. Other family saves and completed journey records will remain safe.</p>
         <div className="cinematic-reset-actions">
           <button className="cinematic-reset-cancel" onClick={onCancel} data-sound="dismiss" autoFocus>Keep this journey</button>
-          <button className="cinematic-reset-confirm" onClick={onConfirm} data-sound="warning">Continue to family selection<ArrowRight weight="bold" /></button>
+          <button className="cinematic-reset-confirm" onClick={onConfirm} data-sound="warning">Start again<ArrowCounterClockwise weight="bold" /></button>
         </div>
       </section>
     </div>
@@ -600,9 +629,15 @@ function RestartConfirmation({ familyName, day, decisions, onCancel, onConfirm }
 }
 
 export function BeginnerApp() {
-  const [game, setGame] = useState(loadGame);
-  const [familySelectionRequired, setFamilySelectionRequired] = useState(() => !hasChosenFamily());
-  const [showFamilySelection, setShowFamilySelection] = useState(() => !hasChosenFamily());
+  const [initialOnboardingState] = useState(() => createInitialOnboardingState({
+    tutorialComplete: hasCompletedTutorial(),
+    familySelected: hasSelectedFamily(),
+  }));
+  const [game, setGame] = useState(loadCurrentGame);
+  const [familySelectionRequired, setFamilySelectionRequired] = useState(initialOnboardingState.familySelectionRequired);
+  const [showFamilySelection, setShowFamilySelection] = useState(initialOnboardingState.showFamilySelection);
+  const [familySaves, setFamilySaves] = useState(loadFamilySaves);
+  const [journeyArchive, setJourneyArchive] = useState(loadJourneyArchive);
   const [soundtrackOn, setSoundtrackOn] = useState(false);
   const [showRoadsideWork, setShowRoadsideWork] = useState(false);
   const [showSocialFeed, setShowSocialFeed] = useState(false);
@@ -611,9 +646,11 @@ export function BeginnerApp() {
   const [showJourneyLog, setShowJourneyLog] = useState(false);
   const [contentMode, setContentMode] = useState(loadContentMode);
   const [showContentSettings, setShowContentSettings] = useState(false);
-  const [showRestartConfirmation, setShowRestartConfirmation] = useState(false);
+  const [restartFamilyId, setRestartFamilyId] = useState(null);
+  const [restartReturnsToSelection, setRestartReturnsToSelection] = useState(false);
   const [tutorialStep, setTutorialStep] = useState(0);
-  const [showTutorial, setShowTutorial] = useState(() => !hasCompletedTutorial());
+  const [showTutorial, setShowTutorial] = useState(initialOnboardingState.showTutorial);
+  const [tutorialIsOnboarding, setTutorialIsOnboarding] = useState(initialOnboardingState.tutorialIsOnboarding);
   const soundtrackRef = useRef(null);
   const interactionSoundsRef = useRef(null);
   const family = getFamilyPreset(game);
@@ -642,10 +679,14 @@ export function BeginnerApp() {
     : (contentMode === "reduced" && reducedFatalityName
       ? `The crossing ends with ${reducedFatalityName}'s death. The event is not described in detail.`
       : game.currentOutcome.copy);
+  const restartGame = restartFamilyId ? (familySaves[restartFamilyId] ?? game) : null;
+  const restartFamily = restartFamilyId ? getFamilyPreset(restartFamilyId) : null;
 
   useEffect(() => {
-    localStorage.setItem(GAME_SAVE_KEY, JSON.stringify(game));
-  }, [game]);
+    if (familySelectionRequired) return;
+    setFamilySaves(saveFamilyGame(game));
+    setJourneyArchive(loadJourneyArchive());
+  }, [familySelectionRequired, game]);
 
   useEffect(() => {
     setShowSocialFeed(false);
@@ -701,25 +742,38 @@ export function BeginnerApp() {
     setSoundtrackOn(true);
   };
 
-  const selectFamily = (familyId) => {
-    const fresh = createInitialGame(familyId);
-    localStorage.setItem(FAMILY_SELECTION_KEY, familyId);
-    localStorage.setItem(GAME_SAVE_KEY, JSON.stringify(fresh));
-    setGame(fresh);
+  const selectFamily = (familyId, options = {}) => {
+    const selectedGame = selectFamilyGame(familyId, options);
+    setGame(selectedGame);
+    setFamilySaves(loadFamilySaves());
+    setJourneyArchive(loadJourneyArchive());
     setFamilySelectionRequired(false);
     setShowFamilySelection(false);
     setShowRoadsideWork(false);
     setShowSocialFeed(false);
     setShowSupplyShop(false);
-    setShowRestartConfirmation(false);
+    setRestartFamilyId(null);
+    setRestartReturnsToSelection(false);
     setSelectedPersonId(null);
     setShowJourneyLog(false);
   };
 
-  const requestRestart = () => setShowRestartConfirmation(true);
+  const requestRestart = () => {
+    setRestartReturnsToSelection(false);
+    setRestartFamilyId(game.familyId);
+  };
+  const requestFamilyRestart = (familyId) => {
+    setRestartReturnsToSelection(true);
+    setShowFamilySelection(false);
+    setRestartFamilyId(familyId);
+  };
+  const cancelRestart = () => {
+    setRestartFamilyId(null);
+    if (restartReturnsToSelection) setShowFamilySelection(true);
+    setRestartReturnsToSelection(false);
+  };
   const confirmRestart = () => {
-    setShowRestartConfirmation(false);
-    setShowFamilySelection(true);
+    if (restartFamilyId) selectFamily(restartFamilyId, { restart: true });
   };
 
   const choose = (choice) => setGame((current) => chooseOption(current, choice.id));
@@ -737,11 +791,15 @@ export function BeginnerApp() {
 
   const finishTutorial = () => {
     localStorage.setItem(TUTORIAL_COMPLETE_KEY, "complete");
-    setShowTutorial(false);
+    const nextOverlayState = completeTutorialOverlayState({ tutorialIsOnboarding });
+    setShowTutorial(nextOverlayState.showTutorial);
+    setShowFamilySelection(nextOverlayState.showFamilySelection);
+    setTutorialIsOnboarding(nextOverlayState.tutorialIsOnboarding);
   };
 
   const replayTutorial = () => {
     setTutorialStep(0);
+    setTutorialIsOnboarding(false);
     setShowTutorial(true);
   };
 
@@ -919,7 +977,13 @@ export function BeginnerApp() {
         </section>
       </footer>
 
-      {game.phase === "ended" && <Ending game={game} onTryAgain={() => selectFamily(game.familyId)} onChooseFamily={requestRestart} />}
+      {game.phase === "ended" && (
+        <Ending
+          game={game}
+          onTryAgain={requestRestart}
+          onChooseFamily={() => setShowFamilySelection(true)}
+        />
+      )}
       {showRoadsideWork && roadsideOpportunity && (
         <RoadsideWork
           opportunity={roadsideOpportunity}
@@ -951,12 +1015,12 @@ export function BeginnerApp() {
       {showJourneyLog && <JourneyLog game={game} onClose={() => setShowJourneyLog(false)} />}
       {showContentSettings && <ContentSettings currentMode={contentMode} onSelect={selectContentMode} onClose={() => setShowContentSettings(false)} />}
       {game.pendingIncident && <TravelIncident game={game} onResolve={(responseId) => setGame((current) => resolveTravelIncident(current, responseId))} />}
-      {showRestartConfirmation && (
+      {restartFamily && restartGame && (
         <RestartConfirmation
-          familyName={family.shortName}
-          day={game.day}
-          decisions={game.history.length}
-          onCancel={() => setShowRestartConfirmation(false)}
+          familyName={restartFamily.shortName}
+          day={restartGame.day}
+          decisions={restartGame.history.length}
+          onCancel={cancelRestart}
           onConfirm={confirmRestart}
         />
       )}
@@ -964,7 +1028,10 @@ export function BeginnerApp() {
         <FamilySelection
           currentFamilyId={game.familyId}
           required={familySelectionRequired}
+          saves={familySaves}
+          archive={journeyArchive}
           onSelect={selectFamily}
+          onRestart={requestFamilyRestart}
           onClose={() => setShowFamilySelection(false)}
         />
       )}

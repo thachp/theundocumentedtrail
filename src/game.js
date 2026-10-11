@@ -84,7 +84,7 @@ const HADDAD_PEOPLE = [
     image: HADDAD_PORTRAIT_STRIP,
     focus: "0% 42%",
     skills: ["Machine repair", "Negotiation"],
-    story: "He repaired bakery equipment outside Aleppo. After shelling destroyed the workshop and an armed group demanded that he report for service, he sold what tools remained.",
+    story: "He repaired bakery equipment during years of displacement. After the family returned near Aleppo, he found the workshop stripped and unsafe while a local armed faction began asking about his teenage son.",
   },
   {
     id: "nadia",
@@ -94,7 +94,7 @@ const HADDAD_PEOPLE = [
     image: HADDAD_PORTRAIT_STRIP,
     focus: "33.333% 42%",
     skills: ["Former teacher", "Documents"],
-    story: "A former Arabic teacher. She keeps school records, identity papers, and the deed to a damaged apartment wrapped inside a plastic folder.",
+    story: "A former Arabic teacher. She keeps school records, identity papers, an old displacement card, and the deed to their damaged apartment wrapped inside a plastic folder.",
   },
   {
     id: "sami",
@@ -104,7 +104,7 @@ const HADDAD_PEOPLE = [
     image: HADDAD_PORTRAIT_STRIP,
     focus: "66.667% 42%",
     skills: ["Electronics", "Some English"],
-    story: "He fixes phones from discarded parts and follows every border rumor online. He is old enough to understand why checkpoints frighten his parents.",
+    story: "He fixes phones from discarded parts and follows conflicting posts about return, recruitment, and European asylum rules. An armed faction has twice asked when he will report to them.",
   },
   {
     id: "mariam",
@@ -114,7 +114,7 @@ const HADDAD_PEOPLE = [
     image: HADDAD_PORTRAIT_STRIP,
     focus: "100% 42%",
     skills: ["Drawing", "Asthma"],
-    story: "She carries the brass key to the family's damaged apartment and draws every temporary room as if the walls might help her remember it.",
+    story: "She carries the brass key to the apartment the family tried to reclaim and draws every temporary room as if the walls might help her remember where home is.",
   },
 ];
 
@@ -278,8 +278,8 @@ export const FAMILY_PRESETS = Object.freeze({
     id: "haddad",
     name: "The Haddad family",
     shortName: "Haddad",
-    origin: "Syria · 2015",
-    context: "War destroys the family's livelihood near Aleppo. They leave for Türkiye and face the dangerous, uncertain route toward protection in Europe.",
+    origin: "Syria · Present day",
+    context: "After years of displacement, the family returns near Aleppo and finds a damaged home, little work, explosive-remnant warnings, and new pressure on Sami. They are forced to leave again.",
     journey: "Northern Syria to an asylum process in Germany",
     startEventId: "haddadHome",
     startRoute: "elmstead",
@@ -767,8 +767,12 @@ const sources = {
     url: "https://missingmigrants.iom.int/",
   },
   syria: {
-    label: "UNHCR: the Syria emergency and prolonged displacement crisis",
-    url: "https://www.unhcr.org/emergencies/syria-emergency",
+    label: "UNHCR: large-scale returns coexist with displacement, damaged homes, and persistent humanitarian need",
+    url: "https://www.unhcr.org/sites/default/files/2026-04/unhcr-syria-operational-update-march.pdf",
+  },
+  turkeyProtection: {
+    label: "UNHCR Türkiye: Syrian registration is handled by migration authorities and assessed individually",
+    url: "https://help.unhcr.org/turkiye/information-for-syrians/reception-and-registration-with-the-turkish-authorities/",
   },
   mediterranean: {
     label: "UNHCR: sea crossings carry risks of exploitation, pushbacks, and shipwreck",
@@ -779,8 +783,8 @@ const sources = {
     url: "https://www.unhcr.org/us/news/news-releases/refugees-and-migrants-face-heightened-risks-while-trying-reach-europe-unhcr",
   },
   europeAsylum: {
-    label: "EUAA: asylum decisions and conditions for Syrians can change with the political situation",
-    url: "https://www.euaa.europa.eu/latest-asylum-trends-annual-analysis/applications",
+    label: "EUAA: current protection needs for Syrians require an individual assessment",
+    url: "https://www.euaa.europa.eu/country-guidance-syria",
   },
   senegalAtlantic: {
     label: "IOM: departures from Senegal toward the Canary Islands remain active",
@@ -1425,59 +1429,59 @@ export const SOCIAL_FEEDS = {
     },
   },
   haddadEuropeNews: {
-    id: "assault-rally",
-    eyebrow: "Trending across the district",
-    headline: "One criminal charge becomes a verdict on every family",
+    id: "syria-safe-debate",
+    eyebrow: "Trending across Europe",
+    headline: "A political transition becomes a claim that every Syrian is safe",
     location: "Central Europe",
     posts: [
       {
-        id: "district-report",
-        author: "District Report",
-        handle: "@districtreport",
-        initials: "DR",
-        label: "Verified local reporting",
+        id: "asylum-brief",
+        author: "Asylum Brief",
+        handle: "@asylumbrief",
+        initials: "AB",
+        label: "Verified policy reporting",
         tone: "verified",
-        body: "A recently arrived man has been charged with sexual assault. The survivor is receiving support. Police ask the public not to identify her or target unrelated shelter residents.",
-        reach: "Statement and support numbers",
+        body: "European authorities have resumed many Syrian case decisions after the fall of the former government. Current guidance still requires each person's risks and circumstances to be assessed individually.",
+        reach: "Official guidance linked",
       },
       {
-        id: "nation-first",
-        author: "Nation First Now",
-        handle: "@nationfirstnow",
-        initials: "NF",
+        id: "return-them-now",
+        author: "Return Them Now",
+        handle: "@returnthemnow",
+        initials: "RN",
         label: "Influencer commentary",
         tone: "hostile",
-        body: "The account turns one defendant into a claim about every refugee family and publishes the address of tomorrow's removal rally.",
-        reach: "31K reposts",
+        body: "The account posts celebration graphics over return-convoy footage and claims the change of government proves that every Syrian case should be rejected immediately.",
+        reach: "46K reposts",
       },
       {
-        id: "neighbors-table",
-        author: "Neighbors' Table",
-        handle: "@neighborstable",
-        initials: "NT",
-        label: "Community response",
+        id: "legal-route",
+        author: "Legal Route Network",
+        handle: "@legalroute",
+        initials: "LR",
+        label: "Legal support notice",
         tone: "support",
-        body: "Support the survivor. Reject collective punishment. Volunteers will escort families and document harassment near the shelter.",
-        reach: "Local volunteers responding",
+        body: "Do not rely on viral claims about automatic approval or automatic return. Bring evidence about recruitment threats, housing, medical needs, and prior displacement to an accredited adviser.",
+        reach: "Clinic locations attached",
       },
     ],
     evidence: [
-      "A criminal charge concerns one defendant and has not been proven at trial.",
-      "The survivor's privacy and access to support do not conflict with protecting unrelated residents.",
-      "The rally post has already exposed the shelter address.",
+      "The political situation in Syria has changed, but protection decisions still examine individual circumstances.",
+      "Return-convoy footage does not show whether every destination is safe or whether each return was voluntary.",
+      "The family has records of displacement, a damaged home, Mariam's medical needs, and threats toward Sami.",
     ],
     voice: {
       personId: "sami",
-      verify: "The police statement names one case. The influencer's video keeps changing from one man to all of us.",
-      support: "The volunteer tells us which entrance will be watched tomorrow.",
-      ignore: "I do not want Mariam to see it, but she hears the adults whispering.",
-      respond: "My reply says we are not the defendant. They answer that it does not matter.",
+      verify: "The official page says individual assessment. The post turns that into one sentence about all Syrians.",
+      support: "The adviser asks about the men who came for me, not just the country name on my papers.",
+      ignore: "I close the feed, but the celebration music keeps playing from other phones in the shelter.",
+      respond: "I post photographs of our street. Strangers answer that damaged walls do not prove danger.",
     },
     outcomes: {
-      verify: "The family saves the original police statement and separates the charge from the influencer's collective accusation.",
-      support: "A community group arranges an escort and records threats without diminishing the survivor's harm.",
-      ignore: "The phones go dark, but uncertainty about the rally keeps the family awake.",
-      respond: "The public reply draws solidarity and a wave of hostile attention to Sami's account.",
+      verify: "The family saves the current guidance and separates an individual legal assessment from a viral political slogan.",
+      support: "An accredited adviser begins organizing the family's documents around their specific risks and losses.",
+      ignore: "The phones go dark, but uncertainty about return policy keeps the family awake.",
+      respond: "The public reply attracts some support and a wave of strangers challenging the family's account of home.",
     },
   },
   diopIslandWait: {
@@ -3013,13 +3017,13 @@ export const EVENTS = {
 
   haddadHome: {
     id: "haddadHome",
-    region: "Northern Syria · 2015",
-    location: "The Haddad apartment",
+    region: "Northern Syria · Present day",
+    location: "The family's damaged apartment near Aleppo",
     time: "04:40",
     weather: "Dust before dawn",
-    weatherDetail: "The electricity has been out since yesterday",
+    weatherDetail: "One room has power from a shared generator",
     route: "elmstead",
-    contentNote: "War, bombardment, and forced displacement",
+    contentNote: "Renewed displacement, recruitment pressure, and explosive remnants",
     source: sources.syria,
     messages: [
       {
@@ -3028,18 +3032,19 @@ export const EVENTS = {
         role: "Family conversation",
         time: "04:32",
         trusted: true,
-        body: "The workshop is gone. The school is closed. Kareem was ordered to report to an armed unit, and the next street was hit last night. We have four bags, the document folder, and one apartment key.",
+        body: "We returned because every broadcast said rebuilding had begun. The apartment has one usable room, the workshop is stripped, clearance workers marked the end of our street, and the men asking for Sami came back tonight. We have four bags, the document folder, and the same apartment key.",
       },
     ],
     known: [
-      "The workshop that supported the family was destroyed.",
-      "The children cannot safely return to school.",
+      "The family returned to a damaged home after years of displacement.",
+      "Suspected explosive remnants have been marked at the end of the street.",
+      "An armed faction has twice asked when sixteen-year-old Sami will report to them.",
       "A neighbor plans to leave for the Turkish border before sunrise.",
     ],
     assumed: [
-      "The apartment will still be standing next month.",
+      "A change of government has made every part of Syria safe.",
+      "The apartment deed guarantees that the family can rebuild soon.",
       "The neighbor knows which roads remain open.",
-      "Leaving today means the family will never return.",
     ],
     choices: [
       {
@@ -3054,7 +3059,7 @@ export const EVENTS = {
         effects: { supplies: -1, water: -3, stress: 5, exposure: 4, progress: 7 },
         consequence: "Food -1 day · Water -3 L · The family stays together",
         outcomeTitle: "The apartment key turns once more",
-        outcome: "Nadia locks a door that may no longer protect anything. The convoy travels slowly and stops whenever aircraft are heard.",
+        outcome: "Nadia locks the only usable room. The convoy travels slowly, stopping at clearance markers and checkpoints that answer to different authorities.",
         setFlags: { keptDocuments: true },
       },
       {
@@ -3069,7 +3074,7 @@ export const EVENTS = {
         effects: { supplies: -2, water: -4, battery: -24, stress: 11, exposure: 7, progress: 5 },
         consequence: "Four days pass · Phone -24% · Food -2 days",
         outcomeTitle: "A short message arrives through static",
-        outcome: "Her brother confirms a reception center across the border, but cannot confirm whether the road to it is open.",
+        outcome: "Her brother confirms where Turkish migration authorities are directing newly arrived families, but cannot confirm whether the road or crossing will remain open.",
         setFlags: { receptionContact: true },
       },
       {
@@ -3093,39 +3098,39 @@ export const EVENTS = {
 
   haddadBorder: {
     id: "haddadBorder",
-    region: "Türkiye–Syria border region · 2015",
+    region: "Türkiye–Syria border region · Present day",
     location: "A crowded reception town",
     time: "16:10",
     weather: "Cold rain",
     weatherDetail: "Families wait beneath plastic sheeting",
     route: "elmstead",
     contentNote: "Border controls and exploitation risk",
-    source: sources.syria,
+    source: sources.turkeyProtection,
     messages: [
       {
-        sender: "Aid desk volunteer",
+        sender: "Protection counselor",
         initial: "A",
         role: "Registered humanitarian worker",
         time: "15:55",
         trusted: true,
-        body: "Registration can connect you with temporary protection and health care here. It does not guarantee travel onward or a place in Europe.",
+        body: "Only Türkiye's migration authorities can decide registration. New arrivals may be referred to a temporary accommodation center for assessment. Registration can provide legal stay and access to services; it does not guarantee onward travel or resettlement.",
       },
     ],
     known: [
       "Mariam's breathing is worse in the wet weather.",
-      "Registration is free at the marked aid desk.",
+      "Official registration is free and handled by Turkish migration authorities.",
       "A cousin has offered one room several hours away.",
     ],
     assumed: [
-      "Registering will prevent every future detention.",
+      "A counselor can promise how the authorities will decide the family's case.",
       "The cousin can host four people indefinitely.",
       "A paid driver can bypass every document check.",
     ],
     choices: [
       {
         id: "haddadRegisterTurkey",
-        title: "Register at the humanitarian desk",
-        hint: "Wait, document every name, and request medical care",
+        title: "Request an official registration referral",
+        hint: "Document every name and medical need for migration authorities",
         icon: "aid",
         tone: "trusted",
         route: "elmstead",
@@ -3133,8 +3138,8 @@ export const EVENTS = {
         next: "haddadTurkey",
         effects: { supplies: 2, medicine: 1, stress: -10, exposure: -8, progress: 10, people: { mariam: 8 } },
         consequence: "Medicine +1 · Mariam health +8 · Risk falls",
-        outcomeTitle: "Every name is written twice",
-        outcome: "The family receives temporary papers, blankets, and an asthma check. The document explains protection in Türkiye, not passage to Europe.",
+        outcomeTitle: "Every name and need is recorded",
+        outcome: "The counselor helps the family reach the designated authority. After an individual assessment, they receive registration documents, blankets, and an asthma referral. The papers concern protection in Türkiye, not passage to Europe.",
         setFlags: { turkeyRegistration: true },
       },
       {
@@ -3172,7 +3177,7 @@ export const EVENTS = {
 
   haddadTurkey: {
     id: "haddadTurkey",
-    region: "Western Türkiye · 2015",
+    region: "Western Türkiye · Present day",
     location: "A basement room near İzmir",
     time: "21:20",
     weather: "Warm night",
@@ -3187,7 +3192,7 @@ export const EVENTS = {
         role: "Family contact",
         time: "20:58",
         trusted: true,
-        body: "The repair shop posts its daily wage. The garment room pays more but keeps passports until the week ends. A broker says the sea crossing leaves as soon as the cash is ready.",
+        body: "Temporary protection still exists, but rent and food keep rising. The repair shop posts its daily wage. The garment room pays more but keeps passports until the week ends. A broker says the sea crossing leaves as soon as the cash is ready.",
       },
     ],
     known: [
@@ -3256,7 +3261,7 @@ export const EVENTS = {
 
   haddadAegean: {
     id: "haddadAegean",
-    region: "Aegean coast · 2015",
+    region: "Aegean coast · Present day",
     location: "A rented room near the sea",
     time: "02:15",
     weather: "Wind rising",
@@ -3276,7 +3281,7 @@ export const EVENTS = {
     ],
     known: [
       "The small boat has fewer life jackets than passengers.",
-      "A humanitarian office can review protection options in Türkiye tomorrow.",
+      "A legal office can review their still-active protection options in Türkiye tomorrow.",
       "Another operator claims to have a less crowded boat later in the week.",
     ],
     assumed: [
@@ -3297,7 +3302,7 @@ export const EVENTS = {
         effects: { cash: -280, stress: -12, exposure: -22, progress: 58, trustAll: 1 },
         consequence: "The sea crossing ends · A local protection process begins",
         outcomeTitle: "The family keeps all four names together",
-        outcome: "A legal clinic helps the family renew temporary papers and enter a housing waitlist. Work and school remain uncertain, but nobody boards tonight.",
+        outcome: "A legal clinic confirms that temporary protection remains in effect and helps the family update their papers and seek housing support. Work and school remain uncertain, but nobody boards tonight.",
         ending: {
           type: "local_protection",
           status: "won",
@@ -3340,7 +3345,7 @@ export const EVENTS = {
 
   haddadMemorial: {
     id: "haddadMemorial",
-    region: "Eastern Aegean · 2015",
+    region: "Eastern Aegean · Present day",
     location: "A temporary reception room",
     time: "18:05",
     weather: "Salt wind",
@@ -3414,7 +3419,7 @@ export const EVENTS = {
           type: "returned",
           status: "stopped",
           title: "Returned with an empty place",
-          copy: "The family returns to Türkiye without Mariam. The war that forced them from Syria and the debt from the journey remain unresolved.",
+          copy: "The family returns to Türkiye without Mariam. The failed return to Syria, the threats that displaced them again, and the debt from the journey remain unresolved.",
         },
       },
     ],
@@ -3422,7 +3427,7 @@ export const EVENTS = {
 
   haddadGreece: {
     id: "haddadGreece",
-    region: "Greece · 2015",
+    region: "Greece · Present day",
     location: "Island reception center",
     time: "11:25",
     weather: "Hard sunlight",
@@ -3500,7 +3505,7 @@ export const EVENTS = {
 
   haddadBalkans: {
     id: "haddadBalkans",
-    region: "Western Balkans · 2015",
+    region: "Western Balkans · Present day",
     location: "A closed transit station",
     time: "06:30",
     weather: "Freezing fog",
@@ -3577,11 +3582,11 @@ export const EVENTS = {
 
   haddadEuropeNews: {
     id: "haddadEuropeNews",
-    region: "Central Europe · 2015",
+    region: "Central Europe · Present day",
     location: "A temporary rail shelter",
     time: "20:10",
     weather: "Rain on metal roofing",
-    weatherDetail: "Phones replay the same border speech",
+    weatherDetail: "Phones replay the same return-convoy celebration",
     route: "quarry",
     contentNote: "Anti-refugee rhetoric and dehumanizing social media",
     source: sources.europeBorders,
@@ -3592,7 +3597,7 @@ export const EVENTS = {
         role: "Fictional anti-refugee influencer",
         time: "19:42",
         trusted: false,
-        body: "Close every border. Turn the trains around. Tonight's removals prove pressure works. Share if you want Europe protected from people like them.",
+        body: "Syria has changed, so reject every claim and send them all back. Tonight's return convoy proves the country is safe. Share if you want the removals to move faster.",
       },
       {
         sender: "Shelter legal desk",
@@ -3600,16 +3605,16 @@ export const EVENTS = {
         role: "Verified information",
         time: "19:55",
         trusted: true,
-        body: "A viral post is not an official notice. Registration remains open in the destination city, but processing rules and wait times can change.",
+        body: "A viral post is not an official decision. Syrian claims are being examined under updated guidance, but each person's risks and circumstances still require an individual assessment.",
       },
     ],
     known: [
       "The legal desk has tomorrow's official registration address.",
-      "The influencer does not identify the people shown in removal footage.",
+      "The influencer does not say whether the people shown returned voluntarily or what conditions awaited them.",
       "Posting publicly can expose the family's location and account.",
     ],
     assumed: [
-      "A viral slogan describes the law accurately.",
+      "A political transition makes every Syrian case identical.",
       "Arguing online will change the influencer's audience.",
       "Reaching Germany guarantees a positive asylum decision.",
     ],
@@ -3625,8 +3630,8 @@ export const EVENTS = {
         next: "haddadGermany",
         effects: { battery: -6, stress: -8, exposure: -12, progress: 10, trustAll: 1 },
         consequence: "Phone -6% · Stress -8 · Risk falls",
-        outcomeTitle: "The volunteer writes the address on paper",
-        outcome: "The family learns what documents to present and which parts of the process remain uncertain. The post continues circulating without them.",
+        outcomeTitle: "The adviser writes two lists on paper",
+        outcome: "One list names current procedures; the other names the family's own evidence: repeated displacement, the damaged home, recruitment pressure on Sami, and Mariam's medical history. The post continues circulating without them.",
         setFlags: { germanLegalAdvice: true },
       },
       {
@@ -3641,7 +3646,7 @@ export const EVENTS = {
         effects: { battery: 8, stress: -5, progress: 9 },
         consequence: "Stress -5 · Phone +8%",
         outcomeTitle: "The shelter roof replaces the shouting",
-        outcome: "Nadia puts the phone away. The family reviews names, documents, and the morning meeting place instead.",
+        outcome: "Nadia puts the phone away. The family reviews names, documents, evidence from their attempted return, and the morning meeting place instead.",
       },
       {
         id: "haddadArgueOnline",
@@ -3655,14 +3660,14 @@ export const EVENTS = {
         effects: { battery: -22, stress: 14, exposure: 22, progress: 9 },
         consequence: "Phone -22% · Stress +14 · Risk +22",
         outcomeTitle: "The reply is copied without its context",
-        outcome: "Some strangers offer support. Others repost the family's profile beside slurs and demands for removal.",
+        outcome: "Some strangers offer support. Others repost photographs of the family's damaged street beside claims that the images are old or fabricated.",
       },
     ],
   },
 
   haddadGermany: {
     id: "haddadGermany",
-    region: "Germany · 2015",
+    region: "Germany · Present day",
     location: "Regional arrival center",
     time: "09:05",
     weather: "Clear cold morning",
@@ -3677,24 +3682,24 @@ export const EVENTS = {
         role: "Official information",
         time: "08:48",
         trusted: true,
-        body: "Registration begins the asylum process. It is not a promise of protection, permanent residence, family housing, or a quick decision.",
+        body: "Registration begins the asylum process. Political change in Syria may affect the assessment, but it is not an automatic approval or refusal. Your family's circumstances and current risks must be examined individually.",
       },
     ],
     known: [
       "The center can register the surviving family members together.",
-      "A legal clinic can review their Syrian and transit documents.",
+      "A legal clinic can review their Syrian documents, attempted return, transit records, and evidence concerning Sami.",
       "A relative in another country cannot transfer the case by invitation alone.",
     ],
     assumed: [
-      "Arrival means the family has already won asylum.",
+      "The fall of the former government automatically ends every Syrian protection claim.",
       "Avoiding registration preserves every option.",
       "One missing document decides the entire case.",
     ],
     choices: [
       {
         id: "haddadRegisterGermany",
-        title: "Register and request legal review",
-        hint: "Enter the asylum process with every document and recorded name",
+        title: "Register and request individual review",
+        hint: "Enter the asylum process with every document, recorded name, and current risk",
         icon: "legal",
         tone: "trusted",
         route: "elmstead",
@@ -3703,7 +3708,7 @@ export const EVENTS = {
         effects: { cash: -160, stress: 9, exposure: -28, progress: 100, trustAll: 1 },
         consequence: "21 days pass · The asylum case begins · Route complete",
         outcomeTitle: "A case number is read back to the family",
-        outcome: "The Haddads move to temporary family accommodation while their claim is reviewed. Arrival has ended the route, not the uncertainty.",
+        outcome: "The Haddads move to temporary family accommodation while officials assess the conditions they faced after returning to Syria and the risks each survivor describes. Arrival has ended the route, not the uncertainty.",
         contextBonuses: [
           {
             flag: "keptDocuments",
@@ -3728,7 +3733,7 @@ export const EVENTS = {
           type: "asylum_pending",
           status: "won",
           title: "Registered while the case continues",
-          copy: "The Haddads reach temporary accommodation with a case number, debt, grief, and no guarantee of protection. Their new chapter begins with another wait.",
+          copy: "The Haddads reach temporary accommodation with a case number, evidence from a failed return, debt, grief, and no guarantee of protection. Their new chapter begins with an individual review.",
         },
       },
       {
