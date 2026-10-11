@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.playwright-mcp/
+*.log
+
+# Local design-review captures; curated references live in public/qa.
+/design-qa-comparison.png
+/implementation-*.png
+/interaction-modal.png
+/playable-*.png
