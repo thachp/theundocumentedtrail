@@ -102,7 +102,7 @@ test("starts the Diop brothers and cousins in Senegal as a four-person group", (
   assert.equal(FAMILY_PRESETS.diop.heroImage, "/assets/diop-journey-hero.webp");
 });
 
-test("starts the Nguyễn family in Vietnam with a distinct United Kingdom journey", () => {
+test("starts the Bùi family in Vietnam with a distinct United Kingdom journey", () => {
   const game = createInitialGame("nguyen");
 
   assert.equal(game.familyId, "nguyen");
@@ -110,6 +110,8 @@ test("starts the Nguyễn family in Vietnam with a distinct United Kingdom journ
   assert.deepEqual(Object.keys(game.people), ["minh", "lan", "mai", "bao"]);
   assert.equal(getPeople(game)[2].name, "Mai");
   assert.equal(getPeople(game)[3].age, 15);
+  assert.equal(FAMILY_PRESETS.nguyen.name, "The Bùi family");
+  assert.equal(FAMILY_PRESETS.nguyen.shortName, "Bùi");
   assert.equal(FAMILY_PRESETS.nguyen.destination, "United Kingdom review");
   assert.equal(FAMILY_PRESETS.nguyen.heroImage, "/assets/nguyen-journey-hero.webp");
 });
@@ -545,7 +547,7 @@ test("the Diop group can turn back before the Atlantic crossing with all four al
   assert.equal(Object.values(game.people).every((person) => person.alive), true);
 });
 
-test("the Nguyễn family can reach a UK safeguarding review through truthful screening", () => {
+test("the Bùi family can reach a UK safeguarding review through truthful screening", () => {
   let game = createInitialGame("nguyen");
   game = chooseAndContinue(game, "nguyenVerifyOffer");
   game = chooseAndContinue(game, "nguyenDemandContract");
@@ -569,7 +571,7 @@ test("the Nguyễn family can reach a UK safeguarding review through truthful sc
   assert.equal(game.storyThreads.ukLegalAdvice.status, "resolved");
 });
 
-test("the Nguyễn family can stop in France without attempting the Channel", () => {
+test("the Bùi family can stop in France without attempting the Channel", () => {
   let game = createInitialGame("nguyen");
   game = chooseAndContinue(game, "nguyenVerifyOffer");
   game = chooseAndContinue(game, "nguyenDemandContract");
