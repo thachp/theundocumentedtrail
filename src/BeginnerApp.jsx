@@ -688,8 +688,12 @@ export function BeginnerApp() {
   const [tutorialStep, setTutorialStep] = useState(0);
   const [showTutorial, setShowTutorial] = useState(initialOnboardingState.showTutorial);
   const [tutorialIsOnboarding, setTutorialIsOnboarding] = useState(initialOnboardingState.tutorialIsOnboarding);
+  const [showJourneyTools, setShowJourneyTools] = useState(false);
+  const [choicesVisible, setChoicesVisible] = useState(false);
   const soundtrackRef = useRef(null);
   const interactionSoundsRef = useRef(null);
+  const journeyToolsRef = useRef(null);
+  const choicesRef = useRef(null);
   const family = getFamilyPreset(game);
   const people = getPeople(game);
   const event = getEvent(game);
@@ -722,6 +726,11 @@ export function BeginnerApp() {
     : event.messages;
   const restartGame = restartFamilyId ? (familySaves[restartFamilyId] ?? game) : null;
   const restartFamily = restartFamilyId ? getFamilyPreset(restartFamilyId) : null;
+  const optionalActionLabels = [
+    roadsideOpportunity ? "Work" : null,
+    supplyStop ? "Resupply" : null,
+    socialFeed ? "The Current" : null,
+  ].filter(Boolean);
 
   useEffect(() => {
     if (familySelectionRequired) return;
@@ -732,7 +741,43 @@ export function BeginnerApp() {
   useEffect(() => {
     setShowSocialFeed(false);
     setShowSupplyShop(false);
+    setShowJourneyTools(false);
   }, [game.eventId]);
+
+  useEffect(() => {
+    if (!showJourneyTools) return undefined;
+
+    const dismissMenu = (pointerEvent) => {
+      if (!journeyToolsRef.current?.contains(pointerEvent.target)) setShowJourneyTools(false);
+    };
+    const dismissOnEscape = (keyboardEvent) => {
+      if (keyboardEvent.key === "Escape") setShowJourneyTools(false);
+    };
+
+    document.addEventListener("pointerdown", dismissMenu);
+    document.addEventListener("keydown", dismissOnEscape);
+    return () => {
+      document.removeEventListener("pointerdown", dismissMenu);
+      document.removeEventListener("keydown", dismissOnEscape);
+    };
+  }, [showJourneyTools]);
+
+  useEffect(() => {
+    if (game.phase !== "decision") {
+      setChoicesVisible(false);
+      return undefined;
+    }
+
+    setChoicesVisible(false);
+    const choices = choicesRef.current;
+    if (!choices || typeof IntersectionObserver === "undefined") return undefined;
+    const observer = new IntersectionObserver(
+      ([entry]) => setChoicesVisible(entry.isIntersecting),
+      { threshold: 0.12 },
+    );
+    observer.observe(choices);
+    return () => observer.disconnect();
+  }, [game.eventId, game.phase]);
 
   useEffect(() => () => soundtrackRef.current?.dispose(), []);
   useEffect(() => () => interactionSoundsRef.current?.dispose(), []);
@@ -839,9 +884,16 @@ export function BeginnerApp() {
   };
 
   const replayTutorial = () => {
+    setShowJourneyTools(false);
     setTutorialStep(0);
     setTutorialIsOnboarding(false);
     setShowTutorial(true);
+  };
+
+  const scrollToChoices = () => {
+    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    choicesRef.current?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    choicesRef.current?.focus({ preventScroll: true });
   };
 
   return (
@@ -856,32 +908,48 @@ export function BeginnerApp() {
           <i />
           <small>Family<br />Safety<br />Tomorrow</small>
         </div>
-        <div className="cinematic-header-actions">
-          <button className="cinematic-music" onClick={() => setShowFamilySelection(true)} aria-label="Choose family journey" data-tooltip={`Playing ${family.name} · choose another family`} data-sound="tap"><UsersThree weight="duotone" /></button>
-          <button className="cinematic-music" onClick={replayTutorial} aria-label="Open tutorial" data-tooltip="How to play" data-sound="tap"><Question weight="duotone" /></button>
-          <button className="cinematic-music" onClick={() => setShowContentSettings(true)} aria-label="Open content settings" data-tooltip="Sensitive-content settings" data-sound="tap"><WarningCircle weight="duotone" /></button>
-          <button className="cinematic-music" onClick={() => setShowJourneyLog(true)} aria-label="Open journey log" data-tooltip="Journey log" data-sound="tap"><BookOpenText weight="duotone" /></button>
-          <a
-            className="cinematic-source-link"
-            href="https://github.com/thachp/theundocumentedtrail"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="View the open-source project on GitHub"
-            data-tooltip="Open source on GitHub · MIT license"
-          >
-            <GithubLogo weight="fill" aria-hidden="true" />
-          </a>
+        <div className="cinematic-tools" ref={journeyToolsRef}>
           <button
-            className={`cinematic-music ${soundtrackOn ? `playing ${soundtrackTheme.id}` : ""}`}
-            onClick={toggleSoundtrack}
-            aria-pressed={soundtrackOn}
-            aria-label={soundtrackOn ? `Pause music — ${soundtrackTheme.label}` : "Play soundtrack"}
-            data-tooltip={soundtrackOn ? `${soundtrackTheme.label} playing · pause music` : "Play the journey soundtrack"}
+            className="cinematic-tools-trigger"
+            onClick={() => setShowJourneyTools((current) => !current)}
+            aria-expanded={showJourneyTools}
+            aria-controls="cinematic-journey-tools"
             data-sound="tap"
           >
-            {soundtrackOn ? <SpeakerHigh weight="fill" /> : <MusicNotes weight="duotone" />}
+            <Compass weight="duotone" aria-hidden="true" />
+            <span>Journey tools</span>
+            <ArrowRight weight="bold" aria-hidden="true" />
           </button>
-          <a href="/?mode=full" className="cinematic-full-link" data-tooltip="Open the detailed planning view" data-tooltip-align="right">Planning view</a>
+          <div id="cinematic-journey-tools" className={`cinematic-header-actions ${showJourneyTools ? "open" : ""}`} role="group" aria-label="Journey tools">
+            <button className="cinematic-music" onClick={() => { setShowJourneyTools(false); setShowFamilySelection(true); }} aria-label="Choose family journey" data-tooltip={`Playing ${family.name} · choose another family`} data-sound="tap"><UsersThree weight="duotone" /><span className="cinematic-tool-label">Choose family</span></button>
+            <button className="cinematic-music" onClick={replayTutorial} aria-label="Open tutorial" data-tooltip="How to play" data-sound="tap"><Question weight="duotone" /><span className="cinematic-tool-label">How to play</span></button>
+            <button className="cinematic-music" onClick={() => { setShowJourneyTools(false); setShowContentSettings(true); }} aria-label="Open content settings" data-tooltip="Sensitive-content settings" data-sound="tap"><WarningCircle weight="duotone" /><span className="cinematic-tool-label">Content settings</span></button>
+            <button className="cinematic-music" onClick={() => { setShowJourneyTools(false); setShowJourneyLog(true); }} aria-label="Open journey log" data-tooltip="Journey log" data-sound="tap"><BookOpenText weight="duotone" /><span className="cinematic-tool-label">Journey log</span></button>
+            <a
+              className="cinematic-source-link"
+              href="https://github.com/thachp/theundocumentedtrail"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="View the open-source project on GitHub"
+              data-tooltip="Open source on GitHub · MIT license"
+              onClick={() => setShowJourneyTools(false)}
+            >
+              <GithubLogo weight="fill" aria-hidden="true" />
+              <span className="cinematic-tool-label">Open-source project</span>
+            </a>
+            <button
+              className={`cinematic-music ${soundtrackOn ? `playing ${soundtrackTheme.id}` : ""}`}
+              onClick={() => { setShowJourneyTools(false); toggleSoundtrack(); }}
+              aria-pressed={soundtrackOn}
+              aria-label={soundtrackOn ? `Pause music — ${soundtrackTheme.label}` : "Play soundtrack"}
+              data-tooltip={soundtrackOn ? `${soundtrackTheme.label} playing · pause music` : "Play the journey soundtrack"}
+              data-sound="tap"
+            >
+              {soundtrackOn ? <SpeakerHigh weight="fill" /> : <MusicNotes weight="duotone" />}
+              <span className="cinematic-tool-label">{soundtrackOn ? "Pause soundtrack" : "Play soundtrack"}</span>
+            </button>
+            <a href="/?mode=full" className="cinematic-full-link" data-tooltip="Open the detailed planning view" data-tooltip-align="right">Planning view</a>
+          </div>
         </div>
       </header>
 
@@ -924,29 +992,47 @@ export function BeginnerApp() {
                 {event.source && <a href={event.source.url} target="_blank" rel="noreferrer">Research basis: {event.source.label}</a>}
               </div>
             )}
-            {game.phase === "decision" && roadsideOpportunity && (
-              <button className={`cinematic-work-trigger ${roadsideWorkCompleted ? "completed" : ""}`} onClick={() => setShowRoadsideWork(true)} data-sound="tap">
-                <Briefcase weight="duotone" />
-                <span>
-                  <small>{roadsideWorkCompleted ? "Work completed here" : roadsideOpportunity.eyebrow}</small>
-                  <strong>{roadsideWorkCompleted ? roadsideOutcome?.title : "Find short-term work"}</strong>
-                </span>
-                <ArrowRight weight="bold" />
-              </button>
-            )}
-            {supplyStop && <SupplyStopTrigger stop={supplyStop} onOpen={() => setShowSupplyShop(true)} />}
-            {socialFeed && (
-              <SocialFeedTrigger
-                feed={socialFeed}
-                climate={game.socialClimate}
-                resolved={socialFeedResolved}
-                onOpen={() => setShowSocialFeed(true)}
-              />
+            {game.phase === "decision" && optionalActionLabels.length > 0 && (
+              <details className="cinematic-optional-actions" key={`optional-${event.id}`}>
+                <summary>
+                  <span><small>Optional before choosing</small><strong>{optionalActionLabels.join(" · ")}</strong></span>
+                  <ArrowRight weight="bold" aria-hidden="true" />
+                </summary>
+                <div className="cinematic-optional-list">
+                  {roadsideOpportunity && (
+                    <button className={`cinematic-work-trigger ${roadsideWorkCompleted ? "completed" : ""}`} onClick={() => setShowRoadsideWork(true)} data-sound="tap">
+                      <Briefcase weight="duotone" />
+                      <span>
+                        <small>{roadsideWorkCompleted ? "Work completed here" : roadsideOpportunity.eyebrow}</small>
+                        <strong>{roadsideWorkCompleted ? roadsideOutcome?.title : "Find short-term work"}</strong>
+                      </span>
+                      <ArrowRight weight="bold" />
+                    </button>
+                  )}
+                  {supplyStop && <SupplyStopTrigger stop={supplyStop} onOpen={() => setShowSupplyShop(true)} />}
+                  {socialFeed && (
+                    <SocialFeedTrigger
+                      feed={socialFeed}
+                      climate={game.socialClimate}
+                      resolved={socialFeedResolved}
+                      onOpen={() => setShowSocialFeed(true)}
+                    />
+                  )}
+                </div>
+              </details>
             )}
           </div>
 
+          {game.phase === "decision" && !choicesVisible && (
+            <button className="cinematic-choice-jump" onClick={scrollToChoices} aria-controls="guided-choice-options" data-sound="tap">
+              <Crosshair weight="duotone" aria-hidden="true" />
+              <span>View {event.choices.length} choices</span>
+              <ArrowRight weight="bold" aria-hidden="true" />
+            </button>
+          )}
+
           {game.phase === "decision" ? (
-            <div className="cinematic-decision" key={`choices-${event.id}`}>
+            <div className="cinematic-decision" id="guided-choice-options" ref={choicesRef} tabIndex="-1" key={`choices-${event.id}`}>
               <div className="cinematic-choice-prompt" role="note">
                 <Crosshair weight="duotone" aria-hidden="true" />
                 <span>
@@ -970,6 +1056,7 @@ export function BeginnerApp() {
                       <small>{toneLabels[choice.tone]}</small>
                       <strong>{choice.title}</strong>
                       <span>{unavailable ?? choice.hint}</span>
+                      {choice.consequence && <span className="cinematic-choice-consequence"><Clock weight="duotone" aria-hidden="true" />Immediate cost · {choice.consequence}</span>}
                       {bonus && <em><Sparkle weight="fill" />{bonus.label}</em>}
                       <span className="cinematic-choice-action">
                         {unavailable ? "Unavailable" : "Select this path"}

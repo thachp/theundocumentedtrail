@@ -22,5 +22,8 @@ When implementing from a selected generated mock, treat that image as the source
 - Keep the main hero art dark and somber, grounded in the aftermath of loss rather than active violence. Character portraits should visibly shift between healthy, strained, and exhausted expressions based on individual health and group stress.
 - In the guided view, make every decision point explicitly instruct the player to select one option, and give each choice a visible action affordance rather than relying on card styling alone.
 - Attribute guided story copy to its actual speaker. Use family portraits for traveler voices and clear role/trust cues for outside contacts; never present a generic “coyote” character when the line belongs to a family member, narrator, or verified helper.
+- On mobile, collapse secondary header controls into a labeled “Journey tools” menu with 44px-or-larger targets, and show a direct “View choices” cue while the decision cards are below the viewport.
+- Show each route choice’s immediate cost before selection, using the authored consequence data rather than introducing new calculations.
+- Keep work, resupply, and social-feed actions available but visually secondary inside an “Optional before choosing” disclosure.
 
 Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts/prepare-sites-build.mjs`, and `tests/sites-worker.test.mjs` intact so the same local prototype can be handed to Sites. Before a Sites handoff, run `npm run build` and `npm run test:sites`; the build must leave `dist/client/index.html`, `dist/server/index.js`, and `dist/.openai/hosting.json`.
