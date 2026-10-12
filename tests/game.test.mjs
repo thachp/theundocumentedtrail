@@ -20,6 +20,7 @@ import {
   getSupplyOptions,
   getSupplyStop,
   getTravelIncidentOptions,
+  getTravelLeadOptions,
   getTravelPlanOptions,
   getJourneyScore,
   getJourneyStage,
@@ -438,6 +439,29 @@ test("a long leg requires one simple travel plan before continuing", () => {
   assert.equal(game.currentOutcome.travelPlan.id, "steady");
   assert.equal(game.activityLog.at(-1).kind, "travel");
   assert.equal(continueJourney(game).eventId, "waitingTown");
+});
+
+test("a trusted traveler can coordinate a long leg with a skill-based benefit", () => {
+  let game = createInitialGame();
+  game = chooseAndContinue(game, "safeHouse");
+  game = chooseAndContinue(game, "churchBus");
+  game = chooseAndContinue(game, "callForHelp");
+  game = chooseOption(game, "stayShelter");
+
+  const leads = getTravelLeadOptions(game);
+  assert.deepEqual(leads.map((lead) => lead.personId), ["marisol", "edwin", "daniela", "aurelia"]);
+  assert.equal(leads.find((lead) => lead.personId === "marisol").roleId, "planning");
+  assert.equal(leads.find((lead) => lead.personId === "edwin").roleId, "route");
+
+  const waterBefore = game.resources.water;
+  const ledPlan = getTravelPlanOptions(game, "marisol").find((option) => option.id === "steady");
+  assert.match(ledPlan.consequence, /Marisol saves 1 L water/);
+
+  game = planTravelLeg(game, "steady", "marisol");
+  assert.equal(game.resources.water, waterBefore);
+  assert.equal(game.currentOutcome.travelPlan.lead.personId, "marisol");
+  assert.equal(game.currentOutcome.travelPlan.lead.skill, "Former teacher");
+  assert.match(game.activityLog.at(-1).detail, /Marisol coordinates with Former teacher/);
 });
 
 test("medicine is visible game state and can restore a traveler's health", () => {

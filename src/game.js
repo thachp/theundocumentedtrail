@@ -542,6 +542,29 @@ export const TRAVEL_STRATEGIES = [
   },
 ];
 
+const TRAVEL_ROLE_RULES = [
+  {
+    id: "planning",
+    title: "Plan supplies",
+    keywords: ["planning", "teacher", "documents", "budgeting", "bookkeeping", "schoolwork", "memory", "problem solving"],
+  },
+  {
+    id: "route",
+    title: "Read the route",
+    keywords: ["observation", "navigation", "driving", "weather", "english", "french", "negotiation", "community ties", "fishing"],
+  },
+  {
+    id: "repair",
+    title: "Keep equipment working",
+    keywords: ["repair", "machinery", "welding", "electronics"],
+  },
+  {
+    id: "care",
+    title: "Hold the group together",
+    keywords: ["health", "care", "first aid", "cooking", "devout", "drawing", "curious", "asthma"],
+  },
+];
+
 export const TRAVEL_INCIDENTS = [
   {
     id: "cold",
@@ -7222,6 +7245,79 @@ export function getChoiceBonuses(game, choice) {
   return bonuses;
 }
 
+function getTravelRole(person) {
+  for (const skill of person.skills) {
+    const normalized = skill.toLocaleLowerCase();
+    const role = TRAVEL_ROLE_RULES.find((candidate) => candidate.keywords.some((keyword) => normalized.includes(keyword)));
+    if (role) return { ...role, skill };
+  }
+  return { ...TRAVEL_ROLE_RULES[3], skill: person.skills[0] };
+}
+
+function getTravelRoleStrength(trust) {
+  if (trust >= 4) return 1;
+  if (trust === 3) return 0.75;
+  return 0.5;
+}
+
+function getTravelRoleImpact(roleId, weeks, strength) {
+  if (roleId === "planning") return `Saves ${Math.max(1, Math.round(weeks * strength))} L water through rationing`;
+  if (roleId === "route") return `Lowers route risk by ${Math.max(1, Math.round(weeks * 2 * strength))}`;
+  if (roleId === "repair") return `Saves up to $${Math.max(5, Math.round(weeks * strength) * 5)} on paid travel`;
+  return `Lowers stress by ${Math.max(1, Math.round(weeks * 2 * strength))} and protects health`;
+}
+
+export function getTravelLeadOptions(game) {
+  const weeks = travelWeeks(game);
+  return getPeople(game)
+    .filter((person) => game.people[person.id]?.alive !== false)
+    .map((person) => {
+      const state = game.people[person.id];
+      const role = getTravelRole(person);
+      const strength = getTravelRoleStrength(state.trust);
+      return {
+        personId: person.id,
+        person,
+        skill: role.skill,
+        roleId: role.id,
+        roleTitle: role.title,
+        trust: state.trust,
+        health: state.health,
+        impact: getTravelRoleImpact(role.id, weeks, strength),
+        unavailable: state.health < 35 ? `${person.name} needs care before coordinating this leg` : null,
+      };
+    });
+}
+
+function getTravelLeadContribution(game, strategyEffects, lead) {
+  const weeks = travelWeeks(game);
+  const strength = getTravelRoleStrength(lead.trust);
+
+  if (lead.roleId === "planning") {
+    const waterSaved = Math.max(1, Math.round(weeks * strength));
+    return { effects: { water: waterSaved }, label: `${lead.person.name} saves ${waterSaved} L water` };
+  }
+  if (lead.roleId === "route") {
+    const riskReduced = Math.max(1, Math.round(weeks * 2 * strength));
+    return { effects: { exposure: -riskReduced }, label: `${lead.person.name} lowers risk by ${riskReduced}` };
+  }
+  if (lead.roleId === "repair") {
+    if ((strategyEffects.cash ?? 0) < 0) {
+      const cashSaved = Math.min(Math.abs(strategyEffects.cash), Math.max(5, Math.round(weeks * strength) * 5));
+      return { effects: { cash: cashSaved }, label: `${lead.person.name} saves $${cashSaved} in repairs` };
+    }
+    const batterySaved = Math.max(1, Math.round(weeks * 2 * strength));
+    return { effects: { battery: batterySaved }, label: `${lead.person.name} preserves ${batterySaved}% phone charge` };
+  }
+
+  const stressReduced = Math.max(1, Math.round(weeks * 2 * strength));
+  const healthProtected = Math.max(1, Math.round(weeks * strength));
+  return {
+    effects: { stress: -stressReduced, peopleAll: healthProtected },
+    label: `${lead.person.name} lowers stress by ${stressReduced} and protects health`,
+  };
+}
+
 function getChoiceReactions(game, choice) {
   return (CHOICE_REACTIONS[choice.id] ?? [])
     .filter((reaction) => game.people[reaction.personId]?.alive !== false);
@@ -7312,7 +7408,7 @@ export function requiresTravelPlan(game) {
   );
 }
 
-export function getTravelPlanOptions(game) {
+export function getTravelPlanOptions(game, leadPersonId = null) {
   const weeks = travelWeeks(game);
   const recoverCost = weeks * 25;
   const planDetails = {
@@ -7330,7 +7426,27 @@ export function getTravelPlanOptions(game) {
       unavailable: game.resources.cash < recoverCost ? `Requires $${recoverCost}` : null,
     },
   };
-  return TRAVEL_STRATEGIES.map((strategy) => ({ ...strategy, weeks, ...planDetails[strategy.id] }));
+  const lead = leadPersonId
+    ? getTravelLeadOptions(game).find((option) => option.personId === leadPersonId && !option.unavailable)
+    : null;
+  return TRAVEL_STRATEGIES.map((strategy) => {
+    const plan = { ...strategy, weeks, ...planDetails[strategy.id] };
+    if (!lead) return plan;
+    const contribution = getTravelLeadContribution(game, plan.effects, lead);
+    return {
+      ...plan,
+      effects: mergeEffects(plan.effects, contribution.effects),
+      consequence: `${plan.consequence} · ${contribution.label}`,
+      leadBonus: {
+        personId: lead.personId,
+        personName: lead.person.name,
+        skill: lead.skill,
+        roleId: lead.roleId,
+        roleTitle: lead.roleTitle,
+        label: contribution.label,
+      },
+    };
+  });
 }
 
 function applyEffects(game, effects = {}) {
@@ -7764,9 +7880,13 @@ export function respondToSocialFeed(game, responseId) {
     : nextGame;
 }
 
-export function planTravelLeg(game, strategyId) {
+export function planTravelLeg(game, strategyId, leadPersonId = null) {
   if (!requiresTravelPlan(game)) return game;
-  const strategy = getTravelPlanOptions(game).find((option) => option.id === strategyId);
+  if (leadPersonId) {
+    const lead = getTravelLeadOptions(game).find((option) => option.personId === leadPersonId);
+    if (!lead || lead.unavailable) return game;
+  }
+  const strategy = getTravelPlanOptions(game, leadPersonId).find((option) => option.id === strategyId);
   if (!strategy || strategy.unavailable) return game;
 
   const applied = applyEffects(game, strategy.effects);
@@ -7780,6 +7900,7 @@ export function planTravelLeg(game, strategyId) {
         title: strategy.title,
         consequence: strategy.consequence,
         tone: strategy.tone,
+        lead: strategy.leadBonus ?? null,
       },
     },
     activityLog: [
@@ -7788,7 +7909,7 @@ export function planTravelLeg(game, strategyId) {
         day: game.day,
         kind: "travel",
         title: strategy.title,
-        detail: `${game.currentOutcome.days} days planned · ${strategy.consequence}`,
+        detail: `${game.currentOutcome.days} days planned · ${strategy.consequence}${strategy.leadBonus ? ` · ${strategy.leadBonus.personName} coordinates with ${strategy.leadBonus.skill}` : ""}`,
         tone: strategy.tone,
       },
       ...getNewLossEntries(game, applied),

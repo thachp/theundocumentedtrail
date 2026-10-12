@@ -50,6 +50,7 @@ import {
   getSocialFeed,
   getSocialResponseOptions,
   getSupplyStop,
+  getTravelLeadOptions,
   getTravelPlanOptions,
   hasCompletedRoadsideWork,
   hasRespondedToSocialFeed,
@@ -232,6 +233,47 @@ const toneLabels = {
   danger: "High risk",
 };
 
+function getConsequenceIcon(consequence) {
+  const normalized = consequence.toLocaleLowerCase();
+
+  if (normalized.includes("cash") || normalized.includes("debt")) return Wallet;
+  if (normalized.includes("water")) return Drop;
+  if (normalized.includes("food")) return ForkKnife;
+  if (normalized.includes("medicine")) return Pill;
+  if (normalized.includes("phone")) return BatteryMedium;
+  if (normalized.includes("health") || normalized.includes("dies") || normalized.includes("death")) return Heartbeat;
+  if (normalized.includes("risk")) return Eye;
+  if (normalized.includes("stress")) return WarningCircle;
+  if (normalized.includes("trust") || normalized.includes("cohesion") || normalized.includes("family")) return UsersThree;
+  if (normalized.includes("day") || normalized.includes("week") || normalized.includes("progress")) return Clock;
+  if (normalized.includes("journey") || normalized.includes("route") || normalized.includes("destination")) return MapPin;
+  return Sparkle;
+}
+
+function ChoiceConsequences({ consequence }) {
+  const items = consequence.split(" · ").filter(Boolean);
+
+  return (
+    <span className="cinematic-choice-consequence">
+      <span className="cinematic-choice-consequence-label">
+        <Clock weight="duotone" aria-hidden="true" />
+        Immediate cost
+      </span>
+      <span className="cinematic-choice-consequence-items">
+        {items.map((item) => {
+          const Icon = getConsequenceIcon(item);
+          return (
+            <span className="cinematic-choice-consequence-chip" key={item}>
+              <Icon weight="duotone" aria-hidden="true" />
+              {item}
+            </span>
+          );
+        })}
+      </span>
+    </span>
+  );
+}
+
 function StoryVoice({ message, game, people }) {
   const speaker = people.find((person) => person.name.toLocaleLowerCase() === message.sender.toLocaleLowerCase());
   const voiceTone = message.trusted === true ? "trusted" : message.trusted === false ? "unverified" : "context";
@@ -367,22 +409,65 @@ function RoadsideWork({ opportunity, outcome, completed, onChoose, onClose }) {
 }
 
 function TravelPlanner({ game, onChoose }) {
+  const [leadPersonId, setLeadPersonId] = useState(null);
+  const leadOptions = getTravelLeadOptions(game);
+  const selectedLead = leadOptions.find((option) => option.personId === leadPersonId) ?? null;
+  const strategies = getTravelPlanOptions(game, leadPersonId);
+
   return (
     <div className="cinematic-travel-planner" aria-label="Plan this travel leg">
       <header>
         <Clock weight="duotone" />
-        <span><small>The next leg lasts {game.currentOutcome.days} days</small><strong>How will the family manage the time?</strong></span>
+        <span><small>The next leg lasts {game.currentOutcome.days} days</small><strong>Assign a travel role, then choose the pace</strong></span>
       </header>
-      <div>
-        {getTravelPlanOptions(game).map((strategy) => (
+      <section className="cinematic-travel-leadership" aria-labelledby="travel-leadership-title">
+        <div className="cinematic-travel-step">
+          <small>Step 1 · Family role</small>
+          <strong id="travel-leadership-title">Who should coordinate this leg?</strong>
+          <span>Trust changes how strongly each skill helps.</span>
+        </div>
+        <div className="cinematic-travel-leads" role="group" aria-label="Choose a traveler to coordinate the leg">
+          {leadOptions.map((option) => (
+            <button
+              type="button"
+              className={leadPersonId === option.personId ? "selected" : ""}
+              key={option.personId}
+              onClick={() => setLeadPersonId(option.personId)}
+              disabled={Boolean(option.unavailable)}
+              aria-pressed={leadPersonId === option.personId}
+              title={option.unavailable ?? option.impact}
+              data-sound="tap"
+            >
+              <Portrait
+                person={option.person}
+                state={game.people[option.personId]}
+                stress={game.resources.stress}
+                family={game}
+                alt=""
+              />
+              <span>
+                <strong>{option.person.name}</strong>
+                <small>{option.skill} · Trust {option.trust}/5</small>
+                <em>{option.unavailable ?? option.impact}</em>
+              </span>
+            </button>
+          ))}
+        </div>
+      </section>
+      <div className="cinematic-travel-step cinematic-travel-pace-heading">
+        <small>Step 2 · Travel pace</small>
+        <strong>{selectedLead ? `${selectedLead.person.name} will coordinate. How should the group travel?` : "Choose a family role to unlock the travel plans"}</strong>
+      </div>
+      <div className="cinematic-travel-strategies">
+        {strategies.map((strategy) => (
           <button
             key={strategy.id}
             className={strategy.tone}
-            onClick={() => onChoose(strategy.id)}
-            disabled={Boolean(strategy.unavailable)}
+            onClick={() => onChoose(strategy.id, leadPersonId)}
+            disabled={!selectedLead || Boolean(strategy.unavailable)}
             data-sound={strategy.tone === "danger" ? "warning" : "choice"}
           >
-            <small>{strategy.unavailable ?? strategy.hint}</small>
+            <small>{!selectedLead ? "Assign a travel role first" : strategy.unavailable ?? strategy.hint}</small>
             <strong>{strategy.title}</strong>
             <span>{strategy.consequence}</span>
           </button>
@@ -1135,7 +1220,7 @@ export function BeginnerApp() {
                       <small>{toneLabels[choice.tone]}</small>
                       <strong>{choice.title}</strong>
                       <span>{unavailable ?? choice.hint}</span>
-                      {choice.consequence && <span className="cinematic-choice-consequence"><Clock weight="duotone" aria-hidden="true" />Immediate cost · {choice.consequence}</span>}
+                      {choice.consequence && <ChoiceConsequences consequence={choice.consequence} />}
                       {bonus && <em><Sparkle weight="fill" />{bonus.label}</em>}
                       <span className="cinematic-choice-action">
                         {unavailable ? "Unavailable" : "Select this path"}
@@ -1186,7 +1271,7 @@ export function BeginnerApp() {
                   {game.pendingEnding ? "See journey result" : "Continue the journey"}<ArrowRight weight="bold" />
                 </button>}
               </div>
-              {travelPlanRequired && <TravelPlanner game={game} onChoose={(strategyId) => setGame((current) => planTravelLeg(current, strategyId))} />}
+              {travelPlanRequired && <TravelPlanner game={game} onChoose={(strategyId, leadPersonId) => setGame((current) => planTravelLeg(current, strategyId, leadPersonId))} />}
             </>
           )}
         </section>

@@ -43,3 +43,22 @@ test("the journey chooser is a horizontally scrollable carousel with usable cont
   assert.match(buttonRule, /height:\s*46px/, "carousel controls should meet the minimum touch target");
   assert.match(mobileRules, /\.cinematic-family-options\s*\{[^}]*grid-auto-columns:\s*calc\(100% - 26px\)/s, "mobile should reveal part of the next card");
 });
+
+test("guided choice consequences wrap into scannable chips", () => {
+  const itemsRule = ruleFor(".cinematic-choice .cinematic-choice-consequence-items");
+  const chipRule = ruleFor(".cinematic-choice .cinematic-choice-consequence-chip");
+
+  assert.match(itemsRule, /display:\s*flex/, "consequence items should sit in a compact row");
+  assert.match(itemsRule, /flex-wrap:\s*wrap/, "consequence items should wrap on narrow cards");
+  assert.match(chipRule, /max-width:\s*100%/, "long authored consequences should stay inside the card");
+});
+
+test("travel roles stay selectable across desktop and mobile layouts", () => {
+  const leadsRule = ruleFor(".cinematic-travel-leads");
+  const leadButtonRule = ruleFor(".cinematic-travel-leads > button");
+  const mobileRules = beginnerCss.match(/@media \(max-width: 720px\) \{([\s\S]*)\n\}/)?.[1] ?? "";
+
+  assert.match(leadsRule, /grid-template-columns:\s*repeat\(4, minmax\(0, 1fr\)\)/, "desktop should compare every traveler in one row");
+  assert.match(leadButtonRule, /min-height:\s*74px/, "travel roles should have generous selection targets");
+  assert.match(mobileRules, /\.cinematic-travel-leads\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/s, "mobile should arrange travel roles in a readable two-column grid");
+});
