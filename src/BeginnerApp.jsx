@@ -137,9 +137,9 @@ const sceneByEvent = {
   riverCrossing: "/assets/guided-night-camp.webp",
   memorial: "/assets/guided-night-camp.webp",
   detention: "/assets/guided-night-camp.webp",
-  rohingyaSea: "/assets/rohingya-sea-scene.png",
-  rohingyaWeather: "/assets/rohingya-sea-scene.png",
-  rohingyaSignal: "/assets/rohingya-sea-scene.png",
+  rohingyaSea: "/assets/rohingya-sea-scene.webp",
+  rohingyaWeather: "/assets/rohingya-sea-scene.webp",
+  rohingyaSignal: "/assets/rohingya-sea-scene.webp",
 };
 
 const reducedDescriptions = {

@@ -7,31 +7,31 @@ const RAMIREZ_PORTRAIT_STRIPS = {
   strained: "/assets/ramirez-family-portraits-strained.webp",
   critical: "/assets/ramirez-family-portraits-critical.webp",
 };
-const HADDAD_PORTRAIT_STRIP = "/assets/haddad-family-portraits.png";
+const HADDAD_PORTRAIT_STRIP = "/assets/haddad-family-portraits.webp";
 const HADDAD_PORTRAIT_STRIPS = {
   healthy: HADDAD_PORTRAIT_STRIP,
   strained: HADDAD_PORTRAIT_STRIP,
   critical: HADDAD_PORTRAIT_STRIP,
 };
-const DIOP_PORTRAIT_STRIP = "/assets/diop-group-portraits.png";
+const DIOP_PORTRAIT_STRIP = "/assets/diop-group-portraits.webp";
 const DIOP_PORTRAIT_STRIPS = {
   healthy: DIOP_PORTRAIT_STRIP,
   strained: DIOP_PORTRAIT_STRIP,
   critical: DIOP_PORTRAIT_STRIP,
 };
-const NGUYEN_PORTRAIT_STRIP = "/assets/nguyen-family-portraits.png";
+const NGUYEN_PORTRAIT_STRIP = "/assets/nguyen-family-portraits.webp";
 const NGUYEN_PORTRAIT_STRIPS = {
   healthy: NGUYEN_PORTRAIT_STRIP,
   strained: NGUYEN_PORTRAIT_STRIP,
   critical: NGUYEN_PORTRAIT_STRIP,
 };
-const PUNJAB_PORTRAIT_STRIP = "/assets/punjab-group-portraits.png";
+const PUNJAB_PORTRAIT_STRIP = "/assets/punjab-group-portraits.webp";
 const PUNJAB_PORTRAIT_STRIPS = {
   healthy: PUNJAB_PORTRAIT_STRIP,
   strained: PUNJAB_PORTRAIT_STRIP,
   critical: PUNJAB_PORTRAIT_STRIP,
 };
-const ROHINGYA_PORTRAIT_STRIP = "/assets/rohingya-family-portraits.png";
+const ROHINGYA_PORTRAIT_STRIP = "/assets/rohingya-family-portraits.webp";
 const ROHINGYA_PORTRAIT_STRIPS = {
   healthy: ROHINGYA_PORTRAIT_STRIP,
   strained: ROHINGYA_PORTRAIT_STRIP,
@@ -333,8 +333,8 @@ export const FAMILY_PRESETS = Object.freeze({
     startEventId: "haddadHome",
     startRoute: "elmstead",
     destination: "Asylum registration",
-    heroImage: "/assets/haddad-journey-hero.png",
-    mapImage: "/assets/haddad-route-map.png",
+    heroImage: "/assets/haddad-journey-hero.webp",
+    mapImage: "/assets/haddad-route-map.webp",
     mapAlt: "Non-navigational illustrated story map from Syria through Türkiye, Greece, and the Balkans toward Germany",
     portraitStrips: HADDAD_PORTRAIT_STRIPS,
     portraitSheet: { width: 2046, height: 768 },
@@ -357,8 +357,8 @@ export const FAMILY_PRESETS = Object.freeze({
     startEventId: "diopHome",
     startRoute: "elmstead",
     destination: "Canary Islands reception",
-    heroImage: "/assets/diop-journey-hero.png",
-    mapImage: "/assets/diop-route-map.png",
+    heroImage: "/assets/diop-journey-hero.webp",
+    mapImage: "/assets/diop-route-map.webp",
     mapAlt: "Non-navigational illustrated story map from Senegal through Mauritania and across the Atlantic toward the Canary Islands",
     portraitStrips: DIOP_PORTRAIT_STRIPS,
     portraitSheet: { width: 2046, height: 768 },
@@ -381,8 +381,8 @@ export const FAMILY_PRESETS = Object.freeze({
     startEventId: "nguyenHome",
     startRoute: "elmstead",
     destination: "United Kingdom review",
-    heroImage: "/assets/nguyen-journey-hero.png",
-    mapImage: "/assets/nguyen-route-map.png",
+    heroImage: "/assets/nguyen-journey-hero.webp",
+    mapImage: "/assets/nguyen-route-map.webp",
     mapAlt: "Non-navigational illustrated story map from Vietnam through continental Europe and France toward the United Kingdom",
     portraitStrips: NGUYEN_PORTRAIT_STRIPS,
     portraitSheet: { width: 2048, height: 768 },
@@ -405,8 +405,8 @@ export const FAMILY_PRESETS = Object.freeze({
     startEventId: "punjabHome",
     startRoute: "elmstead",
     destination: "Irish employment review",
-    heroImage: "/assets/punjab-journey-hero.png",
-    mapImage: "/assets/punjab-route-map.png",
+    heroImage: "/assets/punjab-journey-hero.webp",
+    mapImage: "/assets/punjab-route-map.webp",
     mapAlt: "Non-navigational illustrated story map from Punjab through Delhi and an international transit hub toward Ireland",
     portraitStrips: PUNJAB_PORTRAIT_STRIPS,
     portraitSheet: { width: 2048, height: 768 },
@@ -429,8 +429,8 @@ export const FAMILY_PRESETS = Object.freeze({
     startEventId: "rohingyaCamp",
     startRoute: "elmstead",
     destination: "Temporary reception in Aceh",
-    heroImage: "/assets/rohingya-journey-hero.png",
-    mapImage: "/assets/rohingya-route-map.png",
+    heroImage: "/assets/rohingya-journey-hero.webp",
+    mapImage: "/assets/rohingya-route-map.webp",
     mapAlt: "Non-navigational illustrated story map from Cox's Bazar across the Bay of Bengal and Andaman Sea toward Aceh, Indonesia",
     portraitStrips: ROHINGYA_PORTRAIT_STRIPS,
     portraitSheet: { width: 2172, height: 724 },

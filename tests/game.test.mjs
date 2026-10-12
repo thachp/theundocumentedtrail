@@ -82,7 +82,7 @@ test("starts the Haddad family in Syria with a distinct journey preset", () => {
   assert.equal(FAMILY_PRESETS.haddad.origin, "Syria · Conflict displacement");
   assert.match(FAMILY_PRESETS.haddad.context, /return/i);
   assert.equal(FAMILY_PRESETS.haddad.destination, "Asylum registration");
-  assert.equal(FAMILY_PRESETS.haddad.heroImage, "/assets/haddad-journey-hero.png");
+  assert.equal(FAMILY_PRESETS.haddad.heroImage, "/assets/haddad-journey-hero.webp");
   assert.equal(
     Object.values(EVENTS)
       .filter((event) => event.id.startsWith("haddad"))
@@ -100,7 +100,7 @@ test("starts the Diop brothers and cousins in Senegal as a four-person group", (
   assert.equal(getPeople(game)[3].name, "Lamine");
   assert.equal(getPeople(game)[3].age, 12);
   assert.equal(FAMILY_PRESETS.diop.destination, "Canary Islands reception");
-  assert.equal(FAMILY_PRESETS.diop.heroImage, "/assets/diop-journey-hero.png");
+  assert.equal(FAMILY_PRESETS.diop.heroImage, "/assets/diop-journey-hero.webp");
 });
 
 test("starts the Bùi family in Vietnam with a distinct United Kingdom journey", () => {
@@ -114,7 +114,7 @@ test("starts the Bùi family in Vietnam with a distinct United Kingdom journey",
   assert.equal(FAMILY_PRESETS.nguyen.name, "The Bùi family");
   assert.equal(FAMILY_PRESETS.nguyen.shortName, "Bùi");
   assert.equal(FAMILY_PRESETS.nguyen.destination, "United Kingdom review");
-  assert.equal(FAMILY_PRESETS.nguyen.heroImage, "/assets/nguyen-journey-hero.png");
+  assert.equal(FAMILY_PRESETS.nguyen.heroImage, "/assets/nguyen-journey-hero.webp");
 });
 
 test("starts the Punjab work group in India with a distinct Ireland journey", () => {
@@ -126,7 +126,7 @@ test("starts the Punjab work group in India with a distinct Ireland journey", ()
   assert.equal(getPeople(game)[0].name, "Gurpreet");
   assert.equal(getPeople(game)[3].age, 22);
   assert.equal(FAMILY_PRESETS.punjab.destination, "Irish employment review");
-  assert.equal(FAMILY_PRESETS.punjab.heroImage, "/assets/punjab-journey-hero.png");
+  assert.equal(FAMILY_PRESETS.punjab.heroImage, "/assets/punjab-journey-hero.webp");
 });
 
 test("starts the Karim family in Cox's Bazar with a distinct statelessness journey", () => {
@@ -138,7 +138,7 @@ test("starts the Karim family in Cox's Bazar with a distinct statelessness journ
   assert.equal(getPeople(game)[3].name, "Sadia");
   assert.equal(getPeople(game)[3].age, 11);
   assert.equal(FAMILY_PRESETS.rohingya.destination, "Temporary reception in Aceh");
-  assert.equal(FAMILY_PRESETS.rohingya.heroImage, "/assets/rohingya-journey-hero.png");
+  assert.equal(FAMILY_PRESETS.rohingya.heroImage, "/assets/rohingya-journey-hero.webp");
   assert.match(FAMILY_PRESETS.rohingya.context, /education|aid/i);
 });
 
