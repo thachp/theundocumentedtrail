@@ -1221,8 +1221,19 @@
 .cinematic-family-dialog > small { display: block; margin-top: 14px; color: var(--cinematic-teal); font-size: 8px; text-transform: uppercase; letter-spacing: 0.18em; }
 .cinematic-family-dialog h2 { margin: 6px 48px 8px 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(30px, 4vw, 44px); line-height: 1.05; }
 .cinematic-family-dialog > p { max-width: 720px; margin: 0; color: #bbc6c2; font-size: 13px; line-height: 1.55; }
-.cinematic-family-options { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
-.cinematic-family-card { position: relative; overflow: hidden; display: flex; flex-direction: column; color: #f2ecdf; text-align: left; border: 1px solid rgba(197, 209, 208, 0.35); background: rgba(6, 16, 21, 0.9); transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease; }
+.cinematic-family-carousel { margin-top: 22px; }
+.cinematic-family-carousel-controls { min-height: 46px; display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 8px; }
+.cinematic-family-carousel-controls > span { display: flex; flex-direction: column; gap: 2px; color: #d8e1de; }
+.cinematic-family-carousel-controls > span strong { color: #f0eadf; font-family: Georgia, "Times New Roman", serif; font-size: 13px; font-weight: 500; }
+.cinematic-family-carousel-controls > span small { color: #8f9d99; font-size: 8px; letter-spacing: 0.04em; }
+.cinematic-family-carousel-controls > div { display: flex; gap: 8px; }
+.cinematic-family-carousel-controls button { width: 46px; height: 46px; display: grid; place-items: center; color: #ecf4ef; border: 1px solid rgba(98, 214, 193, 0.48); background: rgba(13, 48, 49, 0.9); cursor: pointer; transition: border-color 150ms ease, background-color 150ms ease, transform 150ms ease; }
+.cinematic-family-carousel-controls button:hover:not(:disabled) { transform: translateY(-1px); border-color: var(--cinematic-teal); background: rgba(20, 76, 70, 0.95); }
+.cinematic-family-carousel-controls button:disabled { opacity: 0.34; cursor: not-allowed; }
+.cinematic-family-carousel-controls button svg { width: 18px; height: 18px; }
+.cinematic-family-options { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(290px, calc((100% - 24px) / 3)); gap: 12px; overflow-x: auto; overscroll-behavior-inline: contain; scroll-padding-inline: 2px; scroll-snap-type: inline mandatory; padding: 2px 2px 14px; scrollbar-color: rgba(98, 214, 193, 0.64) rgba(5, 16, 20, 0.8); scrollbar-width: thin; }
+.cinematic-family-options:focus-visible { outline: 2px solid var(--cinematic-teal); outline-offset: 4px; }
+.cinematic-family-card { min-width: 0; position: relative; overflow: hidden; display: flex; flex-direction: column; scroll-snap-align: center; scroll-snap-stop: always; color: #f2ecdf; text-align: left; border: 1px solid rgba(197, 209, 208, 0.35); background: rgba(6, 16, 21, 0.9); transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease; }
 .cinematic-family-card:hover,
 .cinematic-family-card.selected { transform: translateY(-2px); border-color: var(--cinematic-teal); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28); }
 .cinematic-family-portrait { position: relative; }
@@ -1431,7 +1442,7 @@
   .cinematic-footer { grid-template-columns: 1fr; }
   .cinematic-resources { min-height: 116px; border-right: 0; border-bottom: 1px solid var(--cinematic-line); }
   .cinematic-people { min-height: 110px; }
-  .cinematic-family-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cinematic-family-options { grid-auto-columns: minmax(300px, calc((100% - 12px) / 2)); }
   .cinematic-family-portrait img { height: 130px; }
   .cinematic-family-copy { min-height: 172px; }
   .cinematic-journey-archive > div { grid-template-columns: 1fr; }
@@ -1577,7 +1588,9 @@
   .cinematic-care-action button { grid-column: 1 / -1; width: 100%; }
   .cinematic-content-options { grid-template-columns: 1fr; }
   .cinematic-family-dialog { padding: 24px 18px 18px; }
-  .cinematic-family-options { grid-template-columns: 1fr; }
+  .cinematic-family-options { grid-auto-columns: calc(100% - 26px); }
+  .cinematic-family-carousel-controls { margin-bottom: 6px; }
+  .cinematic-family-carousel-controls > span small { max-width: 150px; }
   .cinematic-family-portrait img { height: 112px; }
   .cinematic-family-copy { min-height: 158px; }
   .cinematic-journey-archive article { grid-template-columns: minmax(120px, 1.5fr) auto repeat(2, minmax(44px, auto)); }

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowCounterClockwise,
+  ArrowLeft,
   ArrowRight,
   BatteryMedium,
   BookOpenText,
@@ -136,6 +137,9 @@ const sceneByEvent = {
   riverCrossing: "/assets/guided-night-camp.webp",
   memorial: "/assets/guided-night-camp.webp",
   detention: "/assets/guided-night-camp.webp",
+  rohingyaSea: "/assets/rohingya-sea-scene.png",
+  rohingyaWeather: "/assets/rohingya-sea-scene.png",
+  rohingyaSignal: "/assets/rohingya-sea-scene.png",
 };
 
 const reducedDescriptions = {
@@ -148,6 +152,10 @@ const reducedDescriptions = {
   diopMemorial: "The three survivors are grieving Lamine's death. The memorial remains part of the story without detailed description.",
   nguyenSafeHouse: "The family faces forced labor and threats of sexual violence. The abuse is not described in detail, and Mai chooses what information to record.",
   nguyenChannel: "The family must decide whether to stop in France or attempt a dangerous Channel crossing. The risks are stated without graphic detail.",
+  rohingyaCoast: "The family must decide whether to return to the camp or accept an unsafe, unverified sea route. The risks are stated without graphic detail.",
+  rohingyaSea: "The crossing is taking longer than promised, and the family must ration limited water. Further details are shortened.",
+  rohingyaWeather: "Changing weather makes the current route unsafe. The family chooses how to reduce the immediate risk.",
+  rohingyaSignal: "The boat is disabled at sea. The family can seek rescue without knowing where landing will be permitted.",
 };
 
 const storyTitles = {
@@ -201,6 +209,14 @@ const storyTitles = {
   punjabInspection: "The plant closes. The permits do not move with it.",
   punjabPolicy: "A deportation flight becomes someone else's celebration.",
   punjabFinal: "Four workers ask to re-enter the system.",
+  rohingyaCamp: "A closed classroom and an unverified boat.",
+  rohingyaPapers: "Papers do not create citizenship. Losing them still matters.",
+  rohingyaCoast: "The broker calls changing weather a deadline.",
+  rohingyaSea: "Every cup of water becomes a family decision.",
+  rohingyaWeather: "The forecast changes faster than the promise.",
+  rohingyaSignal: "Rescue offers no choice of shore.",
+  rohingyaLanding: "Land is reached. Permission is not.",
+  rohingyaAceh: "Survival is not the same as belonging.",
 };
 
 const reducedFatalityNames = {
@@ -463,7 +479,46 @@ function JourneyLog({ game, onClose }) {
 }
 
 function FamilySelection({ currentFamilyId, required, saves, archive, onSelect, onRestart, onClose }) {
+  const families = Object.values(FAMILY_PRESETS);
+  const initialIndex = Math.max(0, families.findIndex((family) => family.id === currentFamilyId));
+  const carouselRef = useRef(null);
+  const [carouselIndex, setCarouselIndex] = useState(initialIndex);
   const recentJourneys = archive.slice(0, 6);
+
+  const scrollToFamily = (index, behavior = "smooth") => {
+    const rail = carouselRef.current;
+    const nextIndex = Math.min(families.length - 1, Math.max(0, index));
+    const card = rail?.children[nextIndex];
+    if (!rail || !card) return;
+    const left = card.offsetLeft - ((rail.clientWidth - card.clientWidth) / 2);
+    rail.scrollTo({ left: Math.max(0, left), behavior });
+    setCarouselIndex(nextIndex);
+  };
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => scrollToFamily(initialIndex, "auto"));
+    return () => cancelAnimationFrame(frame);
+  }, [currentFamilyId]);
+
+  const updateCarouselIndex = () => {
+    const rail = carouselRef.current;
+    if (!rail) return;
+    const center = rail.scrollLeft + (rail.clientWidth / 2);
+    const nextIndex = [...rail.children].reduce((closest, card, index) => {
+      const cardCenter = card.offsetLeft + (card.clientWidth / 2);
+      return Math.abs(cardCenter - center) < closest.distance
+        ? { index, distance: Math.abs(cardCenter - center) }
+        : closest;
+    }, { index: 0, distance: Number.POSITIVE_INFINITY }).index;
+    setCarouselIndex(nextIndex);
+  };
+
+  const handleCarouselKeys = (event) => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    event.preventDefault();
+    scrollToFamily(carouselIndex + (event.key === "ArrowRight" ? 1 : -1));
+  };
+
   return (
     <div className="cinematic-family-backdrop">
       <section className="cinematic-family-dialog" role="dialog" aria-modal="true" aria-labelledby="family-selection-title">
@@ -472,8 +527,25 @@ function FamilySelection({ currentFamilyId, required, saves, archive, onSelect, 
         <small>Choose a journey</small>
         <h2 id="family-selection-title">Whose road will you follow?</h2>
         <p>Each traveling group is a fictional composite grounded in documented experiences. Every family now keeps its own progress, so you can leave one road and safely return later.</p>
-        <div className="cinematic-family-options">
-          {Object.values(FAMILY_PRESETS).map((family) => {
+        <div className="cinematic-family-carousel">
+          <div className="cinematic-family-carousel-controls">
+            <span aria-live="polite"><strong>{carouselIndex + 1} of {families.length}</strong><small>Drag, swipe, or use the arrows</small></span>
+            <div>
+              <button onClick={() => scrollToFamily(carouselIndex - 1)} disabled={carouselIndex === 0} aria-label="Previous journey" data-sound="tap"><ArrowLeft weight="bold" /></button>
+              <button onClick={() => scrollToFamily(carouselIndex + 1)} disabled={carouselIndex === families.length - 1} aria-label="Next journey" data-sound="tap"><ArrowRight weight="bold" /></button>
+            </div>
+          </div>
+          <div
+            className="cinematic-family-options"
+            ref={carouselRef}
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Journey choices"
+            tabIndex="0"
+            onScroll={updateCarouselIndex}
+            onKeyDown={handleCarouselKeys}
+          >
+          {families.map((family, index) => {
             const saved = saves[family.id];
             const savedStatus = saved?.phase === "ended"
               ? `${saved.status === "won" ? "Completed" : "Journey stopped"} · Score ${getJourneyScore(saved)}`
@@ -481,7 +553,13 @@ function FamilySelection({ currentFamilyId, required, saves, archive, onSelect, 
                 ? `In progress · Day ${saved.day} · ${saved.progress}%`
                 : "Not started";
             return (
-              <article className={`cinematic-family-card ${currentFamilyId === family.id ? "selected" : ""}`} key={family.id}>
+              <article
+                className={`cinematic-family-card ${currentFamilyId === family.id ? "selected" : ""}`}
+                key={family.id}
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`${index + 1} of ${families.length}: ${family.name}`}
+              >
                 <div className="cinematic-family-portrait">
                   <img src={family.portraitStrips.healthy} alt={`Portraits of ${family.name}`} />
                   <span className={saved?.phase === "ended" ? saved.status : saved ? "playing" : "new"}>{savedStatus}</span>
@@ -505,6 +583,7 @@ function FamilySelection({ currentFamilyId, required, saves, archive, onSelect, 
               </article>
             );
           })}
+          </div>
         </div>
         {recentJourneys.length > 0 && (
           <section className="cinematic-journey-archive" aria-label="Completed journey archive">
