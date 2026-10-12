@@ -138,7 +138,7 @@ test("starts the Karim family in Cox's Bazar with a distinct statelessness journ
   assert.equal(getPeople(game)[3].name, "Sadia");
   assert.equal(getPeople(game)[3].age, 11);
   assert.equal(FAMILY_PRESETS.rohingya.destination, "Temporary reception in Aceh");
-  assert.equal(FAMILY_PRESETS.rohingya.heroImage, "/assets/rohingya-journey-hero.png");
+  assert.equal(FAMILY_PRESETS.rohingya.heroImage, "/assets/rohingya-journey-hero.webp");
   assert.match(FAMILY_PRESETS.rohingya.context, /education|aid/i);
 });
 

@@ -31,7 +31,7 @@ const PUNJAB_PORTRAIT_STRIPS = {
   strained: PUNJAB_PORTRAIT_STRIP,
   critical: PUNJAB_PORTRAIT_STRIP,
 };
-const ROHINGYA_PORTRAIT_STRIP = "/assets/rohingya-family-portraits.png";
+const ROHINGYA_PORTRAIT_STRIP = "/assets/rohingya-family-portraits.webp";
 const ROHINGYA_PORTRAIT_STRIPS = {
   healthy: ROHINGYA_PORTRAIT_STRIP,
   strained: ROHINGYA_PORTRAIT_STRIP,
@@ -429,8 +429,8 @@ export const FAMILY_PRESETS = Object.freeze({
     startEventId: "rohingyaCamp",
     startRoute: "elmstead",
     destination: "Temporary reception in Aceh",
-    heroImage: "/assets/rohingya-journey-hero.png",
-    mapImage: "/assets/rohingya-route-map.png",
+    heroImage: "/assets/rohingya-journey-hero.webp",
+    mapImage: "/assets/rohingya-route-map.webp",
     mapAlt: "Non-navigational illustrated story map from Cox's Bazar across the Bay of Bengal and Andaman Sea toward Aceh, Indonesia",
     portraitStrips: ROHINGYA_PORTRAIT_STRIPS,
     portraitSheet: { width: 2172, height: 724 },
