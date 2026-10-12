@@ -24,6 +24,7 @@ import {
   SpeakerHigh,
   Sparkle,
   UsersThree,
+  UserCircle,
   Wallet,
   WarningCircle,
   X,
@@ -214,6 +215,41 @@ const toneLabels = {
   uncertain: "Uncertain route",
   danger: "High risk",
 };
+
+function StoryVoice({ message, game, people }) {
+  const speaker = people.find((person) => person.name.toLocaleLowerCase() === message.sender.toLocaleLowerCase());
+  const voiceTone = message.trusted === true ? "trusted" : message.trusted === false ? "unverified" : "context";
+  const sourceLabel = message.trusted === true
+    ? "Known voice"
+    : message.trusted === false
+      ? "Identity unverified"
+      : "Story context";
+
+  return (
+    <article className={`cinematic-voice ${voiceTone}`}>
+      <div className={`cinematic-speaker-avatar ${speaker ? "traveler" : "source"}`}>
+        {speaker ? (
+          <Portrait
+            person={speaker}
+            state={game.people[speaker.id]}
+            stress={game.resources.stress}
+            family={game}
+            alt={`${speaker.name} speaking`}
+          />
+        ) : (
+          <UserCircle weight="duotone" aria-hidden="true" />
+        )}
+      </div>
+      <div className="cinematic-voice-copy">
+        <header>
+          <span><strong>{message.sender}</strong><small>{message.role}</small></span>
+          <em>{sourceLabel}</em>
+        </header>
+        <blockquote>“{message.body}”</blockquote>
+      </div>
+    </article>
+  );
+}
 
 function loadContentMode() {
   return localStorage.getItem(CONTENT_MODE_KEY) ?? "standard";
@@ -673,13 +709,17 @@ export function BeginnerApp() {
   const selectedPerson = people.find((person) => person.id === selectedPersonId) ?? null;
   const travelPlanRequired = requiresTravelPlan(game);
   const reducedFatalityName = reducedFatalityNames[game.currentOutcome?.id];
+  const reducedDecisionCopy = contentMode === "reduced" ? reducedDescriptions[event.id] : null;
   const storyCopy = game.phase === "decision"
-    ? (contentMode === "reduced" && reducedDescriptions[event.id]
-      ? reducedDescriptions[event.id]
+    ? (reducedDecisionCopy
+      ? reducedDecisionCopy
       : event.messages.map((message) => message.body).join(" "))
     : (contentMode === "reduced" && reducedFatalityName
       ? `The crossing ends with ${reducedFatalityName}'s death. The event is not described in detail.`
       : game.currentOutcome.copy);
+  const decisionMessages = reducedDecisionCopy
+    ? [{ sender: "Story context", role: "Non-graphic summary", body: reducedDecisionCopy }]
+    : event.messages;
   const restartGame = restartFamilyId ? (familySaves[restartFamilyId] ?? game) : null;
   const restartFamily = restartFamilyId ? getFamilyPreset(restartFamilyId) : null;
 
@@ -865,7 +905,15 @@ export function BeginnerApp() {
           <div className="cinematic-copy" key={`${event.id}-${game.phase}-${game.currentOutcome?.id ?? "decision"}`}>
             <span>{event.location} · Day {game.day}</span>
             <h1>{game.phase === "decision" ? (storyTitles[event.id] ?? event.location) : game.currentOutcome.title}</h1>
-            <p>{storyCopy}</p>
+            {game.phase === "decision" ? (
+              <div className={`cinematic-voices ${decisionMessages.length > 1 ? "multiple" : ""}`}>
+                {decisionMessages.map((message, index) => (
+                  <StoryVoice key={`${message.sender}-${message.time ?? index}`} message={message} game={game} people={people} />
+                ))}
+              </div>
+            ) : (
+              <p>{storyCopy}</p>
+            )}
             <div className="cinematic-context">
               <MapPin weight="fill" />
               <small>{event.weather} · {event.time} · {event.region}</small>
@@ -898,26 +946,39 @@ export function BeginnerApp() {
           </div>
 
           {game.phase === "decision" ? (
-            <div className="cinematic-choices" key={`choices-${event.id}`} aria-label="Decision options">
-              {event.choices.map((choice) => {
-                const unavailable = getRequirementFailure(game, choice);
-                const bonus = getChoiceBonuses(game, choice)[0];
-                return (
-                  <button
-                    key={choice.id}
-                    className={`cinematic-choice ${choice.tone}`}
-                    onClick={() => choose(choice)}
-                    disabled={Boolean(unavailable)}
-                    data-sound={choice.tone === "danger" ? "warning" : "choice"}
-                  >
-                    <small>{toneLabels[choice.tone]}</small>
-                    <strong>{choice.title}</strong>
-                    <span>{unavailable ?? choice.hint}</span>
-                    {bonus && <em><Sparkle weight="fill" />{bonus.label}</em>}
-                    <ArrowRight weight="bold" aria-hidden="true" />
-                  </button>
-                );
-              })}
+            <div className="cinematic-decision" key={`choices-${event.id}`}>
+              <div className="cinematic-choice-prompt" role="note">
+                <Crosshair weight="duotone" aria-hidden="true" />
+                <span>
+                  <small>Your decision</small>
+                  <strong id="guided-decision-prompt">Choose what the family does next</strong>
+                </span>
+                <em>Select one option below to continue</em>
+              </div>
+              <div className="cinematic-choices" aria-labelledby="guided-decision-prompt">
+                {event.choices.map((choice) => {
+                  const unavailable = getRequirementFailure(game, choice);
+                  const bonus = getChoiceBonuses(game, choice)[0];
+                  return (
+                    <button
+                      key={choice.id}
+                      className={`cinematic-choice ${choice.tone}`}
+                      onClick={() => choose(choice)}
+                      disabled={Boolean(unavailable)}
+                      data-sound={choice.tone === "danger" ? "warning" : "choice"}
+                    >
+                      <small>{toneLabels[choice.tone]}</small>
+                      <strong>{choice.title}</strong>
+                      <span>{unavailable ?? choice.hint}</span>
+                      {bonus && <em><Sparkle weight="fill" />{bonus.label}</em>}
+                      <span className="cinematic-choice-action">
+                        {unavailable ? "Unavailable" : "Select this path"}
+                        <ArrowRight weight="bold" aria-hidden="true" />
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           ) : (
             <>
