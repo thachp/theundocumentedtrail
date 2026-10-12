@@ -30,3 +30,16 @@ test("the desktop planning view scrolls only its messages panel", () => {
   assert.match(panelRule, /overflow-y:\s*auto/, "long messages should scroll inside the right panel");
   assert.match(mobileRules, /\.game-shell\s*\{[^}]*height:\s*auto[^}]*overflow:\s*visible/s, "small screens should keep normal document scrolling");
 });
+
+test("the journey chooser is a horizontally scrollable carousel with usable controls", () => {
+  const railRule = ruleFor(".cinematic-family-options");
+  const buttonRule = ruleFor(".cinematic-family-carousel-controls button");
+  const mobileRules = beginnerCss.match(/@media \(max-width: 720px\) \{([\s\S]*)\n\}/)?.[1] ?? "";
+
+  assert.match(railRule, /grid-auto-flow:\s*column/, "journeys should flow horizontally");
+  assert.match(railRule, /overflow-x:\s*auto/, "the carousel should support trackpad and touch scrolling");
+  assert.match(railRule, /scroll-snap-type:\s*inline mandatory/, "cards should settle into a readable position");
+  assert.match(buttonRule, /width:\s*46px/, "carousel controls should meet the minimum touch target");
+  assert.match(buttonRule, /height:\s*46px/, "carousel controls should meet the minimum touch target");
+  assert.match(mobileRules, /\.cinematic-family-options\s*\{[^}]*grid-auto-columns:\s*calc\(100% - 26px\)/s, "mobile should reveal part of the next card");
+});

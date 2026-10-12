@@ -49,6 +49,7 @@ const WINNING_ROUTES = {
   diop: ["diopVerifyOffice", "diopRepairShift", "diopLicensedCoach", "diopForecastWait", "diopSmallerPirogue", "diopRecordLamine", "diopRegisterArrival", "diopVerifySpainRules", "diopLegalReview"],
   nguyen: ["nguyenVerifyOffer", "nguyenDemandContract", "nguyenCallHotline", "nguyenReportThreats", "nguyenShelterFrance", "nguyenSmallBoat", "nguyenTellTruth", "nguyenLegalAdvice", "nguyenSafeguardingReview"],
   punjab: ["punjabVerifyPermits", "punjabWaitPortal", "punjabPresentDocuments", "punjabRegisterDublin", "punjabDocumentWork", "punjabContactReactivation", "punjabLegalAdvice", "punjabReactivationReview"],
+  rohingya: ["rohingyaVerifySister", "rohingyaCopyPapers", "rohingyaCheckForecast", "rohingyaMeasuredWater", "rohingyaShelterIsland", "rohingyaCallRescue", "rohingyaRegisterLanding", "rohingyaTemporaryReview"],
 };
 
 test("starts the Ramirez family at home with journey resources", () => {
@@ -128,6 +129,19 @@ test("starts the Punjab work group in India with a distinct Ireland journey", ()
   assert.equal(FAMILY_PRESETS.punjab.heroImage, "/assets/punjab-journey-hero.png");
 });
 
+test("starts the Karim family in Cox's Bazar with a distinct statelessness journey", () => {
+  const game = createInitialGame("rohingya");
+
+  assert.equal(game.familyId, "rohingya");
+  assert.equal(game.eventId, "rohingyaCamp");
+  assert.deepEqual(Object.keys(game.people), ["yasmin", "hamida", "rafiq", "sadia"]);
+  assert.equal(getPeople(game)[3].name, "Sadia");
+  assert.equal(getPeople(game)[3].age, 11);
+  assert.equal(FAMILY_PRESETS.rohingya.destination, "Temporary reception in Aceh");
+  assert.equal(FAMILY_PRESETS.rohingya.heroImage, "/assets/rohingya-journey-hero.png");
+  assert.match(FAMILY_PRESETS.rohingya.context, /education|aid/i);
+});
+
 test("journey choices describe the pressure behind each departure", () => {
   assert.deepEqual(
     Object.fromEntries(Object.entries(FAMILY_PRESETS).map(([id, family]) => [id, family.origin])),
@@ -137,6 +151,7 @@ test("journey choices describe the pressure behind each departure", () => {
       diop: "Senegal · Debt and lost livelihoods",
       nguyen: "Vietnam · Recruitment debt",
       punjab: "India · Job-recruitment fraud",
+      rohingya: "Bangladesh · Statelessness and shrinking aid",
     },
   );
 });
@@ -148,6 +163,7 @@ test("every family begins at a resupply stop and later reaches another one", () 
     diop: "diopDakar",
     nguyen: "nguyenTransit",
     punjab: "punjabDelhi",
+    rohingya: "rohingyaCoast",
   };
 
   for (const [familyId, laterEventId] of Object.entries(laterStops)) {
@@ -207,6 +223,8 @@ test("journey stages distinguish physical arrival from later legal review", () =
     ["nguyen", "nguyenFinal", 88, "review"],
     ["punjab", "punjabDublin", 29, "arrival"],
     ["punjab", "punjabPolicy", 69, "review"],
+    ["rohingya", "rohingyaLanding", 72, "arrival"],
+    ["rohingya", "rohingyaAceh", 86, "review"],
   ];
 
   for (const [familyId, eventId, progress, expectedStage] of cases) {
