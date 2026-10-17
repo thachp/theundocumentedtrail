@@ -51,18 +51,18 @@ export function TravelIncident({ game, onResolve }) {
             const Icon = responseIcons[option.id];
             return (
               <button
-                className={option.tone}
+
                 key={option.id}
                 onClick={() => onResolve(option.id)}
                 disabled={Boolean(option.unavailable)}
-                data-sound={option.tone === "danger" ? "warning" : "choice"}
+                data-sound="choice"
                 autoFocus={option.id === firstAvailableId}
               >
                 <Icon weight={option.id === "medicine" ? "fill" : "duotone"} aria-hidden="true" />
                 <span>
                   <strong>{option.title}</strong>
                   <small>{option.unavailable ?? option.hint}</small>
-                  <em>{option.consequence}</em>
+
                 </span>
                 <ArrowRight weight="bold" aria-hidden="true" />
               </button>

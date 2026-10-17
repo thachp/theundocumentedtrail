@@ -44,15 +44,6 @@ test("the journey chooser is a horizontally scrollable carousel with usable cont
   assert.match(mobileRules, /\.cinematic-family-options\s*\{[^}]*grid-auto-columns:\s*calc\(100% - 26px\)/s, "mobile should reveal part of the next card");
 });
 
-test("guided choice consequences wrap into scannable chips", () => {
-  const itemsRule = ruleFor(".cinematic-choice .cinematic-choice-consequence-items");
-  const chipRule = ruleFor(".cinematic-choice .cinematic-choice-consequence-chip");
-
-  assert.match(itemsRule, /display:\s*flex/, "consequence items should sit in a compact row");
-  assert.match(itemsRule, /flex-wrap:\s*wrap/, "consequence items should wrap on narrow cards");
-  assert.match(chipRule, /max-width:\s*100%/, "long authored consequences should stay inside the card");
-});
-
 test("travel roles stay selectable across desktop and mobile layouts", () => {
   const leadsRule = ruleFor(".cinematic-travel-leads");
   const leadButtonRule = ruleFor(".cinematic-travel-leads > button");

@@ -842,3 +842,13 @@ test("authored content links to valid events and keeps the three-choice rhythm",
     assert.equal(opportunity.choices.length, 2, `${opportunity.id} should offer two work choices`);
   }
 });
+
+test("repeated commitment cannot apply the same decision twice", () => {
+  const initial = createInitialGame();
+  const choice = EVENTS[initial.eventId].choices[0];
+  const committed = chooseOption(initial, choice.id);
+  assert.equal(committed.phase, "outcome");
+  assert.equal(committed.currentOutcome.consequence, choice.consequence);
+  assert.equal(committed.history.length, 1);
+  assert.strictEqual(chooseOption(committed, choice.id), committed);
+});

@@ -37,7 +37,6 @@ import {
   buySupply,
   chooseOption,
   continueJourney,
-  getChoiceBonuses,
   getCondition,
   getEvent,
   getFamilyPreset,
@@ -96,7 +95,7 @@ const TUTORIAL_STEPS = [
     icon: Crosshair,
     eyebrow: "How decisions work",
     title: "Read the route before you choose",
-    copy: "Each decision is marked as trusted, uncertain, or high risk. Read what is known, notice what is only assumed, and check the immediate cost before committing.",
+    copy: "Read what the family knows and notice what is only a promise. Choose a path to discover its actual consequences; they appear after you commit.",
     lessons: ["Trusted does not mean guaranteed", "High-risk routes may be faster", "Research links explain the real-world basis"],
   },
   {
@@ -227,53 +226,6 @@ const reducedFatalityNames = {
   diopNightPirogue: "Lamine",
 };
 
-const toneLabels = {
-  trusted: "Trusted route",
-  uncertain: "Uncertain route",
-  danger: "High risk",
-};
-
-function getConsequenceIcon(consequence) {
-  const normalized = consequence.toLocaleLowerCase();
-
-  if (normalized.includes("cash") || normalized.includes("debt")) return Wallet;
-  if (normalized.includes("water")) return Drop;
-  if (normalized.includes("food")) return ForkKnife;
-  if (normalized.includes("medicine")) return Pill;
-  if (normalized.includes("phone")) return BatteryMedium;
-  if (normalized.includes("health") || normalized.includes("dies") || normalized.includes("death")) return Heartbeat;
-  if (normalized.includes("risk")) return Eye;
-  if (normalized.includes("stress")) return WarningCircle;
-  if (normalized.includes("trust") || normalized.includes("cohesion") || normalized.includes("family")) return UsersThree;
-  if (normalized.includes("day") || normalized.includes("week") || normalized.includes("progress")) return Clock;
-  if (normalized.includes("journey") || normalized.includes("route") || normalized.includes("destination")) return MapPin;
-  return Sparkle;
-}
-
-function ChoiceConsequences({ consequence }) {
-  const items = consequence.split(" · ").filter(Boolean);
-
-  return (
-    <span className="cinematic-choice-consequence">
-      <span className="cinematic-choice-consequence-label">
-        <Clock weight="duotone" aria-hidden="true" />
-        Immediate cost
-      </span>
-      <span className="cinematic-choice-consequence-items">
-        {items.map((item) => {
-          const Icon = getConsequenceIcon(item);
-          return (
-            <span className="cinematic-choice-consequence-chip" key={item}>
-              <Icon weight="duotone" aria-hidden="true" />
-              {item}
-            </span>
-          );
-        })}
-      </span>
-    </span>
-  );
-}
-
 function StoryVoice({ message, game, people }) {
   const speaker = people.find((person) => person.name.toLocaleLowerCase() === message.sender.toLocaleLowerCase());
   const voiceTone = message.trusted === true ? "trusted" : message.trusted === false ? "unverified" : "context";
@@ -394,11 +346,11 @@ function RoadsideWork({ opportunity, outcome, completed, onChoose, onClose }) {
         ) : (
           <div className="cinematic-work-choices" aria-label="Short-term work options">
             {opportunity.choices.map((choice) => (
-              <button key={choice.id} className={choice.tone} onClick={() => onChoose(choice.id)} data-sound={choice.tone === "danger" ? "warning" : "choice"}>
+              <button key={choice.id} className="" onClick={() => onChoose(choice.id)} data-sound="choice">
                 <small>{choice.tone === "danger" ? "Unverified offer" : "One-day shift"}</small>
                 <strong>{choice.title}</strong>
                 <span>{choice.hint}</span>
-                <em><Clock weight="bold" />{choice.consequence}</em>
+
               </button>
             ))}
           </div>
@@ -435,7 +387,7 @@ function TravelPlanner({ game, onChoose }) {
               onClick={() => setLeadPersonId(option.personId)}
               disabled={Boolean(option.unavailable)}
               aria-pressed={leadPersonId === option.personId}
-              title={option.unavailable ?? option.impact}
+              title={option.unavailable ?? option.roleTitle}
               data-sound="tap"
             >
               <Portrait
@@ -448,7 +400,7 @@ function TravelPlanner({ game, onChoose }) {
               <span>
                 <strong>{option.person.name}</strong>
                 <small>{option.skill} · Trust {option.trust}/5</small>
-                <em>{option.unavailable ?? option.impact}</em>
+                <em>{option.unavailable ?? option.roleTitle}</em>
               </span>
             </button>
           ))}
@@ -462,14 +414,13 @@ function TravelPlanner({ game, onChoose }) {
         {strategies.map((strategy) => (
           <button
             key={strategy.id}
-            className={strategy.tone}
+
             onClick={() => onChoose(strategy.id, leadPersonId)}
             disabled={!selectedLead || Boolean(strategy.unavailable)}
-            data-sound={strategy.tone === "danger" ? "warning" : "choice"}
+            data-sound="choice"
           >
             <small>{!selectedLead ? "Assign a travel role first" : strategy.unavailable ?? strategy.hint}</small>
             <strong>{strategy.title}</strong>
-            <span>{strategy.consequence}</span>
           </button>
         ))}
       </div>
@@ -1203,25 +1154,21 @@ export function BeginnerApp() {
                   <small>Your decision</small>
                   <strong id="guided-decision-prompt">Choose what the family does next</strong>
                 </span>
-                <em>Select one option below to continue</em>
+                <em>{game.history.length === 0 ? "Read what is known, then choose. Consequences appear afterward. Progress saves automatically; How to play is always in Journey tools." : "Select one option below to continue"}</em>
               </div>
               <div className="cinematic-choices" aria-labelledby="guided-decision-prompt">
                 {event.choices.map((choice) => {
                   const unavailable = getRequirementFailure(game, choice);
-                  const bonus = getChoiceBonuses(game, choice)[0];
                   return (
                     <button
                       key={choice.id}
-                      className={`cinematic-choice ${choice.tone}`}
+                      className="cinematic-choice"
                       onClick={() => choose(choice)}
                       disabled={Boolean(unavailable)}
-                      data-sound={choice.tone === "danger" ? "warning" : "choice"}
+                      data-sound="choice"
                     >
-                      <small>{toneLabels[choice.tone]}</small>
                       <strong>{choice.title}</strong>
                       <span>{unavailable ?? choice.hint}</span>
-                      {choice.consequence && <ChoiceConsequences consequence={choice.consequence} />}
-                      {bonus && <em><Sparkle weight="fill" />{bonus.label}</em>}
                       <span className="cinematic-choice-action">
                         {unavailable ? "Unavailable" : "Select this path"}
                         <ArrowRight weight="bold" aria-hidden="true" />

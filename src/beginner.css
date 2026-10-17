@@ -1676,3 +1676,23 @@
   .cinematic-choice,
   .cinematic-stage-gauge::after { transition: none; }
 }
+
+/* Readable story copy and quieter choices, preserving the illustrated scene. */
+.cinematic-copy p, .cinematic-voice-copy blockquote { font-size: 17px; line-height: 1.6; }
+.cinematic-voice-copy header strong { font-size: 16px; }
+.cinematic-voice-copy header small { font-size: 12px; white-space: normal; }
+.cinematic-choice span { font-size: 15px; line-height: 1.5; }
+.cinematic-choice { gap: 10px; }
+.cinematic-choice-prompt { flex-wrap: wrap; }
+.cinematic-choice-prompt strong { font-size: 18px; }
+.cinematic-choice-prompt em { font-size: 13px; line-height: 1.5; max-width: 340px; }
+.cinematic-choices { gap: 12px; }
+@media (max-width: 1100px) {
+  .cinematic-choices { grid-template-columns: 1fr; }
+  .cinematic-choice { min-height: 44px; }
+}
+.cinematic-family-dialog > p { font-size: 15px; }
+.cinematic-family-copy p { font-size: 14px; line-height: 1.55; }
+.cinematic-family-copy small, .cinematic-family-copy em { font-size: 12px; letter-spacing: 0.04em; }
+.cinematic-family-actions button { min-height: 44px; font-size: 13px; }
+.cinematic-family-dialog > footer { font-size: 12px; }

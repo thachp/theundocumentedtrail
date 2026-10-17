@@ -226,11 +226,11 @@ function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop,
             const unavailable = getRequirementFailure(game, choice);
             return (
               <button
-                className={`decision ${index === 0 ? "primary" : ""} ${choice.tone}`}
+                className="decision"
                 key={choice.id}
                 onClick={() => onChoice(choice)}
                 disabled={Boolean(unavailable)}
-                title={unavailable ?? choice.consequence}
+                title={unavailable ?? choice.hint}
                 data-sound="choice"
               >
                 <Icon weight={index === 0 ? "fill" : "duotone"} aria-hidden="true" />
@@ -279,8 +279,8 @@ function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop,
             <div className="planning-travel-options">
               <small>Plan the next {game.currentOutcome.days} days</small>
               {getTravelPlanOptions(game).map((strategy) => (
-                <button key={strategy.id} onClick={() => onTravelPlan(strategy.id)} disabled={Boolean(strategy.unavailable)} data-sound={strategy.tone === "danger" ? "warning" : "choice"}>
-                  <strong>{strategy.title}</strong><span>{strategy.unavailable ?? strategy.consequence}</span>
+                <button key={strategy.id} onClick={() => onTravelPlan(strategy.id)} disabled={Boolean(strategy.unavailable)} data-sound="choice">
+                  <strong>{strategy.title}</strong><span>{strategy.unavailable ?? strategy.hint}</span>
                 </button>
               ))}
             </div>
@@ -368,17 +368,13 @@ function ChoiceModal({ choice, game, onCancel, onConfirm }) {
     <div className="modal-backdrop" role="presentation" onMouseDown={onCancel}>
       <section className="choice-modal" role="dialog" aria-modal="true" aria-labelledby="choice-title" onMouseDown={(event) => event.stopPropagation()}>
         <button className="modal-close" onClick={onCancel} aria-label="Close decision" data-sound="dismiss"><X weight="bold" /></button>
-        <span className={`modal-symbol ${choice.tone}`}><Icon weight="fill" /></span>
+        <span className="modal-symbol"><Icon weight="fill" /></span>
         <small>Day {game.day} · choose carefully</small>
         <h2 id="choice-title">{choice.title}?</h2>
-        <p>{choice.hint}. The immediate consequences are visible, but later events may change the outcome.</p>
-        <div className="choice-preview">
-          <strong>Expected change</strong>
-          <span>{choice.consequence}</span>
-        </div>
+        <p>{choice.hint}. The family cannot know the outcome in advance. Actual consequences appear after you commit.</p>
         <div className="modal-actions">
           <button className="back-button" onClick={onCancel} data-sound="dismiss"><ArrowLeft weight="bold" />Keep thinking</button>
-          <button className={`confirm-button ${choice.tone === "danger" ? "danger" : ""}`} onClick={onConfirm} data-sound={choice.tone === "danger" ? "warning" : "confirm"}>
+          <button className="confirm-button" onClick={onConfirm} data-sound="confirm">
             Make this choice<ArrowRight weight="bold" />
           </button>
         </div>
