@@ -964,7 +964,7 @@ const sources = {
     url: "https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/employment-permits/",
   },
   irelandVisa: {
-    label: "Ireland ISD: employment visa and separate border-entry checks · undated guidance checked 18 October 2026",
+    label: "Ireland ISD: employment visa and separate border-entry checks · updated 23 September 2024; checked 18 October 2026",
     url: "https://www.irishimmigration.ie/coming-to-work-in-ireland/what-are-my-work-visa-options/applying-for-a-long-stay-employment-visa/employment-visa/",
   },
   irelandRedundancy: {

@@ -20,6 +20,8 @@ test("Punjab mechanics match the pre-correction contract: IDs, branches, effects
 });
 
 test("all Delhi branches distinguish issued records and later visas before boarding, with entry decided separately", () => {
+  assert.match(HISTORY_SOURCES.irelandVisa.date,/Updated 23 September 2024/);
+  assert.match(EVENTS.punjabAirport.source.label,/updated 23 September 2024/);
   const airport = prose("punjabAirport");
   assert.match(airport,/After a further wait in India/);
   assert.match(airport,/all four permits.*issued.*separate long-stay employment visas/);
