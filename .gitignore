@@ -8,3 +8,6 @@ dist/
 /implementation-*.png
 /interaction-modal.png
 /playable-*.png
+
+# Full local Cambodian QA captures; curated examples are retained explicitly.
+/artifacts/cambodia-expanded/*.png

@@ -1,0 +1,51 @@
+{
+  "householdEdition": 3,
+  "people": [
+    "dara",
+    "vann",
+    "maly",
+    "sophea"
+  ],
+  "generator": "OpenAI image_gen, 18 October 2026",
+  "reference": "Existing fictional four-person cover.webp; original file/provenance retained",
+  "rights": "Generated original fictional illustrations. No archival photograph, real survivor likeness, testimony adaptation or external endorsement. No third-party media copied. Generated art is illustrative and does not verify site layout.",
+  "prompts": {
+    "expanded-camp-water.webp": "Khao-I-Dang 1980, four relatives at a simple water distribution point, bamboo shelters, Maly resting. Match reference identities and characteristic rust/indigo/olive/teal clothing; wide cinematic, humane muted light; no armed people, readable text or modern objects.",
+    "expanded-camp-work.webp": "Khao-I-Dang shelter 1980: Dara repairs clothing, Vann sorts tools, Sophea reads, Maly rests with a cup. Same four identities/colors, wide cinematic non-graphic original fictional illustration.",
+    "expanded-long-beach.webp": "Long Beach modest apartment1982: same four relatives at a table, Dara sketches sleeve, Sophea reads letter, Vann listens, Maly holds cup. Palm trees and unbranded early1980s buildings outside. No modern screens; wide somber warm cinematic art, not archival."
+  },
+  "altAndCrop": "Scene-specific text identifies the fictional activity and four relatives. 16:9 images with central faces, 50%45% hero focus; actual responsive screenshots recorded in browser QA.",
+  "files": [
+    {
+      "file": "expanded-camp-water.webp",
+      "sha256": "053549539d5dcb25762b2c6c42edb3d7755a2200b5d2e3af9b550d34a4d03d91",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "bytes": 307098,
+      "inspected": "Four recognizable adults; non-graphic, period-oriented clothing/objects; no documentary authenticity claimed."
+    },
+    {
+      "file": "expanded-camp-work.webp",
+      "sha256": "9737c05fd4140a69f447ba980987d9fcf1e5813bf93ef7d9ba5334fb678ef7cc",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "bytes": 243798,
+      "inspected": "Four recognizable adults; non-graphic, period-oriented clothing/objects; no documentary authenticity claimed."
+    },
+    {
+      "file": "expanded-long-beach.webp",
+      "sha256": "9f4bb1176960878d8ae709a21a1f01c0b61d848cd7cb68f844af7fc4809ce8f4",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "bytes": 216954,
+      "inspected": "Four recognizable adults; non-graphic, period-oriented clothing/objects; no documentary authenticity claimed."
+    }
+  ],
+  "legacyArt": "Cambodia C02/C03/C04/C05/C06/C07 artwork reused where relevant; original provenance.json remains unchanged. No claim of unique artwork per event."
+}

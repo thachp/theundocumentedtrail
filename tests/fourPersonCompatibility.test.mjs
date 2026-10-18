@@ -56,7 +56,7 @@ test('Cambodia: original intro, decision, outcome and complete fixtures keep ori
 import * as oldStory from '../src/legacyHouseholds/cambodiaStory.js';
 test('Cambodia: restart creates four-person v2 while legacy-tab advancement and stale-tab recovery remain v1',()=>{
  const storage=memory();storage.setItem(oldState.CAMBODIA_SAVE_KEY,oldCambodiaRecord(oldCambodia.cambodiaGame(oldState.startCambodia(oldState.createCambodiaState()))));
- const old=loadCambodiaJourney(storage),v1raw=storage.getItem(oldState.CAMBODIA_SAVE_KEY);const revised=restartCambodiaJourney(storage);
+ const old=loadCambodiaJourney(storage),v1raw=storage.getItem(oldState.CAMBODIA_SAVE_KEY);const revised=restartCambodiaJourney(storage,2);
  assert.equal(revised.householdEdition,2);assert.equal(Object.keys(revised.people).length,4);assert.equal(storage.getItem(oldState.CAMBODIA_SAVE_KEY),v1raw);assert.equal(loadCambodiaJourney(storage).householdEdition,2);
  const revisedRaw=storage.getItem('undocumented-trail:review:cambodia-1979:v2');const advanced=applyCambodiaJourneyAction(old,g=>oldCambodia.chooseCambodiaJourney(g,'drawing'),storage);
  assert.equal(advanced.householdEdition,1);assert.equal(advanced.phase,'outcome');assert.equal(storage.getItem('undocumented-trail:review:cambodia-1979:v2'),revisedRaw);
@@ -84,10 +84,10 @@ test('Cambodia: completed revised run archives once across resume/restart, retai
  const oldRaw=oldCambodiaRecord(oldCambodia.cambodiaGame(old));storage.setItem(oldState.CAMBODIA_SAVE_KEY,oldRaw);
  // Real neighboring journey namespace sentinels, including both archive editions.
  for(const id of ['mariel-1980','vietnam-bidong-1978'])for(const edition of [1,2]){storage.setItem(authoredSaveKey(id,edition),`${id} v${edition} save sentinel`);storage.setItem(authoredArchiveKey(id,edition),`${id} v${edition} archive sentinel`);}
- const untouched=new Map(storage.data);let game=restartCambodiaJourney(storage);
+ const untouched=new Map(storage.data);let game=restartCambodiaJourney(storage,2);
  while(game.phase!=='ended'){const scene=oldStory.CAMBODIA_SCENES[game.day-1];game=applyCambodiaJourneyAction(game,game.phase==='outcome'?continueCambodiaJourney:g=>chooseCambodiaJourney(g,scene.choices[0].id),storage);}
  assert.equal(loadCambodiaArchive(storage).length,1);assert.equal(loadCambodiaArchive(storage)[0].runId,game.runId);assert.deepEqual(loadCambodiaArchive(storage)[0].history,game.cambodiaState.history);
- const archiveRaw=storage.getItem(CAMBODIA_ARCHIVE_KEY);assert.equal(loadCambodiaJourney(storage).phase,'ended');restartCambodiaJourney(storage);restartCambodiaJourney(storage);assert.equal(storage.getItem(CAMBODIA_ARCHIVE_KEY),archiveRaw);
+ const archiveRaw=storage.getItem(CAMBODIA_ARCHIVE_KEY);assert.equal(loadCambodiaJourney(storage).phase,'ended');restartCambodiaJourney(storage,2);restartCambodiaJourney(storage,2);assert.equal(storage.getItem(CAMBODIA_ARCHIVE_KEY),archiveRaw);
  for(const [key,value]of untouched)assert.equal(storage.getItem(key),value,key);assert.equal(storage.getItem(oldState.CAMBODIA_SAVE_KEY),oldRaw);
 });
 

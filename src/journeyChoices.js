@@ -7,9 +7,9 @@ export const CAMBODIA_CHOICE = Object.freeze({
   kind: "historical",
   name: "A Place for Tomorrow",
   origin: "Cambodia · Forced displacement",
-  period: "1979–1982",
-  context: "A fictional Khmer Cambodian household moves from displacement and a Thai holding centre toward rebuilding life in Minnesota.",
-  journey: "Cambodia → Thailand → Minnesota",
+  period: "1979–1985",
+  context: "Four relatives face displacement, scarce resources and camp decisions, then rebuild in Long Beach. A later optional chapter distinguishes Site One and Site Two.",
+  journey: "Cambodia → Khao-I-Dang → Long Beach",
   href: "/?story=cambodia-1979",
 });
 

@@ -30,7 +30,7 @@ export function JourneyHistoryDialog({ game, introduction = false, onClose, stor
     dialog.showModal();
     return () => {
       dialog.close();
-      if (previous?.isConnected) previous.focus();
+      if (previous?.isConnected && previous !== document.body && previous.getClientRects().length) previous.focus();
       else document.querySelector("[data-history-return]")?.focus();
     };
   }, []);
@@ -62,6 +62,7 @@ export function JourneyHistoryDialog({ game, introduction = false, onClose, stor
 }
 
 export function SceneHistory({ game, onExplore, storyScene, sources }) {
+  if(game.familyId === "cambodia-1979") sources ??= cambodiaEdition(game).CAMBODIA.sources;
   const note = storyScene ? { text: storyScene.context, sourceIds: storyScene.sourceIds } : getSceneHistory(game);
   if (!note) return null;
   const event = storyScene ? { region: storyScene.place } : getEvent(game);

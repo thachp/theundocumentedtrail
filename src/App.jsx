@@ -342,16 +342,34 @@ function DetailDrawer({ person, personState, relationshipNote, route, medicine, 
   );
 }
 
+function CambodiaChoiceDialog({ children, onCancel }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    const previous = document.activeElement;
+    const dialog = ref.current;
+    dialog.showModal();
+    dialog.querySelector("h2")?.focus({ preventScroll: true });
+    return () => {
+      dialog.close();
+      if (previous?.isConnected && previous.getClientRects().length) previous.focus();
+      else document.querySelector("[data-history-return]")?.focus();
+    };
+  }, []);
+  return <dialog ref={ref} className="choice-modal cambodia-choice-dialog" aria-labelledby="choice-title" onCancel={event => { event.preventDefault(); onCancel(); }} onClick={event => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    if (event.target === event.currentTarget && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) onCancel();
+  }}>{children}</dialog>;
+}
+
 function ChoiceModal({ choice, game, onCancel, onConfirm }) {
   if (!choice) return null;
   const Icon = choiceIcons[choice.icon] ?? Compass;
-  return (
-    <div className="modal-backdrop" role="presentation" onMouseDown={onCancel}>
-      <section className="choice-modal" role="dialog" aria-modal="true" aria-labelledby="choice-title" onMouseDown={(event) => event.stopPropagation()}>
+  const native = game.familyId === "cambodia-1979" && game.householdEdition === 3;
+  const content = <>
         <button className="modal-close" onClick={onCancel} aria-label="Close decision" data-sound="dismiss"><X weight="bold" /></button>
         <span className="modal-symbol"><Icon weight="fill" /></span>
         <small>{isCambodiaJourney(game) ? "Scene" : "Day"} {game.day} · choose carefully</small>
-        <h2 id="choice-title">{choice.title}?</h2>
+        <h2 id="choice-title" tabIndex={native ? -1 : undefined}>{choice.title}?</h2>
         <p>{choice.hint}. The family cannot know the outcome in advance. Actual consequences appear after you commit.</p>
         <div className="modal-actions">
           <button className="back-button" onClick={onCancel} data-sound="dismiss"><ArrowLeft weight="bold" />Keep thinking</button>
@@ -359,9 +377,11 @@ function ChoiceModal({ choice, game, onCancel, onConfirm }) {
             Make this choice<ArrowRight weight="bold" />
           </button>
         </div>
-      </section>
-    </div>
-  );
+  </>;
+  if (native) return <CambodiaChoiceDialog onCancel={onCancel}>{content}</CambodiaChoiceDialog>;
+  return <div className="modal-backdrop" role="presentation" onMouseDown={onCancel}>
+    <section className="choice-modal" role="dialog" aria-modal="true" aria-labelledby="choice-title" onMouseDown={event => event.stopPropagation()}>{content}</section>
+  </div>;
 }
 
 function JourneyLog({ game, onClose }) {
@@ -596,7 +616,7 @@ export function App() {
   };
 
   return (
-    <main className={`game-shell${isCambodiaJourney(game) ? " cambodia-planning" : ""}`} onClickCapture={playInteractionSound}>
+    <main className={`game-shell${isCambodiaJourney(game) ? " cambodia-planning" : ""}${game.familyId==="cambodia-1979"&&game.householdEdition===3?" cambodia-expanded-planning":""}`} onClickCapture={playInteractionSound}>
       <header className="game-header">
         <div className="brand-lockup">
           <div><h1>The Undocumented Trail</h1><p>Everything they carry</p></div>
@@ -610,7 +630,7 @@ export function App() {
           <span className="header-actions">
             <button className="planning-journey-select" onClick={() => setShowFamilySelection(true)} aria-label="Choose a journey" data-sound="tap">Journeys</button>
             <button onClick={() => setShowHistory(true)} aria-label="Explore the history" data-tooltip="Historical context and sources" data-sound="tap"><BookOpenText weight="duotone" /></button>
-            <a data-ending-return className="guided-return" href={isCambodiaJourney(game) ? `/?story=${game.familyId}${game.householdEdition===1?"&edition=1":""}` : "/"} data-tooltip="Switch to the simpler story view">Guided view</a>
+            <a data-ending-return className="guided-return" href={isCambodiaJourney(game) ? `/?story=${game.familyId}${game.familyId==="cambodia-1979"?`&edition=${game.householdEdition}`:game.householdEdition===1?"&edition=1":""}` : "/"} data-tooltip="Switch to the simpler story view">Guided view</a>
             <a
               className="source-link"
               href="https://github.com/thachp/theundocumentedtrail"
@@ -661,7 +681,7 @@ export function App() {
             {!isCambodiaJourney(game) && Object.entries(ROUTES).map(([id, approach]) => <button key={id} onClick={() => inspectRoute(id)} data-sound="tap">{approach.title}</button>)}
           </details>
 
-          {drawerOpen && selectedPerson && isCambodiaJourney(game) && <CambodiaPersonDialog person={selectedPerson} onClose={() => setDrawerOpen(false)} />}
+          {drawerOpen && selectedPerson && isCambodiaJourney(game) && <CambodiaPersonDialog game={game} person={selectedPerson} onClose={() => setDrawerOpen(false)} />}
           {drawerOpen && !isCambodiaJourney(game) && (
             <DetailDrawer
               person={selectedPerson}

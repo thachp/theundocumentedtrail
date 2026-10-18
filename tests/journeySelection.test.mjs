@@ -16,7 +16,7 @@ test("the normal chooser includes Cambodia without adding a survival preset or c
   assert.deepEqual(choices.slice(0,6).map(c=>c.id),Object.keys(FAMILY_PRESETS));
   assert.equal(Object.keys(FAMILY_PRESETS).length,6);
   const story=choices.find(c=>c.id==="cambodia-1979");
-  assert.equal(story.kind,"historical");assert.equal(story.name,"A Place for Tomorrow");assert.match(story.origin,/Cambodia/);assert.equal(story.period,"1979–1982");assert.equal(story.href,"/?story=cambodia-1979");
+  assert.equal(story.kind,"historical");assert.equal(story.name,"A Place for Tomorrow");assert.match(story.origin,/Cambodia/);assert.equal(story.period,"1979–1985");assert.equal(story.href,"/?story=cambodia-1979");
   assert.equal(getJourneyChoices({VITE_ENABLE_CAMBODIA_STORY:"false"}).length,6+AUTHORED_STORIES.length);
 });
 

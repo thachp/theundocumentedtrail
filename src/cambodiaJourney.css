@@ -21,3 +21,15 @@ img.cinematic-scene{width:100%;height:100%;object-fit:cover;object-position:50% 
 @media (max-width:680px) {
   .cambodia-planning .header-actions [data-tooltip]::after {display:none;}
 }
+.cambodia-resources ul {grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));list-style:none;margin:0;padding:0;gap:8px;font-size:13px;}
+@media(max-width:480px){.cambodia-resources ul{grid-template-columns:1fr;}}
+/* Expanded resources and individual states need a content-sized footer. */
+.cinematic-shell.cambodia-expanded {grid-template-rows:116px minmax(610px,1fr) auto;}
+@media(min-width:681px) and (max-width:1200px){.cinematic-shell.cambodia-expanded{grid-template-rows:100px minmax(690px,auto) auto;}}
+.cambodia-expanded-planning .cambodia-resources {grid-column:1/-1;grid-template-columns:repeat(4,minmax(0,1fr));}
+.cambodia-expanded-planning .header-actions button,.cambodia-expanded-planning .header-actions a {min-width:44px;min-height:44px;}
+@media(min-width:681px){.cambodia-expanded-planning .cambodia-resources ul{grid-template-columns:repeat(4,minmax(0,1fr));}}
+dialog.cambodia-choice-dialog {margin:auto;max-height:calc(100dvh - 32px);overflow:auto;color:#edf4f4;}
+dialog.cambodia-choice-dialog::backdrop {background:rgba(2,10,15,.82);}
+.cambodia-choice-dialog .modal-close {width:44px;height:44px;}
+.cambodia-choice-dialog button {min-height:44px;}
