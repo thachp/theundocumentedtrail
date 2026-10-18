@@ -3,7 +3,7 @@
 .cambodia-journey-context {padding:12px 16px;border:1px solid #71867d99;background:#102328;color:#ece4d0;font:15px/1.6 "IBM Plex Sans",sans-serif;margin:12px 0;}
 .cambodia-journey-context p,.cinematic-copy .cambodia-journey-context p{font-size:15px;line-height:1.6;margin:8px 0;}.cambodia-journey-context summary{min-height:44px;cursor:pointer;padding:10px 0;}.cambodia-journey-context button,.cambodia-person-dialog button{min-height:44px;padding:10px 14px;border:1px solid #9eae9c;background:#294642;color:#f0e7d1;cursor:pointer;font:inherit;}.cambodia-journey-context a{color:#ead1a0;}.cambodia-journey-context :focus-visible,.cambodia-person-dialog :focus-visible{outline:3px solid #edc778;outline-offset:3px;}
 .cambodia-person-dialog{max-width:min(560px,calc(100vw - 28px));padding:24px;color:#ece4d0;background:#102328;font:16px/1.6 "IBM Plex Sans",sans-serif;border:1px solid #71867d;}.cambodia-person-dialog::backdrop{background:#000b;}
-img.cinematic-scene{width:100%;height:100%;object-fit:cover;object-position:50% 45%;}.planning-cambodia-hero{display:block;width:100%;max-height:280px;object-fit:cover;object-position:50% 45%;}.cambodia-hero-credit{font-size:12px;color:#cbd3c7;margin:8px 16px;}
+img.cinematic-scene{width:100%;height:100%;object-fit:cover;object-position:50% 45%;}.planning-cambodia-hero{display:block;width:100%;height:auto;max-height:440px;object-fit:contain;object-position:center;background:#07131a;}.cambodia-hero-credit{font-size:12px;color:#cbd3c7;margin:8px 16px;}
 @media(max-width:480px){.cambodia-resources{gap:8px;padding:12px;}.cambodia-resources strong{font-size:21px;}.cambodia-resources span{font-size:12px;}}
 
 /* Cambodia adds a cover and historical context above the planning grid. Let
@@ -14,4 +14,10 @@ img.cinematic-scene{width:100%;height:100%;object-fit:cover;object-position:50% 
   .cambodia-planning .map-stage.geographic-map-stage {display:block;overflow:visible;}
   .cambodia-planning .geographic-map-stage > .journey-map-fit {display:block;overflow:visible;}
   .cambodia-planning .journey-map-fit > .journey-map-canvas {height:clamp(320px,44vh,520px);min-height:320px;}
+}
+
+/* On narrow Planning screens the controls already have visible labels or
+   accessible names. Invisible desktop tooltips must not widen the document. */
+@media (max-width:680px) {
+  .cambodia-planning .header-actions [data-tooltip]::after {display:none;}
 }
