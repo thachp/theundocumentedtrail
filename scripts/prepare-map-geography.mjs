@@ -2,6 +2,7 @@
 // Input: world-atlas@2.0.2, Natural Earth 4.1.0. No network or runtime dependency.
 import { readFile, writeFile } from "node:fs/promises";
 import { MAP_BOUNDS } from "../src/journeyGeography.js";
+import { PILOT_MAP_BOUNDS } from "../src/cambodiaGeography.js";
 const topology = JSON.parse(await readFile(process.argv[2], "utf8"));
 const { scale, translate } = topology.transform;
 const arcs = topology.arcs.map((arc) => {
@@ -44,7 +45,7 @@ function simplify(points, tolerance = .04) {
     ? [...simplify(points.slice(0, split + 1), tolerance).slice(0, -1), ...simplify(points.slice(split), tolerance)]
     : [first, last];
 }
-const result = Object.fromEntries(Object.entries(MAP_BOUNDS).map(([familyId, bounds]) => [familyId,
+const result = Object.fromEntries(Object.entries({ ...MAP_BOUNDS, ...PILOT_MAP_BOUNDS }).map(([familyId, bounds]) => [familyId,
   topology.objects.countries.geometries.flatMap((country) => {
     // Every first ring is an exterior. Inland holes are intentionally omitted
     // for this small-scale land context; it is not a political boundary map.

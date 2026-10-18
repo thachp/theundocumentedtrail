@@ -1,3 +1,4 @@
+import { cambodiaStoryEnabled } from "./cambodiaState.js";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowCounterClockwise,
@@ -625,6 +626,7 @@ function FamilySelection({ currentFamilyId, required, saves, archive, onSelect, 
           })}
           </div>
         </div>
+        {cambodiaStoryEnabled(import.meta.env) && <section className="cinematic-journey-archive"><h3>Historical stories</h3><p>An unscored fictional composite about migration, refuge and rebuilding.</p><a href="/?story=cambodia-1979">A Place for Tomorrow · Khmer Cambodian household, 1979–1982 →</a></section>}
         {recentJourneys.length > 0 && (
           <section className="cinematic-journey-archive" aria-label="Completed journey archive">
             <header><BookOpenText weight="duotone" /><span><small>Journey archive</small><strong>Roads already traveled</strong></span></header>

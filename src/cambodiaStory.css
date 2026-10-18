@@ -1,0 +1,36 @@
+.cambodia-pilot { min-height:100vh; color:#f1eadb; background:#171e1b; font-family:"IBM Plex Sans",sans-serif; font-size:18px; line-height:1.65; }
+.cambodia-pilot * { box-sizing:border-box; }
+.cambodia-pilot a { color:#ead1a0; text-underline-offset:4px; overflow-wrap:anywhere; }
+.cambodia-pilot button { min-height:44px; padding:10px 16px; border:1px solid #b2a27e; border-radius:4px; background:#29392f; color:#fff7e6; font:inherit; line-height:1.4; text-align:left; cursor:pointer; white-space:normal; }
+.cambodia-pilot :focus-visible { outline:3px solid #f0ce76; outline-offset:4px; }
+.pilot-header { padding:20px clamp(16px,4vw,64px); border-bottom:1px solid #66705d; }
+.pilot-header > a { font-size:24px; font-weight:700; }
+.pilot-header > p { margin:8px 0 16px; color:#f0ce76; font-size:16px; }
+.pilot-header nav,.pilot-actions { display:flex; gap:12px; flex-wrap:wrap; }
+.pilot-layout { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); gap:clamp(20px,4vw,64px); max-width:1500px; margin:auto; padding:32px clamp(16px,4vw,64px) 64px; align-items:start; }
+.pilot-reading,.pilot-layout aside { min-width:0; }
+.cambodia-pilot h1 { font-family:Georgia,serif; font-size:clamp(32px,4vw,52px); line-height:1.15; margin:12px 0 24px; overflow-wrap:anywhere; }
+.cambodia-pilot h2 { font-size:24px; line-height:1.3; }
+.pilot-eyebrow { color:#d9c59c; font-size:16px; }
+.pilot-status,.pilot-note,.pilot-recalled,.pilot-consequence { border-left:3px solid #b9a278; padding:12px 18px; background:#ffffff08; }
+.pilot-status { font-size:16px; }
+.pilot-choices { display:grid; gap:14px; margin:24px 0; }
+.pilot-choices button { display:grid; gap:8px; padding:20px; }
+.pilot-choices strong { font-size:20px; }
+.pilot-choice-action { color:#ead1a0; }
+.pilot-instruction { font-weight:600; }
+.pilot-actions { margin:24px 0; }
+.pilot-testimony,.pilot-method { margin:24px 0; padding:16px; border:1px solid #7d866f; }
+.cambodia-pilot summary { cursor:pointer; min-height:44px; padding:8px 0; }
+.pilot-method { font-size:16px; }
+.pilot-warning { padding:16px 24px; border:1px solid #ead1a0; }
+.pilot-warning button { margin-left:12px; }
+.pilot-announcement { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+.cambodia-pilot .journey-map { margin:0; }
+/* Keep parchment links in map ink; the dark-page link color fails here. */
+.cambodia-pilot .journey-map a { color:#302b21; }
+.cambodia-pilot .journey-map a:focus-visible { outline-color:#174f49; }
+.cambodia-pilot .journey-history-dialog { color:#f1eadb; }
+@media(max-width:900px) { .pilot-layout { grid-template-columns:minmax(0,1fr); } .pilot-layout aside { max-width:650px; width:100%; } }
+@media(max-width:480px) { .pilot-header nav { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); } .pilot-header nav button { font-size:15px; } .pilot-actions { display:grid; } .pilot-layout { padding-top:24px; } }
+@media(prefers-reduced-motion:reduce) { .cambodia-pilot * { animation:none !important; transition:none !important; scroll-behavior:auto !important; } }
