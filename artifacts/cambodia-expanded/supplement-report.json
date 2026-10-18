@@ -1,0 +1,46 @@
+[
+  {
+    "mode": "guided",
+    "width": 1365,
+    "chooser": true,
+    "sourceLinks": 9,
+    "dialogClosed": true,
+    "person": true,
+    "modeEditionPreserved": true,
+    "ending": true,
+    "errors": []
+  },
+  {
+    "mode": "guided",
+    "width": 390,
+    "chooser": true,
+    "sourceLinks": 9,
+    "dialogClosed": true,
+    "person": true,
+    "modeEditionPreserved": true,
+    "ending": true,
+    "errors": []
+  },
+  {
+    "mode": "full",
+    "width": 1365,
+    "chooser": true,
+    "sourceLinks": 9,
+    "dialogClosed": true,
+    "person": true,
+    "modeEditionPreserved": true,
+    "ending": true,
+    "errors": []
+  },
+  {
+    "mode": "full",
+    "width": 390,
+    "chooser": true,
+    "sourceLinks": 9,
+    "dialogClosed": true,
+    "person": true,
+    "modeEditionPreserved": true,
+    "ending": true,
+    "errors": []
+  }
+]

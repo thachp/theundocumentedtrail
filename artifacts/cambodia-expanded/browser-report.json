@@ -1,0 +1,959 @@
+{
+  "head": "72b59173606f0c4d74db0c001145d392a0002b36",
+  "browser": "154.0.8037.57",
+  "cases": [
+    {
+      "mode": "guided",
+      "width": 1365,
+      "id": "E01",
+      "overflow": false,
+      "images": [],
+      "title": "Four people, unfinished plans",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "id": "E02",
+      "overflow": false,
+      "images": [],
+      "title": "Across a landscape of loss",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "id": "E03",
+      "overflow": false,
+      "images": [],
+      "title": "A bundle is missing",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "id": "R01",
+      "overflow": false,
+      "images": [],
+      "title": "Help has its own limits",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "id": "E04",
+      "overflow": false,
+      "images": [],
+      "title": "No safe shortcut promised",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "id": "E05",
+      "overflow": false,
+      "images": [],
+      "title": "Reception is a beginning",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "id": "W01",
+      "overflow": false,
+      "images": [],
+      "title": "Food, water and a neighbor",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "id": "E06",
+      "overflow": false,
+      "images": [],
+      "title": "A queue and a fever",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "id": "E07",
+      "overflow": false,
+      "images": [],
+      "title": "A repair, a meal, a lesson",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "id": "J01",
+      "overflow": false,
+      "images": [],
+      "title": "One exchange does not make a livelihood",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "id": "E08",
+      "overflow": false,
+      "images": [],
+      "title": "An application, not a promise",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "id": "E09",
+      "overflow": false,
+      "images": [],
+      "title": "The decision comes from elsewhere",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "id": "E10",
+      "overflow": false,
+      "images": [],
+      "title": "A different kind of timetable",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "id": "E11",
+      "overflow": false,
+      "images": [],
+      "title": "A place for tomorrow",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "id": "P01",
+      "overflow": false,
+      "images": [],
+      "title": "A friend\u2019s different circumstances",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "id": "P02",
+      "overflow": false,
+      "images": [],
+      "title": "A camp name is not a pathway",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "interaction": "choice/reload",
+      "phase": "consequence",
+      "stable": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "interaction": "back",
+      "phase": "scene"
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "id": "E01",
+      "overflow": false,
+      "images": [],
+      "title": "Four people, unfinished plans",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "id": "E02",
+      "overflow": false,
+      "images": [],
+      "title": "Across a landscape of loss",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "id": "E03",
+      "overflow": false,
+      "images": [],
+      "title": "A bundle is missing",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "id": "R01",
+      "overflow": false,
+      "images": [],
+      "title": "Help has its own limits",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "id": "E04",
+      "overflow": false,
+      "images": [],
+      "title": "No safe shortcut promised",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "id": "E05",
+      "overflow": false,
+      "images": [],
+      "title": "Reception is a beginning",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "id": "W01",
+      "overflow": false,
+      "images": [],
+      "title": "Food, water and a neighbor",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "id": "E06",
+      "overflow": false,
+      "images": [],
+      "title": "A queue and a fever",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "id": "E07",
+      "overflow": false,
+      "images": [],
+      "title": "A repair, a meal, a lesson",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "id": "J01",
+      "overflow": false,
+      "images": [],
+      "title": "One exchange does not make a livelihood",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "id": "E08",
+      "overflow": false,
+      "images": [],
+      "title": "An application, not a promise",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "id": "E09",
+      "overflow": false,
+      "images": [],
+      "title": "The decision comes from elsewhere",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "id": "E10",
+      "overflow": false,
+      "images": [],
+      "title": "A different kind of timetable",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "id": "E11",
+      "overflow": false,
+      "images": [],
+      "title": "A place for tomorrow",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "id": "P01",
+      "overflow": false,
+      "images": [],
+      "title": "A friend\u2019s different circumstances",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "id": "P02",
+      "overflow": false,
+      "images": [],
+      "title": "A camp name is not a pathway",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "interaction": "choice/reload",
+      "phase": "consequence",
+      "stable": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "interaction": "back",
+      "phase": "scene"
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "id": "E01",
+      "overflow": false,
+      "images": [],
+      "title": "Four people, unfinished plans",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "id": "E02",
+      "overflow": false,
+      "images": [],
+      "title": "Across a landscape of loss",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "id": "E03",
+      "overflow": false,
+      "images": [],
+      "title": "A bundle is missing",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "id": "R01",
+      "overflow": false,
+      "images": [],
+      "title": "Help has its own limits",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "id": "E04",
+      "overflow": false,
+      "images": [],
+      "title": "No safe shortcut promised",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "id": "E05",
+      "overflow": false,
+      "images": [],
+      "title": "Reception is a beginning",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "id": "W01",
+      "overflow": false,
+      "images": [],
+      "title": "Food, water and a neighbor",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "id": "E06",
+      "overflow": false,
+      "images": [],
+      "title": "A queue and a fever",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "id": "E07",
+      "overflow": false,
+      "images": [],
+      "title": "A repair, a meal, a lesson",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "id": "J01",
+      "overflow": false,
+      "images": [],
+      "title": "One exchange does not make a livelihood",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "id": "E08",
+      "overflow": false,
+      "images": [],
+      "title": "An application, not a promise",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "id": "E09",
+      "overflow": false,
+      "images": [],
+      "title": "The decision comes from elsewhere",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "id": "E10",
+      "overflow": false,
+      "images": [],
+      "title": "A different kind of timetable",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "id": "E11",
+      "overflow": false,
+      "images": [],
+      "title": "A place for tomorrow",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "id": "P01",
+      "overflow": false,
+      "images": [],
+      "title": "A friend\u2019s different circumstances",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "id": "P02",
+      "overflow": false,
+      "images": [],
+      "title": "A camp name is not a pathway",
+      "resources": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "interaction": "choice/reload",
+      "phase": "consequence",
+      "stable": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "interaction": "back",
+      "phase": "scene"
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "id": "E01",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "id": "E02",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "id": "E03",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "id": "R01",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "id": "E04",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "id": "E05",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "id": "W01",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "id": "E06",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "id": "E07",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "id": "J01",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "id": "E08",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "id": "E09",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "id": "E10",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "id": "E11",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "id": "P01",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "id": "P02",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "interaction": "choice/reload",
+      "phase": "consequence",
+      "stable": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "interaction": "back",
+      "phase": "scene"
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "id": "E01",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "id": "E02",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "id": "E03",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "id": "R01",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "id": "E04",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "id": "E05",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "id": "W01",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "id": "E06",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "id": "E07",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "id": "J01",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "id": "E08",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "id": "E09",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "id": "E10",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "id": "E11",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "id": "P01",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "id": "P02",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "interaction": "choice/reload",
+      "phase": "consequence",
+      "stable": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "interaction": "back",
+      "phase": "scene"
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "id": "E01",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "id": "E02",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "id": "E03",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "id": "R01",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "id": "E04",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "id": "E05",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "id": "W01",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "id": "E06",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "id": "E07",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "id": "J01",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "id": "E08",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "id": "E09",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "id": "E10",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "id": "E11",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "id": "P01",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "id": "P02",
+      "overflow": false,
+      "images": [],
+      "resources": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "interaction": "choice/reload",
+      "phase": "consequence",
+      "stable": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "interaction": "back",
+      "phase": "scene"
+    }
+  ],
+  "errors": [],
+  "keyboard": [
+    {
+      "mode": "guided",
+      "width": 1365,
+      "focus": "SUMMARY",
+      "reducedMotion": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "focus": "SUMMARY",
+      "reducedMotion": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "focus": "SUMMARY",
+      "reducedMotion": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "focus": "SUMMARY",
+      "reducedMotion": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "focus": "SUMMARY",
+      "reducedMotion": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "focus": "SUMMARY",
+      "reducedMotion": true
+    }
+  ],
+  "screenshots": [
+    "artifacts/cambodia-expanded/guided-1365-E01.png",
+    "artifacts/cambodia-expanded/guided-1365-E07.png",
+    "artifacts/cambodia-expanded/guided-1365-E10.png",
+    "artifacts/cambodia-expanded/guided-1365-P02.png",
+    "artifacts/cambodia-expanded/guided-390-E01.png",
+    "artifacts/cambodia-expanded/guided-390-E07.png",
+    "artifacts/cambodia-expanded/guided-390-E10.png",
+    "artifacts/cambodia-expanded/guided-390-P02.png",
+    "artifacts/cambodia-expanded/full-1365-E01.png",
+    "artifacts/cambodia-expanded/full-1365-E07.png",
+    "artifacts/cambodia-expanded/full-1365-E10.png",
+    "artifacts/cambodia-expanded/full-1365-P02.png",
+    "artifacts/cambodia-expanded/full-390-E01.png",
+    "artifacts/cambodia-expanded/full-390-E07.png",
+    "artifacts/cambodia-expanded/full-390-E10.png",
+    "artifacts/cambodia-expanded/full-390-P02.png"
+  ],
+  "dirty": true,
+  "note": "Initial pre-commit working-tree QA; the final PR reports exact-head reruns."
+}
