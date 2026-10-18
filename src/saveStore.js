@@ -91,15 +91,31 @@ function archiveCompletedGame(game, storage, completedAt) {
   return nextArchive;
 }
 
+function sameSaveContent(a, b) {
+  const { saveRevision: _a, ...left } = a;
+  const { saveRevision: _b, ...right } = b;
+  return JSON.stringify(left) === JSON.stringify(right);
+}
+
+function sameSaveBase(a, b) {
+  return a.runId === b.runId && (a.saveRevision ?? 0) === (b.saveRevision ?? 0);
+}
+
 export function saveFamilyGame(game, storage, options = {}) {
   const target = activeStorage(storage);
   if (!isSavedGameValid(game)) return loadFamilySaves(target);
 
   const saves = loadFamilySaves(target);
-  const nextSaves = { ...saves, [game.familyId]: game };
+  const stored = saves[game.familyId];
+  if (stored && sameSaveContent(game, stored)) return saves;
+  // A restored page must not overwrite a later revision, even if its next
+  // action produces a valid game. Only explicit family restart replaces a run.
+  if (stored && !options.replaceRun && !sameSaveBase(game, stored)) return saves;
+  const committed = { ...game, saveRevision: (stored?.saveRevision ?? 0) + 1 };
+  const nextSaves = { ...saves, [game.familyId]: committed };
   target.setItem(FAMILY_SAVES_KEY, JSON.stringify(nextSaves));
-  target.setItem(GAME_SAVE_KEY, JSON.stringify(game));
-  archiveCompletedGame(game, target, options.completedAt ?? Date.now());
+  target.setItem(GAME_SAVE_KEY, JSON.stringify(committed));
+  archiveCompletedGame(committed, target, options.completedAt ?? Date.now());
   return nextSaves;
 }
 
@@ -121,6 +137,16 @@ export function selectFamilyGame(familyId, options = {}) {
   const saved = loadFamilySaves(target)[validFamilyId];
   const game = options.restart || !saved ? createInitialGame(validFamilyId) : saved;
   target.setItem(FAMILY_SELECTION_KEY, validFamilyId);
-  saveFamilyGame(game, target);
-  return game;
+  return saveFamilyGame(game, target, { replaceRun: Boolean(options.restart) })[validFamilyId];
+}
+
+// Read the durable base before applying an event from a potentially frozen page.
+// Stale intents are discarded, not replayed against a different story state.
+export function applySavedJourneyAction(snapshot, action, storage) {
+  const target = activeStorage(storage);
+  const stored = loadFamilySaves(target)[snapshot.familyId];
+  if (typeof action === "function" && stored && !sameSaveBase(snapshot, stored)) return stored;
+  const next = typeof action === "function" ? action(snapshot) : action;
+  if (!isSavedGameValid(next)) return stored ?? snapshot;
+  return saveFamilyGame(next, target)[next.familyId] ?? stored ?? snapshot;
 }

@@ -1,5 +1,6 @@
 import { cambodiaStoryEnabled } from "./cambodiaState.js";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useJourneyGame } from "./useJourneyGame.js";
 import {
   ArrowCounterClockwise,
   ArrowLeft,
@@ -63,10 +64,8 @@ import {
 } from "./game.js";
 import {
   hasSelectedFamily,
-  loadCurrentGame,
   loadFamilySaves,
   loadJourneyArchive,
-  saveFamilyGame,
   selectFamilyGame,
 } from "./saveStore.js";
 import {
@@ -794,7 +793,7 @@ export function BeginnerApp() {
     tutorialComplete: hasCompletedTutorial(),
     familySelected: hasSelectedFamily(),
   }));
-  const [game, setGame] = useState(loadCurrentGame);
+  const [game, setGame] = useJourneyGame();
   const [familySelectionRequired, setFamilySelectionRequired] = useState(initialOnboardingState.familySelectionRequired);
   const [showFamilySelection, setShowFamilySelection] = useState(initialOnboardingState.showFamilySelection);
   const [familySaves, setFamilySaves] = useState(loadFamilySaves);
@@ -859,7 +858,7 @@ export function BeginnerApp() {
 
   useEffect(() => {
     if (familySelectionRequired) return;
-    setFamilySaves(saveFamilyGame(game));
+    setFamilySaves(loadFamilySaves());
     setJourneyArchive(loadJourneyArchive());
   }, [familySelectionRequired, game]);
 
