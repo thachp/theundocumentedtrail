@@ -80,15 +80,15 @@ test("starts the Haddad family in Syria with a distinct journey preset", () => {
   assert.equal(game.resources.cash, 2400);
   assert.deepEqual(Object.keys(game.people), ["kareem", "nadia", "sami", "mariam"]);
   assert.equal(getPeople(game)[0].name, "Kareem");
-  assert.equal(FAMILY_PRESETS.haddad.origin, "Syria · Conflict displacement");
-  assert.match(FAMILY_PRESETS.haddad.context, /return/i);
+  assert.equal(FAMILY_PRESETS.haddad.origin, "Syria · Wartime displacement · July 2015");
+  assert.match(FAMILY_PRESETS.haddad.context, /Aleppo, July 2015/);
   assert.equal(FAMILY_PRESETS.haddad.destination, "Asylum registration");
   assert.equal(FAMILY_PRESETS.haddad.heroImage, "/assets/haddad-journey-hero.webp");
   assert.equal(
     Object.values(EVENTS)
       .filter((event) => event.id.startsWith("haddad"))
-      .some((event) => event.region.includes("2015")),
-    false,
+      .every((event) => event.region.includes("2015")),
+    true,
   );
 });
 
@@ -148,7 +148,7 @@ test("journey choices describe the pressure behind each departure", () => {
     Object.fromEntries(Object.entries(FAMILY_PRESETS).map(([id, family]) => [id, family.origin])),
     {
       ramirez: "Honduras · Gang threats",
-      haddad: "Syria · Conflict displacement",
+      haddad: "Syria · Wartime displacement · July 2015",
       diop: "Senegal · Debt and lost livelihoods",
       nguyen: "Vietnam · Recruitment debt",
       punjab: "India · Job-recruitment fraud",

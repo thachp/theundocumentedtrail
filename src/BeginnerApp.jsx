@@ -75,6 +75,8 @@ import {
 import { SocialFeedModal, SocialFeedTrigger } from "./SocialFeed.jsx";
 import { Portrait } from "./Portrait.jsx";
 import { JourneyMap } from "./JourneyMap.jsx";
+import { JourneyHistoryDialog, SceneHistory } from "./JourneyHistory.jsx";
+import { getJourneyDate, getJourneyHistory, shouldShowJourneyIntro, rememberJourneyIntro } from "./journeyHistory.js";
 import { SupplyShop, SupplyStopTrigger } from "./SupplyShop.jsx";
 import { TravelIncident } from "./TravelIncident.jsx";
 import { createInteractionSounds } from "./soundEffects.js";
@@ -181,8 +183,8 @@ const storyTitles = {
   haddadAegean: "The sea is shorter than the list of risks.",
   haddadMemorial: "The key belongs to an empty hand.",
   haddadGreece: "Every name enters another system.",
-  haddadBalkans: "The route closes while people are already on it.",
-  haddadEuropeNews: "A border speech fills every phone.",
+  haddadBalkans: "A delayed connection leaves everyone waiting.",
+  haddadEuropeNews: "A photograph becomes an argument about everyone.",
   haddadGermany: "Arrival begins another kind of waiting.",
   diopHome: "Four bags wait beside an empty repair stall.",
   diopDakar: "A posted wage is smaller than a recruiter's promise.",
@@ -603,6 +605,7 @@ function FamilySelection({ currentFamilyId, required, saves, archive, onSelect, 
                 </div>
                 <div className="cinematic-family-copy">
                   <small>{family.origin}</small>
+                  <span className="history-chooser-setting">{getJourneyHistory(family.id).place} · {getJourneyHistory(family.id).era}</span>
                   <strong>{family.name}</strong>
                   <p>{family.context}</p>
                   <em><MapPin weight="fill" />{family.journey}</em>
@@ -703,7 +706,7 @@ function Tutorial({ step, onBack, onNext, onFinish }) {
   );
 }
 
-function Ending({ game, onTryAgain, onChooseFamily }) {
+function Ending({ game, onTryAgain, onChooseFamily, onExploreHistory }) {
   const won = game.status === "won";
   const score = getJourneyScore(game);
   const people = getPeople(game);
@@ -719,6 +722,8 @@ function Ending({ game, onTryAgain, onChooseFamily }) {
         <small>{reachedDestination ? "Destination reached · Route complete" : won ? "A new destination · Journey complete" : "The journey ends here"}</small>
         <h2 id="cinematic-ending-title">{game.ending.title}</h2>
         <p>{game.ending.copy}</p>
+        <p className="history-ending-period">{getJourneyDate(game)}</p>
+        <button className="history-ending-button" onClick={onExploreHistory}>Explore the history</button>
         <JourneyMap game={game} compact />
 
         {won && (
@@ -805,6 +810,7 @@ export function BeginnerApp() {
   const [tutorialStep, setTutorialStep] = useState(0);
   const [showTutorial, setShowTutorial] = useState(initialOnboardingState.showTutorial);
   const [tutorialIsOnboarding, setTutorialIsOnboarding] = useState(initialOnboardingState.tutorialIsOnboarding);
+  const [historyMode, setHistoryMode] = useState(null);
   const [showJourneyTools, setShowJourneyTools] = useState(false);
   const [choicesVisible, setChoicesVisible] = useState(false);
   const soundtrackRef = useRef(null);
@@ -952,6 +958,7 @@ export function BeginnerApp() {
     setJourneyArchive(loadJourneyArchive());
     setFamilySelectionRequired(false);
     setShowFamilySelection(false);
+    setHistoryMode(shouldShowJourneyIntro(selectedGame, window.localStorage) ? "intro" : null);
     setShowRoadsideWork(false);
     setShowSocialFeed(false);
     setShowSupplyShop(false);
@@ -959,6 +966,11 @@ export function BeginnerApp() {
     setRestartReturnsToSelection(false);
     setSelectedPersonId(null);
     setShowJourneyLog(false);
+  };
+
+  const closeHistory = () => {
+    if (historyMode === "intro") rememberJourneyIntro(game, window.localStorage);
+    setHistoryMode(null);
   };
 
   const requestRestart = () => {
@@ -1039,6 +1051,7 @@ export function BeginnerApp() {
           </button>
           <div id="cinematic-journey-tools" className={`cinematic-header-actions ${showJourneyTools ? "open" : ""}`} role="group" aria-label="Journey tools">
             <button className="cinematic-music" onClick={() => { setShowJourneyTools(false); setShowFamilySelection(true); }} aria-label="Choose family journey" data-tooltip={`Playing ${family.name} · choose another family`} data-sound="tap"><UsersThree weight="duotone" /><span className="cinematic-tool-label">Choose family</span></button>
+            <button className="cinematic-music" onClick={() => { setShowJourneyTools(false); setHistoryMode("explore"); }} aria-label="Explore the history" data-tooltip="Place, period, timeline and sources" data-sound="tap"><BookOpenText weight="duotone" /><span className="cinematic-tool-label">Explore the history</span></button>
             <button className="cinematic-music" onClick={replayTutorial} aria-label="Open tutorial" data-tooltip="How to play" data-sound="tap"><Question weight="duotone" /><span className="cinematic-tool-label">How to play</span></button>
             <button className="cinematic-music" onClick={() => { setShowJourneyTools(false); setShowContentSettings(true); }} aria-label="Open content settings" data-tooltip="Sensitive-content settings" data-sound="tap"><WarningCircle weight="duotone" /><span className="cinematic-tool-label">Content settings</span></button>
             <button className="cinematic-music" onClick={() => { setShowJourneyTools(false); setShowJourneyLog(true); }} aria-label="Open journey log" data-tooltip="Journey log" data-sound="tap"><BookOpenText weight="duotone" /><span className="cinematic-tool-label">Journey log</span></button>
@@ -1080,8 +1093,8 @@ export function BeginnerApp() {
 
         <section className="cinematic-story" aria-label="Current story and decision">
           <div className="cinematic-copy" key={`${event.id}-${game.phase}-${game.currentOutcome?.id ?? "decision"}`}>
-            <span>{event.location} · Day {game.day}</span>
-            <h1>{game.phase === "decision" ? (storyTitles[event.id] ?? event.location) : game.currentOutcome.title}</h1>
+            <span>{event.location} · {getJourneyDate(game)}</span>
+            <h1 tabIndex="-1" data-history-return>{game.phase === "decision" ? (storyTitles[event.id] ?? event.location) : game.currentOutcome.title}</h1>
             {game.phase === "decision" ? (
               <div className={`cinematic-voices ${decisionMessages.length > 1 ? "multiple" : ""}`}>
                 {decisionMessages.map((message, index) => (
@@ -1091,6 +1104,7 @@ export function BeginnerApp() {
             ) : (
               <p>{storyCopy}</p>
             )}
+            <SceneHistory game={game} onExplore={() => setHistoryMode("explore")} />
             <div className="cinematic-context">
               <MapPin weight="fill" />
               <small>{event.weather} · {event.time} · {event.region}</small>
@@ -1241,9 +1255,11 @@ export function BeginnerApp() {
         </section>
       </footer>
 
+      {historyMode && !showFamilySelection && <JourneyHistoryDialog game={game} introduction={historyMode === "intro"} onClose={closeHistory} />}
       {game.phase === "ended" && (
         <Ending
           game={game}
+          onExploreHistory={() => setHistoryMode("explore")}
           onTryAgain={requestRestart}
           onChooseFamily={() => setShowFamilySelection(true)}
         />

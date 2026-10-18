@@ -1,6 +1,7 @@
 import { useId } from "react";
 import { getJourneyGeography, MAP_SIZE, projectCoordinate } from "./journeyGeography.js";
 import land from "./mapLand.json";
+import { getJourneyDate } from "./journeyHistory.js";
 import "./journeyMap.css";
 
 export function JourneyMap({ game, compact = false, fitViewport = false }) {
@@ -21,7 +22,7 @@ export function JourneyMap({ game, compact = false, fitViewport = false }) {
   return (
     <figure className={`journey-map ${compact ? "journey-map-compact" : ""} ${fitViewport ? "journey-map-fit" : ""}`} data-family={family.id} data-event={current.eventId}>
       <figcaption>
-        <span>{family.shortName} · Journey geography</span>
+        <span>{family.shortName} · {getJourneyDate(game)}</span>
         <strong>{current.label}</strong>
         <small>{current.uncertainty}</small>
       </figcaption>
