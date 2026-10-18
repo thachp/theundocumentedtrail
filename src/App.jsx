@@ -1,3 +1,4 @@
+import { LivelihoodDialog, LivelihoodOptional } from "./LivelihoodActivity.jsx";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowCounterClockwise,
@@ -157,7 +158,7 @@ function CharacterCard({ person, state, stress, familyId, active, onClick }) {
   );
 }
 
-function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop, onOpenSocialFeed, onOpenSupplyShop, onExploreHistory, onChoice, onContinue, onTravelPlan }) {
+function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop, onOpenSocialFeed, onOpenSupplyShop, onExploreHistory, onOpenLivelihood, onChoice, onContinue, onTravelPlan }) {
   const travelPlanRequired = requiresTravelPlan(game);
   return (
     <aside className="messages-panel" aria-label="Messages and decisions">
@@ -193,6 +194,7 @@ function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop,
         />
       )}
 
+      <LivelihoodOptional game={game} onOpen={onOpenLivelihood} />
       {supplyStop && <SupplyStopTrigger compact stop={supplyStop} onOpen={onOpenSupplyShop} />}
 
       {game.phase === "decision" ? (
@@ -465,6 +467,7 @@ function RestartModal({ onCancel, onConfirm }) {
 
 export function App() {
   const [game, setGame] = useState(loadCurrentGame);
+  const [showLivelihood, setShowLivelihood] = useState(false);
   const [selectedRoute, setSelectedRoute] = useState(game.route);
   const [selectedPersonId, setSelectedPersonId] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -552,6 +555,7 @@ export function App() {
   };
 
   const restart = () => {
+    setShowLivelihood(false);
     const fresh = selectFamilyGame(game.familyId, { restart: true });
     setGame(fresh);
     setPendingChoice(null);
@@ -702,6 +706,7 @@ export function App() {
           supplyStop={supplyStop}
           onOpenSocialFeed={() => setShowSocialFeed(true)}
           onExploreHistory={() => setShowHistory(true)}
+          onOpenLivelihood={() => setShowLivelihood(true)}
           onOpenSupplyShop={() => setShowSupplyShop(true)}
           onChoice={setPendingChoice}
           onContinue={continueWithIncidents}
@@ -709,6 +714,7 @@ export function App() {
         />
       </div>
 
+      {showLivelihood && <LivelihoodDialog game={game} onUpdate={action => setGame(current => action(current))} onClose={() => setShowLivelihood(false)} />}
       <ChoiceModal choice={pendingChoice} game={game} onCancel={() => setPendingChoice(null)} onConfirm={confirmChoice} />
       {showHistory && <JourneyHistoryDialog game={game} onClose={() => setShowHistory(false)} />}
       {showLog && <JourneyLog game={game} onClose={() => setShowLog(false)} />}

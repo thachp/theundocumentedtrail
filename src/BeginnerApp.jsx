@@ -1,3 +1,5 @@
+import { LivelihoodDialog, LivelihoodTrigger } from "./LivelihoodActivity.jsx";
+import { isRepairScene } from "./livelihoodActivity.js";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowCounterClockwise,
@@ -799,6 +801,7 @@ export function BeginnerApp() {
   const [journeyArchive, setJourneyArchive] = useState(loadJourneyArchive);
   const [soundtrackOn, setSoundtrackOn] = useState(false);
   const [showRoadsideWork, setShowRoadsideWork] = useState(false);
+  const [showLivelihood, setShowLivelihood] = useState(false);
   const [showSocialFeed, setShowSocialFeed] = useState(false);
   const [showSupplyShop, setShowSupplyShop] = useState(false);
   const [selectedPersonId, setSelectedPersonId] = useState(null);
@@ -960,6 +963,7 @@ export function BeginnerApp() {
     setShowFamilySelection(false);
     setHistoryMode(shouldShowJourneyIntro(selectedGame, window.localStorage) ? "intro" : null);
     setShowRoadsideWork(false);
+    setShowLivelihood(false);
     setShowSocialFeed(false);
     setShowSupplyShop(false);
     setRestartFamilyId(null);
@@ -1122,7 +1126,8 @@ export function BeginnerApp() {
                   <ArrowRight weight="bold" aria-hidden="true" />
                 </summary>
                 <div className="cinematic-optional-list">
-                  {roadsideOpportunity && (
+                  {isRepairScene(game) && <LivelihoodTrigger game={game} onOpen={() => setShowLivelihood(true)} />}
+                  {roadsideOpportunity && !isRepairScene(game) && (
                     <button className={`cinematic-work-trigger ${roadsideWorkCompleted ? "completed" : ""}`} onClick={() => setShowRoadsideWork(true)} data-sound="tap">
                       <Briefcase weight="duotone" />
                       <span>
@@ -1264,6 +1269,7 @@ export function BeginnerApp() {
           onChooseFamily={() => setShowFamilySelection(true)}
         />
       )}
+      {showLivelihood && isRepairScene(game) && <LivelihoodDialog game={game} onUpdate={action => setGame(current => action(current))} onClose={() => setShowLivelihood(false)} />}
       {showRoadsideWork && roadsideOpportunity && (
         <RoadsideWork
           opportunity={roadsideOpportunity}

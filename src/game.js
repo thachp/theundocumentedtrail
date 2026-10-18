@@ -1,3 +1,4 @@
+import { repairActive, repairFollowUp } from "./livelihoodActivity.js";
 export const GAME_VERSION = 14;
 export const GAME_SAVE_KEY = "the-long-road-save-v14";
 
@@ -7067,7 +7068,9 @@ export function createInitialGame(familyId = "ramirez") {
 }
 
 export function getEvent(game) {
-  return EVENTS[game.eventId];
+  const event = EVENTS[game.eventId];
+  const followUp = repairFollowUp(game);
+  return followUp ? { ...event, messages: [...event.messages, { sender: "Ibrahima", initial: "I", role: "Group notebook", time: event.time, trusted: true, body: followUp }] } : event;
 }
 
 export function getRoadsideOpportunity(game) {
@@ -7097,6 +7100,7 @@ export function getSupplyOptions(game) {
 }
 
 export function buySupply(game, itemId) {
+  if (repairActive(game)) return game;
   const option = getSupplyOptions(game).find((item) => item.id === itemId);
   if (!option || option.unavailable) return game;
 
@@ -7197,6 +7201,7 @@ export function getResourceTone(resource, value) {
 }
 
 export function getRequirementFailure(game, choice) {
+  if (repairActive(game)) return "Finish or summarize the committed repair day first.";
   if (!choice.requires) return null;
   for (const [resource, needed] of Object.entries(choice.requires)) {
     const current = game.resources[resource] ?? 0;
@@ -7824,6 +7829,7 @@ export function takeRoadsideJob(game, choiceId) {
 }
 
 export function respondToSocialFeed(game, responseId) {
+  if (repairActive(game)) return game;
   if (game.status !== "playing" || hasRespondedToSocialFeed(game)) return game;
   const feed = getSocialFeed(game);
   const response = getSocialResponseOptions(game).find((option) => option.id === responseId);
@@ -7922,6 +7928,7 @@ export function planTravelLeg(game, strategyId, leadPersonId = null) {
 }
 
 export function useMedicine(game, personId) {
+  if (repairActive(game)) return game;
   const traveler = game.people[personId];
   if (game.status !== "playing" || !traveler || traveler.alive === false || traveler.health >= 100 || game.resources.medicine < 1) return game;
   const person = getPeople(game).find((item) => item.id === personId);
