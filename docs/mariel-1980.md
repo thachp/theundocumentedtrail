@@ -14,7 +14,7 @@ Sources directly read on 18 October 2026:
 - University of Miami [El efecto Mariel](https://www.library.miami.edu/chc/efecto-mariel.html): page inspected for collection context. No collection item, interview, quotation, photo or likeness reproduced; not used to certify every invented perspective.
 - Library of Congress item [2021669954](https://www.loc.gov/item/2021669954/) returned 403. Not bypassed or used. No archival photo license is inferred.
 
-The story separates 1980 from Freedom Flights, Pedro Pan, 1994 balseros and later wet-foot/dry-foot rules. Isabel has work, sleep, privacy and expense constraints of her own. Newcomer and coworker perspectives are attributed fictional voices, not group claims. No causal claim blames Mariel arrivals for pre-existing racial inequities or the McDuffie unrest. No external legal, historical, community, paid or naming review has occurred or been commissioned. Cambodia's review waiver is not extended here. Publication remains held for applicable editorial review decisions and owner approval.
+The story separates 1980 from Freedom Flights, Pedro Pan, 1994 balseros and later wet-foot/dry-foot rules. Isabel has work, sleep, privacy and expense constraints of her own. Newcomer and coworker perspectives are attributed fictional voices, not group claims. No causal claim blames Mariel arrivals for pre-existing racial inequities or the McDuffie unrest. No external legal, historical, community, paid or naming review has occurred or been commissioned. Cambodia's review waiver is not extended here. Required release gates and recommended reviews are distinguished in `story-integration-release.md`; no paid review is committed. Root QA and owner approval remain required.
 
 ## Art preparation and rights
 
@@ -34,8 +34,12 @@ The sibling Vietnamese PR uses identical shared engine/adaptor changes and its o
 
 ## Verification
 
-Automated checks and exact final heads are recorded in the PR and QA record after the final asset pass. Tests cover each displayed choice, all authored combinations, every source and map target, callbacks, actual Guided/Planning scene/outcome/ending rendering, save phases, stale tabs, Back, restart/archive preservation, unknown saves and blocked storage. Chromium smoke covers 1365/390/320px, refresh, mode switching and a full run. This is not a VoiceOver or other screen-reader pass. Full manual touch, platform bfcache, all zoom/reflow combinations, expert historical/naming review and root exact-head QA remain release checks. Existing bundle-size warning remains.
+Automated checks and exact final heads are recorded in the PR and QA record after the final asset pass. Tests cover each displayed choice, all authored combinations, every source and map target, callbacks, actual Guided/Planning scene/outcome/ending rendering, save phases, stale tabs, Back, restart/archive preservation, unknown saves and blocked storage. Chromium smoke covers 1365/390/320px, refresh, mode switching and a full run. This is not a VoiceOver or other screen-reader pass. Independent root exact-head QA remains required; issue27 screen-reader/text-resize checks are outstanding. Broader touch/bfcache and expert reviews are recommended as distinguished in `story-integration-release.md`. Existing bundle-size warning remains.
 
 ## Stable-main reconciliation verification
 
 Rebased only this feature branch onto stable main `b62c59e08d9a7bfba7feb088a4d6d09bbfd98727` at the owner’s request. Both shared views retain `commitJourneyChoice`; latest map/hero CSS, ending focus, existing save store and narrative migration match main unchanged. **143 tests and production/Sites build pass** after reconciliation. Browser smoke and asset checks are repeated against the reconciled build; exact final feature heads are recorded in their draft PRs. No story merge or deployment.
+
+## Combined review stack
+
+PR30 is now stacked on PR29, with both registrations combined and shared adapters retained once. See `story-integration-release.md` for review order and the distinction between required release gates and recommended external reviews. Individual QA above is superseded for combined-release purposes by `story-integration-qa.json`.
