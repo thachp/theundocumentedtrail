@@ -69,6 +69,7 @@ import {
 import { loadCurrentGame, saveFamilyGame, selectFamilyGame } from "./saveStore.js";
 import { SocialFeedModal, SocialFeedTrigger } from "./SocialFeed.jsx";
 import { Portrait } from "./Portrait.jsx";
+import { JourneyMap } from "./JourneyMap.jsx";
 import { SupplyShop, SupplyStopTrigger } from "./SupplyShop.jsx";
 import { TravelIncident } from "./TravelIncident.jsx";
 import { createJourneySoundtrack, selectSoundtrackTheme } from "./soundtrack.js";
@@ -115,34 +116,6 @@ function StatusMetric({ icon: Icon, value, label, tone = "default", tooltip }) {
         <small>{label}</small>
       </span>
     </div>
-  );
-}
-
-function RouteMarker({ route, className, active, onClick }) {
-  const item = ROUTES[route];
-  return (
-    <button
-      className={`route-marker ${className} ${item.tone} ${active ? "active" : ""}`}
-      onClick={() => onClick(route)}
-      aria-pressed={active}
-      aria-label={`Inspect ${item.title} route`}
-      data-sound="tap"
-    >
-      <span className="route-marker-dot">
-        {route === "elmstead" ? (
-          <HouseLine weight="fill" aria-hidden="true" />
-        ) : route === "ridge" ? (
-          <Mountains weight="fill" aria-hidden="true" />
-        ) : (
-          <Path weight="bold" aria-hidden="true" />
-        )}
-      </span>
-      <span className="route-marker-copy">
-        <strong>{item.title}</strong>
-        <small>{item.kicker}</small>
-        <em>{item.duration}</em>
-      </span>
-    </button>
   );
 }
 
@@ -441,6 +414,7 @@ function EndingModal({ game, onRestart }) {
         <small>{reachedDestination ? "Destination reached · Route complete" : won ? "Journey complete · A new destination" : "The journey ends here"}</small>
         <h2 id="ending-title">{game.ending.title}</h2>
         <p>{game.ending.copy}</p>
+        <JourneyMap game={game} compact />
         {won && (
           <div className="ending-route" aria-label={`${game.progress}% of the planned route completed`}>
             <span><i style={{ width: `${game.progress}%` }} /></span>
@@ -665,40 +639,17 @@ export function App() {
       </header>
 
       <div className="game-grid">
-        <section className="map-stage" aria-label="The Undocumented Trail schematic route map">
-          <div key={`${game.familyId}-${game.eventId}`} className="map-image" style={{ backgroundImage: `url("${family.mapImage}")` }} aria-hidden="true" />
-          <div className="map-vignette" aria-hidden="true" />
-
-          <div className="weather-card">
-            <div><strong>{event.time}</strong><small>Day {game.day}</small></div>
-            <CloudRain weight="duotone" aria-hidden="true" />
-            <div><strong>{event.weather}</strong><small>{event.weatherDetail}</small></div>
+        <section className="map-stage geographic-map-stage" aria-label="Journey geography">
+          <div className="planning-map-context">
+            <strong>Day {game.day} · {event.time} · {event.weather}</strong>
+            <small>{event.weatherDetail}</small>
           </div>
-
-          <div className="journey-progress" aria-label={`${game.progress}% journey progress`}>
-            <span><strong>{family.destination}</strong><small>{100 - game.progress}% remaining</small></span>
-            <div><i style={{ width: `${game.progress}%` }} /></div>
-          </div>
-
-          <button key={`location-${game.eventId}`} className="current-location" onClick={() => inspectRoute(game.route)} data-sound="tap">
-            <Crosshair weight="fill" aria-hidden="true" />
-            <span><strong>{event.location}</strong><small>{event.region}</small></span>
-          </button>
-
-          <RouteMarker route="ridge" className="marker-ridge" active={selectedRoute === "ridge"} onClick={inspectRoute} />
-          <RouteMarker route="quarry" className="marker-quarry" active={selectedRoute === "quarry"} onClick={inspectRoute} />
-          <RouteMarker route="elmstead" className="marker-elmstead" active={selectedRoute === "elmstead"} onClick={inspectRoute} />
-
-          <div className="map-caption">
-            <IconText icon={MapPin}>{event.location}</IconText>
-            <span>{game.phase === "decision" ? "Choose a route using the best information available." : "Decision recorded. Review the outcome before continuing."}</span>
-          </div>
-
-          <div className="map-legend" aria-label="Route confidence legend">
-            <span><i className="trusted" />Trusted contact</span>
-            <span><i className="uncertain" />Unverified route</span>
-            <span><i className="danger" />High exposure</span>
-          </div>
+          <JourneyMap game={game} />
+          <details className="planning-map-approaches">
+            <summary>Travel approach details</summary>
+            <p>These approaches describe support and risk, not geographic waypoints.</p>
+            {Object.entries(ROUTES).map(([id, approach]) => <button key={id} onClick={() => inspectRoute(id)} data-sound="tap">{approach.title}</button>)}
+          </details>
 
           {drawerOpen && (
             <DetailDrawer

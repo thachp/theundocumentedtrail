@@ -74,6 +74,7 @@ import {
 } from "./onboarding.js";
 import { SocialFeedModal, SocialFeedTrigger } from "./SocialFeed.jsx";
 import { Portrait } from "./Portrait.jsx";
+import { JourneyMap } from "./JourneyMap.jsx";
 import { SupplyShop, SupplyStopTrigger } from "./SupplyShop.jsx";
 import { TravelIncident } from "./TravelIncident.jsx";
 import { createInteractionSounds } from "./soundEffects.js";
@@ -718,6 +719,7 @@ function Ending({ game, onTryAgain, onChooseFamily }) {
         <small>{reachedDestination ? "Destination reached · Route complete" : won ? "A new destination · Journey complete" : "The journey ends here"}</small>
         <h2 id="cinematic-ending-title">{game.ending.title}</h2>
         <p>{game.ending.copy}</p>
+        <JourneyMap game={game} compact />
 
         {won && (
           <div className="cinematic-arrival-route" aria-label={`${game.progress}% of the planned route completed`}>
@@ -1071,16 +1073,8 @@ export function BeginnerApp() {
       <section className="cinematic-stage">
         <div key={`${game.familyId}-${event.id}`} className="cinematic-scene" style={{ backgroundImage: `url("${sceneByEvent[event.id] ?? family.heroImage}")` }} aria-hidden="true" />
 
-        <aside className="cinematic-map" aria-label={`Journey map, ${game.progress}% complete`}>
-          <img src={family.mapImage} alt={family.mapAlt} />
-          <div className="cinematic-map-destination">
-            <HouseLine weight="fill" />
-            <span><strong>{family.destination}</strong><small>{100 - game.progress}% remains</small></span>
-          </div>
-          <div className="cinematic-map-route">
-            <Compass weight="duotone" />
-            <span><strong>{route.title}</strong><small>{route.kicker}</small></span>
-          </div>
+        <aside className="cinematic-map" aria-label="Journey geography">
+          <JourneyMap game={game} />
           <JourneyGauge game={game} event={event} />
         </aside>
 

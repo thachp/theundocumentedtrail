@@ -19,6 +19,7 @@ When implementing from a selected generated mock, treat that image as the source
 - In the journey chooser, pair each country with the pressure behind departure rather than the generic phrase “Present day”: gang threats, conflict displacement, debt and lost livelihoods, recruitment debt, job-recruitment fraud, or statelessness and shrinking aid.
 - Present the journey chooser as a horizontal carousel with visible previous/next controls, touch and trackpad scrolling, keyboard arrow navigation, and a partial next-card cue on mobile.
 - Keep one resumable save per family and preserve completed runs in the journey archive. Starting or restarting one family must not erase another family's progress.
+- Journey maps use explicit event coordinates and a shared geographic projection for land, visited routes and current markers. Label unknown and regional positions honestly, provide a text itinerary, and preserve branch-dependent returns. Do not place geographic markers on the distorted illustrated map artwork.
 - The selected family must drive every prominent identity-bearing visual, including the hero scene, route map, and portrait strip. Never show one family's people during another family's journey.
 - Use the locally bundled AndriiG “Sad Music” Pixabay track as the looping journey soundtrack. Keep the synthesized button-click feedback separate from the music control.
 - Keep button-click feedback clearly audible over the soundtrack; interface sounds should feel crisp and noticeably louder than the original subtle mix.
