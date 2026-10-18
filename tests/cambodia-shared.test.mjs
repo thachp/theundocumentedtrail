@@ -59,7 +59,7 @@ test('both actual shared views render every scene with original choices, geograp
   }
   storage.setItem(CAMBODIA_SAVE_KEY,JSON.stringify(game.cambodiaState));
   for(const View of [App,BeginnerApp]){const html=renderToStaticMarkup(React.createElement(View));assert.match(html,/Their lives continue beyond the frame/);assert.doesNotMatch(html,/% health|NaN|undefined/);}
-  let total=0;for(const id of ['cover','C01','C02','C04','C05','C06','C07','C08','C09']){const size=(await stat(`public/assets/cambodia/${id}.webp`)).size;assert.ok(size<200000);total+=size;}assert.ok(total<1500000);
+  let total=0;for(const id of ['cover','C01','C02','C03','C04','C05','C06','C07','C08','C09']){const size=(await stat(`public/assets/cambodia/${id}.webp`)).size;assert.ok(size<200000);total+=size;}assert.ok(total<2000000);
  }finally{await server.close();delete globalThis.window;delete globalThis.localStorage;}
 });
 

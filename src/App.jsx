@@ -126,7 +126,7 @@ function StatusMetric({ icon: Icon, value, label, tone = "default", tooltip }) {
   );
 }
 
-function CharacterCard({ person, state, stress, familyId, active, onClick }) {
+function CharacterCard({ person, state, stress, family, active, onClick }) {
   const condition = getCondition(state.health, state.alive !== false);
   const portraitMood = getPortraitMood(state, stress);
   return (
@@ -136,7 +136,7 @@ function CharacterCard({ person, state, stress, familyId, active, onClick }) {
       aria-pressed={active}
       data-sound="tap"
     >
-      <Portrait person={person} state={state} stress={stress} family={familyId} />
+      <Portrait person={person} state={state} stress={stress} family={family} />
       <span className="character-copy">
         <span className="character-heading">
           <strong>{person.name}</strong>
@@ -146,7 +146,7 @@ function CharacterCard({ person, state, stress, familyId, active, onClick }) {
           <span><Sparkle weight="duotone" aria-hidden="true" />{person.skills[0]}</span>
           <span><Handshake weight="duotone" aria-hidden="true" />{person.skills[1]}</span>
         </span>
-        {!isCambodiaJourney({familyId}) && <><span className={`condition ${condition.tone}`}>
+        {!isCambodiaJourney(family) && <><span className={`condition ${condition.tone}`}>
           <i />{state.alive === false ? condition.label : `${condition.label} · ${state.health}%`}
         </span>
         <span className="trust-row">
@@ -610,7 +610,7 @@ export function App() {
           <span className="header-actions">
             <button className="planning-journey-select" onClick={() => setShowFamilySelection(true)} aria-label="Choose a journey" data-sound="tap">Journeys</button>
             <button onClick={() => setShowHistory(true)} aria-label="Explore the history" data-tooltip="Historical context and sources" data-sound="tap"><BookOpenText weight="duotone" /></button>
-            <a data-ending-return className="guided-return" href={isCambodiaJourney(game) ? `/?story=${game.familyId}` : "/"} data-tooltip="Switch to the simpler story view">Guided view</a>
+            <a data-ending-return className="guided-return" href={isCambodiaJourney(game) ? `/?story=${game.familyId}${game.householdEdition===1?"&edition=1":""}` : "/"} data-tooltip="Switch to the simpler story view">Guided view</a>
             <a
               className="source-link"
               href="https://github.com/thachp/theundocumentedtrail"
@@ -689,7 +689,7 @@ export function App() {
                 person={person}
                 state={game.people[person.id]}
                 stress={game.resources.stress}
-                familyId={game.familyId}
+                family={game}
                 active={selectedPersonId === person.id && drawerOpen}
                 onClick={inspectPerson}
               />

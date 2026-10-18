@@ -20,7 +20,7 @@ Baseline: main cc884455d036a7ec23c80a3b00530937e76b7914 (18 October 2026). Resol
 
 Story fields consumed today: id, title, name, shortName, origin, period, route, notice, contentNote, premise, people, sources, historicalSummary, scenes, callbacks, glossary.
 
-- people: tuples [id, name, age, pronouns, skills[], description]. Current storyFamily uses three hard-coded cover portrait crops, while the authoring standard now requires four named starting travelers. A new authored journey therefore needs explicit four-person adapter/crop work and regression tests before acceptance; this documentation update does not implement that repair. Do not shrink the party to fit the adapter, silently put a fourth person outside a crop, reuse someone else's portrait or change existing story data without scope authorization.
+- people: tuples [id, name, age, pronouns, skills[], description]. The shared adapter accepts story.portraits keyed by person ID, each with {image,viewBox,width,height}; provide and visually verify all four. The original three hard-coded cover crops remain only as legacy compatibility fallback. Do not omit the fourth traveler or reuse someone else's portrait. Current revised households are edition 2; src/legacyHouseholds retains edition-1 narrative and matching archived assets for existing saves.
 - sources: map of stable IDs to {title,date,url}; keep richer claim/section/verification ledger in the story documentation.
 - scenes: {id,date,place,title,prose,summary,context,sourceIds,coordinates:[longitude,latitude],landKey,bounds:[west,south,east,north],stage,choices}.
 - choices: {id,title,description,consequence,cost:[time,energy],flag:[key,value]}. Three visible options is the shared reference pattern. Each cost must fit current capacity 4; units reset per scene and are fictional. They are not cash, historical scarcity estimates or survival probabilities.
@@ -31,7 +31,7 @@ Current authored engine is sequential: index advances one scene at a time; choic
 
 ## Save contract
 
-Authored keys: undocumented-trail:household:<id>:v1 and :archive:v1. Store replays valid choice history, checks runId/saveRevision, and preserves unreadable/newer data with saveWritable false. Never rename IDs, reorder persisted scenes or replace storage versions casually. Survival stores per-family snapshots in the-undocumented-trail-family-saves-v1 plus selected family/archive and legacy keys; do not change these to add a story.
+Revised authored keys: undocumented-trail:household:<id>:v2 and :archive:v2; original :v1 and :archive:v1 remain separate and resumable. Cambodia similarly uses separate v2 save/archive and frozen v1 save. New runs use four-person edition 2; existing edition-1 progress is not reinterpreted or overwritten when switching editions. Store replays valid choice history, checks runId/saveRevision, and preserves unreadable/newer data with saveWritable false. Never rename IDs, reorder persisted scenes or replace storage versions casually. Survival stores per-family snapshots in the-undocumented-trail-family-saves-v1 plus selected family/archive and legacy keys; do not change these to add a story.
 
 ## Verification entry points
 

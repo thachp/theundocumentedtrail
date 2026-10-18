@@ -23,22 +23,22 @@ export function observeJourneyRestore(restore, windowTarget = window, documentTa
 // Both interfaces share a revision-aware durable state boundary. Saving in an
 // effect after render allowed a bfcache-restored page to write its old snapshot.
 export function useJourneyGame() {
-  const [game, renderGame] = useState(() => authoredStory(new URLSearchParams(window.location.search).get("story")) ? loadAuthoredJourney(new URLSearchParams(window.location.search).get("story")) : cambodiaStoryEnabled(import.meta.env) && new URLSearchParams(window.location.search).get("story") === "cambodia-1979" ? loadCambodiaJourney() : loadCurrentGame());
+  const [game, renderGame] = useState(() => authoredStory(new URLSearchParams(window.location.search).get("story")) ? loadAuthoredJourney(new URLSearchParams(window.location.search).get("story"),undefined,new URLSearchParams(window.location.search).get("edition")==="1"?1:undefined) : cambodiaStoryEnabled(import.meta.env) && new URLSearchParams(window.location.search).get("story") === "cambodia-1979" ? loadCambodiaJourney(undefined,new URLSearchParams(window.location.search).get("edition")==="1"?1:undefined) : loadCurrentGame());
   const current = useRef(game);
   const setGame = useCallback((action) => {
     const historicalAction = isCambodiaJourney(current.current) && (typeof action === "function" || isCambodiaJourney(action));
-    const next = isAuthoredJourney(action) ? action : isAuthoredJourney(current.current) && (typeof action === "function" || isAuthoredJourney(action)) ? applyAuthoredAction(current.current, action) : historicalAction ? applyCambodiaJourneyAction(current.current, action) : applySavedJourneyAction(current.current, action);
-    if (isAuthoredJourney(next)) { const url=new URL(window.location.href); url.searchParams.set("story",next.familyId); window.history.replaceState(null,"",url); }
+    const next = isAuthoredJourney(action)||isCambodiaJourney(action) ? action : isAuthoredJourney(current.current) && (typeof action === "function" || isAuthoredJourney(action)) ? applyAuthoredAction(current.current, action) : historicalAction ? applyCambodiaJourneyAction(current.current, action) : applySavedJourneyAction(current.current, action);
+    if (isAuthoredJourney(next)||isCambodiaJourney(next)) { const url=new URL(window.location.href); url.searchParams.set("story",next.familyId); if(next.householdEdition===1)url.searchParams.set("edition","1");else url.searchParams.delete("edition"); window.history.replaceState(null,"",url); }
     if (!isCambodiaJourney(next) && !isAuthoredJourney(next) && new URLSearchParams(window.location.search).has("story")) {
-      const url = new URL(window.location.href); url.searchParams.delete("story"); window.history.replaceState(null, "", url);
+      const url = new URL(window.location.href); url.searchParams.delete("story"); url.searchParams.delete("edition"); window.history.replaceState(null, "", url);
     }
     current.current = next;
     renderGame(next);
   }, []);
   useEffect(() => {
     const restore = () => {
-      const saved = isAuthoredJourney(current.current) ? loadAuthoredJourney(current.current.familyId) : isCambodiaJourney(current.current) ? loadCambodiaJourney() : loadFamilySaves()[current.current.familyId];
-      if (!saved || (isAuthoredJourney(current.current) && !saved.saveWritable)) return;
+      const saved = isAuthoredJourney(current.current) ? loadAuthoredJourney(current.current.familyId,undefined,current.current.householdEdition) : isCambodiaJourney(current.current) ? loadCambodiaJourney(undefined,current.current.householdEdition) : loadFamilySaves()[current.current.familyId];
+      if (!saved || ((isAuthoredJourney(current.current)||isCambodiaJourney(current.current)) && !saved.saveWritable)) return;
       current.current = saved;
       renderGame(saved);
     };

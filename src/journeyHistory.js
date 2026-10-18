@@ -1,3 +1,4 @@
+import { cambodiaEdition } from './cambodiaEdition.js';
 // Shared editorial context. Dates in sources describe reporting, not the lives
 // of these fictional composites. Ramírez and Haddad have authored calendars.
 import { CAMBODIA, CAMBODIA_SOURCES, sceneFor } from "./cambodiaStory.js";
@@ -107,12 +108,12 @@ export const JOURNEY_HISTORY = Object.freeze({
 export const FICTION_NOTICE = fiction;
 export function getJourneyHistory(gameOrId) {
   if(authoredStory(gameOrId)) return authoredHistory(authoredStory(gameOrId));
-  if ((typeof gameOrId === "string" ? gameOrId : gameOrId.familyId) === "cambodia-1979") return CAMBODIA.history;
+  if ((typeof gameOrId === "string" ? gameOrId : gameOrId.familyId) === "cambodia-1979") return cambodiaEdition(gameOrId).CAMBODIA.history;
   return JOURNEY_HISTORY[typeof gameOrId === "string" ? gameOrId : gameOrId.familyId];
 }
 export function getJourneyDate(game) {
   if(authoredStory(game)) return storyScene(game).date;
-  if (game.familyId === "cambodia-1979") return sceneFor(game.cambodiaState).date;
+  if (game.familyId === "cambodia-1979") return cambodiaEdition(game).sceneFor(game.cambodiaState).date;
   const context = getJourneyHistory(game);
   if (!context.departureDate) return "Contemporary · story day " + game.day;
   if (game.familyId === "ramirez" && game.day > 142) return "Historical early-2024 setting · saved story day " + game.day + " (calendar not reconstructed)";
@@ -141,7 +142,7 @@ scenes("rohingya", "rohingyaCamp rohingyaPapers rohingyaCoast rohingyaSea rohing
 export const SCENE_HISTORY = Object.freeze(sceneNotes);
 export function getSceneHistory(game) {
   if(authoredStory(game)){const s=storyScene(game);return {text:s.context,sourceIds:s.sourceIds};}
-  if (game.familyId === "cambodia-1979") { const scene=sceneFor(game.cambodiaState); return {text:scene.context,sourceIds:scene.sourceIds}; }
+  if (game.familyId === "cambodia-1979") { const scene=cambodiaEdition(game).sceneFor(game.cambodiaState); return {text:scene.context,sourceIds:scene.sourceIds}; }
   const note = SCENE_HISTORY[game.eventId];
   return note?.familyId === game.familyId ? note : null;
 }

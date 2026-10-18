@@ -41,6 +41,6 @@ Portrait plan: <all four identifiable at start in cover, portraits/status and sc
 
 ## Integration and acceptance
 
-Chooser metadata and both modes: <paths/symbols>. Saves: <stable namespace/version; other family sentinels; migration impact>. Sources/history/glossary: <IDs>. Endings: <legal distinctions and callbacks>.
+Chooser metadata and both modes: <paths/symbols>. Saves: <stable namespace/version; original-edition narrative/art; explicit edition switching without reset; other family sentinels; migration impact>. Sources/history/glossary: <IDs>. Endings: <legal distinctions and callbacks>.
 Fill the consistency verification matrix with head, commands/results, browser/viewport, actual AT/method, artifact paths, remaining gaps and explicit waivers. No unrun pass.
 Recommended external reviews: <purpose; actually obtained or not>. Release authority: <draft PR only unless separately authorized; never granted by this skill>.

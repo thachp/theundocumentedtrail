@@ -15,7 +15,7 @@ test('actual shared Guided and Planning render every new scene, outcome, ending 
   const {App}=await server.ssrLoadModule('/src/App.jsx'),{BeginnerApp}=await server.ssrLoadModule('/src/BeginnerApp.jsx'),{JourneyHistoryDialog}=await server.ssrLoadModule('/src/JourneyHistory.jsx');
   for(const story of AUTHORED_STORIES){
    globalThis.window.location.search=`?story=${story.id}`;globalThis.window.location.href=`https://example.test/?story=${story.id}`;
-   const save=game=>storage.setItem(authoredSaveKey(story.id),JSON.stringify({...game.storyState,version:1,storyId:story.id}));
+   const save=game=>storage.setItem(authoredSaveKey(story.id),JSON.stringify({...game.storyState,version:2,storyId:story.id}));
    let game=authoredGame(story);
    for(const scene of story.scenes){
     save(game);

@@ -552,13 +552,33 @@ function ContentSettings({ currentMode, onSelect, onClose }) {
 }
 
 function Tutorial({ step, onBack, onNext, onFinish, historical = false }) {
+  const tutorialRef = useRef(null);
+  const returnFocus = useRef(typeof document === "undefined" ? null : document.activeElement);
+  useEffect(() => {
+    tutorialRef.current?.querySelector(".tutorial-next")?.focus();
+    return () => {
+      const previous = returnFocus.current;
+      const fallback = ['.cinematic-tools-trigger','[aria-label="Open tutorial"]','[data-ending-return]'].flatMap(selector=>[...document.querySelectorAll(selector)]).find(node=>node.getClientRects().length);
+      (previous?.isConnected && previous.getClientRects().length ? previous : fallback)?.focus({preventScroll:true});
+    };
+  }, []);
+  const containFocus = event => {
+    if (event.key === "Escape") { event.preventDefault(); event.stopPropagation(); onFinish(); return; }
+    if (event.key !== "Tab") return;
+    const buttons = [...tutorialRef.current.querySelectorAll("button:not([disabled]),a[href],[tabindex='0']")];
+    const first = buttons[0], last = buttons.at(-1);
+    if (!first) return;
+    const outside = !tutorialRef.current.contains(document.activeElement);
+    if (event.shiftKey && (document.activeElement === first || outside)) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && (document.activeElement === last || outside)) { event.preventDefault(); first.focus(); }
+  };
   const steps = historical ? CAMBODIA_TUTORIAL_STEPS : TUTORIAL_STEPS;
   const item = steps[step];
   const Icon = item.icon;
   const isLastStep = step === steps.length - 1;
   return (
-    <div className="cinematic-tutorial-backdrop" onKeyDown={(event) => event.key === "Escape" && onFinish()}>
-      <section className="cinematic-tutorial" role="dialog" aria-modal="true" aria-labelledby="tutorial-title">
+    <div className="cinematic-tutorial-backdrop" onKeyDown={containFocus}>
+      <section ref={tutorialRef} className="cinematic-tutorial" role="dialog" aria-modal="true" aria-labelledby="tutorial-title">
         <header>
           <span className="cinematic-tutorial-icon"><Icon weight="duotone" /></span>
           <button onClick={onFinish} data-sound="dismiss">Skip tutorial</button>
@@ -956,7 +976,7 @@ export function BeginnerApp() {
               {soundtrackOn ? <SpeakerHigh weight="fill" /> : <MusicNotes weight="duotone" />}
               <span className="cinematic-tool-label">{soundtrackOn ? "Pause soundtrack" : "Play soundtrack"}</span>
             </button>
-            <a href={isCambodiaJourney(game) ? `/?mode=full&story=${game.familyId}` : "/?mode=full"} className="cinematic-full-link" data-tooltip="Open the detailed planning view" data-tooltip-align="right">Planning view</a>
+            <a href={isCambodiaJourney(game) ? `/?mode=full&story=${game.familyId}${game.householdEdition===1?"&edition=1":""}` : "/?mode=full"} className="cinematic-full-link" data-tooltip="Open the detailed planning view" data-tooltip-align="right">Planning view</a>
           </div>
         </div>
       </header>

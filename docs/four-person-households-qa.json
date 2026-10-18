@@ -1,0 +1,1098 @@
+{
+  "workspace": "/workspace/four-person-households",
+  "baseHead": "9afb9cd6321df88dccd31a26468a72ae2c6c7bf6",
+  "testedState": "Validated working tree committed in this PR; runtime fingerprint below excludes docs and git metadata.",
+  "runtimeEvidence": {
+    "fullPathsAndZoom": {
+      "assets/index-D-UFULps.js": "c19d9245c5c01e35426269b1c1efbb782026a00ffeb75cc2d7bcdf01672d8ee9",
+      "assets/index-Bba0yJM8.css": "81832ad908368d8de7aa9513c98f45dd7be6c50b4997a55fb760c53fdbe4c839",
+      "assets/cambodia/cover.webp": "858aa2c93fc114ff0803ba0380bfb0f94f1950ccc1c30e2206a7ca3f9f45988b",
+      "assets/cambodia/C03.webp": "0d8464c496ddee73f67c05cb685291acd43dc2937cd28cf4d94ef8334b170893",
+      "assets/cambodia/C07.webp": "ff5e1121f9d102efb1e2030a342da8d6a28921b993ef136cffcf8526215a3175",
+      "assets/cambodia/C08.webp": "3c5a739f81795a696f2de77de2b3011208bbd10d450327f1f7b2a62b9531785e",
+      "assets/cambodia/provenance.json": "e676a6ebfe8d949193ac028e93875407d936ab9001165c0b05a81211cff2c376",
+      "assets/cambodia/C02.webp": "5b4258a5fb985792cd095f7ae9f335a989ad4742c70383438dc8dd25367f5974",
+      "assets/cambodia/C09.webp": "330ee33f7a499470c0835a456e6e855fb8553518fbdf7264c5d1968325446daf",
+      "assets/cambodia/C06.webp": "30c940ebc07bbfa32cbc64003dcd57d12085a2c331f1bd947d73b612b61ab87f",
+      "assets/cambodia/C05.webp": "2c0e64466687178fbfad10d71edf6768e3176ef1319595f15e81b3f949994714",
+      "assets/cambodia/C04.webp": "0ea8e7287602b4ba41331ca77035bf96e629f2356c41ecbc96a52ab4190eb7ae",
+      "assets/cambodia/C01.webp": "3708b149ba1b6d1eac469afbc11a1085a9517530ff4e6adfae1bdf1338765fb4",
+      "assets/cambodia/README.md": "5a0dca7d66d1805231d4a887b64d6e65442424f23993d50e0cf07ae0579c483c",
+      "assets/mariel-1980/cover.webp": "e51d8e9ed720c2dbbff708f5d6a4f7ac5bceccceaa1ee62f735ebaca7d8323a2",
+      "assets/mariel-1980/mariel-03.webp": "c6faafba7c8ab37f3fe5dbf2d05e39e4a2e2ce5da63e14250f527311d533af9c",
+      "assets/mariel-1980/mariel-06.webp": "2c877bc92adf9f8d579f878fec39873791bd785247b4275ef08e86dab9beda11",
+      "assets/mariel-1980/mariel-01.webp": "a364a7a006d36aeef7818e4278ac3257db7be8e3c263784c3d3af3f7ffef0acb",
+      "assets/mariel-1980/provenance.json": "447ee256ba47b46c593a9fd0ad9e0df53a073d066fdce1166e5ba8c26999944c",
+      "assets/mariel-1980/mariel-07.webp": "b33e0d44c5ccf2c363f3c16ce29e758dd661ff7847e903eec5cf1398545926d1",
+      "assets/mariel-1980/mariel-09.webp": "7abf8c24efae3afebf36fc2ae844dd8d4de7440b83bf401d64e99fa75fb3b002",
+      "assets/mariel-1980/mariel-04.webp": "9390df43a34a58391ee94622d81279be4f1a3e6fa1239f0573859c7bb2faea7c",
+      "assets/mariel-1980/mariel-02.webp": "983b6551f55b18de853259171d7372e547f2eb9387f71365ca172b10a83741f6",
+      "assets/mariel-1980/mariel-10.webp": "7668dc5e5322778792a44d377de30d0cc3a6d2a8d83b2c2fec6496cc27cbff07",
+      "assets/mariel-1980/mariel-05.webp": "e6c727041b055a8e0524e8a191d0fa7d46ff69bd93774484f95274e2119d20c3",
+      "assets/mariel-1980/mariel-08.webp": "70737ee0c94bb125752043e4253171fed97686f39df6d943006cdcd10f41e795",
+      "assets/vietnam-bidong-1978/cover.webp": "3787deba6db2a5f3571529af4a7638f5cae7f2502a8b6d338950b8435a0103d0",
+      "assets/vietnam-bidong-1978/bidong-08.webp": "887c1f6b108f06c83efaefd3af86edc60646943cdc48ee676bfa6790aacd2dc3",
+      "assets/vietnam-bidong-1978/provenance.json": "ad16f5be1272ff9437c9428b2eb648534eba40d91422827108d92eabce490766",
+      "assets/vietnam-bidong-1978/bidong-06.webp": "e22a085d18b42e88e900223d1c6a61fbddcbbe6ff80edfa2e3c22c5d863f6dac",
+      "assets/vietnam-bidong-1978/bidong-03.webp": "bb96fd3fcecdfeccc5cf0cd3a6ed852004c02e9fe4dbbe2ae3261856ba40eb1c",
+      "assets/vietnam-bidong-1978/bidong-04.webp": "04b51b3fd26808af157a641463983c2ce7b850635b78a8e323a00044963aabad",
+      "assets/vietnam-bidong-1978/bidong-02.webp": "eeb3b501146087a32c2da938f63f72b8f84d46b96d94614e6b449708cbf344c4",
+      "assets/vietnam-bidong-1978/bidong-07.webp": "36f73e7b92c40e34f05a3a92bd48ee84e81e63e00764eb7ebe95d89764154e92",
+      "assets/vietnam-bidong-1978/bidong-05.webp": "1d9515a7698218e650b1273a320c61af72ed3622ac1e6f54f098923de078aea8",
+      "assets/vietnam-bidong-1978/bidong-01.webp": "ea9456f103d30611814cbe96ccabcf5cd17f32d9833c3dbd7a57e54051f24528",
+      "assets/vietnam-bidong-1978/bidong-09.webp": "33dd219725407b523155b6a5d10a15177e5825cdebb6ba4565f34c5ddda2dd0b"
+    },
+    "latestFocusReadonlyCompatibility": {
+      "assets/index-CDZF1gFz.js": "c33bafcbbb93aba6113cef1c43001a545b894f9b458b30c64007978c3fc431c6",
+      "assets/index-Bba0yJM8.css": "81832ad908368d8de7aa9513c98f45dd7be6c50b4997a55fb760c53fdbe4c839"
+    }
+  },
+  "matrices": {
+    "fullPaths": {
+      "pass": 18,
+      "total": 18,
+      "report": "final-path-report.json",
+      "coverage": "3 stories × Guided/Planning ×1365/390/320. Normal chooser; four named portraits/crops and >=44px portrait targets; fourth-person detail; optional expanded sources; Guided five-step tutorial; opening/intermediate/final heroes; map; refreshscene3; all first-choice-path outcomes/endings; no JS errors."
+    },
+    "legacyCompatibility": {
+      "pass": 6,
+      "total": 6,
+      "report": "compat-report.json",
+      "coverage": "Frozen-module v1 scene2 fixtures, original text, legacy hero and all3 legacy portrait images; explicit revisedv2; old/new resume actions; original modeflip and refresh; nonempty original archive and v1 bytes preserved; other-family sentinels untouched."
+    },
+    "revisedModeResume": {
+      "pass": 6,
+      "total": 6,
+      "report": "revised-mode-report.json",
+      "coverage": "New v2 scene2, both mode-switch directions and reload; 4 people and byte-identical v2 slot."
+    },
+    "readonlyCambodia": {
+      "pass": 8,
+      "total": 8,
+      "report": "readonly-report.json",
+      "coverage": "both modes ×v1/v2 ×malformed/empty raw. Continue scene1→2 in tab, pageshow/visibility/storage restore does not reset progress or overwrite bytes."
+    },
+    "tutorialFocus": {
+      "pass": 9,
+      "total": 9,
+      "report": "focus-report.json",
+      "coverage": "3stories ×1365/390/320; Tab and ShiftTab wrapping; Escape close; visible returntarget Open tutorialdesktop/Journeytoolsmobile."
+    },
+    "nativeZoom": {
+      "pass": 18,
+      "total": 18,
+      "report": "zoom-report.json",
+      "coverage": "3 fixed nativewindow widths1440/780/640 ×3stories ×bothmodes. Chrome native200% verified half innerwidth, unchanged outerwidth, DPR2, CSSzoom1. Four reachable>=44portraittargets, no horizontaloverflow; expandedhistory bottomreturn; reducedmotion preference emulation."
+    }
+  },
+  "limitations": [
+    "First-choice path per scene, not exhaustive browser choice branches. Root unit/exhaustive tests cover broader choices.",
+    "Hero screenshots verify representative opening/intermediate/final states; source/art provenance inspection owned storyagents/root.",
+    "Reduced motion is media emulation, not OS acceptance.",
+    "Actual screen-reader/assistive-technology test unrun. Keyboard/nativezoom are separate evidence.",
+    "No production access, real profiles/saves, code edits or publication."
+  ],
+  "supersededHarnessFailures": [
+    "Exact prose matcher in Guided omitted curlyquotes; corrected substring verification.",
+    "Readonly used nonexistent cinematic-dialogue class; corrected actual blockquote selector.",
+    "Two immediate image.complete checks raced image load; explicit awaitload reruns passed.",
+    "Case-sensitive restored button matcher rejected CSS-uppercase JOURNEY TOOLS; corrected case-insensitive check."
+  ],
+  "productDefectsFoundAndFixedByRoot": [
+    "Planning original-edition portrait context lost when only familyId passed; root propagated full game; legacy portrait checks now pass.",
+    "Shared Guided tutorial initially allowed Tab into background; root added focus containment/Escape/visible focus restoration; latest9cases pass."
+  ],
+  "runtimeFingerprint": {
+    "algorithm": "SHA256 of newline-joined sorted path:SHA256(file bytes) rows for all src/public files and package.json",
+    "sha256": "7903b9afc0e78ab07ad1557902e97d5f0860552b948e928d8112a8225205e0b3"
+  },
+  "automated": {
+    "command": "npm test",
+    "tests": 166,
+    "pass": 166,
+    "fail": 0,
+    "enumeratedChoiceSequences": 79244,
+    "build": "npm run build PASS; required Sites artifacts present",
+    "warning": "Large client JS bundle warning remains; frozen original text is bundled for compatible resume."
+  },
+  "art": {
+    "revisedImages": 31,
+    "revisedBytes": 7394306,
+    "retainedOriginalFiles": 33,
+    "provenance": "Actual encoded dimensions and SHA256 checked; source agents inspected every new illustration; original inventory verified against base commit."
+  },
+  "caseEvidence": {
+    "final-path-report": [
+      {
+        "story": "cambodia-1979",
+        "mode": "guided",
+        "width": 1365,
+        "pass": true,
+        "checks": [
+          "normal chooser",
+          "four named portraits and targets; no horizontal overflow",
+          "optional history and source links",
+          "five tutorial steps; keyboard focus result recorded separately",
+          "fourth person story dialog",
+          "refresh retains scene3",
+          "geographical map",
+          "opening intermediate final heroes differ; full first-choice path and ending"
+        ],
+        "heroImages": [
+          "/assets/cambodia/C01.webp",
+          "/assets/cambodia/C03.webp",
+          "/assets/cambodia/C09.webp"
+        ],
+        "errors": []
+      },
+      {
+        "story": "cambodia-1979",
+        "mode": "guided",
+        "width": 390,
+        "pass": true,
+        "checks": [
+          "normal chooser",
+          "four named portraits and targets; no horizontal overflow",
+          "optional history and source links",
+          "five tutorial steps; keyboard focus result recorded separately",
+          "fourth person story dialog",
+          "refresh retains scene3",
+          "geographical map",
+          "opening intermediate final heroes differ; full first-choice path and ending"
+        ],
+        "heroImages": [
+          "/assets/cambodia/C01.webp",
+          "/assets/cambodia/C03.webp",
+          "/assets/cambodia/C09.webp"
+        ],
+        "errors": []
+      },
+      {
+        "story": "cambodia-1979",
+        "mode": "guided",
+        "width": 320,
+        "pass": true,
+        "checks": [
+          "normal chooser",
+          "four named portraits and targets; no horizontal overflow",
+          "optional history and source links",
+          "five tutorial steps; keyboard focus result recorded separately",
+          "fourth person story dialog",
+          "refresh retains scene3",
+          "geographical map",
+          "opening intermediate final heroes differ; full first-choice path and ending"
+        ],
+        "heroImages": [
+          "/assets/cambodia/C01.webp",
+          "/assets/cambodia/C03.webp",
+          "/assets/cambodia/C09.webp"
+        ],
+        "errors": []
+      },
+      {
+        "story": "cambodia-1979",
+        "mode": "full",
+        "width": 1365,
+        "pass": true,
+        "checks": [
+          "normal chooser",
+          "four named portraits and targets; no horizontal overflow",
+          "optional history and source links",
+          "fourth person story dialog",
+          "refresh retains scene3",
+          "geographical map",
+          "opening intermediate final heroes differ; full first-choice path and ending"
+        ],
+        "heroImages": [
+          "/assets/cambodia/C01.webp",
+          "/assets/cambodia/C03.webp",
+          "/assets/cambodia/C09.webp"
+        ],
+        "errors": []
+      },
+      {
+        "story": "cambodia-1979",
+        "mode": "full",
+        "width": 390,
+        "pass": true,
+        "checks": [
+          "normal chooser",
+          "four named portraits and targets; no horizontal overflow",
+          "optional history and source links",
+          "fourth person story dialog",
+          "refresh retains scene3",
+          "geographical map",
+          "opening intermediate final heroes differ; full first-choice path and ending"
+        ],
+        "heroImages": [
+          "/assets/cambodia/C01.webp",
+          "/assets/cambodia/C03.webp",
+          "/assets/cambodia/C09.webp"
+        ],
+        "errors": []
+      },
+      {
+        "story": "cambodia-1979",
+        "mode": "full",
+        "width": 320,
+        "pass": true,
+        "checks": [
+          "normal chooser",
+          "four named portraits and targets; no horizontal overflow",
+          "optional history and source links",
+          "fourth person story dialog",
+          "refresh retains scene3",
+          "geographical map",
+          "opening intermediate final heroes differ; full first-choice path and ending"
+        ],
+        "heroImages": [
+          "/assets/cambodia/C01.webp",
+          "/assets/cambodia/C03.webp",
+          "/assets/cambodia/C09.webp"
+        ],
+        "errors": []
+      },
+      {
+        "story": "mariel-1980",
+        "mode": "guided",
+        "width": 1365,
+        "pass": true,
+        "checks": [
+          "normal chooser",
+          "four named portraits and targets; no horizontal overflow",
+          "optional history and source links",
+          "five tutorial steps; keyboard focus result recorded separately",
+          "fourth person story dialog",
+          "refresh retains scene3",
+          "geographical map",
+          "opening intermediate final heroes differ; full first-choice path and ending"
+        ],
+        "heroImages": [
+          "/assets/mariel-1980/mariel-01.webp",
+          "/assets/mariel-1980/mariel-03.webp",
+          "/assets/mariel-1980/mariel-10.webp"
+        ],
+        "errors": []
+      },
+      {
+        "story": "mariel-1980",
+        "mode": "guided",
+        "width": 390,
+        "pass": true,
+        "checks": [
+          "normal chooser",
+          "four named portraits and targets; no horizontal overflow",
+          "optional history and source links",
+          "five tutorial steps; keyboard focus result recorded separately",
+          "fourth person story dialog",
+          "refresh retains scene3",
+          "geographical map",
+          "opening intermediate final heroes differ; full first-choice path and ending"
+        ],
+        "heroImages": [
+          "/assets/mariel-1980/mariel-01.webp",
+          "/assets/mariel-1980/mariel-03.webp",
+          "/assets/mariel-1980/mariel-10.webp"
+        ],
+        "errors": []
+      },
+      {
+        "story": "mariel-1980",
+        "mode": "guided",
+        "width": 320,
+        "pass": true,
+        "checks": [
+          "normal chooser",
+          "four named portraits and targets; no horizontal overflow",
+          "optional history and source links",
+          "five tutorial steps; keyboard focus result recorded separately",
+          "fourth person story dialog",
+          "refresh retains scene3",
+          "geographical map",
+          "opening intermediate final heroes differ; full first-choice path and ending"
+        ],
+        "heroImages": [
+          "/assets/mariel-1980/mariel-01.webp",
+          "/assets/mariel-1980/mariel-03.webp",
+          "/assets/mariel-1980/mariel-10.webp"
+        ],
+        "errors": []
+      },
+      {
+        "story": "mariel-1980",
+        "mode": "full",
+        "width": 1365,
+        "pass": true,
+        "checks": [
+          "normal chooser",
+          "four named portraits and targets; no horizontal overflow",
+          "optional history and source links",
+          "fourth person story dialog",
+          "refresh retains scene3",
+          "geographical map",
+          "opening intermediate final heroes differ; full first-choice path and ending"
+        ],
+        "heroImages": [
+          "/assets/mariel-1980/mariel-01.webp",
+          "/assets/mariel-1980/mariel-03.webp",
+          "/assets/mariel-1980/mariel-10.webp"
+        ],
+        "errors": []
+      },
+      {
+        "story": "mariel-1980",
+        "mode": "full",
+        "width": 390,
+        "pass": true,
+        "checks": [
+          "normal chooser",
+          "four named portraits and targets; no horizontal overflow",
+          "optional history and source links",
+          "fourth person story dialog",
+          "refresh retains scene3",
+          "geographical map",
+          "opening intermediate final heroes differ; full first-choice path and ending"
+        ],
+        "heroImages": [
+          "/assets/mariel-1980/mariel-01.webp",
+          "/assets/mariel-1980/mariel-03.webp",
+          "/assets/mariel-1980/mariel-10.webp"
+        ],
+        "errors": []
+      },
+      {
+        "story": "mariel-1980",
+        "mode": "full",
+        "width": 320,
+        "pass": true,
+        "checks": [
+          "normal chooser",
+          "four named portraits and targets; no horizontal overflow",
+          "optional history and source links",
+          "fourth person story dialog",
+          "refresh retains scene3",
+          "geographical map",
+          "opening intermediate final heroes differ; full first-choice path and ending"
+        ],
+        "heroImages": [
+          "/assets/mariel-1980/mariel-01.webp",
+          "/assets/mariel-1980/mariel-03.webp",
+          "/assets/mariel-1980/mariel-10.webp"
+        ],
+        "errors": []
+      },
+      {
+        "story": "vietnam-bidong-1978",
+        "mode": "guided",
+        "width": 1365,
+        "pass": true,
+        "checks": [
+          "normal chooser",
+          "four named portraits and targets; no horizontal overflow",
+          "optional history and source links",
+          "five tutorial steps; keyboard focus result recorded separately",
+          "fourth person story dialog",
+          "refresh retains scene3",
+          "geographical map",
+          "opening intermediate final heroes differ; full first-choice path and ending"
+        ],
+        "heroImages": [
+          "/assets/vietnam-bidong-1978/bidong-01.webp",
+          "/assets/vietnam-bidong-1978/bidong-03.webp",
+          "/assets/vietnam-bidong-1978/bidong-09.webp"
+        ],
+        "errors": []
+      },
+      {
+        "story": "vietnam-bidong-1978",
+        "mode": "guided",
+        "width": 390,
+        "pass": true,
+        "checks": [
+          "normal chooser",
+          "four named portraits and targets; no horizontal overflow",
+          "optional history and source links",
+          "five tutorial steps; keyboard focus result recorded separately",
+          "fourth person story dialog",
+          "refresh retains scene3",
+          "geographical map",
+          "opening intermediate final heroes differ; full first-choice path and ending"
+        ],
+        "heroImages": [
+          "/assets/vietnam-bidong-1978/bidong-01.webp",
+          "/assets/vietnam-bidong-1978/bidong-03.webp",
+          "/assets/vietnam-bidong-1978/bidong-09.webp"
+        ],
+        "errors": []
+      },
+      {
+        "story": "vietnam-bidong-1978",
+        "mode": "guided",
+        "width": 320,
+        "pass": true,
+        "checks": [
+          "normal chooser",
+          "four named portraits and targets; no horizontal overflow",
+          "optional history and source links",
+          "five tutorial steps; keyboard focus result recorded separately",
+          "fourth person story dialog",
+          "refresh retains scene3",
+          "geographical map",
+          "opening intermediate final heroes differ; full first-choice path and ending"
+        ],
+        "heroImages": [
+          "/assets/vietnam-bidong-1978/bidong-01.webp",
+          "/assets/vietnam-bidong-1978/bidong-03.webp",
+          "/assets/vietnam-bidong-1978/bidong-09.webp"
+        ],
+        "errors": []
+      },
+      {
+        "story": "vietnam-bidong-1978",
+        "mode": "full",
+        "width": 1365,
+        "pass": true,
+        "checks": [
+          "normal chooser",
+          "four named portraits and targets; no horizontal overflow",
+          "optional history and source links",
+          "fourth person story dialog",
+          "refresh retains scene3",
+          "geographical map",
+          "opening intermediate final heroes differ; full first-choice path and ending"
+        ],
+        "heroImages": [
+          "/assets/vietnam-bidong-1978/bidong-01.webp",
+          "/assets/vietnam-bidong-1978/bidong-03.webp",
+          "/assets/vietnam-bidong-1978/bidong-09.webp"
+        ],
+        "errors": []
+      },
+      {
+        "story": "vietnam-bidong-1978",
+        "mode": "full",
+        "width": 390,
+        "pass": true,
+        "checks": [
+          "normal chooser",
+          "four named portraits and targets; no horizontal overflow",
+          "optional history and source links",
+          "fourth person story dialog",
+          "refresh retains scene3",
+          "geographical map",
+          "opening intermediate final heroes differ; full first-choice path and ending"
+        ],
+        "heroImages": [
+          "/assets/vietnam-bidong-1978/bidong-01.webp",
+          "/assets/vietnam-bidong-1978/bidong-03.webp",
+          "/assets/vietnam-bidong-1978/bidong-09.webp"
+        ],
+        "errors": []
+      },
+      {
+        "story": "vietnam-bidong-1978",
+        "mode": "full",
+        "width": 320,
+        "pass": true,
+        "checks": [
+          "normal chooser",
+          "four named portraits and targets; no horizontal overflow",
+          "optional history and source links",
+          "fourth person story dialog",
+          "refresh retains scene3",
+          "geographical map",
+          "opening intermediate final heroes differ; full first-choice path and ending"
+        ],
+        "heroImages": [
+          "/assets/vietnam-bidong-1978/bidong-01.webp",
+          "/assets/vietnam-bidong-1978/bidong-03.webp",
+          "/assets/vietnam-bidong-1978/bidong-09.webp"
+        ],
+        "errors": []
+      }
+    ],
+    "compat-report": [
+      {
+        "id": "mariel-1980",
+        "mode": "guided",
+        "pass": true,
+        "checks": [
+          "frozen original scene2 text, art and three people",
+          "explicit new edition has four people and separate v2",
+          "both resume buttons preserve progress; refresh revised",
+          "mode switch and refresh retain explicit original edition",
+          "v1/archive/other-family sentinel byte preservation"
+        ],
+        "originalPortraits": [
+          {
+            "crop": "595 90 490 700",
+            "image": "/assets/legacy-households/mariel-1980/cover.webp"
+          },
+          {
+            "crop": "80 60 570 750",
+            "image": "/assets/legacy-households/mariel-1980/cover.webp"
+          },
+          {
+            "crop": "1040 210 430 620",
+            "image": "/assets/legacy-households/mariel-1980/cover.webp"
+          }
+        ]
+      },
+      {
+        "id": "mariel-1980",
+        "mode": "full",
+        "pass": true,
+        "checks": [
+          "frozen original scene2 text, art and three people",
+          "explicit new edition has four people and separate v2",
+          "both resume buttons preserve progress; refresh revised",
+          "mode switch and refresh retain explicit original edition",
+          "v1/archive/other-family sentinel byte preservation"
+        ],
+        "originalPortraits": [
+          {
+            "crop": "595 90 490 700",
+            "image": "/assets/legacy-households/mariel-1980/cover.webp"
+          },
+          {
+            "crop": "80 60 570 750",
+            "image": "/assets/legacy-households/mariel-1980/cover.webp"
+          },
+          {
+            "crop": "1040 210 430 620",
+            "image": "/assets/legacy-households/mariel-1980/cover.webp"
+          }
+        ]
+      },
+      {
+        "id": "vietnam-bidong-1978",
+        "mode": "guided",
+        "pass": true,
+        "checks": [
+          "frozen original scene2 text, art and three people",
+          "explicit new edition has four people and separate v2",
+          "both resume buttons preserve progress; refresh revised",
+          "mode switch and refresh retain explicit original edition",
+          "v1/archive/other-family sentinel byte preservation"
+        ],
+        "originalPortraits": [
+          {
+            "crop": "595 90 490 700",
+            "image": "/assets/legacy-households/vietnam-bidong-1978/cover.webp"
+          },
+          {
+            "crop": "80 60 570 750",
+            "image": "/assets/legacy-households/vietnam-bidong-1978/cover.webp"
+          },
+          {
+            "crop": "1040 210 430 620",
+            "image": "/assets/legacy-households/vietnam-bidong-1978/cover.webp"
+          }
+        ]
+      },
+      {
+        "id": "vietnam-bidong-1978",
+        "mode": "full",
+        "pass": true,
+        "checks": [
+          "frozen original scene2 text, art and three people",
+          "explicit new edition has four people and separate v2",
+          "both resume buttons preserve progress; refresh revised",
+          "mode switch and refresh retain explicit original edition",
+          "v1/archive/other-family sentinel byte preservation"
+        ],
+        "originalPortraits": [
+          {
+            "crop": "595 90 490 700",
+            "image": "/assets/legacy-households/vietnam-bidong-1978/cover.webp"
+          },
+          {
+            "crop": "80 60 570 750",
+            "image": "/assets/legacy-households/vietnam-bidong-1978/cover.webp"
+          },
+          {
+            "crop": "1040 210 430 620",
+            "image": "/assets/legacy-households/vietnam-bidong-1978/cover.webp"
+          }
+        ]
+      },
+      {
+        "id": "cambodia-1979",
+        "mode": "guided",
+        "pass": true,
+        "checks": [
+          "frozen original scene2 text, art and three people",
+          "explicit new edition has four people and separate v2",
+          "both resume buttons preserve progress; refresh revised",
+          "mode switch and refresh retain explicit original edition",
+          "v1/archive/other-family sentinel byte preservation"
+        ],
+        "originalPortraits": [
+          {
+            "crop": "625 125 330 470",
+            "image": "/assets/legacy-households/cambodia/cover.webp"
+          },
+          {
+            "crop": "320 75 350 500",
+            "image": "/assets/legacy-households/cambodia/cover.webp"
+          },
+          {
+            "crop": "970 155 350 500",
+            "image": "/assets/legacy-households/cambodia/cover.webp"
+          }
+        ]
+      },
+      {
+        "id": "cambodia-1979",
+        "mode": "full",
+        "pass": true,
+        "checks": [
+          "frozen original scene2 text, art and three people",
+          "explicit new edition has four people and separate v2",
+          "both resume buttons preserve progress; refresh revised",
+          "mode switch and refresh retain explicit original edition",
+          "v1/archive/other-family sentinel byte preservation"
+        ],
+        "originalPortraits": [
+          {
+            "crop": "625 125 330 470",
+            "image": "/assets/legacy-households/cambodia/cover.webp"
+          },
+          {
+            "crop": "320 75 350 500",
+            "image": "/assets/legacy-households/cambodia/cover.webp"
+          },
+          {
+            "crop": "970 155 350 500",
+            "image": "/assets/legacy-households/cambodia/cover.webp"
+          }
+        ]
+      }
+    ],
+    "revised-mode-report": [
+      {
+        "id": "cambodia-1979",
+        "mode": "guided",
+        "pass": true
+      },
+      {
+        "id": "cambodia-1979",
+        "mode": "full",
+        "pass": true
+      },
+      {
+        "id": "mariel-1980",
+        "mode": "guided",
+        "pass": true
+      },
+      {
+        "id": "mariel-1980",
+        "mode": "full",
+        "pass": true
+      },
+      {
+        "id": "vietnam-bidong-1978",
+        "mode": "guided",
+        "pass": true
+      },
+      {
+        "id": "vietnam-bidong-1978",
+        "mode": "full",
+        "pass": true
+      }
+    ],
+    "readonly-report": [
+      {
+        "mode": "guided",
+        "edition": 1,
+        "raw": "unreadable original bytes",
+        "pass": true
+      },
+      {
+        "mode": "guided",
+        "edition": 1,
+        "raw": "",
+        "pass": true
+      },
+      {
+        "mode": "guided",
+        "edition": 2,
+        "raw": "unreadable original bytes",
+        "pass": true
+      },
+      {
+        "mode": "guided",
+        "edition": 2,
+        "raw": "",
+        "pass": true
+      },
+      {
+        "mode": "full",
+        "edition": 1,
+        "raw": "unreadable original bytes",
+        "pass": true
+      },
+      {
+        "mode": "full",
+        "edition": 1,
+        "raw": "",
+        "pass": true
+      },
+      {
+        "mode": "full",
+        "edition": 2,
+        "raw": "unreadable original bytes",
+        "pass": true
+      },
+      {
+        "mode": "full",
+        "edition": 2,
+        "raw": "",
+        "pass": true
+      }
+    ],
+    "focus-report": [
+      {
+        "id": "cambodia-1979",
+        "width": 1365,
+        "restored": {
+          "text": "",
+          "aria": "Open tutorial",
+          "visible": true
+        },
+        "pass": true
+      },
+      {
+        "id": "cambodia-1979",
+        "width": 390,
+        "restored": {
+          "text": "JOURNEY TOOLS",
+          "aria": null,
+          "visible": true
+        },
+        "pass": true
+      },
+      {
+        "id": "cambodia-1979",
+        "width": 320,
+        "restored": {
+          "text": "JOURNEY TOOLS",
+          "aria": null,
+          "visible": true
+        },
+        "pass": true
+      },
+      {
+        "id": "mariel-1980",
+        "width": 1365,
+        "restored": {
+          "text": "",
+          "aria": "Open tutorial",
+          "visible": true
+        },
+        "pass": true
+      },
+      {
+        "id": "mariel-1980",
+        "width": 390,
+        "restored": {
+          "text": "JOURNEY TOOLS",
+          "aria": null,
+          "visible": true
+        },
+        "pass": true
+      },
+      {
+        "id": "mariel-1980",
+        "width": 320,
+        "restored": {
+          "text": "JOURNEY TOOLS",
+          "aria": null,
+          "visible": true
+        },
+        "pass": true
+      },
+      {
+        "id": "vietnam-bidong-1978",
+        "width": 1365,
+        "restored": {
+          "text": "",
+          "aria": "Open tutorial",
+          "visible": true
+        },
+        "pass": true
+      },
+      {
+        "id": "vietnam-bidong-1978",
+        "width": 390,
+        "restored": {
+          "text": "JOURNEY TOOLS",
+          "aria": null,
+          "visible": true
+        },
+        "pass": true
+      },
+      {
+        "id": "vietnam-bidong-1978",
+        "width": 320,
+        "restored": {
+          "text": "JOURNEY TOOLS",
+          "aria": null,
+          "visible": true
+        },
+        "pass": true
+      }
+    ]
+  },
+  "zoomEvidence": [
+    {
+      "nativeWidth": 1440,
+      "checks": [
+        {
+          "id": "cambodia-1979",
+          "mode": "guided",
+          "metrics": {
+            "outerWidth": 1440,
+            "innerWidth": 720,
+            "dpr": 2,
+            "scroll": 720,
+            "rootZoom": "1",
+            "motion": true
+          }
+        },
+        {
+          "id": "cambodia-1979",
+          "mode": "full",
+          "metrics": {
+            "outerWidth": 1440,
+            "innerWidth": 720,
+            "dpr": 2,
+            "scroll": 720,
+            "rootZoom": "1",
+            "motion": true
+          }
+        },
+        {
+          "id": "mariel-1980",
+          "mode": "guided",
+          "metrics": {
+            "outerWidth": 1440,
+            "innerWidth": 720,
+            "dpr": 2,
+            "scroll": 720,
+            "rootZoom": "1",
+            "motion": true
+          }
+        },
+        {
+          "id": "mariel-1980",
+          "mode": "full",
+          "metrics": {
+            "outerWidth": 1440,
+            "innerWidth": 720,
+            "dpr": 2,
+            "scroll": 720,
+            "rootZoom": "1",
+            "motion": true
+          }
+        },
+        {
+          "id": "vietnam-bidong-1978",
+          "mode": "guided",
+          "metrics": {
+            "outerWidth": 1440,
+            "innerWidth": 720,
+            "dpr": 2,
+            "scroll": 720,
+            "rootZoom": "1",
+            "motion": true
+          }
+        },
+        {
+          "id": "vietnam-bidong-1978",
+          "mode": "full",
+          "metrics": {
+            "outerWidth": 1440,
+            "innerWidth": 720,
+            "dpr": 2,
+            "scroll": 720,
+            "rootZoom": "1",
+            "motion": true
+          }
+        }
+      ],
+      "before": {
+        "outerWidth": 1440,
+        "innerWidth": 1440,
+        "dpr": 1
+      },
+      "pass": true
+    },
+    {
+      "nativeWidth": 780,
+      "checks": [
+        {
+          "id": "cambodia-1979",
+          "mode": "guided",
+          "metrics": {
+            "outerWidth": 780,
+            "innerWidth": 390,
+            "dpr": 2,
+            "scroll": 390,
+            "rootZoom": "1",
+            "motion": true
+          }
+        },
+        {
+          "id": "cambodia-1979",
+          "mode": "full",
+          "metrics": {
+            "outerWidth": 780,
+            "innerWidth": 390,
+            "dpr": 2,
+            "scroll": 390,
+            "rootZoom": "1",
+            "motion": true
+          }
+        },
+        {
+          "id": "mariel-1980",
+          "mode": "guided",
+          "metrics": {
+            "outerWidth": 780,
+            "innerWidth": 390,
+            "dpr": 2,
+            "scroll": 390,
+            "rootZoom": "1",
+            "motion": true
+          }
+        },
+        {
+          "id": "mariel-1980",
+          "mode": "full",
+          "metrics": {
+            "outerWidth": 780,
+            "innerWidth": 390,
+            "dpr": 2,
+            "scroll": 390,
+            "rootZoom": "1",
+            "motion": true
+          }
+        },
+        {
+          "id": "vietnam-bidong-1978",
+          "mode": "guided",
+          "metrics": {
+            "outerWidth": 780,
+            "innerWidth": 390,
+            "dpr": 2,
+            "scroll": 390,
+            "rootZoom": "1",
+            "motion": true
+          }
+        },
+        {
+          "id": "vietnam-bidong-1978",
+          "mode": "full",
+          "metrics": {
+            "outerWidth": 780,
+            "innerWidth": 390,
+            "dpr": 2,
+            "scroll": 390,
+            "rootZoom": "1",
+            "motion": true
+          }
+        }
+      ],
+      "before": {
+        "outerWidth": 780,
+        "innerWidth": 780,
+        "dpr": 1
+      },
+      "pass": true
+    },
+    {
+      "nativeWidth": 640,
+      "checks": [
+        {
+          "id": "cambodia-1979",
+          "mode": "guided",
+          "metrics": {
+            "outerWidth": 640,
+            "innerWidth": 320,
+            "dpr": 2,
+            "scroll": 320,
+            "rootZoom": "1",
+            "motion": true
+          }
+        },
+        {
+          "id": "cambodia-1979",
+          "mode": "full",
+          "metrics": {
+            "outerWidth": 640,
+            "innerWidth": 320,
+            "dpr": 2,
+            "scroll": 320,
+            "rootZoom": "1",
+            "motion": true
+          }
+        },
+        {
+          "id": "mariel-1980",
+          "mode": "guided",
+          "metrics": {
+            "outerWidth": 640,
+            "innerWidth": 320,
+            "dpr": 2,
+            "scroll": 320,
+            "rootZoom": "1",
+            "motion": true
+          }
+        },
+        {
+          "id": "mariel-1980",
+          "mode": "full",
+          "metrics": {
+            "outerWidth": 640,
+            "innerWidth": 320,
+            "dpr": 2,
+            "scroll": 320,
+            "rootZoom": "1",
+            "motion": true
+          }
+        },
+        {
+          "id": "vietnam-bidong-1978",
+          "mode": "guided",
+          "metrics": {
+            "outerWidth": 640,
+            "innerWidth": 320,
+            "dpr": 2,
+            "scroll": 320,
+            "rootZoom": "1",
+            "motion": true
+          }
+        },
+        {
+          "id": "vietnam-bidong-1978",
+          "mode": "full",
+          "metrics": {
+            "outerWidth": 640,
+            "innerWidth": 320,
+            "dpr": 2,
+            "scroll": 320,
+            "rootZoom": "1",
+            "motion": true
+          }
+        }
+      ],
+      "before": {
+        "outerWidth": 640,
+        "innerWidth": 640,
+        "dpr": 1
+      },
+      "pass": true
+    }
+  ]
+}

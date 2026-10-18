@@ -1,3 +1,4 @@
+import { cambodiaEdition } from './cambodiaEdition.js';
 import { CAMBODIA_SCENES, sceneFor } from "./cambodiaStory.js";
 import { projectCoordinate } from "./journeyGeography.js";
 export const PILOT_MAP_BOUNDS = { cambodiaRegion: [98, 10, 108, 17], minnesotaRegion: [-98, 42, -89, 50] };
@@ -7,7 +8,8 @@ const locations = {
   C05: [102.5, 14], C06: [102.5, 14], C07: [102.5, 14],
   C08: [-94.5, 46], C09: [-94.5, 46],
 };
-export function getCambodiaGeography(state) {
+export function getCambodiaGeography(state,game) {
+  const {CAMBODIA_SCENES,sceneFor}=cambodiaEdition(game);
   const index = CAMBODIA_SCENES.indexOf(sceneFor(state));
   const landKey = index >= 7 ? "minnesotaRegion" : "cambodiaRegion";
   const bounds = PILOT_MAP_BOUNDS[landKey];
@@ -17,6 +19,6 @@ export function getCambodiaGeography(state) {
   }));
   const current = itinerary.at(-1);
   const inPanel = itinerary.filter(s => landKey === "minnesotaRegion" ? s.eventId >= "C08" : s.eventId < "C08");
-  return { family: { id: "cambodia-1979", name: "A Place for Tomorrow", shortName: "Dara, Vann & Maly" }, landKey, bounds, itinerary, current, points: inPanel.map(s => projectCoordinate(s.coordinates, bounds)), dateLabel: sceneFor(state).date,
+  return { family: { id: "cambodia-1979", name: "A Place for Tomorrow", shortName: game?.householdEdition===1?"Dara, Vann & Maly":"Dara, Vann, Maly & Sophea" }, landKey, bounds, itinerary, current, points: inPanel.map(s => projectCoordinate(s.coordinates, bounds)), dateLabel: sceneFor(state).date,
     note: "Regional story anchors only, not traveled routes or crossing directions. Separate regional panels avoid inventing a flight path. Intermediate processing and flight itinerary are unspecified." };
 }
