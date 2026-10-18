@@ -1,0 +1,66 @@
+.journey-history-dialog {
+  width: min(720px, calc(100vw - 24px));
+  max-height: calc(100dvh - 32px);
+  padding: 0;
+  color: #ece4d0;
+  background: #102328;
+  border: 1px solid #758b7d;
+  border-radius: 5px;
+  font-family: "IBM Plex Sans", sans-serif;
+  line-height: 1.6;
+  box-shadow: 0 24px 80px #0009;
+  overflow-y: auto;
+}
+.journey-history-dialog::backdrop { background: #020a0edb; }
+.journey-history-content { padding: 24px; }
+.journey-history-content header { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.journey-history-content header > span { font-size: 12px; text-transform: uppercase; letter-spacing: .12em; color: #cbb58b; }
+.journey-history-content h2 { margin: 14px 0; font: 30px/1.2 Georgia, serif; }
+.journey-history-content h3 { margin: 20px 0 5px; font-size: 13px; color: #cbb58b; }
+.journey-history-content p { font-size: 15px; margin: 8px 0 16px; }
+.journey-history-content .history-setting { display: grid; gap: 2px; padding-bottom: 14px; border-bottom: 1px solid #71867d66; }
+.history-setting strong { font-size: 17px; }
+.history-setting span { color: #cbd3c7; font-size: 13px; }
+.journey-history-content .history-fiction { padding: 12px; background: #21383a; border-left: 3px solid #bea36c; font-size: 13px; }
+.journey-history-content .history-content-note, .journey-history-content .history-calendar-note { color: #cbd3c7; font-size: 13px; }
+.journey-history-content button, .scene-history button { min-height: 44px; padding: 9px 14px; border: 1px solid #9eae9c; border-radius: 3px; color: #e7e7d7; background: #294642; cursor: pointer; font: inherit; font-size: 14px; }
+.history-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0; }
+.history-actions button:first-child { color: #172b29; background: #dfc594; font-weight: 600; }
+.history-actions .history-skip, .journey-history-content header button { background: transparent; }
+.history-explore { border-top: 1px solid #71867d66; margin-top: 20px; }
+.history-explore summary { min-height: 48px; padding: 12px 0; font-size: 15px; cursor: pointer; }
+.history-timeline { padding-left: 22px; }
+.history-timeline li { padding: 10px 0; }
+.history-timeline li > span { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: #b4c6b7; }
+.history-timeline li strong { font-size: 14px; }
+.history-timeline li p { font-size: 14px; }
+.history-sources { padding-left: 18px; margin: 10px 0; }
+.history-sources li { padding: 7px 0; font-size: 13px; line-height: 1.5; }
+.history-sources small { display: block; color: #b9c8ba; font-size: 12px; }
+.journey-history-dialog a, .scene-history a { color: #baddcf; text-decoration: underline; text-underline-offset: 3px; }
+.history-new-tab { font-size: .85em; }
+.history-glossary { margin: 20px 0; font-size: 13px; }
+.history-glossary dt { font-weight: 600; margin-top: 10px; }
+.history-glossary dd { margin: 2px 0 8px; color: #cbd3c7; }
+.journey-history-dialog :focus-visible, .scene-history :focus-visible { outline: 3px solid #edc778; outline-offset: 3px; }
+.scene-history { margin: 0 0 16px; border: 1px solid #71867d66; padding: 0 12px; background: #102328; color: #e1dfd0; }
+.scene-history summary { min-height: 48px; padding: 9px 0; cursor: pointer; font-size: 12px; }
+.scene-history summary > span { color: #becbbb; }
+.scene-history summary strong { display: block; font-size: 13px; font-weight: 500; }
+.scene-history p { font-size: 14px; line-height: 1.6; }
+.scene-history button { margin-bottom: 12px; }
+.cinematic-family-copy .history-chooser-setting { display: block; margin-top: 6px; color: #bfcfc2; font-size: 11px; }
+.cinematic-copy .scene-history p { font-size: 14px; }
+.messages-panel .scene-history { margin: 14px 18px; }
+.history-ending-button { min-height: 44px; padding: 10px 14px; margin: 0 0 12px; color: #e5dec8; background: #294642; border: 1px solid #71867d; cursor: pointer; }
+.history-ending-button:focus-visible { outline: 3px solid #edc778; outline-offset: 3px; }
+@media (max-width: 720px) {
+  .journey-history-content { padding: 18px; }
+  .journey-history-content h2 { font-size: 26px; }
+  .history-actions { flex-direction: column; }
+  .history-actions button { width: 100%; }
+  .scene-history summary { font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .journey-history-dialog, .scene-history { scroll-behavior: auto; animation: none; transition: none; }
+}

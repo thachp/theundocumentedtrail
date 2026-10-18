@@ -19,7 +19,7 @@ assign("ramirez", "transport", [-100, 22], "Central Mexico", "Broad regional anc
 assign("ramirez", "checkpointDelay", [-102, 25], "Central-northern Mexico", "Broad regional anchor; checkpoint unspecified");
 assign("ramirez", "policyNews northernWait", [-104, 28], "Northern Mexico", "Broad regional anchor; town unspecified");
 assign("ramirez", "borderCity riverCrossing memorial detention", [-106.5, 31.75], "U.S.–Mexico border region", "Representative border anchor; city, crossing and facility unspecified");
-assign("haddad", "haddadHome", [37.16, 36.2], "Near Aleppo, Syria", "Approximate city-area anchor; home unspecified");
+assign("haddad", "haddadHome", [37.16, 36.2], "Aleppo, Syria", "Approximate city-area anchor; home unspecified");
 assign("haddad", "haddadBorder", [36.8, 36.8], "Türkiye–Syria border region", "Regional anchor; reception town unspecified");
 assign("haddad", "haddadTurkey haddadAegean", [27.14, 38.42], "İzmir / Aegean coast, Türkiye", "Approximate coastal anchor; departure beach unspecified");
 assign("haddad", "haddadMemorial haddadGreece", [26, 39], "Eastern Aegean, Greece", "Regional island anchor; island and reception center unspecified");

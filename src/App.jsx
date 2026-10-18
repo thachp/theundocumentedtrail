@@ -70,6 +70,8 @@ import { loadCurrentGame, saveFamilyGame, selectFamilyGame } from "./saveStore.j
 import { SocialFeedModal, SocialFeedTrigger } from "./SocialFeed.jsx";
 import { Portrait } from "./Portrait.jsx";
 import { JourneyMap } from "./JourneyMap.jsx";
+import { JourneyHistoryDialog, SceneHistory } from "./JourneyHistory.jsx";
+import { getJourneyDate } from "./journeyHistory.js";
 import { SupplyShop, SupplyStopTrigger } from "./SupplyShop.jsx";
 import { TravelIncident } from "./TravelIncident.jsx";
 import { createJourneySoundtrack, selectSoundtrackTheme } from "./soundtrack.js";
@@ -155,18 +157,19 @@ function CharacterCard({ person, state, stress, familyId, active, onClick }) {
   );
 }
 
-function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop, onOpenSocialFeed, onOpenSupplyShop, onChoice, onContinue, onTravelPlan }) {
+function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop, onOpenSocialFeed, onOpenSupplyShop, onExploreHistory, onChoice, onContinue, onTravelPlan }) {
   const travelPlanRequired = requiresTravelPlan(game);
   return (
     <aside className="messages-panel" aria-label="Messages and decisions">
       <header className="panel-header">
         <div>
           <ChatCircleDots weight="duotone" aria-hidden="true" />
-          <h2>{game.phase === "outcome" ? "What happened" : "Decision point"}</h2>
+          <h2 tabIndex="-1" data-history-return>{game.phase === "outcome" ? "What happened" : "Decision point"}</h2>
         </div>
         <span><Phone weight="duotone" aria-hidden="true" /> {game.resources.battery}%</span>
       </header>
 
+      <SceneHistory game={game} onExplore={onExploreHistory} />
       <div className="message-thread">
         {event.messages.map((message) => (
           <article className={`message ${message.trusted ? "trusted-message" : "unknown-message"}`} key={`${message.sender}-${message.time}`}>
@@ -398,7 +401,7 @@ function JourneyLog({ game, onClose }) {
   );
 }
 
-function EndingModal({ game, onRestart }) {
+function EndingModal({ game, onRestart, onExploreHistory }) {
   const score = getJourneyScore(game);
   const people = getPeople(game);
   const livingPeople = Object.values(game.people).filter((person) => person.alive !== false);
@@ -414,6 +417,8 @@ function EndingModal({ game, onRestart }) {
         <small>{reachedDestination ? "Destination reached · Route complete" : won ? "Journey complete · A new destination" : "The journey ends here"}</small>
         <h2 id="ending-title">{game.ending.title}</h2>
         <p>{game.ending.copy}</p>
+        <p className="history-ending-period">{getJourneyDate(game)}</p>
+        <button className="history-ending-button" onClick={onExploreHistory}>Explore the history</button>
         <JourneyMap game={game} compact />
         {won && (
           <div className="ending-route" aria-label={`${game.progress}% of the planned route completed`}>
@@ -464,6 +469,7 @@ export function App() {
   const [selectedPersonId, setSelectedPersonId] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [pendingChoice, setPendingChoice] = useState(null);
+  const [showHistory, setShowHistory] = useState(false);
   const [showLog, setShowLog] = useState(false);
   const [showRestart, setShowRestart] = useState(false);
   const [showSocialFeed, setShowSocialFeed] = useState(false);
@@ -597,10 +603,11 @@ export function App() {
         </div>
         <div className="day-summary">
           <div>
-            <strong>Day {game.day} · {event.region}</strong>
+            <strong>{getJourneyDate(game)} · {event.region}</strong>
             <small>{game.history.length ? `${game.history.length} choices saved` : "Different paths. A more human tomorrow."}</small>
           </div>
           <span className="header-actions">
+            <button onClick={() => setShowHistory(true)} aria-label="Explore the history" data-tooltip="Historical context and sources" data-sound="tap"><BookOpenText weight="duotone" /></button>
             <a className="guided-return" href="/" data-tooltip="Switch to the simpler story view">Guided view</a>
             <a
               className="source-link"
@@ -694,6 +701,7 @@ export function App() {
           socialFeedResolved={socialFeedResolved}
           supplyStop={supplyStop}
           onOpenSocialFeed={() => setShowSocialFeed(true)}
+          onExploreHistory={() => setShowHistory(true)}
           onOpenSupplyShop={() => setShowSupplyShop(true)}
           onChoice={setPendingChoice}
           onContinue={continueWithIncidents}
@@ -702,6 +710,7 @@ export function App() {
       </div>
 
       <ChoiceModal choice={pendingChoice} game={game} onCancel={() => setPendingChoice(null)} onConfirm={confirmChoice} />
+      {showHistory && <JourneyHistoryDialog game={game} onClose={() => setShowHistory(false)} />}
       {showLog && <JourneyLog game={game} onClose={() => setShowLog(false)} />}
       {showRestart && <RestartModal onCancel={() => setShowRestart(false)} onConfirm={restart} />}
       {showSocialFeed && socialFeed && (
@@ -723,7 +732,7 @@ export function App() {
         />
       )}
       {game.pendingIncident && <TravelIncident game={game} onResolve={(responseId) => setGame((current) => resolveTravelIncident(current, responseId))} />}
-      {game.phase === "ended" && <EndingModal game={game} onRestart={restart} />}
+      {game.phase === "ended" && <EndingModal game={game} onRestart={restart} onExploreHistory={() => setShowHistory(true)} />}
     </main>
   );
 }

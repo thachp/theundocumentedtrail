@@ -6,6 +6,7 @@ import {
   getPeople,
   isSavedGameValid,
 } from "./game.js";
+import { refreshNarrative } from "./narrativeMigration.js";
 
 export const FAMILY_SELECTION_KEY = "the-undocumented-trail-family-v1";
 export const FAMILY_SAVES_KEY = "the-undocumented-trail-family-saves-v1";
@@ -42,12 +43,12 @@ export function loadFamilySaves(storage) {
 
   if (stored && typeof stored === "object" && !Array.isArray(stored)) {
     for (const [familyId, game] of Object.entries(stored)) {
-      if (FAMILY_PRESETS[familyId] && game?.familyId === familyId && isSavedGameValid(game)) saves[familyId] = game;
+      if (FAMILY_PRESETS[familyId] && game?.familyId === familyId && isSavedGameValid(game)) saves[familyId] = refreshNarrative(game);
     }
   }
 
   const legacy = readJson(target, GAME_SAVE_KEY, null);
-  if (isSavedGameValid(legacy) && !saves[legacy.familyId]) saves[legacy.familyId] = legacy;
+  if (isSavedGameValid(legacy) && !saves[legacy.familyId]) saves[legacy.familyId] = refreshNarrative(legacy);
   return saves;
 }
 
@@ -109,7 +110,7 @@ export function loadCurrentGame(storage) {
   if (selectedFamilyId && saves[selectedFamilyId]) return saves[selectedFamilyId];
 
   const legacy = readJson(target, GAME_SAVE_KEY, null);
-  if (isSavedGameValid(legacy)) return legacy;
+  if (isSavedGameValid(legacy)) return refreshNarrative(legacy);
   if (selectedFamilyId) return createInitialGame(selectedFamilyId);
   return Object.values(saves)[0] ?? createInitialGame();
 }
