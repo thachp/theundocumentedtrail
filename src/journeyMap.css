@@ -48,6 +48,42 @@
 .planning-map-approaches :focus-visible { outline: 3px solid #174f49; outline-offset: 2px; }
 .journey-map-compact { margin: 18px 0; padding: 14px; }
 .journey-map-compact .journey-map-canvas { max-height: 260px; }
+/* The desktop planning grid fixes the pane height. Fit the entire geographic
+   canvas into its remaining row instead of sizing it from the pane width. */
+@media (min-width: 981px) {
+  .map-stage.geographic-map-stage {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .geographic-map-stage > .journey-map-fit {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .journey-map-fit > .journey-map-canvas {
+    width: 100%;
+    height: calc(100% - 20px);
+    min-height: 0;
+    margin: 10px 0;
+  }
+  .journey-map-fit > .journey-map-information {
+    max-height: 150px;
+    overflow-y: auto;
+  }
+  .geographic-map-stage > .planning-map-approaches {
+    max-height: 150px;
+    overflow-y: auto;
+    margin-bottom: 8px;
+  }
+}
+@media (max-width: 980px) {
+  .geographic-map-stage > .journey-map-fit > .journey-map-canvas {
+    height: min(70vw, 360px);
+  }
+}
 @media (max-width: 720px) {
   .cinematic-stage > .cinematic-map { position: relative; width: 100%; height: auto; top: auto; bottom: auto; padding-top: 210px; background: transparent; filter: none; }
   .cinematic-stage > .cinematic-scene { height: 210px; }

@@ -20,6 +20,12 @@ the same projection and fixed family extent. A `600 × 500` SVG viewBox with
 `preserveAspectRatio="xMidYMid meet"` keeps the layers aligned without stretching
 or cover cropping. North is up. This is a story map, not a navigation map.
 
+In desktop Planning view the map figure occupies the remaining pane height;
+its caption, fitted SVG, and itinerary disclosure have separate grid rows.
+The SVG letterboxes within the middle row instead of deriving an overflowing
+height from the pane width. Expanded metadata and approach details have bounded
+scroll areas. Mobile retains normal document flow with a capped SVG height.
+
 Only the selected family's recorded event history and current event are shown.
 Progress percentages and the three abstract travel approaches never determine
 geography. Events skipped by a branch are absent. An outcome stays at its

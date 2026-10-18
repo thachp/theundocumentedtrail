@@ -640,13 +640,13 @@ export function App() {
 
       <div className="game-grid">
         <section className="map-stage geographic-map-stage" aria-label="Journey geography">
-          <div className="planning-map-context">
-            <strong>Day {game.day} · {event.time} · {event.weather}</strong>
-            <small>{event.weatherDetail}</small>
-          </div>
-          <JourneyMap game={game} />
+          <JourneyMap game={game} fitViewport />
           <details className="planning-map-approaches">
-            <summary>Travel approach details</summary>
+            <summary>Weather and travel approach details</summary>
+            <div className="planning-map-context">
+              <strong>Day {game.day} · {event.time} · {event.weather}</strong>
+              <small>{event.weatherDetail}</small>
+            </div>
             <p>These approaches describe support and risk, not geographic waypoints.</p>
             {Object.entries(ROUTES).map(([id, approach]) => <button key={id} onClick={() => inspectRoute(id)} data-sound="tap">{approach.title}</button>)}
           </details>
