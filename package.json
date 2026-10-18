@@ -17,7 +17,7 @@
     "test:maps": "node --test tests/journeyGeography.test.mjs tests/journeyMap-render.test.mjs",
     "test:history": "node --test tests/journeyHistory.test.mjs tests/journeyHistory-render.test.mjs",
     "test:pilot": "node --test tests/cambodia*.test.mjs",
-    "test:perspectives": "node --test tests/sharedPlace*.test.mjs"
+    "test:perspectives": "node --test tests/sharedPlace*.test.mjs tests/usFiscalEvidence.test.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-sans": "^5.2.6",
