@@ -2,7 +2,6 @@ import {
   FAMILY_PRESETS,
   GAME_SAVE_KEY,
   createInitialGame,
-  getJourneyScore,
   getPeople,
   isSavedGameValid,
 } from "./game.js";
@@ -77,7 +76,6 @@ function archiveCompletedGame(game, storage, completedAt) {
     status: game.status,
     endingType: game.ending.type ?? game.status,
     endingTitle: game.ending.title,
-    score: getJourneyScore(game),
     day: game.day,
     decisions: game.history.length,
     survivors,

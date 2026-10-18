@@ -41,7 +41,6 @@ import {
   getCondition,
   getEvent,
   getFamilyPreset,
-  getJourneyScore,
   getJourneyStage,
   getPeople,
   getPortraitMood,
@@ -588,7 +587,7 @@ function FamilySelection({ currentFamilyId, required, saves, archive, onSelect, 
           {families.map((family, index) => {
             const saved = saves[family.id];
             const savedStatus = saved?.phase === "ended"
-              ? `${saved.status === "won" ? "Completed" : "Journey stopped"} · Score ${getJourneyScore(saved)}`
+              ? `${saved.status === "won" ? "Completed" : "Journey stopped"}`
               : saved
                 ? `In progress · Day ${saved.day} · ${saved.progress}%`
                 : "Not started";
@@ -637,7 +636,6 @@ function FamilySelection({ currentFamilyId, required, saves, archive, onSelect, 
                   <article key={entry.runId}>
                     <span><strong>{family.shortName}</strong><small>{entry.endingTitle}</small></span>
                     <em>{entry.status === "won" ? "Completed" : "Stopped"}</em>
-                    <span><strong>{entry.score}</strong><small>Score</small></span>
                     <span><strong>{entry.survivors}/{entry.travelers}</strong><small>Survived</small></span>
                     <span><strong>Day {entry.day}</strong><small>{entry.decisions} decisions</small></span>
                   </article>
@@ -710,7 +708,6 @@ function Tutorial({ step, onBack, onNext, onFinish }) {
 
 function Ending({ game, onTryAgain, onChooseFamily, onExploreHistory }) {
   const won = game.status === "won";
-  const score = getJourneyScore(game);
   const people = getPeople(game);
   const survivors = people.filter((person) => game.people[person.id].alive !== false);
   const losses = people.filter((person) => game.people[person.id].alive === false);
@@ -737,7 +734,6 @@ function Ending({ game, onTryAgain, onChooseFamily, onExploreHistory }) {
         )}
 
         <div className="cinematic-ending-stats" aria-label="Journey results">
-          <div><strong>{score}</strong><span>Journey score</span></div>
           <div><strong>{Math.max(1, game.day - 1)}</strong><span>Days traveled</span></div>
           <div><strong>{survivors.length}/{people.length}</strong><span>Survived</span></div>
           <div><strong>{game.history.length}</strong><span>Decisions</span></div>

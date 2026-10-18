@@ -15,7 +15,7 @@
     "test:layout": "node --test tests/layout.test.mjs",
     "test:sites": "node --test tests/sites-worker.test.mjs",
     "test:maps": "node --test tests/journeyGeography.test.mjs tests/journeyMap-render.test.mjs",
-    "test:history": "node --test tests/journeyHistory.test.mjs tests/journeyHistory-render.test.mjs",
+    "test:history": "node --test tests/journeyHistory.test.mjs tests/journeyHistory-render.test.mjs tests/unscoredRamirez.test.mjs",
     "test:pilot": "node --test tests/cambodia*.test.mjs",
     "test:perspectives": "node --test tests/sharedPlace*.test.mjs tests/usFiscalEvidence.test.mjs"
   },

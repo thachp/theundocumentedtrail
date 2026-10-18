@@ -50,7 +50,6 @@ import {
   getCondition,
   getEvent,
   getFamilyPreset,
-  getJourneyScore,
   getPeople,
   getPortraitMood,
   getRequirementFailure,
@@ -402,7 +401,6 @@ function JourneyLog({ game, onClose }) {
 }
 
 function EndingModal({ game, onRestart, onExploreHistory }) {
-  const score = getJourneyScore(game);
   const people = getPeople(game);
   const livingPeople = Object.values(game.people).filter((person) => person.alive !== false);
   const won = game.status === "won";
@@ -427,7 +425,6 @@ function EndingModal({ game, onRestart, onExploreHistory }) {
           </div>
         )}
         <div className="ending-stats">
-          <div><strong>{score}</strong><span>Journey score</span></div>
           <div><strong>{game.day - 1}</strong><span>Days traveled</span></div>
           <div><strong>{averageHealth}%</strong><span>Average health</span></div>
           <div><strong>{game.history.length}</strong><span>Choices made</span></div>
