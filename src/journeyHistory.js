@@ -57,7 +57,7 @@ export const JOURNEY_HISTORY = Object.freeze({
   nguyen: {
     place: "Nghệ An, Vietnam", era: contemporary,
     historicalSummary: "The UK Home Office's February 2025 country information describes cases in which people seeking work abroad incur travel debts and face exploitation during transit or in the UK. It also describes differing experiences on return. Seeking overseas work does not itself establish trafficking or an asylum entitlement.",
-    familyStakes: "In the fictional Bùi family, a promised British job has been financed against the home. Minh wants to protect that investment; Lan wants to keep control of the family's papers. Mai and Bao have their own hopes and doubts about the move. The recruiter keeps the route, visas and contract vague. At home in Nghệ An, the family must decide how much of the promise to trust before another payment is made.",
+    familyStakes: "In the fictional Bùi family, a promised British job has been financed against the home. Minh wants to protect that investment; Lan wants to keep control of the family's papers. Mai and Bảo have their own hopes and doubts about the move. The recruiter keeps the route, visas and contract vague. At home in Nghệ An, the family must decide how much of the promise to trust before another payment is made.",
     contentNote: "Recruitment deception, debt bondage, labour exploitation and dangerous crossing.",
     sourceIds: ["vietnam"],
     timeline: [

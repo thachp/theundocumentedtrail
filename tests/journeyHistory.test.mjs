@@ -16,6 +16,7 @@ test("all six introductions separate documented background, family fiction and d
     const words = `${context.historicalSummary} ${context.familyStakes}`.split(/\s+/).length;
     assert.ok(words >= 80 && words <= 120, `${familyId}: ${words} words`);
     assert.ok(context.place && context.era && context.contentNote);
+    for (const person of getPeople(familyId)) assert.ok(context.familyStakes.includes(person.name), `${familyId}: preserve ${person.name}’s authored name`);
     assert.ok(context.timeline.length >= 3 && context.timeline.length <= 5);
     assert.ok(context.sourceIds.length);
     for (const sourceId of context.sourceIds) {
