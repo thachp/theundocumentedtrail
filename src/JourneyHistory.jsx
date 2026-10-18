@@ -1,3 +1,4 @@
+import { SharedPlaceContext } from "./SharedPlaceContext.jsx";
 import { useEffect, useId, useRef } from "react";
 import { getEvent, getFamilyPreset } from "./game.js";
 import { FICTION_NOTICE, HISTORY_SOURCES, getJourneyDate, getJourneyHistory, getSceneHistory } from "./journeyHistory.js";
@@ -55,10 +56,10 @@ export function SceneHistory({ game, onExplore, storyScene, sources }) {
   const note = storyScene ? { text: storyScene.context, sourceIds: storyScene.sourceIds } : getSceneHistory(game);
   if (!note) return null;
   const event = storyScene ? { region: storyScene.place } : getEvent(game);
-  return <details className="scene-history" key={storyScene?.id ?? `${game.familyId}-${game.eventId}`}>
+  return <><details className="scene-history" key={storyScene?.id ?? `${game.familyId}-${game.eventId}`}>
     <summary><span>{event.region} · {storyScene?.date ?? getJourneyDate(game)}</span><strong>Why this setting matters</strong></summary>
     <p>{note.text}</p>
     <SourceLinks ids={note.sourceIds} sources={sources} />
     <button type="button" onClick={onExplore}>Explore the history</button>
-  </details>;
+  </details><SharedPlaceContext key={`${game.familyId}-${game.eventId}`} game={game} /></>;
 }

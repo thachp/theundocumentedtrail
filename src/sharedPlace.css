@@ -1,0 +1,27 @@
+.shared-place-context { margin:0 0 16px; padding:0 14px 14px; border:1px solid #71867d99; background:#102328; color:#ece4d0; font:16px/1.6 "IBM Plex Sans",sans-serif; }
+.shared-place-context>summary { padding:12px 0; min-height:48px; cursor:pointer; }
+.shared-place-context>summary span { display:block; color:#cbd3c7; font-size:13px; }
+.shared-place-context>summary strong { font-size:16px; }
+.shared-place-context h3 { font:26px/1.25 Georgia,serif; margin:16px 0; }
+.shared-place-context h4 { font-size:18px; line-height:1.4; margin:18px 0 8px; }
+.shared-place-context p,.cinematic-copy .shared-place-context p { font-size:16px; line-height:1.6; margin:10px 0; }
+.shared-place-context .shared-place-fiction { padding:12px; border-left:3px solid #c4ad7c; background:#ffffff08; }
+.shared-place-voice { border-top:1px solid #71867d66; padding:2px 0 12px; }
+.shared-place-voice h4 span { display:block; color:#cbd3c7; font-size:14px; font-weight:400; }
+.shared-place-voice blockquote { margin:12px 0; padding-left:14px; border-left:2px solid #71867d; font-size:17px; }
+.shared-room-plans { display:grid; gap:12px; margin:16px 0; }
+.shared-room-plans button { display:grid; gap:6px; min-height:44px; padding:14px; border:1px solid #9eae9c; border-radius:3px; background:#294642; color:#f0e7d1; font:inherit; text-align:left; cursor:pointer; }
+.shared-room-plans button[aria-pressed="true"] { border-width:3px; padding:12px; }
+.shared-room-result { padding:0 12px 12px; border:1px solid #71867d; }
+.shared-place-context dl { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.1fr); gap:8px 12px; }
+.shared-place-context dt { font-weight:600; }.shared-place-context dd { margin:0; overflow-wrap:anywhere; }
+.shared-place-source { border:1px solid #71867d66; padding:0 12px 12px; margin:14px 0; }
+.shared-place-source summary { min-height:44px; padding:12px 0; cursor:pointer; }
+.shared-place-context a { color:#ead1a0; text-underline-offset:3px; overflow-wrap:anywhere; }
+.shared-place-source small { display:block; margin-top:12px; }
+.shared-place-context .shared-place-limit { color:#cbd3c7; font-size:14px; }
+.shared-place-context :focus-visible { outline:3px solid #edc778; outline-offset:3px; }
+.shared-place-announcement { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+.messages-panel .shared-place-context { margin:14px 18px; }
+@media(max-width:480px) { .shared-place-context dl { grid-template-columns:minmax(0,1fr); gap:4px; }.shared-place-context dd { margin-bottom:8px; } }
+@media(prefers-reduced-motion:reduce) { .shared-place-context * { animation:none !important; transition:none !important; scroll-behavior:auto !important; } }
