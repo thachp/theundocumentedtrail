@@ -1,3 +1,4 @@
+import { AUTHORED_STORIES } from "./authoredStories.js";
 import { FAMILY_PRESETS } from "./game.js";
 import { cambodiaStoryEnabled } from "./cambodiaState.js";
 
@@ -13,7 +14,7 @@ export const CAMBODIA_CHOICE = Object.freeze({
 });
 
 export function getJourneyChoices(env = {}) {
-  return [...Object.values(FAMILY_PRESETS), ...(cambodiaStoryEnabled(env) ? [CAMBODIA_CHOICE] : [])];
+  return [...Object.values(FAMILY_PRESETS), ...(cambodiaStoryEnabled(env) ? [CAMBODIA_CHOICE] : []), ...AUTHORED_STORIES.map(s=>({id:s.id,kind:"authored-household",name:s.title,origin:s.origin,period:s.period,context:s.historicalSummary,journey:s.route,heroImage:`/assets/${s.id}/cover.webp`,href:`/?story=${s.id}`}))];
 }
 
 export function journeyKeyIndex(key, current, count) {

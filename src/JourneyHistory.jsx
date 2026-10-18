@@ -1,3 +1,5 @@
+import { authoredStory } from "./authoredStories.js";
+import { authoredHistory } from "./authoredJourney.js";
 import { SharedPlaceContext } from "./SharedPlaceContext.jsx";
 import { UsFiscalEvidence } from "./UsFiscalEvidence.jsx";
 import { CAMBODIA } from "./cambodiaStory.js";
@@ -14,6 +16,7 @@ function SourceLinks({ ids, sources = HISTORY_SOURCES }) {
 }
 
 export function JourneyHistoryDialog({ game, introduction = false, onClose, story }) {
+  if (!story && authoredStory(game)) {const s=authoredStory(game);story={...s,history:authoredHistory(s)};}
   if (!story && game.familyId === "cambodia-1979") story = CAMBODIA;
   const dialogRef = useRef(null);
   const headingId = useId();
@@ -50,7 +53,7 @@ export function JourneyHistoryDialog({ game, introduction = false, onClose, stor
         <h3>Sources and their scope</h3>
         <p>Source dates describe the evidence, not the fictional family’s departure. Reporting, policy and individual experience are different kinds of evidence. These links provide background, not current legal advice or a promised route.</p>
         <SourceLinks ids={context.sourceIds} sources={sources} />
-        <dl className="history-glossary">{story ? <><dt>Refugee admission</dt><dd>Authorization to enter a receiving country under a refugee-admission pathway. Camp reception alone does not confer it; admission is not instant citizenship.</dd><dt>Holding centre and border camp</dt><dd>Different settings with different histories and access conditions; neither label describes one universal experience.</dd></> : <><dt>Asylum seeker</dt><dd>A person seeking protection whose claim has not been finally decided.</dd><dt>Temporary protection</dt><dd>A specific protection framework; it is not a promise of permanent status or admission elsewhere.</dd></>}<dt>Fictional composite</dt><dd>Authored people and incidents informed by evidence, without claiming to reproduce a real person’s testimony.</dd></dl>
+        <dl className="history-glossary">{authoredStory(game) ? <>{authoredStory(game).glossary.map(([term,definition])=><div key={term}><dt>{term}</dt><dd>{definition}</dd></div>)}<dt>Evidence and authored outcomes</dt><dd>Sources support dated background. The family’s conversations, waiting time, home and work outcomes are invented.</dd></> : story ? <><dt>Refugee admission</dt><dd>Authorization to enter a receiving country under a refugee-admission pathway. Camp reception alone does not confer it; admission is not instant citizenship.</dd><dt>Holding centre and border camp</dt><dd>Different settings with different histories and access conditions; neither label describes one universal experience.</dd></> : <><dt>Asylum seeker</dt><dd>A person seeking protection whose claim has not been finally decided.</dd><dt>Temporary protection</dt><dd>A specific protection framework; it is not a promise of permanent status or admission elsewhere.</dd></>}<dt>Fictional composite</dt><dd>Authored people and incidents informed by evidence, without claiming to reproduce a real person’s testimony.</dd></dl>
         <button type="button" className="history-return" onClick={onClose}>Return to the journey</button>
       </details>
     </div>

@@ -1,5 +1,5 @@
 import { commitJourneyChoice } from "./journeyChoiceActions.js";
-import { isCambodiaJourney } from "./cambodiaJourney.js";
+import { isSharedHouseholdJourney as isCambodiaJourney } from "./sharedHouseholdJourney.js";
 import { CambodiaResources, CambodiaJourneyContext, CambodiaPersonDialog } from "./CambodiaJourneyUI.jsx";
 import { selectJourneyGame as selectFamilyGame } from "./selectJourney.js";
 import { FamilySelection } from "./JourneySelection.jsx";
@@ -89,11 +89,11 @@ const CONTENT_MODE_KEY = "the-long-road-content-mode-v1";
 const TUTORIAL_COMPLETE_KEY = "the-undocumented-trail-tutorial-v2";
 
 const CAMBODIA_TUTORIAL_STEPS = [
- {icon:Compass,eyebrow:"Historical fictional household",title:"Meet Dara, Vann and Maly",copy:"Follow nine scenes from Cambodia through refuge in Thailand to rebuilding in Minnesota. This is a sourced fictional composite, not a survivor biography.",lessons:["Survival and 1981 admission are fixed premises","Sensitive context is non-graphic","Read the source and fiction labels"]},
+ {icon:Compass,eyebrow:"Historical fictional household",title:"Meet this fictional household",copy:"Follow the selected family through dated scenes of departure, reception and continuing life. Read their names and individual stories through the portraits. This is a sourced fictional composite, not a survivor biography.",lessons:["Survival and legal outcomes follow authored premises","Sensitive context is non-graphic","Read the source and fiction labels"]},
  {icon:Crosshair,eyebrow:"Choose with incomplete information",title:"Read, then select one option",copy:"Care, contact and household planning decisions carry forward. Their exact consequences appear after commitment. The map labels approximate locations honestly.",lessons:["Each scene has its original authored choices","Use the text itinerary with the map","Back navigation revisits an earlier choice"]},
  {icon:FirstAidKit,eyebrow:"Household planning",title:"Allocate attention and effort",copy:"Time and energy are fictional planning units for each scene. They do not measure historical nutrition, survival odds or admission eligibility.",lessons:["Later scenes are new planning occasions","Portraits explain each person’s story","No health or mortality statistics are assigned"]},
- {icon:BookOpenText,eyebrow:"Historical context",title:"Separate evidence from fiction",copy:"Scene sources and labeled testimony explain the historical background. Other people’s experiences are never presented as Dara’s biography.",lessons:["Explore context on demand","Admission follows the original story premise","No action earns humanitarian eligibility"]},
- {icon:ChatCircleDots,eyebrow:"Choices have a memory",title:"Resume this household’s story",copy:"Original decisions and callbacks are retained in a separate Cambodia save. Guided and Planning share that progress.",lessons:["Other families retain their saves","Restart replaces only this story","Earlier relationships return later"]},
+ {icon:BookOpenText,eyebrow:"Historical context",title:"Separate evidence from fiction",copy:"Scene sources and labeled testimony explain the historical background. Other people’s experiences are never presented as this family’s biography.",lessons:["Explore context on demand","Admission follows the original story premise","No action earns humanitarian eligibility"]},
+ {icon:ChatCircleDots,eyebrow:"Choices have a memory",title:"Resume this household’s story",copy:"Original decisions and callbacks are retained in a separate household save. Guided and Planning share that progress.",lessons:["Other families retain their saves","Restart replaces only this story","Earlier relationships return later"]},
 ];
 
 const TUTORIAL_STEPS = [
@@ -305,7 +305,7 @@ const journeyStageIcons = {
 };
 
 function JourneyGauge({ game, event }) {
-  const stages = isCambodiaJourney(game) ? JOURNEY_STAGES.map((stage,i)=>({...stage,label:["Recollection","Displacement","Refuge","Rebuilding"][i]})) : JOURNEY_STAGES;
+  const stages = isCambodiaJourney(game) ? JOURNEY_STAGES.map((stage,i)=>({...stage,label:["Departure","Travel","Reception","Continuing life"][i]})) : JOURNEY_STAGES;
   const currentStage = stages.find(stage=>stage.id===getJourneyStage(game).id);
   const currentIndex = stages.findIndex((stage) => stage.id === currentStage.id);
   const stageProgress = (currentIndex / (stages.length - 1)) * 100;
@@ -956,13 +956,13 @@ export function BeginnerApp() {
               {soundtrackOn ? <SpeakerHigh weight="fill" /> : <MusicNotes weight="duotone" />}
               <span className="cinematic-tool-label">{soundtrackOn ? "Pause soundtrack" : "Play soundtrack"}</span>
             </button>
-            <a href={isCambodiaJourney(game) ? "/?mode=full&story=cambodia-1979" : "/?mode=full"} className="cinematic-full-link" data-tooltip="Open the detailed planning view" data-tooltip-align="right">Planning view</a>
+            <a href={isCambodiaJourney(game) ? `/?mode=full&story=${game.familyId}` : "/?mode=full"} className="cinematic-full-link" data-tooltip="Open the detailed planning view" data-tooltip-align="right">Planning view</a>
           </div>
         </div>
       </header>
 
       <section className="cinematic-stage">
-        {isCambodiaJourney(game) ? <img key={event.id} className="cinematic-scene" src={event.heroImage} alt={event.heroAlt} /> : <div key={`${game.familyId}-${event.id}`} className="cinematic-scene" style={{ backgroundImage: `url("${sceneByEvent[event.id] ?? family.heroImage}")` }} aria-hidden="true" />}
+        {isCambodiaJourney(game) ? <img key={event.id} className="cinematic-scene" style={{backgroundImage:"none",objectPosition:event.heroFocalPoint ?? "50% 45%"}} onError={e=>{if(e.currentTarget.dataset.fallback!=="cover"){e.currentTarget.dataset.fallback="cover";e.currentTarget.src=family.heroImage;}}} src={event.heroImage} alt={event.heroAlt} /> : <div key={`${game.familyId}-${event.id}`} className="cinematic-scene" style={{ backgroundImage: `url("${sceneByEvent[event.id] ?? family.heroImage}")` }} aria-hidden="true" />}
 
         <aside className="cinematic-map" aria-label="Journey geography">
           <JourneyMap game={game} />

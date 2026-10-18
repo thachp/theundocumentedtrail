@@ -1,3 +1,4 @@
+import { loadAuthoredJourney, loadAuthoredArchive } from "./authoredJourneyStore.js";
 import { useEffect, useRef, useState } from "react";
 import { ArrowCounterClockwise, ArrowLeft, ArrowRight, BookOpenText, MapPin, UsersThree, X } from "@phosphor-icons/react";
 import { FAMILY_PRESETS } from "./game.js";
@@ -59,7 +60,7 @@ export function FamilySelection({ currentFamilyId, required, saves, archive, onS
         <span className="cinematic-family-symbol"><UsersThree weight="duotone" /></span>
         <small>Choose a journey</small>
         <h2 id="family-selection-title" tabIndex="-1" ref={headingRef}>Whose road will you follow?</h2>
-        <p>Choose a family journey or the Cambodian historical story. Each keeps its own progress, so you can safely return later.</p>
+        <p>Choose a family journey. Each keeps its own progress, so you can safely return later.</p>
         <div className="cinematic-family-carousel">
           <div className="cinematic-family-carousel-controls">
             <span aria-live="polite"><strong>{carouselIndex + 1} of {families.length}</strong><small>Swipe or use arrows · Home/End: first/last</small></span>
@@ -79,6 +80,11 @@ export function FamilySelection({ currentFamilyId, required, saves, archive, onS
             onKeyDown={handleCarouselKeys}
           >
           {families.map((family, index) => {
+            if (family.kind === "authored-household") {
+              const saved=loadAuthoredJourney(family.id), completed=loadAuthoredArchive(family.id);
+              const started=saved.storyState.history.length>0;
+              return <article className="cinematic-family-card" key={family.id} role="group" aria-roledescription="slide" aria-label={`${index+1} of ${families.length}: ${family.name} · ${family.period}`}><div className="cinematic-family-portrait"><img src={family.heroImage} alt={`Original illustration of the fictional household · ${family.name}`} /><span>{saved.phase==='ended'?'Completed':started?`In progress · Scene ${saved.day}`:'Not started'} · {family.period}</span></div><div className="cinematic-family-copy"><small>{family.origin}</small><strong>{family.name}</strong><p>{family.context}</p><em><MapPin weight="fill" />{family.journey}</em><p>Shared journey · Separate saved progress</p>{completed.length>0&&<details><summary>Completed journeys · {completed.length}</summary>{completed.map(run=><p key={run.runId}>{run.endingTitle} · {run.decisions} decisions</p>)}</details>}</div><div className="cinematic-family-actions"><button className="continue" onClick={()=>onSelect(family.id)}>{saved.phase==='ended'?'View result':started?'Continue':'Start journey'}<ArrowRight weight="bold" /></button>{started&&onRestart&&<button className="restart" onClick={()=>onRestart(family.id)}><ArrowCounterClockwise weight="bold" />Start again</button>}</div></article>;
+            }
             if (family.kind === "historical") return <article className="cinematic-family-card" key={family.id} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${families.length}: Cambodia · ${family.name} · ${family.period}`}>
               <div className="cinematic-family-portrait"><img src="/assets/cambodia/cover.webp" alt="Illustrative fictional household: Dara, Vann and Maly in late-1979 Cambodia" /><span>Family journey · 1979–1982</span></div>
               <div className="cinematic-family-copy"><small>{family.origin}</small><span className="history-chooser-setting">Cambodia → Thailand → United States · {family.period}</span><strong>{family.name}</strong><p>{family.context}</p><em><MapPin weight="fill" />{family.journey}</em><p>Shared journey · Separate saved progress</p></div>

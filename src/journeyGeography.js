@@ -77,7 +77,10 @@ const ENDING_LOCATIONS = Object.freeze({
   rohingya: { returned_to_camp: place("rohingya", [92.1, 21.2], "Returned to Cox’s Bazar", "Regional camp anchor; block unspecified") },
 });
 
+import { authoredStory } from "./authoredStories.js";
+import { storyScene } from "./authoredJourney.js";
 export function getJourneyGeography(game) {
+  if(authoredStory(game)){const story=authoredStory(game),scene=storyScene(game),bounds=scene.bounds,itinerary=story.scenes.slice(0,game.storyState.index+1).map(s=>({eventId:s.id,label:s.place,storyLocation:`${s.date} · ${s.title}`,region:s.place,coordinates:s.coordinates,uncertainty:"Broad story anchor; exact home, port, transfer and travel itinerary are unspecified"})),panel=itinerary.filter((s,i)=>story.scenes[i].landKey===scene.landKey);return {family:{id:story.id,name:story.title,shortName:story.shortName},landKey:scene.landKey,bounds,itinerary,current:itinerary.at(-1),points:panel.map(s=>projectCoordinate(s.coordinates,bounds)),dateLabel:scene.date,note:"Schematic story connections, not roads or boat tracks. Separate regional panels distinguish sea passage and authorized resettlement travel; intermediate ports and flights are not reconstructed."};}
   if (game.familyId === "cambodia-1979") return getCambodiaGeography(game.cambodiaState);
   const family = FAMILY_PRESETS[game.familyId];
   const validLocation = (id) => EVENT_LOCATIONS[id]?.familyId === family?.id;

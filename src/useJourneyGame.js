@@ -2,6 +2,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { applySavedJourneyAction, loadCurrentGame, loadFamilySaves } from "./saveStore.js";
 import { isCambodiaJourney } from "./cambodiaJourney.js";
 import { loadCambodiaJourney, applyCambodiaJourneyAction } from "./cambodiaJourneyStore.js";
+import { authoredStory } from "./authoredStories.js";
+import { isAuthoredJourney } from "./authoredJourney.js";
+import { loadAuthoredJourney, applyAuthoredAction } from "./authoredJourneyStore.js";
 import { cambodiaStoryEnabled } from "./cambodiaState.js";
 
 export function observeJourneyRestore(restore, windowTarget = window, documentTarget = document) {
@@ -20,12 +23,13 @@ export function observeJourneyRestore(restore, windowTarget = window, documentTa
 // Both interfaces share a revision-aware durable state boundary. Saving in an
 // effect after render allowed a bfcache-restored page to write its old snapshot.
 export function useJourneyGame() {
-  const [game, renderGame] = useState(() => cambodiaStoryEnabled(import.meta.env) && new URLSearchParams(window.location.search).get("story") === "cambodia-1979" ? loadCambodiaJourney() : loadCurrentGame());
+  const [game, renderGame] = useState(() => authoredStory(new URLSearchParams(window.location.search).get("story")) ? loadAuthoredJourney(new URLSearchParams(window.location.search).get("story")) : cambodiaStoryEnabled(import.meta.env) && new URLSearchParams(window.location.search).get("story") === "cambodia-1979" ? loadCambodiaJourney() : loadCurrentGame());
   const current = useRef(game);
   const setGame = useCallback((action) => {
     const historicalAction = isCambodiaJourney(current.current) && (typeof action === "function" || isCambodiaJourney(action));
-    const next = historicalAction ? applyCambodiaJourneyAction(current.current, action) : applySavedJourneyAction(current.current, action);
-    if (!isCambodiaJourney(next) && new URLSearchParams(window.location.search).has("story")) {
+    const next = isAuthoredJourney(action) ? action : isAuthoredJourney(current.current) && (typeof action === "function" || isAuthoredJourney(action)) ? applyAuthoredAction(current.current, action) : historicalAction ? applyCambodiaJourneyAction(current.current, action) : applySavedJourneyAction(current.current, action);
+    if (isAuthoredJourney(next)) { const url=new URL(window.location.href); url.searchParams.set("story",next.familyId); window.history.replaceState(null,"",url); }
+    if (!isCambodiaJourney(next) && !isAuthoredJourney(next) && new URLSearchParams(window.location.search).has("story")) {
       const url = new URL(window.location.href); url.searchParams.delete("story"); window.history.replaceState(null, "", url);
     }
     current.current = next;
@@ -33,8 +37,8 @@ export function useJourneyGame() {
   }, []);
   useEffect(() => {
     const restore = () => {
-      const saved = isCambodiaJourney(current.current) ? loadCambodiaJourney() : loadFamilySaves()[current.current.familyId];
-      if (!saved) return;
+      const saved = isAuthoredJourney(current.current) ? loadAuthoredJourney(current.current.familyId) : isCambodiaJourney(current.current) ? loadCambodiaJourney() : loadFamilySaves()[current.current.familyId];
+      if (!saved || (isAuthoredJourney(current.current) && !saved.saveWritable)) return;
       current.current = saved;
       renderGame(saved);
     };
