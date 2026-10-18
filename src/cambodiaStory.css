@@ -27,6 +27,9 @@
 .pilot-warning button { margin-left:12px; }
 .pilot-announcement { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
 .cambodia-pilot .journey-map { margin:0; }
+/* Keep parchment links in map ink; the dark-page link color fails here. */
+.cambodia-pilot .journey-map a { color:#302b21; }
+.cambodia-pilot .journey-map a:focus-visible { outline-color:#174f49; }
 .cambodia-pilot .journey-history-dialog { color:#f1eadb; }
 @media(max-width:900px) { .pilot-layout { grid-template-columns:minmax(0,1fr); } .pilot-layout aside { max-width:650px; width:100%; } }
 @media(max-width:480px) { .pilot-header nav { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); } .pilot-header nav button { font-size:15px; } .pilot-actions { display:grid; } .pilot-layout { padding-top:24px; } }
