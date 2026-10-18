@@ -21,6 +21,6 @@ export function CambodiaJourneyContext({game,onChange}) {
 }
 export function CambodiaPersonDialog({person,onClose,game}) {
  const ref=useRef(null);
- useEffect(()=>{const previous=document.activeElement;ref.current.showModal();return()=>{ref.current?.close();if(previous?.isConnected)previous.focus();};},[]);
- return <dialog className="cambodia-person-dialog" ref={ref} onCancel={onClose} aria-labelledby="cambodia-person-title"><button onClick={onClose}>Close</button><h2 id="cambodia-person-title">{person.name}</h2><p>{person.story}</p><p>{game?.householdEdition===3?`Fictional health units: ${game.people[person.id].health}/100. Cohesion: ${game.people[person.id].trust}/5. These describe authored circumstances, not medical measurements or worth. All four survive as a story premise.`:"Health and mortality are not measured for this historical household. They survive as an authored premise."}</p></dialog>;
+ useEffect(()=>{const previous=document.activeElement,dialog=ref.current;dialog.showModal();return()=>{dialog.close();if(previous?.isConnected)previous.focus();};},[]);
+ return <dialog className="cambodia-person-dialog" ref={ref} onCancel={event=>{event.preventDefault();onClose();}} aria-labelledby="cambodia-person-title"><button onClick={onClose}>Close</button><h2 id="cambodia-person-title">{person.name}</h2><p>{person.story}</p><p>{game?.householdEdition===3?`Fictional health units: ${game.people[person.id].health}/100. Cohesion: ${game.people[person.id].trust}/5. These describe authored circumstances, not medical measurements or worth. All four survive as a story premise.`:"Health and mortality are not measured for this historical household. They survive as an authored premise."}</p></dialog>;
 }

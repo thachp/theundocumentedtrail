@@ -61,3 +61,11 @@ test('expanded art exists with verified hashes; every scene has an informative a
  assert.deepEqual(expanded.familyFor(expanded.cambodiaGame(prefixes().get('P01'))).people.map(p=>p.age),[30,29,55,28]);
  const last=prefixes().get('E11'),game=chooseOption(expanded.cambodiaGame(last),'letter');assert.equal(game.pendingEnding,null);assert.equal(continueJourney(game).eventId,'P01');
 });
+
+test('Site Two distinguishes March displacement from June facilities and credits the source accurately',()=>{
+ const scene=STORY.scenes.find(scene=>scene.id==='P02');
+ assert.match(scene.date,/March 1985/);assert.match(scene.prose,/March account concerns displacement and initial relief/);
+ assert.match(scene.context,/June 1985/);assert.match(scene.context,/not presented as already available/);
+ assert.match(CAMBODIA_SOURCES.E4.title,/Soriya J\.-M\. Birsens s\.j\./);
+ assert.match(CAMBODIA_SOURCES.E4.title,/Vluchteling in Samlor Chngangn/);
+});
