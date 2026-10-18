@@ -924,7 +924,7 @@ export function BeginnerApp() {
   };
 
   return (
-    <main className="cinematic-shell" onClickCapture={playInteractionSound}>
+    <main className={`cinematic-shell${game.householdEdition===3 && game.familyId==="cambodia-1979"?" cambodia-expanded":""}`} onClickCapture={playInteractionSound}>
       <header className="cinematic-header">
         <a data-ending-return className="cinematic-brand" href="/" aria-label="The Undocumented Trail journey">
           <strong>The Undocumented Trail</strong>
@@ -976,7 +976,7 @@ export function BeginnerApp() {
               {soundtrackOn ? <SpeakerHigh weight="fill" /> : <MusicNotes weight="duotone" />}
               <span className="cinematic-tool-label">{soundtrackOn ? "Pause soundtrack" : "Play soundtrack"}</span>
             </button>
-            <a href={isCambodiaJourney(game) ? `/?mode=full&story=${game.familyId}${game.householdEdition===1?"&edition=1":""}` : "/?mode=full"} className="cinematic-full-link" data-tooltip="Open the detailed planning view" data-tooltip-align="right">Planning view</a>
+            <a href={isCambodiaJourney(game) ? `/?mode=full&story=${game.familyId}${game.familyId==="cambodia-1979"?`&edition=${game.householdEdition}`:game.householdEdition===1?"&edition=1":""}` : "/?mode=full"} className="cinematic-full-link" data-tooltip="Open the detailed planning view" data-tooltip-align="right">Planning view</a>
           </div>
         </div>
       </header>
@@ -1154,7 +1154,7 @@ export function BeginnerApp() {
         </section>
       </footer>
 
-      {selectedPerson && isCambodiaJourney(game) && <CambodiaPersonDialog person={selectedPerson} onClose={() => setSelectedPersonId(null)} />}
+      {selectedPerson && isCambodiaJourney(game) && <CambodiaPersonDialog game={game} person={selectedPerson} onClose={() => setSelectedPersonId(null)} />}
       {historyMode && !showFamilySelection && <JourneyHistoryDialog game={game} introduction={historyMode === "intro"} onClose={closeHistory} />}
       {game.phase === "ended" && !showFamilySelection && !historyMode && !restartFamilyId && (
         <Ending

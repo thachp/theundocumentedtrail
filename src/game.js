@@ -1,3 +1,4 @@
+import * as expandedCambodiaJourney from './cambodiaExpanded/journey.js';
 import * as legacyCambodiaJourney from "./legacyHouseholds/cambodiaJourney.js";
 import { CAMBODIA_FAMILY, isCambodiaJourney, newCambodiaGame, cambodiaEvent, chooseCambodiaJourney, continueCambodiaJourney } from "./cambodiaJourney.js";
 export const GAME_VERSION = 14;
@@ -487,6 +488,7 @@ import { isAuthoredJourney, authoredGame, storyFamily, authoredEvent, chooseAuth
 
 export function getJourneyStage(game) {
   if (isAuthoredJourney(game)) return JOURNEY_STAGES[storyScene(game).stage];
+  if (isCambodiaJourney(game) && game.householdEdition===3) return JOURNEY_STAGES[game.eventId < "E02" ? 0 : ["E02","E03","E04","R01"].includes(game.eventId)?1:["E05","E06","E07","E08","E09","W01","J01"].includes(game.eventId)?2:3];
   if (isCambodiaJourney(game)) return JOURNEY_STAGES[game.eventId < "C03" ? 0 : game.eventId < "C05" ? 1 : game.eventId < "C08" ? 2 : 3];
   const stageId = game.progress >= 100 ? "review" : (JOURNEY_STAGE_BY_EVENT[game.eventId] ?? "transit");
   return JOURNEY_STAGES.find((stage) => stage.id === stageId);
@@ -496,7 +498,7 @@ export function getFamilyPreset(gameOrId = "ramirez") {
   const familyId = typeof gameOrId === "string" ? gameOrId : gameOrId?.familyId;
   if (gameOrId?.people && Array.isArray(gameOrId.people)) return gameOrId;
   if (authoredStory(gameOrId)) return storyFamily(authoredStory(gameOrId));
-  if (familyId === CAMBODIA_FAMILY.id) return gameOrId?.householdEdition===1?legacyCambodiaJourney.CAMBODIA_FAMILY:CAMBODIA_FAMILY;
+  if (familyId === CAMBODIA_FAMILY.id) return gameOrId?.householdEdition===1?legacyCambodiaJourney.CAMBODIA_FAMILY:gameOrId?.householdEdition===3?expandedCambodiaJourney.familyFor(gameOrId):CAMBODIA_FAMILY;
   return FAMILY_PRESETS[familyId] ?? FAMILY_PRESETS.ramirez;
 }
 
@@ -7096,7 +7098,7 @@ export function createInitialGame(familyId = "ramirez") {
 
 export function getEvent(game) {
   if (isAuthoredJourney(game)) return authoredEvent(game);
-  if (isCambodiaJourney(game)) return game.householdEdition===1?legacyCambodiaJourney.cambodiaEvent(game):cambodiaEvent(game);
+  if (isCambodiaJourney(game)) return game.householdEdition===1?legacyCambodiaJourney.cambodiaEvent(game):game.householdEdition===3?expandedCambodiaJourney.cambodiaEvent(game):cambodiaEvent(game);
   return EVENTS[game.eventId];
 }
 
@@ -7227,6 +7229,7 @@ export function getResourceTone(resource, value) {
 }
 
 export function getRequirementFailure(game, choice) {
+  if(game.householdEdition===3 && isCambodiaJourney(game))return choice.unavailableReason??null;
   if (!choice.requires) return null;
   for (const [resource, needed] of Object.entries(choice.requires)) {
     const current = game.resources[resource] ?? 0;
@@ -7747,7 +7750,7 @@ export function resolveTravelIncident(game, responseId) {
 
 export function chooseOption(game, choiceId) {
   if (isAuthoredJourney(game)) return chooseAuthored(game, choiceId);
-  if (isCambodiaJourney(game)) return game.householdEdition===1?legacyCambodiaJourney.chooseCambodiaJourney(game,choiceId):chooseCambodiaJourney(game, choiceId);
+  if (isCambodiaJourney(game)) return game.householdEdition===1?legacyCambodiaJourney.chooseCambodiaJourney(game,choiceId):game.householdEdition===3?expandedCambodiaJourney.chooseCambodiaJourney(game,choiceId):chooseCambodiaJourney(game, choiceId);
   if (game.phase !== "decision" || game.status !== "playing" || game.pendingIncident) return game;
   const event = getEvent(game);
   const choice = event.choices.find((item) => item.id === choiceId);
@@ -7985,7 +7988,7 @@ export function useMedicine(game, personId) {
 
 export function continueJourney(game, options = {}) {
   if (isAuthoredJourney(game)) return continueAuthored(game);
-  if (isCambodiaJourney(game)) return game.householdEdition===1?legacyCambodiaJourney.continueCambodiaJourney(game):continueCambodiaJourney(game);
+  if (isCambodiaJourney(game)) return game.householdEdition===1?legacyCambodiaJourney.continueCambodiaJourney(game):game.householdEdition===3?expandedCambodiaJourney.continueCambodiaJourney(game):continueCambodiaJourney(game);
   if (game.phase !== "outcome" || game.pendingIncident) return game;
   if (requiresTravelPlan(game)) return game;
   if (game.pendingEnding) {

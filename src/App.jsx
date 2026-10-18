@@ -596,7 +596,7 @@ export function App() {
   };
 
   return (
-    <main className={`game-shell${isCambodiaJourney(game) ? " cambodia-planning" : ""}`} onClickCapture={playInteractionSound}>
+    <main className={`game-shell${isCambodiaJourney(game) ? " cambodia-planning" : ""}${game.familyId==="cambodia-1979"&&game.householdEdition===3?" cambodia-expanded-planning":""}`} onClickCapture={playInteractionSound}>
       <header className="game-header">
         <div className="brand-lockup">
           <div><h1>The Undocumented Trail</h1><p>Everything they carry</p></div>
@@ -610,7 +610,7 @@ export function App() {
           <span className="header-actions">
             <button className="planning-journey-select" onClick={() => setShowFamilySelection(true)} aria-label="Choose a journey" data-sound="tap">Journeys</button>
             <button onClick={() => setShowHistory(true)} aria-label="Explore the history" data-tooltip="Historical context and sources" data-sound="tap"><BookOpenText weight="duotone" /></button>
-            <a data-ending-return className="guided-return" href={isCambodiaJourney(game) ? `/?story=${game.familyId}${game.householdEdition===1?"&edition=1":""}` : "/"} data-tooltip="Switch to the simpler story view">Guided view</a>
+            <a data-ending-return className="guided-return" href={isCambodiaJourney(game) ? `/?story=${game.familyId}${game.familyId==="cambodia-1979"?`&edition=${game.householdEdition}`:game.householdEdition===1?"&edition=1":""}` : "/"} data-tooltip="Switch to the simpler story view">Guided view</a>
             <a
               className="source-link"
               href="https://github.com/thachp/theundocumentedtrail"
@@ -661,7 +661,7 @@ export function App() {
             {!isCambodiaJourney(game) && Object.entries(ROUTES).map(([id, approach]) => <button key={id} onClick={() => inspectRoute(id)} data-sound="tap">{approach.title}</button>)}
           </details>
 
-          {drawerOpen && selectedPerson && isCambodiaJourney(game) && <CambodiaPersonDialog person={selectedPerson} onClose={() => setDrawerOpen(false)} />}
+          {drawerOpen && selectedPerson && isCambodiaJourney(game) && <CambodiaPersonDialog game={game} person={selectedPerson} onClose={() => setDrawerOpen(false)} />}
           {drawerOpen && !isCambodiaJourney(game) && (
             <DetailDrawer
               person={selectedPerson}
