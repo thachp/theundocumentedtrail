@@ -49,11 +49,11 @@ test("committed inventory cannot be spent by another action or an old work handl
 });
 test("atomic family save resumes active and settled ledgers while preserving all other family slots", () => {
  const storage=memory();for(const id of Object.keys(FAMILY_PRESETS))saveFamilyGame(createInitialGame(id),storage);
- const before=loadFamilySaves(storage);let s=beginRepair(atShop());
- assert.ok(isSavedGameValid(s));saveFamilyGame(s,storage);
+ const before=loadFamilySaves(storage);let s=beginRepair({...before.diop,eventId:"diopDakar"});
+ assert.ok(isSavedGameValid(s));s=saveFamilyGame(s,storage).diop;
  assert.deepEqual(loadFamilySaves(storage).diop,s);
  assert.ok(storage.getItem(FAMILY_SAVES_KEY));assert.ok(storage.getItem(GAME_SAVE_KEY));
- s=settleRepair(loadFamilySaves(storage).diop,{summary:true});saveFamilyGame(s,storage);
+ s=settleRepair(loadFamilySaves(storage).diop,{summary:true});s=saveFamilyGame(s,storage).diop;
  assert.deepEqual(loadFamilySaves(storage).diop,s);assert.deepEqual(settleRepair(loadFamilySaves(storage).diop),loadFamilySaves(storage).diop);
  for(const id of Object.keys(FAMILY_PRESETS).filter(id=>id!=="diop"))assert.deepEqual(loadFamilySaves(storage)[id],before[id]);
  const legacy=atShop();delete legacy.livelihoodActivities;assert.ok(isSavedGameValid(legacy));assert.equal(repairUnavailable(legacy),null);

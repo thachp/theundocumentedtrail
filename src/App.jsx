@@ -1,3 +1,4 @@
+import { useJourneyGame } from "./useJourneyGame.js";
 import { LivelihoodDialog, LivelihoodOptional } from "./LivelihoodActivity.jsx";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -67,7 +68,7 @@ import {
   resolveTravelIncident,
   useMedicine,
 } from "./game.js";
-import { loadCurrentGame, saveFamilyGame, selectFamilyGame } from "./saveStore.js";
+import { selectFamilyGame } from "./saveStore.js";
 import { SocialFeedModal, SocialFeedTrigger } from "./SocialFeed.jsx";
 import { Portrait } from "./Portrait.jsx";
 import { JourneyMap } from "./JourneyMap.jsx";
@@ -466,7 +467,7 @@ function RestartModal({ onCancel, onConfirm }) {
 }
 
 export function App() {
-  const [game, setGame] = useState(loadCurrentGame);
+  const [game, setGame] = useJourneyGame();
   const [showLivelihood, setShowLivelihood] = useState(false);
   const [selectedRoute, setSelectedRoute] = useState(game.route);
   const [selectedPersonId, setSelectedPersonId] = useState(null);
@@ -493,10 +494,6 @@ export function App() {
   const socialOptions = getSocialResponseOptions(game);
   const supplyStop = getSupplyStop(game);
   const selectedPerson = people.find((person) => person.id === selectedPersonId) ?? null;
-
-  useEffect(() => {
-    saveFamilyGame(game);
-  }, [game]);
 
   useEffect(() => {
     setSelectedRoute(game.route);
