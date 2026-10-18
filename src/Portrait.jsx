@@ -6,7 +6,7 @@ export function Portrait({ person, state, stress = 0, family, alt = "", classNam
   const familyPreset = getFamilyPreset(family);
   const image = getPortraitImage(person, state, stress, family);
   const index = Math.max(0, familyPreset.people.findIndex((traveler) => traveler.id === person.id));
-  const geometry = getPortraitCropGeometry(index, familyPreset.portraitSheet.width, familyPreset.portraitSheet.height);
+  const geometry = getPortraitCropGeometry(index, person.portraitSheet?.width??familyPreset.portraitSheet.width, person.portraitSheet?.height??familyPreset.portraitSheet.height);
   if (person.portraitViewBox) geometry.viewBox = person.portraitViewBox;
   return (
     <svg

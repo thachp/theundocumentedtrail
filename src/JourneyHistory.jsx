@@ -1,3 +1,4 @@
+import { cambodiaEdition } from './cambodiaEdition.js';
 import { authoredStory } from "./authoredStories.js";
 import { authoredHistory } from "./authoredJourney.js";
 import { SharedPlaceContext } from "./SharedPlaceContext.jsx";
@@ -17,7 +18,7 @@ function SourceLinks({ ids, sources = HISTORY_SOURCES }) {
 
 export function JourneyHistoryDialog({ game, introduction = false, onClose, story }) {
   if (!story && authoredStory(game)) {const s=authoredStory(game);story={...s,history:authoredHistory(s)};}
-  if (!story && game.familyId === "cambodia-1979") story = CAMBODIA;
+  if (!story && game.familyId === "cambodia-1979") story = cambodiaEdition(game).CAMBODIA;
   const dialogRef = useRef(null);
   const headingId = useId();
   const context = story?.history ?? getJourneyHistory(game);

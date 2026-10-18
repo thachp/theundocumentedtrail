@@ -1,3 +1,4 @@
+import * as legacyCambodiaJourney from "./legacyHouseholds/cambodiaJourney.js";
 import { CAMBODIA_FAMILY, isCambodiaJourney, newCambodiaGame, cambodiaEvent, chooseCambodiaJourney, continueCambodiaJourney } from "./cambodiaJourney.js";
 export const GAME_VERSION = 14;
 export const GAME_SAVE_KEY = "the-long-road-save-v14";
@@ -493,8 +494,9 @@ export function getJourneyStage(game) {
 
 export function getFamilyPreset(gameOrId = "ramirez") {
   const familyId = typeof gameOrId === "string" ? gameOrId : gameOrId?.familyId;
-  if (authoredStory(familyId)) return storyFamily(authoredStory(familyId));
-  if (familyId === CAMBODIA_FAMILY.id) return CAMBODIA_FAMILY;
+  if (gameOrId?.people && Array.isArray(gameOrId.people)) return gameOrId;
+  if (authoredStory(gameOrId)) return storyFamily(authoredStory(gameOrId));
+  if (familyId === CAMBODIA_FAMILY.id) return gameOrId?.householdEdition===1?legacyCambodiaJourney.CAMBODIA_FAMILY:CAMBODIA_FAMILY;
   return FAMILY_PRESETS[familyId] ?? FAMILY_PRESETS.ramirez;
 }
 
@@ -7094,7 +7096,7 @@ export function createInitialGame(familyId = "ramirez") {
 
 export function getEvent(game) {
   if (isAuthoredJourney(game)) return authoredEvent(game);
-  if (isCambodiaJourney(game)) return cambodiaEvent(game);
+  if (isCambodiaJourney(game)) return game.householdEdition===1?legacyCambodiaJourney.cambodiaEvent(game):cambodiaEvent(game);
   return EVENTS[game.eventId];
 }
 
@@ -7208,7 +7210,7 @@ export function getPortraitMood(personState, groupStress = 0) {
 
 export function getPortraitImage(person, personState, groupStress = 0, gameOrFamilyId = "ramirez") {
   const family = getFamilyPreset(gameOrFamilyId);
-  return family.portraitStrips[getPortraitMood(personState, groupStress)] ?? person?.image;
+  return person?.portraitImage ?? family.portraitStrips[getPortraitMood(personState, groupStress)] ?? person?.image;
 }
 
 export function getResourceTone(resource, value) {
@@ -7745,7 +7747,7 @@ export function resolveTravelIncident(game, responseId) {
 
 export function chooseOption(game, choiceId) {
   if (isAuthoredJourney(game)) return chooseAuthored(game, choiceId);
-  if (isCambodiaJourney(game)) return chooseCambodiaJourney(game, choiceId);
+  if (isCambodiaJourney(game)) return game.householdEdition===1?legacyCambodiaJourney.chooseCambodiaJourney(game,choiceId):chooseCambodiaJourney(game, choiceId);
   if (game.phase !== "decision" || game.status !== "playing" || game.pendingIncident) return game;
   const event = getEvent(game);
   const choice = event.choices.find((item) => item.id === choiceId);
@@ -7983,7 +7985,7 @@ export function useMedicine(game, personId) {
 
 export function continueJourney(game, options = {}) {
   if (isAuthoredJourney(game)) return continueAuthored(game);
-  if (isCambodiaJourney(game)) return continueCambodiaJourney(game);
+  if (isCambodiaJourney(game)) return game.householdEdition===1?legacyCambodiaJourney.continueCambodiaJourney(game):continueCambodiaJourney(game);
   if (game.phase !== "outcome" || game.pendingIncident) return game;
   if (requiresTravelPlan(game)) return game;
   if (game.pendingEnding) {

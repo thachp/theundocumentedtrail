@@ -1,3 +1,4 @@
+import { webpDimensions } from './webpDimensions.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { AUTHORED_STORIES, authoredStory } from '../src/authoredStories.js';
@@ -13,7 +14,7 @@ for(const story of AUTHORED_STORIES){
   for(let side=0;side<3;side++){
    let game=authoredGame(story);const ids=new Set();
    for(const scene of story.scenes){
-    assert.equal(game.eventId,scene.id);assert.equal(getFamilyPreset(game).id,story.id);assert.match(getFamilyPreset(game).people[0].portraitViewBox,/^595 /);assert.match(getFamilyPreset(game).people[1].portraitViewBox,/^80 /);assert.equal(getEvent(game).choices.length,3);
+    assert.equal(game.eventId,scene.id);assert.equal(getFamilyPreset(game).id,story.id);assert.equal(getFamilyPreset(game).people.length,4);for(const p of getFamilyPreset(game).people){assert.equal(p.portraitViewBox,story.portraits[p.id].viewBox);const [x,y,w,h]=p.portraitViewBox.split(' ').map(Number);assert.ok(w>0&&h>0&&x>=0&&y>=0&&x+w<=p.portraitSheet.width&&y+h<=p.portraitSheet.height);}assert.equal(getEvent(game).choices.length,3);
     const map=getJourneyGeography(game);assert.deepEqual(map.current.coordinates,scene.coordinates);assert.equal(map.itinerary.length,game.day);
     for(const [x,y]of map.points){assert.ok(Number.isFinite(x)&&Number.isFinite(y));assert.ok(x>=0&&x<=600&&y>=0&&y<=500);}
     for(const id of getSceneHistory(game).sourceIds)assert.ok(story.sources[id]?.url.startsWith('https://'));
@@ -42,7 +43,7 @@ for(const story of AUTHORED_STORIES){
   assert.equal(storage.getItem('original-family-saves'),'sentinel');assert.equal(storage.getItem('undocumented-trail:review:cambodia-1979:v1'),'Cambodia sentinel');
   const unknown='{"version":99}';storage.setItem(authoredSaveKey(story.id),unknown);let blocked=loadAuthoredJourney(story.id,storage);assert.equal(blocked.saveWritable,false);
   blocked=applyAuthoredAction(blocked,g=>chooseAuthored(g,story.scenes[0].choices[0].id),storage);assert.equal(blocked.phase,'outcome');assert.equal(storage.getItem(authoredSaveKey(story.id)),unknown);
-  const forged={...game.storyState,flags:{forged:'approval'},version:1,storyId:story.id};assert.deepEqual(validateAuthored(story,forged).flags,{});
+  const forged={...game.storyState,flags:{forged:'approval'},version:2,storyId:story.id};assert.deepEqual(validateAuthored(story,forged).flags,{});
   assert.equal(validateAuthored(story,{...forged,history:[{sceneId:'other',choiceId:'other'}]}),null);
  });
  test(`${story.id}: original cover and every distinct scene hero are bundled within a bounded budget`,async()=>{
@@ -75,6 +76,6 @@ test('asset provenance is complete and each authored location uses its own disti
  for(const story of AUTHORED_STORIES){
   const manifest=JSON.parse(await readFile(`public/assets/${story.id}/provenance.json`,'utf8'));assert.equal(manifest.assets.length,story.scenes.length+1);
   const digests=new Set();
-  for(const asset of manifest.assets){assert.equal(asset.dimensions,'1672x941');assert.match(asset.alt,/fictional/i);assert.equal(asset.focalPoint,'50% 45%');const bytes=await readFile('public'+asset.path);assert.equal(bytes.length,asset.bytes);assert.equal(createHash('sha256').update(bytes).digest('hex'),asset.webpSHA256);assert.ok(!digests.has(asset.webpSHA256));digests.add(asset.webpSHA256);}
+  for(const asset of manifest.assets){assert.match(asset.dimensions,/^\d+x\d+$/);assert.match(asset.alt,/fictional/i);assert.equal(asset.focalPoint,'50% 45%');const bytes=await readFile('public'+asset.path);assert.equal(webpDimensions(bytes).join('x'),asset.dimensions);assert.equal(bytes.length,asset.bytes);assert.equal(createHash('sha256').update(bytes).digest('hex'),asset.webpSHA256);assert.ok(!digests.has(asset.webpSHA256));digests.add(asset.webpSHA256);}
  }
 });

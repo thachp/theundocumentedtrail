@@ -1,0 +1,204 @@
+{
+  "baselineCommit": "9afb9cd6321df88dccd31a26468a72ae2c6c7bf6",
+  "notice": "Bit-identical original edition assets; original manifests retain their original paths. This inventory maps retained storage locations without changing their rights or source claims.",
+  "files": [
+    {
+      "path": "/assets/legacy-households/cambodia/cover.webp",
+      "originalPath": "/assets/cambodia/cover.webp",
+      "sha256": "f7221861e6e7b692c6e68dbd988ff46933516b939752b1d77114ea4301bec3f7",
+      "bytes": 152944
+    },
+    {
+      "path": "/assets/legacy-households/cambodia/C07.webp",
+      "originalPath": "/assets/cambodia/C07.webp",
+      "sha256": "2406fbe3cf49074c38e0b666b3167fd0352279c01a425fe02d9350ddead14060",
+      "bytes": 126954
+    },
+    {
+      "path": "/assets/legacy-households/cambodia/C08.webp",
+      "originalPath": "/assets/cambodia/C08.webp",
+      "sha256": "d83d083ea565dc12363d59ea5be2f36c3134c5e0b8f1f08362ea124cd8044cf4",
+      "bytes": 103886
+    },
+    {
+      "path": "/assets/legacy-households/cambodia/C02.webp",
+      "originalPath": "/assets/cambodia/C02.webp",
+      "sha256": "7c4a7e2e7d4401b8e3b7a0bbf2aac00c127db4dcbb318782d422fb57967b8280",
+      "bytes": 123836
+    },
+    {
+      "path": "/assets/legacy-households/cambodia/C09.webp",
+      "originalPath": "/assets/cambodia/C09.webp",
+      "sha256": "47c70272b4a452418afa0a7064b42f1c7368e1dcf0e8b48346b2b210196b5e8f",
+      "bytes": 106710
+    },
+    {
+      "path": "/assets/legacy-households/cambodia/C06.webp",
+      "originalPath": "/assets/cambodia/C06.webp",
+      "sha256": "95d682558f739b510a02250a9c530cd63b9bb95fc485987cab0a93cdb05206fa",
+      "bytes": 154054
+    },
+    {
+      "path": "/assets/legacy-households/cambodia/C05.webp",
+      "originalPath": "/assets/cambodia/C05.webp",
+      "sha256": "72ab9a999c636a07ec7826cded5f34798225ab96ebd35f9910aa356bdf1f68a2",
+      "bytes": 169000
+    },
+    {
+      "path": "/assets/legacy-households/cambodia/C04.webp",
+      "originalPath": "/assets/cambodia/C04.webp",
+      "sha256": "796dc99a502b244f905813a3aa7e621626050a91015f24f6aa80182d53f6c09e",
+      "bytes": 157920
+    },
+    {
+      "path": "/assets/legacy-households/cambodia/C01.webp",
+      "originalPath": "/assets/cambodia/C01.webp",
+      "sha256": "3ac70cdf9439be083d0d4860388fe651bd786949efa1099bf0bae9ddfccacf9f",
+      "bytes": 155514
+    },
+    {
+      "path": "/assets/legacy-households/cambodia/README.md",
+      "originalPath": "/assets/cambodia/README.md",
+      "sha256": "a0ac49f1663237602b2447ace0ae91d307a116fd62ad85b397b0b9499a4c07da",
+      "bytes": 845
+    },
+    {
+      "path": "/assets/legacy-households/mariel-1980/cover.webp",
+      "originalPath": "/assets/mariel-1980/cover.webp",
+      "sha256": "f523b1a83ad5fbad591f2f033a865041463219cc9e24bd306874757770fbdee1",
+      "bytes": 142916
+    },
+    {
+      "path": "/assets/legacy-households/mariel-1980/mariel-03.webp",
+      "originalPath": "/assets/mariel-1980/mariel-03.webp",
+      "sha256": "e91dd750bc5588066a6eea00b3f7af831559835253e2e1d4a2a46311dfb4aac2",
+      "bytes": 186942
+    },
+    {
+      "path": "/assets/legacy-households/mariel-1980/mariel-06.webp",
+      "originalPath": "/assets/mariel-1980/mariel-06.webp",
+      "sha256": "d7d89b25ba2a495431c6ebbd1e9b407defa626f1e825097c59b86ba9ce215c26",
+      "bytes": 154010
+    },
+    {
+      "path": "/assets/legacy-households/mariel-1980/mariel-01.webp",
+      "originalPath": "/assets/mariel-1980/mariel-01.webp",
+      "sha256": "d52ee6fcac739d43bbca1797fb5818d5fdd2db1c788af91564cfa99d133957bd",
+      "bytes": 209252
+    },
+    {
+      "path": "/assets/legacy-households/mariel-1980/provenance.json",
+      "originalPath": "/assets/mariel-1980/provenance.json",
+      "sha256": "0bcc647f6f7d0f0ca4a30ca61074bcbee51af6b88d83cb1f1aff6bb398a7502d",
+      "bytes": 6633
+    },
+    {
+      "path": "/assets/legacy-households/mariel-1980/mariel-07.webp",
+      "originalPath": "/assets/mariel-1980/mariel-07.webp",
+      "sha256": "230978f3047373236925872572f758ceb891b55816c82ebb9b39c00d7936dd9f",
+      "bytes": 167614
+    },
+    {
+      "path": "/assets/legacy-households/mariel-1980/mariel-09.webp",
+      "originalPath": "/assets/mariel-1980/mariel-09.webp",
+      "sha256": "2012c0696f0133159b18f4d2e4cb0eac141af35f717b0728054e5109af2565d5",
+      "bytes": 146948
+    },
+    {
+      "path": "/assets/legacy-households/mariel-1980/mariel-04.webp",
+      "originalPath": "/assets/mariel-1980/mariel-04.webp",
+      "sha256": "1f84b064d16e1626c3e5011143aa0fce491d9082c07f0a02df4c1f84809a33dd",
+      "bytes": 188506
+    },
+    {
+      "path": "/assets/legacy-households/mariel-1980/mariel-02.webp",
+      "originalPath": "/assets/mariel-1980/mariel-02.webp",
+      "sha256": "ac2bb8f38fb9bd294d028e6e8a7530c3fcc3e28e246a0f87d0213d1f12f27b1c",
+      "bytes": 201198
+    },
+    {
+      "path": "/assets/legacy-households/mariel-1980/mariel-10.webp",
+      "originalPath": "/assets/mariel-1980/mariel-10.webp",
+      "sha256": "7d641bd8fca4d96c5bf227a483def590a14ede0b398f0a6087defebdf5888b8f",
+      "bytes": 165326
+    },
+    {
+      "path": "/assets/legacy-households/mariel-1980/mariel-05.webp",
+      "originalPath": "/assets/mariel-1980/mariel-05.webp",
+      "sha256": "83e243adf48fd77e354e4b0851da4bded930f4be7a92a8d7e76f7d77e483b046",
+      "bytes": 162480
+    },
+    {
+      "path": "/assets/legacy-households/mariel-1980/mariel-08.webp",
+      "originalPath": "/assets/mariel-1980/mariel-08.webp",
+      "sha256": "88efe55c7805786c16e9c92c36096e0ca0b03adacf161f1cdd6e510d9abf5846",
+      "bytes": 163132
+    },
+    {
+      "path": "/assets/legacy-households/vietnam-bidong-1978/cover.webp",
+      "originalPath": "/assets/vietnam-bidong-1978/cover.webp",
+      "sha256": "f47fcdbcbd69220af49dad5217dd68ddf9eadc1f865ae6e676deaad06757b467",
+      "bytes": 126510
+    },
+    {
+      "path": "/assets/legacy-households/vietnam-bidong-1978/bidong-08.webp",
+      "originalPath": "/assets/vietnam-bidong-1978/bidong-08.webp",
+      "sha256": "7d14f56eda7c44072f972ba61e2cdf48af6d42d1214b3bfe587be23ed94f9a57",
+      "bytes": 162244
+    },
+    {
+      "path": "/assets/legacy-households/vietnam-bidong-1978/provenance.json",
+      "originalPath": "/assets/vietnam-bidong-1978/provenance.json",
+      "sha256": "5df40b7c3c27b15460ba712f794c0a6f3bd0dd0b3774b3d5cc30b9dca3067e73",
+      "bytes": 6319
+    },
+    {
+      "path": "/assets/legacy-households/vietnam-bidong-1978/bidong-06.webp",
+      "originalPath": "/assets/vietnam-bidong-1978/bidong-06.webp",
+      "sha256": "561536436a06c98c7d2e1c460d6a972d96a8cadb0b9e64acffe0585e9ee9d8b5",
+      "bytes": 202820
+    },
+    {
+      "path": "/assets/legacy-households/vietnam-bidong-1978/bidong-03.webp",
+      "originalPath": "/assets/vietnam-bidong-1978/bidong-03.webp",
+      "sha256": "c7fa94900a0ee5fd76316b115c210c1959f5c8d4219d3cce9b73999e37ef4a68",
+      "bytes": 241984
+    },
+    {
+      "path": "/assets/legacy-households/vietnam-bidong-1978/bidong-04.webp",
+      "originalPath": "/assets/vietnam-bidong-1978/bidong-04.webp",
+      "sha256": "cb7cefd8b66fb9c53adf3a3856b82f5ff9504c08d97a2419becf40c6091e475a",
+      "bytes": 191268
+    },
+    {
+      "path": "/assets/legacy-households/vietnam-bidong-1978/bidong-02.webp",
+      "originalPath": "/assets/vietnam-bidong-1978/bidong-02.webp",
+      "sha256": "d31ccad87fa75626f3150772b6e31ae02bdc89eda9c5bf9abeaa7864a661e662",
+      "bytes": 202130
+    },
+    {
+      "path": "/assets/legacy-households/vietnam-bidong-1978/bidong-07.webp",
+      "originalPath": "/assets/vietnam-bidong-1978/bidong-07.webp",
+      "sha256": "fdc4518f7d674e4c93bedead2212e59d0390eb62c25133ecc473f2d6d7f24799",
+      "bytes": 193114
+    },
+    {
+      "path": "/assets/legacy-households/vietnam-bidong-1978/bidong-05.webp",
+      "originalPath": "/assets/vietnam-bidong-1978/bidong-05.webp",
+      "sha256": "6d719f3e88a40ba3d911d6af06c0cf50418b92d7342ef01b52f043b2fd84e8fe",
+      "bytes": 269832
+    },
+    {
+      "path": "/assets/legacy-households/vietnam-bidong-1978/bidong-01.webp",
+      "originalPath": "/assets/vietnam-bidong-1978/bidong-01.webp",
+      "sha256": "c2866c627986d8458c665f0e83a8d305878506315e47a400c44edeb1c5e6dcd1",
+      "bytes": 185524
+    },
+    {
+      "path": "/assets/legacy-households/vietnam-bidong-1978/bidong-09.webp",
+      "originalPath": "/assets/vietnam-bidong-1978/bidong-09.webp",
+      "sha256": "3d7eaf3f5a10978f1c0152a13767e6798c4e875b5b77f94bc9b5d386bfe7219e",
+      "bytes": 175054
+    }
+  ]
+}

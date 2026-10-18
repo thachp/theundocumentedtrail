@@ -3,15 +3,27 @@ import { backCambodia, chooseCambodia, continueCambodia, createCambodiaState, st
 
 export const isCambodiaJourney = game => game?.familyId === STORY_ID;
 export const CAMBODIA_COVER = "/assets/cambodia/cover.webp";
-export const cambodiaHero = id => id === "C03" ? CAMBODIA_COVER : `/assets/cambodia/${id}.webp`;
+export const cambodiaHero = id => `/assets/cambodia/${id}.webp`;
+const sceneArt = {
+ C01:"Dara sketches a sleeve while Vann, Maly and Sophea discuss a shirt at home in a fictional 1974 recollection",
+ C02:"Four household members viewed from behind in a symbolic, non-graphic recollection of displacement; no atrocity is staged",
+ C03:"Dara, Vann, Maly and Sophea discuss uncertain family news beside packed bundles in a fictional late-1979 rural setting",
+ C04:"The four relatives rest beside their bundles while Sophea checks protected contact notes",
+ C05:"Dara, Vann, Maly and Sophea discuss family news beside a fictional holding-centre shelter",
+ C06:"The four relatives discuss questions, mutual support and time for learning inside a fictional shelter",
+ C07:"The four relatives pack modest belongings and discuss questions before their fictional 1981 departure",
+ C08:"Dara, Vann, Maly and Sophea negotiate learning, work and household tasks around a Minnesota table",
+ C09:"Dara sketches and Sophea writes while Vann and Maly join their continuing household conversation in 1982",
+};
 export const CAMBODIA_FAMILY = {
-  id:STORY_ID,name:"Dara, Vann & Maly",shortName:"Dara’s household",origin:"Cambodia · Forced displacement · 1979–1982",
+  id:STORY_ID,name:"Dara, Vann, Maly & Sophea",shortName:"Dara’s household",origin:"Cambodia · Forced displacement · 1979–1982",
   context:"A fictional Khmer Cambodian household carries relationships and ordinary ambitions through displacement, refuge and rebuilding.",journey:"Cambodia → Thailand → Minnesota",destination:"Continuing life",startEventId:"C01",startRoute:"elmstead",heroImage:CAMBODIA_COVER,
   portraitStrips:{healthy:CAMBODIA_COVER,strained:CAMBODIA_COVER,critical:CAMBODIA_COVER},portraitSheet:{width:1672,height:941},
   people:[
-    {id:"dara",name:"Dara",age:"Adult",pronouns:"she/her",skills:["Clothing repair","Design"],image:CAMBODIA_COVER,portraitViewBox:"625 125 330 470",story:"A fictional Khmer Cambodian woman, 24 in late 1979. Clothing repair and design are interests as well as practical skills; admission is not earned by those skills."},
-    {id:"vann",name:"Vann",age:"Adult",pronouns:"he/him",skills:["Sharing tasks","Family contact"],image:CAMBODIA_COVER,portraitViewBox:"320 75 350 500",story:"Dara’s younger adult brother. Their conversations, disagreements and shared tasks belong to this invented household, not a real survivor’s biography."},
-    {id:"maly",name:"Maly",age:"Adult",pronouns:"she/her",skills:["Household planning","Care"],image:CAMBODIA_COVER,portraitViewBox:"970 155 350 500",story:"Dara and Vann’s aunt. She asks for rest, offers help within her means and has preferences of her own; her needs are not a penalty or test of worth."},
+    {id:"dara",name:"Dara",age:"Adult",pronouns:"she/her",skills:["Clothing repair","Design"],image:CAMBODIA_COVER,portraitViewBox:"640 140 260 400",story:"A fictional Khmer Cambodian woman, 24 in late 1979. Clothing repair and design are interests as well as practical skills; admission is not earned by those skills."},
+    {id:"vann",name:"Vann",age:"Adult",pronouns:"he/him",skills:["Sharing tasks","Family contact"],image:CAMBODIA_COVER,portraitViewBox:"350 100 300 420",story:"Dara’s younger adult brother. Their conversations, disagreements and shared tasks belong to this invented household, not a real survivor’s biography."},
+    {id:"maly",name:"Maly",age:"Adult",pronouns:"she/her",skills:["Household planning","Care"],image:CAMBODIA_COVER,portraitViewBox:"920 205 300 430",story:"Dara and Vann’s aunt. She asks for rest, offers help within her means and has preferences of her own; her needs are not a penalty or test of worth."},
+    {id:"sophea",name:"Sophea",age:"Adult",pronouns:"she/her",skills:["Contact notes","Shared planning"],image:CAMBODIA_COVER,portraitViewBox:"1220 200 300 420",story:"Dara and Vann’s fictional cousin and Maly’s niece, 22 in late 1979. She distinguishes uncertain messages from confirmed information, wants time to learn and write, and negotiates care and tasks rather than serving as an automatic helper."},
   ],
 };
 
@@ -31,14 +43,14 @@ export function cambodiaPlanning(state) {
 }
 export function cambodiaEvent(game) {
  const state=game.cambodiaState,scene=sceneFor(state);
- return {id:scene.id,region:scene.place,location:scene.title,time:scene.date,weather:"Historical fictional composite",weatherDetail:scene.status,route:"elmstead",contentNote:"Non-graphic historical context; survival and admission are authored premises",heroImage:cambodiaHero(scene.id),heroAlt:`Illustration of ${scene.place}, ${scene.date}; fictional household and setting, not an archival image`,source:{label:CAMBODIA_SOURCES[scene.sourceIds[0]].title,url:CAMBODIA_SOURCES[scene.sourceIds[0]].url},
+ return {id:scene.id,region:scene.place,location:scene.title,time:scene.date,weather:"Historical fictional composite",weatherDetail:scene.status,route:"elmstead",contentNote:"Non-graphic historical context; survival and admission are authored premises",heroImage:cambodiaHero(scene.id),heroAlt:`${sceneArt[scene.id]}. Original illustration of a fictional household, not an archival image or verified site reconstruction.`,source:{label:CAMBODIA_SOURCES[scene.sourceIds[0]].title,url:CAMBODIA_SOURCES[scene.sourceIds[0]].url},
   messages:[{sender:"Household account",initial:"D",role:"Authored fictional narrative",body:scene.prose}],known:[scene.status,"Planning units describe attention and effort, not admission or survival."],assumed:["A helpful act can secure admission or settle another person’s case."],
   choices:scene.choices.map(c=>({...c,hint:c.description,icon:"talk",tone:"uncertain",days:0,route:"elmstead",next:null,effects:{},outcomeTitle:"After this choice",outcome:c.consequence}))};
 }
 export function cambodiaGame(state,meta={}) {
  const scene=sceneFor(state),index=CAMBODIA_SCENES.indexOf(scene),entry=state.history.at(-1),choice=scene.choices.find(c=>c.id===entry?.choiceId);
  const planning=cambodiaPlanning(state),ending={type:"cambodia_continuing_life",status:"won",title:"Their lives continue beyond the frame",copy:choice?.consequence??scene.summary};
- return {version:14,familyId:STORY_ID,journeyKind:"historical",runId:meta.runId??"legacy-cambodia-1979",saveRevision:meta.saveRevision??0,cambodiaState:state,saveWarning:meta.warning??meta.saveWarning??"",saveWritable:(meta.writable??meta.saveWritable)!==false,
+ return {version:14,householdEdition:2,familyId:STORY_ID,journeyKind:"historical",runId:meta.runId??"legacy-cambodia-1979",saveRevision:meta.saveRevision??0,cambodiaState:state,saveWarning:meta.warning??meta.saveWarning??"",saveWritable:(meta.writable??meta.saveWritable)!==false,
  phase:state.phase==="complete"?"ended":state.phase==="consequence"?"outcome":"decision",status:state.phase==="complete"?"won":"playing",eventId:scene.id,day:index+1,progress:Math.round(state.history.length/9*100),route:"elmstead",
  resources:{cash:0,supplies:0,water:0,medicine:0,battery:0,stress:0,exposure:0},planning,people:Object.fromEntries(CAMBODIA_FAMILY.people.map(p=>[p.id,{health:100,trust:3,alive:true}])),losses:[],flags:{...state.flags},
  history:state.history.map(h=>{const s=CAMBODIA_SCENES.find(s=>s.id===h.sceneId),c=s.choices.find(c=>c.id===h.choiceId);return {eventId:s.id,choiceId:c.id,choiceTitle:c.title,outcomeTitle:c.consequence,location:s.place,day:CAMBODIA_SCENES.indexOf(s)+1,date:s.date};}),

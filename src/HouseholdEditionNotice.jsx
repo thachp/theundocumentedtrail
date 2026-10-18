@@ -1,0 +1,10 @@
+import { authoredSaveKey, loadAuthoredJourney, restartAuthoredJourney } from './authoredJourneyStore.js';
+import { loadCambodiaJourney, restartCambodiaJourney } from './cambodiaJourneyStore.js';
+export function HouseholdEditionNotice({game,onChange}) {
+ let originalAvailable=false,revisedAvailable=false;
+ try{revisedAvailable=window.localStorage.getItem(game.familyId==='cambodia-1979'?'undocumented-trail:review:cambodia-1979:v2':authoredSaveKey(game.familyId,2))!==null;originalAvailable=window.localStorage.getItem(game.familyId==='cambodia-1979'?'undocumented-trail:review:cambodia-1979:v1':authoredSaveKey(game.familyId,1))!==null;}catch{}
+ const original=game.householdEdition===1;
+ if(!original&&!originalAvailable)return null;
+ const switchEdition=()=>onChange(game.familyId==='cambodia-1979'?(original?(revisedAvailable?loadCambodiaJourney(undefined,2):restartCambodiaJourney()):loadCambodiaJourney(undefined,1)):(original?(revisedAvailable?loadAuthoredJourney(game.familyId,undefined,2):restartAuthoredJourney(game.familyId)):loadAuthoredJourney(game.familyId,undefined,1)));
+ return <aside className="household-edition-notice" aria-label="Saved story edition"><p>{original?'Original three-person edition. Your people, earlier decisions and illustrations remain as they were. The revised four-person edition keeps a separate run; your original save and archives are retained.':'Revised four-person edition. Your original three-person save and archives are retained separately.'}</p><button type="button" onClick={switchEdition}>{original?(revisedAvailable?'Resume revised four-person edition':'Start revised four-person edition'):'Resume original saved edition'}</button></aside>;
+}

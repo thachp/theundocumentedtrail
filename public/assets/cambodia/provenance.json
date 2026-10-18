@@ -1,0 +1,272 @@
+{
+  "storyId": "cambodia-1979",
+  "householdEdition": 2,
+  "people": [
+    "dara",
+    "vann",
+    "maly",
+    "sophea"
+  ],
+  "continuity": {
+    "dara": "24 in late1979; navy blouse, dark gathered hair; clothing design",
+    "vann": "younger adult brother; rust shirt, short dark hair",
+    "maly": "aunt; gray-streaked bun, olive blouse, check scarf",
+    "sophea": "22 in late1979; cousin and niece, muted teal blouse, long braid; learning and contact notes"
+  },
+  "rightsAndLimits": "Original AI-generated fictional illustrations; no third-party archival image, actual survivor likeness, distinctive testimony, verified camp layout or endorsement claimed. Fine visual age/cultural accuracy is not externally validated. Images are interpretive, not historical evidence. No reproduction rights in cited oral-history media claimed.",
+  "legacyArt": "Unmodified original three-person images retained in public/assets/legacy-households/cambodia for original edition saves.",
+  "referenceSHA256": "f7221861e6e7b692c6e68dbd988ff46933516b939752b1d77114ea4301bec3f7",
+  "files": [
+    {
+      "id": "cover",
+      "file": "cover.webp",
+      "sceneId": null,
+      "generator": "OpenAI image_gen imagegen",
+      "generatedAt": "2026-10-18",
+      "originalFile": "/workspace/generated_images/exec-b4f1c086-b6f8-4bed-b8bc-1bb38b443999.png",
+      "originalSHA256": "f48c1a86771702dcd5ba44f702478cc732184e231581d00301e4b907a52e3a71",
+      "sha256": "858aa2c93fc114ff0803ba0380bfb0f94f1950ccc1c30e2206a7ca3f9f45988b",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "bytes": 154030,
+      "webpQuality": 80,
+      "reference": "legacy-households/cambodia/cover.webp",
+      "prompt": "Edit this fictional painted cinematic illustration for an educational historical story. Preserve the three existing Khmer Cambodian adult characters and dark grounded painterly style: young man Vann rust shirt left, Dara24 navy blouse center, aunt Maly gray hair olive blouse check scarf right. Add exactly one fourth adult traveling member: Sophea22, Dara and Vann's cousin, Maly's niece, a young Khmer Cambodian woman with a distinct rounded face, long black braid, faded muted teal blouse and dark patterned sarong, holding a small folded cloth with a notebook tucked safely inside. Place Sophea to the right of Maly, in clear view head to knees, at equal prominence. Exactly FOUR people, all faces clearly visible, waist-up central band for portrait crops, no extra people. Late1979 rural westernCambodia, shoulder bundles, evening landscape, no modern objects/no weapons/no violence/no text. Fictional people not real survivors. Wide16:9 composition with breathing room, maintain identities of original three.",
+      "promptForm": "exact prompt",
+      "inspection": "Visually inspected: four foreground relatives and intended scene; symbolic rear-facing C02 deliberately avoids staging atrocities. Invented setting, not verified site layout.",
+      "focalPosition": "50% 45%",
+      "alt": "Dara, Vann, Maly and Sophea with bundles in a fictional late-1979 rural Cambodian landscape; original fictional household illustration, not an archival image."
+    },
+    {
+      "id": "C01",
+      "file": "C01.webp",
+      "sceneId": "C01",
+      "generator": "OpenAI image_gen imagegen",
+      "generatedAt": "2026-10-18",
+      "originalFile": "/workspace/generated_images/exec-fda98aaf-4df2-457e-b6a1-fa19f647e50e.png",
+      "originalSHA256": "c2ccf8abd42a0fc44c994a594e4a9916952ed79f51f38fc0fe00ad3492a4ea20",
+      "sha256": "3708b149ba1b6d1eac469afbc11a1085a9517530ff4e6adfae1bdf1338765fb4",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "bytes": 193754,
+      "webpQuality": 79,
+      "reference": "cambodia/cover.webp",
+      "prompt": "Create a new original cinematic painterly wide16:9 scene using attached fictional fourperson cover as identity reference. Same four Khmer Cambodian relatives: Vann youngman rustshirt left, Dara youngwoman navyblouse, Maly olderwoman oliveblouse checkscarf, Sophea youngwoman mutedtealblouse longbraid. Preserve distinct faces, approximately periodappropriate plain clothing; exactlyFOUR relatives, allfour recognizable. No added foregroundpeople, no text, no weapons, no violence, no modernobjects. Humane grounded somber style not photograph or real survivor. Scene: 1974 ordinary rural westernCambodia home. Four relatives sitting around wooden table: Dara19 sketches a sleeve design, Vann teen laughs, Maly about45 comments, Sophea17 holds a folded shirt and points at where a pocket should be. No displacement yet, ordinary life, quiet daylight, no modern objects.",
+      "promptForm": "exact prompt",
+      "inspection": "Visually inspected: four foreground relatives and intended scene; symbolic rear-facing C02 deliberately avoids staging atrocities. Invented setting, not verified site layout.",
+      "focalPosition": "50% 45%",
+      "alt": "Dara sketches a sleeve while Vann, Maly and Sophea discuss a shirt at home in a fictional 1974 recollection. Original illustration of a fictional household, not an archival image or verified site reconstruction."
+    },
+    {
+      "id": "C02",
+      "file": "C02.webp",
+      "sceneId": "C02",
+      "generator": "OpenAI image_gen imagegen",
+      "generatedAt": "2026-10-18",
+      "originalFile": "/workspace/generated_images/exec-2bfb6d10-63e0-4c7d-9247-71bd436b7217.png",
+      "originalSHA256": "80948863fd44d0a25b622d5a31a60c8ab23930afbee662423276c23ace559356",
+      "sha256": "5b4258a5fb985792cd095f7ae9f335a989ad4742c70383438dc8dd25367f5974",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "bytes": 180364,
+      "webpQuality": 80,
+      "reference": "cambodia/cover.webp",
+      "prompt": "Create a new original cinematic painterly wide16:9 scene using attached fictional fourperson cover as identity reference. Same four Khmer Cambodian relatives: Vann youngman rustshirt left, Dara youngwoman navyblouse, Maly olderwoman oliveblouse checkscarf, Sophea youngwoman mutedtealblouse longbraid. Preserve distinct faces, approximately periodappropriate plain clothing; exactlyFOUR relatives, allfour recognizable. No added foregroundpeople, no text, no weapons, no violence, no modernobjects. Humane grounded somber style not photograph or real survivor. Scene: Symbolic non-graphic recollection of1975–1979 displacement. Four people shown from behind at dusk, separated only by empty space but clearlyfour, modest clothing, bundles, distant indistinct rural horizon, no guards or weapons or violence or identifiable camp reconstruction. Dark spare reflective composition, no graphic trauma.",
+      "promptForm": "exact prompt",
+      "inspection": "Visually inspected: four foreground relatives and intended scene; symbolic rear-facing C02 deliberately avoids staging atrocities. Invented setting, not verified site layout.",
+      "focalPosition": "50% 45%",
+      "alt": "Four household members viewed from behind in a symbolic, non-graphic recollection of displacement; no atrocity is staged. Original illustration of a fictional household, not an archival image or verified site reconstruction."
+    },
+    {
+      "id": "C03",
+      "file": "C03.webp",
+      "sceneId": "C03",
+      "generator": "OpenAI image_gen imagegen",
+      "generatedAt": "2026-10-18",
+      "originalFile": "/workspace/generated_images/exec-a8665240-84c0-4163-99a9-81b291499958.png",
+      "originalSHA256": "4ee3820c2664a09ea30bb5a2dbe2859a6341c4ebb516e3bbcc0bb1aab4844c4c",
+      "sha256": "0d8464c496ddee73f67c05cb685291acd43dc2937cd28cf4d94ef8334b170893",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "bytes": 187540,
+      "webpQuality": 80,
+      "reference": "cambodia/cover.webp",
+      "prompt": "Create original cinematic painterly wide16:9 scene with attachedfourperson fictional cover as identity reference: Vann youngKhmerman rustshirt, Dara24 navyblouse, Maly olderKhmerwoman oliveblouse checkscarf, Sophea22 mutedtealblouse longblackbraid. Exactlyfour, distinctfaces. November1979 ruralwesternCambodia regional setting deliberately unspecified. Four relatives sit beside packed bundles on lowwoodenplatform at dawn considering uncertain contactnews and preparing fordeparture. Sophea unfolds contactnotes, Dara listens, Vann points to a blank foldedpaper withoutreadabletext, Maly ties clothbundle. Allfourvisiblyparticipate, no additionalpeople. Visuallydistinctfromwalkingcover. No modernobjects,text,guards,weapons,violence or tacticalcrossingdetails. Humane ordinarydecision and uncertainty, fictionalpeople notactualsurvivors, notverifiedsite.",
+      "promptForm": "exact prompt",
+      "inspection": "Visually inspected: four foreground relatives and intended scene; symbolic rear-facing C02 deliberately avoids staging atrocities. Invented setting, not verified site layout.",
+      "focalPosition": "50% 45%",
+      "alt": "Dara, Vann, Maly and Sophea discuss uncertain family news beside packed bundles in a fictional late-1979 rural setting. Original illustration of a fictional household, not an archival image or verified site reconstruction."
+    },
+    {
+      "id": "C04",
+      "file": "C04.webp",
+      "sceneId": "C04",
+      "generator": "OpenAI image_gen imagegen",
+      "generatedAt": "2026-10-18",
+      "originalFile": "/workspace/generated_images/exec-439fd213-d3a2-4b41-806d-01b510c2313e.png",
+      "originalSHA256": "b864b0ad568763e33e879b9dc3ac2bd72ba046b296187b65725bb697e748478a",
+      "sha256": "0ea8e7287602b4ba41331ca77035bf96e629f2356c41ecbc96a52ab4190eb7ae",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "bytes": 199012,
+      "webpQuality": 70,
+      "reference": "cambodia/cover.webp",
+      "prompt": "Create a new original cinematic painterly wide16:9 scene using attached fictional fourperson cover as identity reference. Same four Khmer Cambodian relatives: Vann youngman rustshirt left, Dara youngwoman navyblouse, Maly olderwoman oliveblouse checkscarf, Sophea youngwoman mutedtealblouse longbraid. Preserve distinct faces, approximately periodappropriate plain clothing; exactlyFOUR relatives, allfour recognizable. No added foregroundpeople, no text, no weapons, no violence, no modernobjects. Humane grounded somber style not photograph or real survivor. Scene: LateNovember1979 broad regional rural displacement towardThailand. Allfour sit resting beside bundles in shade. Maly seated with hands relaxed, Vann offers water in simple cup, Dara accepts help, Sophea opens protective cloth to check folded papers. Tired but agents in their care, no border infrastructure or invented crossing directions.",
+      "promptForm": "exact prompt",
+      "inspection": "Visually inspected: four foreground relatives and intended scene; symbolic rear-facing C02 deliberately avoids staging atrocities. Invented setting, not verified site layout.",
+      "focalPosition": "50% 45%",
+      "alt": "The four relatives rest beside their bundles while Sophea checks protected contact notes. Original illustration of a fictional household, not an archival image or verified site reconstruction."
+    },
+    {
+      "id": "C05",
+      "file": "C05.webp",
+      "sceneId": "C05",
+      "generator": "OpenAI image_gen imagegen",
+      "generatedAt": "2026-10-18",
+      "originalFile": "/workspace/generated_images/exec-e683ad47-5375-48e8-91cc-1b9a0d8fb9b7.png",
+      "originalSHA256": "85a23f2af6f9222c040769d0def407455b1b183a866bed77e3dfe31a3e7dd2f4",
+      "sha256": "2c0e64466687178fbfad10d71edf6768e3176ef1319595f15e81b3f949994714",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "bytes": 187074,
+      "webpQuality": 80,
+      "reference": "cambodia/cover.webp",
+      "prompt": "Create a new original cinematic painterly wide16:9 scene using attached fictional fourperson cover as identity reference. Same four Khmer Cambodian relatives: Vann youngman rustshirt left, Dara youngwoman navyblouse, Maly olderwoman oliveblouse checkscarf, Sophea youngwoman mutedtealblouse longbraid. Preserve distinct faces, approximately periodappropriate plain clothing; exactlyFOUR relatives, allfour recognizable. No added foregroundpeople, no text, no weapons, no violence, no modernobjects. Humane grounded somber style not photograph or real survivor. Scene: December1979 fictional holdingcentre areaThailand, modest bamboo shelter exterior not verifiedsite. Four relatives seated together conversing, Sophea and Dara compare a few folded contact notes, Vann listens, Maly gestures gently. Background few indistinct shelters, no text or institutionallogos.",
+      "promptForm": "exact prompt",
+      "inspection": "Visually inspected: four foreground relatives and intended scene; symbolic rear-facing C02 deliberately avoids staging atrocities. Invented setting, not verified site layout.",
+      "focalPosition": "50% 45%",
+      "alt": "Dara, Vann, Maly and Sophea discuss family news beside a fictional holding-centre shelter. Original illustration of a fictional household, not an archival image or verified site reconstruction."
+    },
+    {
+      "id": "C06",
+      "file": "C06.webp",
+      "sceneId": "C06",
+      "generator": "OpenAI image_gen imagegen",
+      "generatedAt": "2026-10-18",
+      "originalFile": "/workspace/generated_images/exec-d4fbbd3e-d0a9-4a66-8acb-8876065ff924.png",
+      "originalSHA256": "c66b42f09c6d7e0a0d1456e95f789a37ad3c8434e717ecd152ae15ed02a406c9",
+      "sha256": "30c940ebc07bbfa32cbc64003dcd57d12085a2c331f1bd947d73b612b61ab87f",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "bytes": 199200,
+      "webpQuality": 77,
+      "reference": "cambodia/cover.webp",
+      "prompt": "Create a new original cinematic painterly wide16:9 scene using attached fictional fourperson cover as identity reference. Same four Khmer Cambodian relatives: Vann youngman rustshirt, Dara youngwoman navyblouse, Maly olderwoman oliveblouse checkscarf, Sophea youngwoman mutedtealblouse longbraid. Preserve distinct faces. ExactlyFOUR relatives, allfour recognizable and included. No extra foregroundpeople, no text, no weapons, no violence, no modernobjects. Humane grounded somber style not photograph or real survivor. Scene: 1980 fictional Thailand holdingcentre shelter. Four relatives around woven mat discussing mutual support and uncertain news, Dara attentive, Maly sets limits with openhand, Sophea holding a notebook close while explaining a wish to study, Vann listens. Plain shelter and afternoon light, not verifiedcamp layout.",
+      "promptForm": "exact prompt",
+      "inspection": "Visually inspected: four foreground relatives and intended scene; symbolic rear-facing C02 deliberately avoids staging atrocities. Invented setting, not verified site layout.",
+      "focalPosition": "50% 45%",
+      "alt": "The four relatives discuss questions, mutual support and time for learning inside a fictional shelter. Original illustration of a fictional household, not an archival image or verified site reconstruction."
+    },
+    {
+      "id": "C07",
+      "file": "C07.webp",
+      "sceneId": "C07",
+      "generator": "OpenAI image_gen imagegen",
+      "generatedAt": "2026-10-18",
+      "originalFile": "/workspace/generated_images/exec-5d1998ca-2d7e-4d54-9aa9-5b7342304328.png",
+      "originalSHA256": "1353a6b947baea781f2a914b03f53543e3e2a20d560e435062e5499552f831bf",
+      "sha256": "ff5e1121f9d102efb1e2030a342da8d6a28921b993ef136cffcf8526215a3175",
+      "dimensions": [
+        1671,
+        941
+      ],
+      "bytes": 169502,
+      "webpQuality": 80,
+      "reference": "cambodia/cover.webp",
+      "prompt": "Create a new original cinematic painterly wide16:9 scene using attached fictional fourperson cover as identity reference. Same four Khmer Cambodian relatives: Vann youngman rustshirt, Dara youngwoman navyblouse, Maly olderwoman oliveblouse checkscarf, Sophea youngwoman mutedtealblouse longbraid. Preserve distinct faces. ExactlyFOUR relatives, allfour recognizable and included. No extra foregroundpeople, no text, no weapons, no violence, no modernobjects. Humane grounded somber style not photograph or real survivor. Scene: 1981 fictional departure preparations inThailand, location deliberately unspecified, no airport or official interview or paperwork text. Four relatives pack modest bundles at simpletable, Maly oliveblouse/scarf, Vannrustshirt, Daranavyblouse, Sopheatealblouse/braid compares questions on folded paper. Quiet uncertainty, ordinary agency not celebratory approval.",
+      "promptForm": "exact prompt",
+      "inspection": "Visually inspected: four foreground relatives and intended scene; symbolic rear-facing C02 deliberately avoids staging atrocities. Invented setting, not verified site layout.",
+      "focalPosition": "50% 45%",
+      "alt": "The four relatives pack modest belongings and discuss questions before their fictional 1981 departure. Original illustration of a fictional household, not an archival image or verified site reconstruction."
+    },
+    {
+      "id": "C08",
+      "file": "C08.webp",
+      "sceneId": "C08",
+      "generator": "OpenAI image_gen imagegen",
+      "generatedAt": "2026-10-18",
+      "originalFile": "/workspace/generated_images/exec-ef5102d0-c6c3-4e88-84bc-0e3ddfe26825.png",
+      "originalSHA256": "a798a9400c4ecfed8fab2f8a7260375eb254c28efd377a5a5bed6d3e601b3a23",
+      "sha256": "3c5a739f81795a696f2de77de2b3011208bbd10d450327f1f7b2a62b9531785e",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "bytes": 173852,
+      "webpQuality": 80,
+      "reference": "cambodia/cover.webp",
+      "prompt": "Create a new original cinematic painterly wide16:9 scene using attached fictional fourperson cover as identity reference. Same four Khmer Cambodian relatives: Vann youngman rustshirt, Dara youngwoman navyblouse, Maly olderwoman oliveblouse checkscarf, Sophea youngwoman mutedtealblouse longbraid. Preserve distinct faces. ExactlyFOUR relatives, allfour recognizable and included. No extra foregroundpeople, no text, no weapons, no violence, no modernobjects. Humane grounded somber style not photograph or real survivor. Scene: Minnesota1981 ordinary modest home interior, no identifiable city. Same four relatives in practical layered early1980s sweaters around kitchen table, Dara with clothing sketch, Vann considers household timetable, Maly points to a task list with no readabletext, Sophea studies an openbook beside foldedletter. Bus timetable symbolic blankpaper, warm lamplight, no modern electronics.",
+      "promptForm": "exact prompt",
+      "inspection": "Visually inspected: four foreground relatives and intended scene; symbolic rear-facing C02 deliberately avoids staging atrocities. Invented setting, not verified site layout.",
+      "focalPosition": "50% 45%",
+      "alt": "Dara, Vann, Maly and Sophea negotiate learning, work and household tasks around a Minnesota table. Original illustration of a fictional household, not an archival image or verified site reconstruction."
+    },
+    {
+      "id": "C09",
+      "file": "C09.webp",
+      "sceneId": "C09",
+      "generator": "OpenAI image_gen imagegen",
+      "generatedAt": "2026-10-18",
+      "originalFile": "/workspace/generated_images/exec-3c36dc41-5fde-4ea3-bfec-ac29ad1e6d65.png",
+      "originalSHA256": "6c8d3f04de842988ee49d2b399085b6c3e7e4092e9b2fef8cede4bf5febb708f",
+      "sha256": "330ee33f7a499470c0835a456e6e855fb8553518fbdf7264c5d1968325446daf",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "bytes": 164910,
+      "webpQuality": 80,
+      "reference": "cambodia/cover.webp",
+      "prompt": "Create a new original cinematic painterly wide16:9 scene using attached fictional fourperson cover as identity reference. Same four Khmer Cambodian relatives: Vann youngman rustshirt, Dara youngwoman navyblouse, Maly olderwoman oliveblouse checkscarf, Sophea youngwoman mutedtealblouse longbraid. Preserve distinct faces. ExactlyFOUR relatives, allfour recognizable and included. No extra foregroundpeople, no text, no weapons, no violence, no modernobjects. Humane grounded somber style not photograph or real survivor. Scene: Minnesota1982 ordinary modest home interior in gentle windowlight. Four relatives with same faces now aboutthree years older than cover, practical early1980s sweaters. Dara sketches a sleeve, Sophea writes letter and suggests a pocket, Vann interrupts smiling, Maly listens and asks a question. Drawing and unfinished letter visible without readabletext. Quiet ongoing life, no triumphant immigration symbolism.",
+      "promptForm": "exact prompt",
+      "inspection": "Visually inspected: four foreground relatives and intended scene; symbolic rear-facing C02 deliberately avoids staging atrocities. Invented setting, not verified site layout.",
+      "focalPosition": "50% 45%",
+      "alt": "Dara sketches and Sophea writes while Vann and Maly join their continuing household conversation in 1982. Original illustration of a fictional household, not an archival image or verified site reconstruction."
+    }
+  ],
+  "totalBytes": 1809238,
+  "portraitSheet": {
+    "width": 1672,
+    "height": 941
+  },
+  "portraitCrops": [
+    {
+      "id": "dara",
+      "name": "Dara",
+      "image": "/assets/cambodia/cover.webp",
+      "viewBox": "640 140 260 400"
+    },
+    {
+      "id": "vann",
+      "name": "Vann",
+      "image": "/assets/cambodia/cover.webp",
+      "viewBox": "350 100 300 420"
+    },
+    {
+      "id": "maly",
+      "name": "Maly",
+      "image": "/assets/cambodia/cover.webp",
+      "viewBox": "920 205 300 430"
+    },
+    {
+      "id": "sophea",
+      "name": "Sophea",
+      "image": "/assets/cambodia/cover.webp",
+      "viewBox": "1220 200 300 420"
+    }
+  ]
+}

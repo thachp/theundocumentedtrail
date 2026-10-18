@@ -18,7 +18,7 @@
     "test:history": "node --test tests/journeyHistory.test.mjs tests/journeyHistory-render.test.mjs tests/punjabProcedures.test.mjs tests/unscoredRamirez.test.mjs tests/endingDialog.test.mjs",
     "test:pilot": "node --test tests/cambodia*.test.mjs",
     "test:perspectives": "node --test tests/sharedPlace*.test.mjs tests/usFiscalEvidence.test.mjs",
-    "test:authored": "node --test tests/authored*.test.mjs"
+    "test:authored": "node --test tests/authored*.test.mjs tests/fourPerson*.test.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-sans": "^5.2.6",
