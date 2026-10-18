@@ -67,7 +67,8 @@ import {
   resolveTravelIncident,
   useMedicine,
 } from "./game.js";
-import { selectFamilyGame } from "./saveStore.js";
+import { hasSelectedFamily, loadFamilySaves, loadJourneyArchive, selectFamilyGame } from "./saveStore.js";
+import { FamilySelection } from "./JourneySelection.jsx";
 import { SocialFeedModal, SocialFeedTrigger } from "./SocialFeed.jsx";
 import { Portrait } from "./Portrait.jsx";
 import { JourneyMap } from "./JourneyMap.jsx";
@@ -466,6 +467,8 @@ function RestartModal({ onCancel, onConfirm }) {
 
 export function App() {
   const [game, setGame] = useJourneyGame();
+  const [showFamilySelection, setShowFamilySelection] = useState(true);
+  const [familySelectionRequired, setFamilySelectionRequired] = useState(() => !hasSelectedFamily());
   const [selectedRoute, setSelectedRoute] = useState(game.route);
   const [selectedPersonId, setSelectedPersonId] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -604,6 +607,7 @@ export function App() {
             <small>{game.history.length ? `${game.history.length} choices saved` : "Different paths. A more human tomorrow."}</small>
           </div>
           <span className="header-actions">
+            <button className="planning-journey-select" onClick={() => setShowFamilySelection(true)} aria-label="Choose a journey" data-sound="tap">Journeys</button>
             <button onClick={() => setShowHistory(true)} aria-label="Explore the history" data-tooltip="Historical context and sources" data-sound="tap"><BookOpenText weight="duotone" /></button>
             <a className="guided-return" href="/" data-tooltip="Switch to the simpler story view">Guided view</a>
             <a
@@ -707,6 +711,7 @@ export function App() {
       </div>
 
       <ChoiceModal choice={pendingChoice} game={game} onCancel={() => setPendingChoice(null)} onConfirm={confirmChoice} />
+      {showFamilySelection && <FamilySelection currentFamilyId={game.familyId} required={familySelectionRequired} saves={loadFamilySaves()} archive={loadJourneyArchive()} onSelect={familyId => { setGame(selectFamilyGame(familyId)); setFamilySelectionRequired(false); setShowFamilySelection(false); }} onClose={() => setShowFamilySelection(false)} />}
       {showHistory && <JourneyHistoryDialog game={game} onClose={() => setShowHistory(false)} />}
       {showLog && <JourneyLog game={game} onClose={() => setShowLog(false)} />}
       {showRestart && <RestartModal onCancel={() => setShowRestart(false)} onConfirm={restart} />}

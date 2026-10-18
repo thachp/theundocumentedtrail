@@ -1,0 +1,151 @@
+import { useEffect, useRef, useState } from "react";
+import { ArrowCounterClockwise, ArrowLeft, ArrowRight, BookOpenText, MapPin, UsersThree, X } from "@phosphor-icons/react";
+import { FAMILY_PRESETS, getJourneyScore } from "./game.js";
+import { getJourneyHistory } from "./journeyHistory.js";
+import { getJourneyChoices, journeyKeyIndex, scrollJourneyCard } from "./journeyChoices.js";
+import "./beginner.css";
+
+export function FamilySelection({ currentFamilyId, required, saves, archive, onSelect, onRestart, onClose }) {
+  const families = getJourneyChoices(import.meta.env);
+  const initialIndex = Math.max(0, families.findIndex((family) => family.id === currentFamilyId));
+  const carouselRef = useRef(null);
+  const dialogRef = useRef(null);
+  const headingRef = useRef(null);
+  const [carouselIndex, setCarouselIndex] = useState(initialIndex);
+  const recentJourneys = archive.slice(0, 6);
+
+  const scrollToFamily = (index, behavior = "smooth", focus = false) => {
+    const nextIndex = scrollJourneyCard(carouselRef.current, index, { behavior, focus, reducedMotion: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches });
+    if (nextIndex !== null) setCarouselIndex(nextIndex);
+  };
+
+  useEffect(() => {
+    const previous = document.activeElement;
+    const dialog = dialogRef.current;
+    dialog.showModal();
+    headingRef.current?.focus({ preventScroll: true });
+    return () => { dialog.close(); if (previous?.isConnected) previous.focus(); };
+  }, []);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => scrollToFamily(initialIndex, "auto"));
+    return () => cancelAnimationFrame(frame);
+  }, [currentFamilyId]);
+
+  const updateCarouselIndex = () => {
+    const rail = carouselRef.current;
+    if (!rail) return;
+    const center = rail.scrollLeft + (rail.clientWidth / 2);
+    const nextIndex = [...rail.children].reduce((closest, card, index) => {
+      const cardCenter = card.offsetLeft + (card.clientWidth / 2);
+      return Math.abs(cardCenter - center) < closest.distance
+        ? { index, distance: Math.abs(cardCenter - center) }
+        : closest;
+    }, { index: 0, distance: Number.POSITIVE_INFINITY }).index;
+    setCarouselIndex(nextIndex);
+  };
+
+  const handleCarouselKeys = (event) => {
+    const nextIndex = journeyKeyIndex(event.key, carouselIndex, families.length);
+    if (nextIndex === null) return;
+    event.preventDefault();
+    scrollToFamily(nextIndex, "smooth", true);
+  };
+
+  return (
+    <dialog ref={dialogRef} className="cinematic-family-backdrop" aria-labelledby="family-selection-title" onCancel={event => { event.preventDefault(); if (!required) onClose(); }}>
+      <section className="cinematic-family-dialog">
+        {!required && <button className="cinematic-work-close" onClick={onClose} aria-label="Close family selection" data-sound="dismiss"><X weight="bold" /></button>}
+        <span className="cinematic-family-symbol"><UsersThree weight="duotone" /></span>
+        <small>Choose a journey</small>
+        <h2 id="family-selection-title" tabIndex="-1" ref={headingRef}>Whose road will you follow?</h2>
+        <p>Choose a family journey or the Cambodian historical story. Each keeps its own progress, so you can safely return later.</p>
+        <div className="cinematic-family-carousel">
+          <div className="cinematic-family-carousel-controls">
+            <span aria-live="polite"><strong>{carouselIndex + 1} of {families.length}</strong><small>Swipe or use arrows · Home/End: first/last</small></span>
+            <div>
+              <button onClick={() => scrollToFamily(carouselIndex - 1)} disabled={carouselIndex === 0} aria-label="Previous journey" data-sound="tap"><ArrowLeft weight="bold" /></button>
+              <button onClick={() => scrollToFamily(carouselIndex + 1)} disabled={carouselIndex === families.length - 1} aria-label="Next journey" data-sound="tap"><ArrowRight weight="bold" /></button>
+            </div>
+          </div>
+          <div
+            className="cinematic-family-options"
+            ref={carouselRef}
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Journey choices"
+            tabIndex="0"
+            onScroll={updateCarouselIndex}
+            onKeyDown={handleCarouselKeys}
+          >
+          {families.map((family, index) => {
+            if (family.kind === "historical") return <article className="cinematic-family-card" key={family.id} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${families.length}: Cambodia · ${family.name} · ${family.period}`}>
+              <div className="cinematic-story-cover" aria-hidden="true"><span>CAMBODIA</span><strong>{family.period}</strong><small>A historical story</small></div>
+              <div className="cinematic-family-copy"><small>{family.origin}</small><span className="history-chooser-setting">Cambodia → Thailand → United States · {family.period}</span><strong>{family.name}</strong><p>{family.context}</p><em><MapPin weight="fill" />{family.journey}</em><p>Unscored story · Separate saved progress</p></div>
+              <div className="cinematic-family-actions"><a className="continue" href={family.href}>Open Cambodian story<ArrowRight weight="bold" /></a></div>
+            </article>;
+            const saved = saves[family.id];
+            const savedStatus = saved?.phase === "ended"
+              ? `${saved.status === "won" ? "Completed" : "Journey stopped"} · Score ${getJourneyScore(saved)}`
+              : saved
+                ? `In progress · Day ${saved.day} · ${saved.progress}%`
+                : "Not started";
+            return (
+              <article
+                className={`cinematic-family-card ${currentFamilyId === family.id ? "selected" : ""}`}
+                key={family.id}
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`${index + 1} of ${families.length}: ${family.name}`}
+              >
+                <div className="cinematic-family-portrait">
+                  <img src={family.portraitStrips.healthy} alt={`Portraits of ${family.name}`} />
+                  <span className={saved?.phase === "ended" ? saved.status : saved ? "playing" : "new"}>{savedStatus}</span>
+                </div>
+                <div className="cinematic-family-copy">
+                  <small>{family.origin}</small>
+                  <span className="history-chooser-setting">{getJourneyHistory(family.id).place} · {getJourneyHistory(family.id).era}</span>
+                  <strong>{family.name}</strong>
+                  <p>{family.context}</p>
+                  <em><MapPin weight="fill" />{family.journey}</em>
+                </div>
+                <div className="cinematic-family-actions">
+                  <button className="continue" onClick={() => onSelect(family.id)} data-sound="confirm">
+                    {saved ? (saved.phase === "ended" ? "View result" : "Continue") : "Start journey"}<ArrowRight weight="bold" />
+                  </button>
+                  {saved && onRestart && (
+                    <button className="restart" onClick={() => onRestart(family.id)} data-sound="warning">
+                      <ArrowCounterClockwise weight="bold" />Start again
+                    </button>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+          </div>
+        </div>
+        {recentJourneys.length > 0 && (
+          <section className="cinematic-journey-archive" aria-label="Completed journey archive">
+            <header><BookOpenText weight="duotone" /><span><small>Journey archive</small><strong>Roads already traveled</strong></span></header>
+            <div>
+              {recentJourneys.map((entry) => {
+                const family = FAMILY_PRESETS[entry.familyId];
+                return (
+                  <article key={entry.runId}>
+                    <span><strong>{family.shortName}</strong><small>{entry.endingTitle}</small></span>
+                    <em>{entry.status === "won" ? "Completed" : "Stopped"}</em>
+                    <span><strong>{entry.score}</strong><small>Score</small></span>
+                    <span><strong>{entry.survivors}/{entry.travelers}</strong><small>Survived</small></span>
+                    <span><strong>Day {entry.day}</strong><small>{entry.decisions} decisions</small></span>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        )}
+        <footer>Stories include displacement, exploitation, detention, family loss, and uncertain legal outcomes. Difficult events remain non-graphic.</footer>
+      </section>
+    </dialog>
+  );
+}
+
