@@ -1,0 +1,118 @@
+{
+  "generator": "OpenAI image_gen tool; model version/seed not exposed",
+  "date": "2026-10-18",
+  "reference": "Original generated fictional family cover; no third-party image reference",
+  "rightsLimit": "Generated illustrations, not archival photos. No exclusive copyright or external rights certification claimed.",
+  "assets": [
+    {
+      "sceneId": "cover",
+      "path": "/assets/vietnam-bidong-1978/cover.webp",
+      "sourceOriginal": "exec-3e62ff88-37f8-497f-98de-663b1af3b8b1.png",
+      "originalSHA256": "6bf8209cba93e8e9c9f7ac0855996de12ae872b8a3947de9949ac146c4abe864",
+      "webpSHA256": "f47fcdbcbd69220af49dad5217dd68ddf9eadc1f865ae6e676deaad06757b467",
+      "dimensions": "1672x941",
+      "bytes": 126510,
+      "focalPoint": "50% 45%",
+      "alt": "Original fictional The Nguyễn family family cover"
+    },
+    {
+      "sceneId": "bidong-01",
+      "path": "/assets/vietnam-bidong-1978/bidong-01.webp",
+      "sourceOriginal": "exec-8aca5421-e2ad-439f-829c-2790d81c9eea.png",
+      "originalSHA256": "18d6b3fd4728e5655ac89a2cc1d7f37b06167223db5a05aafba22fa2fd4dbbce",
+      "webpSHA256": "c2866c627986d8458c665f0e83a8d305878506315e47a400c44edeb1c5e6dcd1",
+      "dimensions": "1672x941",
+      "bytes": 185524,
+      "focalPoint": "50% 45%",
+      "alt": "Original illustration: A familiar repair, Southern Vietnam · regional anchor, Late 1978; fictional The Nguyễn family, not archival imagery"
+    },
+    {
+      "sceneId": "bidong-02",
+      "path": "/assets/vietnam-bidong-1978/bidong-02.webp",
+      "sourceOriginal": "exec-efb6f9d3-eab5-4359-a10f-839e94ad9c82.png",
+      "originalSHA256": "04ec6d989cabe9dda14f6fa8c1a43f1bca357cb15e850dd55845ad0274343ca4",
+      "webpSHA256": "d31ccad87fa75626f3150772b6e31ae02bdc89eda9c5bf9abeaa7864a661e662",
+      "dimensions": "1672x941",
+      "bytes": 202130,
+      "focalPoint": "50% 45%",
+      "alt": "Original illustration: What fits beside a notebook, Southern Vietnam · home unspecified, Late 1978; fictional The Nguyễn family, not archival imagery"
+    },
+    {
+      "sceneId": "bidong-03",
+      "path": "/assets/vietnam-bidong-1978/bidong-03.webp",
+      "sourceOriginal": "exec-59443753-7011-49dc-a2e2-e0d2dc8123b4.png",
+      "originalSHA256": "adb0ff497baec6f2dac704441843b0f22a22022aad062672389e159fc324db15",
+      "webpSHA256": "c7fa94900a0ee5fd76316b115c210c1959f5c8d4219d3cce9b73999e37ef4a68",
+      "dimensions": "1672x941",
+      "bytes": 241984,
+      "focalPoint": "50% 45%",
+      "alt": "Original illustration: Hours of company, Southeast Asian sea passage · approximate region, Late 1978; fictional The Nguyễn family, not archival imagery"
+    },
+    {
+      "sceneId": "bidong-04",
+      "path": "/assets/vietnam-bidong-1978/bidong-04.webp",
+      "sourceOriginal": "exec-682629d2-821a-4110-be2b-92ade7092936.png",
+      "originalSHA256": "37c6301d2ee977d6d6da46d15ce9c65928542c630357cbce554578c82c041248",
+      "webpSHA256": "cb7cefd8b66fb9c53adf3a3856b82f5ff9504c08d97a2419becf40c6091e475a",
+      "dimensions": "1672x941",
+      "bytes": 191268,
+      "focalPoint": "50% 45%",
+      "alt": "Original illustration: Refuge is not admission elsewhere, Pulau Bidong, Malaysia, Late 1978; fictional The Nguyễn family, not archival imagery"
+    },
+    {
+      "sceneId": "bidong-05",
+      "path": "/assets/vietnam-bidong-1978/bidong-05.webp",
+      "sourceOriginal": "exec-6e471e1d-2eb7-44d0-9477-881f9738e81b.png",
+      "originalSHA256": "9ab366900a36929d57b0cb45fda0d856331fbb4655adfddc2ef3183a7fd006b4",
+      "webpSHA256": "6d719f3e88a40ba3d911d6af06c0cf50418b92d7342ef01b52f043b2fd84e8fe",
+      "dimensions": "1672x941",
+      "bytes": 269832,
+      "focalPoint": "50% 45%",
+      "alt": "Original illustration: A day has several kinds of work, Pulau Bidong, Malaysia, Early 1979; fictional The Nguyễn family, not archival imagery"
+    },
+    {
+      "sceneId": "bidong-06",
+      "path": "/assets/vietnam-bidong-1978/bidong-06.webp",
+      "sourceOriginal": "exec-9e165c06-4153-4a37-ba88-1b9445d90eb8.png",
+      "originalSHA256": "7230c7840449faf8be9d6b8b0cd7d2638d3d534b4a93edbb9c5774d276105909",
+      "webpSHA256": "561536436a06c98c7d2e1c460d6a972d96a8cadb0b9e64acffe0585e9ee9d8b5",
+      "dimensions": "1672x941",
+      "bytes": 202820,
+      "focalPoint": "50% 45%",
+      "alt": "Original illustration: A letter without an answer, Pulau Bidong, Malaysia, After 21 July 1979; fictional The Nguyễn family, not archival imagery"
+    },
+    {
+      "sceneId": "bidong-07",
+      "path": "/assets/vietnam-bidong-1978/bidong-07.webp",
+      "sourceOriginal": "exec-63a7beee-e5f4-49cc-8d75-1151bd2e19ee.png",
+      "originalSHA256": "b3e8a0dc63850b256e0ddb7af0ca47e7db7df03a52e615aa6aa34b815d077388",
+      "webpSHA256": "fdc4518f7d674e4c93bedead2212e59d0390eb62c25133ecc473f2d6d7f24799",
+      "dimensions": "1672x941",
+      "bytes": 193114,
+      "focalPoint": "50% 45%",
+      "alt": "Original illustration: Permission, then practical questions, Malaysia · onward itinerary unspecified, Later 1979 · explicit time transition; fictional The Nguyễn family, not archival imagery"
+    },
+    {
+      "sceneId": "bidong-08",
+      "path": "/assets/vietnam-bidong-1978/bidong-08.webp",
+      "sourceOriginal": "exec-48e2accf-b799-426d-a85b-9d401a1fbc07.png",
+      "originalSHA256": "16c8a756fe69c80b4828540ed64aae05582c2f7ab91888ac337d32f29b852c43",
+      "webpSHA256": "7d14f56eda7c44072f972ba61e2cdf48af6d42d1214b3bfe587be23ed94f9a57",
+      "dimensions": "1672x941",
+      "bytes": 162244,
+      "focalPoint": "50% 45%",
+      "alt": "Original illustration: A schedule in a new place, Michigan · city unspecified, Late 1979; fictional The Nguyễn family, not archival imagery"
+    },
+    {
+      "sceneId": "bidong-09",
+      "path": "/assets/vietnam-bidong-1978/bidong-09.webp",
+      "sourceOriginal": "exec-d2b7ae55-b5ef-4537-be13-dd24b80a26fa.png",
+      "originalSHA256": "ade8002fcb297b365476e057d27fb185432c525ef7206d95ab2eec6c43cafcff",
+      "webpSHA256": "3d7eaf3f5a10978f1c0152a13767e6798c4e875b5b77f94bc9b5d386bfe7219e",
+      "dimensions": "1672x941",
+      "bytes": 175054,
+      "focalPoint": "50% 45%",
+      "alt": "Original illustration: More than the waiting, Michigan · city unspecified, End of 1979; fictional The Nguyễn family, not archival imagery"
+    }
+  ]
+}

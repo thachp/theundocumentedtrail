@@ -1,0 +1,103 @@
+{
+  "date": "2026-10-18",
+  "stack": {
+    "PR29": {
+      "base": "main",
+      "head": "1b84c39c8bc3fc5e18dd78b90337dbde89be207d"
+    },
+    "PR30": {
+      "base": "feat/mariel-1980",
+      "parent": "1b84c39c8bc3fc5e18dd78b90337dbde89be207d"
+    },
+    "stableMain": "b62c59e08d9a7bfba7feb088a4d6d09bbfd98727",
+    "stableMainTree": "926b070c270fa106156e2135310840b321152ea5"
+  },
+  "registeredStories": [
+    "mariel-1980",
+    "vietnam-bidong-1978"
+  ],
+  "chooserEntries": 9,
+  "sharedAdapterChangesFromPR29": 0,
+  "storyContentAndAssetChangesFromOriginalFeatureHeads": 0,
+  "tests": {
+    "tests": 147,
+    "pass": 147,
+    "fail": 0
+  },
+  "testCommand": "npm test",
+  "build": {
+    "command": "npm run build",
+    "passed": true,
+    "artifacts": [
+      "dist/client/index.html",
+      "dist/server/index.js",
+      "dist/.openai/hosting.json"
+    ],
+    "existingWarning": "large bundled chunk"
+  },
+  "combinations": {
+    "mariel": 59049,
+    "vietnam": 19683,
+    "total": 78732
+  },
+  "images": {
+    "total": 21,
+    "totalWebpBytes": 3838804,
+    "provenance": "Both per-story provenance.json manifests validated by tests"
+  },
+  "focusedCoverage": {
+    "controller": {
+      "lines": 100,
+      "branches": 91.49,
+      "functions": 100
+    },
+    "saveStore": {
+      "lines": 100,
+      "branches": 73.58,
+      "functions": 76.92
+    },
+    "scope": "authoredJourney.test.mjs only; not whole-app coverage"
+  },
+  "chromium": {
+    "version": "Chromium 154.0.8037.57 built on Debian GNU/Linux 13 (trixie)",
+    "server": "http://localhost:5184/",
+    "widths": [
+      1365,
+      390,
+      320
+    ],
+    "modes": [
+      "Guided",
+      "Planning"
+    ],
+    "logs": [
+      "/tmp/combined-browser-full.log",
+      "/tmp/combined-browser-chooser.log",
+      "/tmp/combined-browser-assets.log",
+      "/tmp/combined-browser-fallback.log",
+      "/tmp/combined-browser-map.log",
+      "/tmp/combined-browser-isolation.log"
+    ],
+    "checks": [
+      "Both complete journeys and all scene illustrations",
+      "Refresh and Guided/Planning resume",
+      "Back",
+      "Keyboard Home/End in normal nine-entry chooser",
+      "Switch to Ramirez and back",
+      "Switch Cuban to Vietnamese and back without replacing either save",
+      "Complete Vietnamese archive while Cuban live progress remains byte-identical",
+      "Same-family cover fallback for failed scene imagery",
+      "Planning geographic map sizing and no horizontal overflow",
+      "No generic phone for authored households",
+      "Reduced-motion emulation: hero animation 0.00001s"
+    ],
+    "limitations": [
+      "Actual screen-reader and text-resizing checks outstanding for independent Mac QA",
+      "Actual touch and platform-specific bfcache behavior unverified"
+    ]
+  },
+  "releaseGateDocument": "docs/story-integration-release.md",
+  "merged": false,
+  "deployed": false,
+  "published": false
+}
