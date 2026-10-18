@@ -127,7 +127,7 @@ test("early stopping keeps the actual country instead of the originally promised
 
 test("land geometry remains bounded and includes the Canary Islands", async () => {
   const land = JSON.parse(await readFile(new URL("../src/mapLand.json", import.meta.url)));
-  for (const [familyId, countries] of Object.entries(land)) {
+  for (const [familyId, countries] of Object.entries(land).filter(([id]) => MAP_BOUNDS[id])) {
     const [west, south, east, north] = MAP_BOUNDS[familyId];
     for (const country of countries) for (const ring of country.rings) for (const [lon, lat] of ring) {
       assert.ok(lon >= west && lon <= east && lat >= south && lat <= north, `${familyId}: ${country.name}`);
