@@ -97,11 +97,11 @@ test("restoration observer refreshes on Back/Forward pageshow, storage and visib
   assert.equal(restores,5);
 });
 
-test("both actual views use the synchronous boundary and contain no post-render save writer or activity feature", async () => {
+test("both actual views use the synchronous boundary and contain no post-render save writer", async () => {
   for(const file of ["App.jsx","BeginnerApp.jsx"]) {
     const source=await readFile(new URL(`../src/${file}`,import.meta.url),"utf8");
     assert.match(source,/\[game, setGame\] = useJourneyGame\(\)/);
-    assert.doesNotMatch(source,/saveFamilyGame|livelihoodActivity|LivelihoodDialog/);
+    assert.doesNotMatch(source,/saveFamilyGame/);
   }
   const hook=await readFile(new URL("../src/useJourneyGame.js",import.meta.url),"utf8");
   assert.match(hook,/applySavedJourneyAction\(current\.current, action\)/);

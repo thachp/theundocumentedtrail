@@ -1,3 +1,5 @@
+import { isRepairScene } from "./livelihoodActivity.js";
+import { LivelihoodDialog, LivelihoodOptional } from "./LivelihoodActivity.jsx";
 import { commitJourneyChoice } from "./journeyChoiceActions.js";
 import { isCambodiaJourney } from "./cambodiaJourney.js";
 import { CambodiaResources, CambodiaJourneyContext, CambodiaPersonDialog } from "./CambodiaJourneyUI.jsx";
@@ -162,7 +164,7 @@ function CharacterCard({ person, state, stress, familyId, active, onClick }) {
   );
 }
 
-function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop, onOpenSocialFeed, onOpenSupplyShop, onExploreHistory, onChoice, onContinue, onTravelPlan }) {
+function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop, onOpenSocialFeed, onOpenSupplyShop, onExploreHistory, onOpenLivelihood, onChoice, onContinue, onTravelPlan }) {
   const travelPlanRequired = requiresTravelPlan(game);
   return (
     <aside className="messages-panel" aria-label="Messages and decisions">
@@ -198,6 +200,7 @@ function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop,
         />
       )}
 
+      <LivelihoodOptional game={game} onOpen={onOpenLivelihood} />
       {supplyStop && <SupplyStopTrigger compact stop={supplyStop} onOpen={onOpenSupplyShop} />}
 
       {game.phase === "decision" ? (
@@ -468,6 +471,7 @@ function RestartModal({ onCancel, onConfirm }) {
 
 export function App() {
   const [game, setGame] = useJourneyGame();
+  const [showLivelihood, setShowLivelihood] = useState(false);
   const [showFamilySelection, setShowFamilySelection] = useState(() => !isCambodiaJourney(game));
   const [familySelectionRequired, setFamilySelectionRequired] = useState(() => !isCambodiaJourney(game) && !hasSelectedFamily());
   const [selectedRoute, setSelectedRoute] = useState(game.route);
@@ -553,6 +557,7 @@ export function App() {
   };
 
   const restart = () => {
+    setShowLivelihood(false);
     const fresh = selectFamilyGame(game.familyId, { restart: true });
     setGame(fresh);
     setPendingChoice(null);
@@ -706,6 +711,7 @@ export function App() {
           supplyStop={supplyStop}
           onOpenSocialFeed={() => setShowSocialFeed(true)}
           onExploreHistory={() => setShowHistory(true)}
+          onOpenLivelihood={() => setShowLivelihood(true)}
           onOpenSupplyShop={() => setShowSupplyShop(true)}
           onChoice={setPendingChoice}
           onContinue={continueWithIncidents}
@@ -713,6 +719,7 @@ export function App() {
         />
       </div>
 
+      {showLivelihood && isRepairScene(game) && <LivelihoodDialog game={game} onUpdate={action => setGame(current => action(current))} onClose={() => setShowLivelihood(false)} />}
       <ChoiceModal choice={pendingChoice} game={game} onCancel={() => setPendingChoice(null)} onConfirm={confirmChoice} />
       {showFamilySelection && <FamilySelection mode="full" currentFamilyId={game.familyId} required={familySelectionRequired} saves={loadFamilySaves()} archive={loadJourneyArchive()} onSelect={familyId => { setGame(selectFamilyGame(familyId)); setFamilySelectionRequired(false); setShowFamilySelection(false); }} onClose={() => setShowFamilySelection(false)} />}
       {showHistory && <JourneyHistoryDialog game={game} onClose={() => setShowHistory(false)} />}

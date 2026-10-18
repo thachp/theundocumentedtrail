@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build && node scripts/prepare-sites-build.mjs",
     "preview": "vite preview",
-    "test": "npm run test:game && npm run test:saves && npm run test:onboarding && npm run test:soundtrack && npm run test:layout && npm run test:maps && npm run test:history && npm run test:pilot && npm run test:perspectives && npm run test:sites",
+    "test": "npm run test:game && npm run test:saves && npm run test:onboarding && npm run test:soundtrack && npm run test:layout && npm run test:maps && npm run test:history && npm run test:pilot && npm run test:perspectives && npm run test:livelihood && npm run test:sites",
     "test:game": "node --test tests/game.test.mjs",
     "test:saves": "node --test tests/saveStore.test.mjs tests/staleJourneySave.test.mjs",
     "test:onboarding": "node --test tests/onboarding.test.mjs tests/journeySelection.test.mjs",
@@ -17,7 +17,8 @@
     "test:maps": "node --test tests/journeyGeography.test.mjs tests/journeyMap-render.test.mjs",
     "test:history": "node --test tests/journeyHistory.test.mjs tests/journeyHistory-render.test.mjs tests/punjabProcedures.test.mjs tests/unscoredRamirez.test.mjs tests/endingDialog.test.mjs",
     "test:pilot": "node --test tests/cambodia*.test.mjs",
-    "test:perspectives": "node --test tests/sharedPlace*.test.mjs tests/usFiscalEvidence.test.mjs"
+    "test:perspectives": "node --test tests/sharedPlace*.test.mjs tests/usFiscalEvidence.test.mjs",
+    "test:livelihood": "node --test tests/livelihood*.test.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-sans": "^5.2.6",
