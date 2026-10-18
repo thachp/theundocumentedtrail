@@ -1,4 +1,5 @@
 import { SharedPlaceContext } from "./SharedPlaceContext.jsx";
+import { UsFiscalEvidence } from "./UsFiscalEvidence.jsx";
 import { useEffect, useId, useRef } from "react";
 import { getEvent, getFamilyPreset } from "./game.js";
 import { FICTION_NOTICE, HISTORY_SOURCES, getJourneyDate, getJourneyHistory, getSceneHistory } from "./journeyHistory.js";
@@ -61,5 +62,5 @@ export function SceneHistory({ game, onExplore, storyScene, sources }) {
     <p>{note.text}</p>
     <SourceLinks ids={note.sourceIds} sources={sources} />
     <button type="button" onClick={onExplore}>Explore the history</button>
-  </details><SharedPlaceContext key={`${game.familyId}-${game.eventId}`} game={game} /></>;
+  </details><SharedPlaceContext key={`${game.familyId}-${game.eventId}`} game={game} /><UsFiscalEvidence key={`fiscal-${game.familyId}-${game.eventId}`} game={game} /></>;
 }
