@@ -603,7 +603,7 @@ export function App() {
         </div>
         <div className="day-summary">
           <div>
-            <strong>{getJourneyDate(game)} · {event.region}</strong>
+            <strong><span className="planning-date">{getJourneyDate(game)}</span><span className="planning-region">{event.region}</span></strong>
             <small>{game.history.length ? `${game.history.length} choices saved` : "Different paths. A more human tomorrow."}</small>
           </div>
           <span className="header-actions">

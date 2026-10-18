@@ -70,3 +70,24 @@ test("planning geography fits its fixed desktop pane and uses document flow on m
   const app = await readFile(new URL("../src/App.jsx", import.meta.url), "utf8");
   assert.match(app, /<JourneyMap game=\{game\} fitViewport\s*\/>/, "planning view must opt into bounded geography");
 });
+
+test("the planning date and location have their own width and can grow the header without clipping the map", async () => {
+  const header = ruleFor(".game-header", planningCss);
+  const summary = ruleFor(".day-summary", planningCss);
+  const caption = ruleFor(".day-summary strong", planningCss);
+  assert.match(header, /height:\s*auto/, "the original fixed 86px height clipped wrapped Guatemala captions at 1440px");
+  assert.match(header, /min-height:\s*86px/, "retain the established minimum header size");
+  assert.match(summary, /display:\s*grid/, "controls must not squeeze date/location into the same horizontal row");
+  assert.match(summary, /grid-template-columns:\s*minmax\(0, 1fr\)/);
+  assert.match(caption, /display:\s*grid/, "date and region should retain separate readable lines");
+  assert.match(caption, /overflow-wrap:\s*anywhere/, "long regional names must fit narrow screens");
+  assert.doesNotMatch(caption, /line-clamp|text-overflow|overflow:\s*hidden/, "keep the meaningful date and region visible");
+  assert.match(ruleFor(".header-actions", planningCss), /flex-wrap:\s*wrap/, "small widths should wrap tools rather than force overflow");
+  const app = await readFile(new URL("../src/App.jsx", import.meta.url), "utf8");
+  assert.match(app, /className="planning-date">\{getJourneyDate\(game\)\}/);
+  assert.match(app, /className="planning-region">\{event.region\}/);
+  // The remaining main grid still shrinks, and the SVG stays fitted to its
+  // pane, so an intrinsically taller header does not restore map clipping.
+  assert.match(ruleFor(".game-grid", planningCss), /min-height:\s*0/);
+  assert.match(ruleFor(".journey-map-fit > .journey-map-canvas", mapCss), /height:\s*calc\(100% - 20px\)/);
+});
