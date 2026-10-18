@@ -8,7 +8,7 @@ for(const mode of ['guided','full'])for(const width of [1365,390,320]){
   await page.evaluate(s=>localStorage.setItem('undocumented-trail:review:cambodia-1979:v3',JSON.stringify({...s,runId:'browser-fixture',saveRevision:0})),state);await page.goto(url);await page.waitForTimeout(100);
   const data=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth,images:[...document.querySelectorAll('img')].filter(i=>!i.complete||!i.naturalWidth).map(i=>i.src),title:document.querySelector('.cinematic-story h1,.cinematic-story h2')?.textContent,resources:!!document.querySelector('[aria-label="Household resources"]')}));
   report.cases.push({mode,width,id,...data});
-  if(['E01','E07','E10','P02'].includes(id)&&width!==320){const file=`artifacts/cambodia-expanded/${mode}-${width}-${id}.png`;await page.screenshot({path:file,fullPage:true});report.screenshots.push(file);}
+  if(['E01','E07','E10','P02'].includes(id)&&width!==320&&!process.env.CAMBODIA_QA_SKIP_SCREENSHOTS){const file=`artifacts/cambodia-expanded/${mode}-${width}-${id}.png`;await page.screenshot({path:file,fullPage:true});report.screenshots.push(file);}
  }
  // Representative real choice / Planning confirmation, outcome, reload, Back.
  await page.evaluate(s=>localStorage.setItem('undocumented-trail:review:cambodia-1979:v3',JSON.stringify({...s,runId:'browser-action',saveRevision:0})),fixtures.E01);await page.goto(url);await page.getByRole('button',{name:/Protect the contact notes/}).click();
