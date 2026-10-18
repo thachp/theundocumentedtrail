@@ -1,4 +1,5 @@
 import { FamilySelection } from "./JourneySelection.jsx";
+import { EndingDialog } from "./EndingDialog.jsx";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useJourneyGame } from "./useJourneyGame.js";
 import {
@@ -42,7 +43,6 @@ import {
   getCondition,
   getEvent,
   getFamilyPreset,
-  getJourneyScore,
   getJourneyStage,
   getPeople,
   getPortraitMood,
@@ -517,6 +517,7 @@ function JourneyLog({ game, onClose }) {
   );
 }
 
+
 function ContentSettings({ currentMode, onSelect, onClose }) {
   return (
     <div className="cinematic-work-backdrop cinematic-content-backdrop">
@@ -575,19 +576,18 @@ function Tutorial({ step, onBack, onNext, onFinish }) {
 
 function Ending({ game, onTryAgain, onChooseFamily, onExploreHistory }) {
   const won = game.status === "won";
-  const score = getJourneyScore(game);
   const people = getPeople(game);
   const survivors = people.filter((person) => game.people[person.id].alive !== false);
   const losses = people.filter((person) => game.people[person.id].alive === false);
   const reachedDestination = won && game.progress >= 100;
   return (
-    <div className={`cinematic-ending-backdrop ${won ? "arrival" : "journey-stopped"}`}>
-      <section className={`cinematic-ending ${game.status}`} role="dialog" aria-modal="true" aria-labelledby="cinematic-ending-title">
+    <EndingDialog className={`cinematic-ending-backdrop ${won ? "arrival" : "journey-stopped"}`} labelledBy="cinematic-ending-title">
+      <section className={`cinematic-ending ${game.status}`}>
         <span className="cinematic-ending-symbol">
           {won ? <HouseLine weight="fill" /> : <Heartbeat weight="duotone" />}
         </span>
         <small>{reachedDestination ? "Destination reached · Route complete" : won ? "A new destination · Journey complete" : "The journey ends here"}</small>
-        <h2 id="cinematic-ending-title">{game.ending.title}</h2>
+        <h2 id="cinematic-ending-title" tabIndex="-1">{game.ending.title}</h2>
         <p>{game.ending.copy}</p>
         <p className="history-ending-period">{getJourneyDate(game)}</p>
         <button className="history-ending-button" onClick={onExploreHistory}>Explore the history</button>
@@ -602,7 +602,6 @@ function Ending({ game, onTryAgain, onChooseFamily, onExploreHistory }) {
         )}
 
         <div className="cinematic-ending-stats" aria-label="Journey results">
-          <div><strong>{score}</strong><span>Journey score</span></div>
           <div><strong>{Math.max(1, game.day - 1)}</strong><span>Days traveled</span></div>
           <div><strong>{survivors.length}/{people.length}</strong><span>Survived</span></div>
           <div><strong>{game.history.length}</strong><span>Decisions</span></div>
@@ -633,7 +632,7 @@ function Ending({ game, onTryAgain, onChooseFamily, onExploreHistory }) {
           <button className="choose-family" onClick={onChooseFamily} data-sound="tap"><UsersThree weight="duotone" />Choose another family</button>
         </div>
       </section>
-    </div>
+    </EndingDialog>
   );
 }
 
@@ -895,7 +894,7 @@ export function BeginnerApp() {
   return (
     <main className="cinematic-shell" onClickCapture={playInteractionSound}>
       <header className="cinematic-header">
-        <a className="cinematic-brand" href="/" aria-label="The Undocumented Trail journey">
+        <a data-ending-return className="cinematic-brand" href="/" aria-label="The Undocumented Trail journey">
           <strong>The Undocumented Trail</strong>
           <span>Everything they carry</span>
         </a>
@@ -1123,7 +1122,7 @@ export function BeginnerApp() {
       </footer>
 
       {historyMode && !showFamilySelection && <JourneyHistoryDialog game={game} introduction={historyMode === "intro"} onClose={closeHistory} />}
-      {game.phase === "ended" && (
+      {game.phase === "ended" && !showFamilySelection && !historyMode && !restartFamilyId && (
         <Ending
           game={game}
           onExploreHistory={() => setHistoryMode("explore")}

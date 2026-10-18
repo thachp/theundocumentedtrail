@@ -31,7 +31,8 @@ test("all six introductions separate documented background, family fiction and d
   }
   assert.match(JOURNEY_HISTORY.haddad.historicalSummary, /March 2011/);
   assert.match(JOURNEY_HISTORY.haddad.familyStakes, /July 2015/);
-  for (const familyId of Object.keys(FAMILY_PRESETS).filter((id) => id !== "haddad")) {
+  assert.equal(JOURNEY_HISTORY.ramirez.departureDate, "2024-01-15");
+  for (const familyId of Object.keys(FAMILY_PRESETS).filter((id) => !["haddad", "ramirez"].includes(id))) {
     assert.equal(JOURNEY_HISTORY[familyId].departureDate, undefined, "do not backdate unrelated journeys");
     assert.match(JOURNEY_HISTORY[familyId].era, /Contemporary/);
   }

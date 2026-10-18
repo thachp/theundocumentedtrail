@@ -303,9 +303,9 @@ export const FAMILY_PRESETS = Object.freeze({
     id: "ramirez",
     name: "The Ramírez family",
     shortName: "Ramírez",
-    origin: "Honduras · Gang threats",
-    context: "Gang threats force a teacher, her children, and their grandmother to leave after the family home is sold under pressure.",
-    journey: "Honduras to a United States border process",
+    origin: "Honduras · Gang threats · January 2024",
+    context: "January 2024: gang threats force a teacher, her children and their grandmother to leave after the home is sold under pressure. Their border process belongs to this historical setting.",
+    journey: "Honduras toward a U.S. border process in early 2024",
     startEventId: "home",
     startRoute: "elmstead",
     destination: "Border process",
@@ -600,7 +600,7 @@ export const TRAVEL_INCIDENTS = [
   },
 ];
 
-const CHOICE_REACTIONS = {
+export const CHOICE_REACTIONS = {
   leaveDawn: [{ personId: "edwin", trustDelta: 1, text: "If we leave now, they cannot make me join them tonight." }],
   safeHouse: [{ personId: "aurelia", trustDelta: 1, text: "A verified door is worth losing two days." }],
   collectPapers: [{ personId: "aurelia", trustDelta: -1, text: "The papers matter, but I wish you had not gone back alone." }],
@@ -631,7 +631,7 @@ const CHOICE_REACTIONS = {
   callLegalAid: [{ personId: "edwin", trustDelta: 1, text: "Now we know which part was policy and which part was rumor." }],
   comfortChildren: [{ personId: "daniela", trustDelta: 1, text: "Tell me what you know. Do not leave the video talking." }],
   argueOnline: [{ personId: "aurelia", trustDelta: -1, text: "Those strangers wanted a fight, not the truth about Mateo." }],
-  verifiedWaitlist: [{ personId: "aurelia", trustDelta: 1, text: "A slow list is still better than a purchased lie." }],
+  verifiedWaitlist: [{ personId: "aurelia", trustDelta: 1, text: "We keep requesting. The shelter cannot promise when a booking will come." }],
   rentNorthernRoom: [{ personId: "edwin", trustDelta: 1, text: "For one month, I can leave a book on a table." }],
   payAppointmentBroker: [{ personId: "edwin", trustDelta: -1, text: "The clinic told us appointments were not for sale." }],
   officialAppointment: [{ personId: "edwin", trustDelta: 1, text: "At least the lawyer explained what the wristbands might mean." }],
@@ -900,8 +900,8 @@ const sources = {
     url: "https://www.unhcr.org/asia/news/joint-press-release-forcibly-displaced-women-high-risk-gender-based-violence-latin-america",
   },
   policy: {
-    label: "White House: January 2025 immigration enforcement order",
-    url: "https://www.whitehouse.gov/presidential-actions/2025/01/protecting-the-american-people-against-invasion/",
+    label: "DHS/DOJ: May 2023 border rule · historical early-2024 context",
+    url: "https://www.govinfo.gov/content/pkg/FR-2023-05-16/html/2023-10146.htm",
   },
   missing: {
     label: "IOM Missing Migrants: deaths and disappearances in the Americas",
@@ -1169,7 +1169,7 @@ export const ROADSIDE_OPPORTUNITIES = {
     id: "northernWaitWork",
     eyebrow: "Work during the long wait",
     title: "The shelter board lists temporary work",
-    copy: "The appointment queue may take weeks. The family can use one day for paid laundry work or sort donations in exchange for supplies.",
+    copy: "Appointment requests may go unanswered for weeks. The family can use one day for paid laundry work or sort donations in exchange for supplies.",
     choices: [
       {
         id: "cooperativeLaundry",
@@ -1552,7 +1552,7 @@ export const SOCIAL_FEEDS = {
         initials: "CD",
         label: "Verified local reporting",
         tone: "verified",
-        body: "The enforcement announcement is real. Individual notices and hearings still differ, and the viral bus video is from an unrelated event.",
+        body: "The May 2023 rule is real in this early-2024 setting. A scheduled port inspection is not an asylum decision; the fictional viral bus video is unrelated.",
         reach: "Source links attached",
       },
       {
@@ -1567,7 +1567,7 @@ export const SOCIAL_FEEDS = {
       },
     ],
     evidence: [
-      "The enforcement announcement can be confirmed through an official notice.",
+      "The dated rule can be checked separately from the fictional video and each person’s circumstances.",
       "The most-shared video is old and does not show the shelter named in the caption.",
       "Publishing a shelter location could expose unrelated families to harassment.",
     ],
@@ -2343,7 +2343,7 @@ export const EVENTS = {
       {
         sender: "Marisol",
         initial: "M",
-        role: "Family notebook · Day twelve",
+        role: "Family notebook · during the wait",
         time: "17:12",
         trusted: true,
         body: "The room is paid by the week. The landlord wants the next payment tomorrow. Every morning someone says the buses will move; every evening the same bags are still against the wall.",
@@ -2697,7 +2697,7 @@ export const EVENTS = {
     location: "Crowded waiting room",
     time: "21:05",
     weather: "Dust outside",
-    weatherDetail: "Rules at the border changed again",
+    weatherDetail: "A dated notice and a viral clip describe different things",
     route: "quarry",
     contentNote: "Hostile political rhetoric and deportation",
     source: sources.policy,
@@ -2708,19 +2708,19 @@ export const EVENTS = {
         role: "Verified public policy report",
         time: "20:48",
         trusted: true,
-        body: "A clip of President Donald Trump plays beside a White House order calling for broader enforcement, detention capacity, and removals. The legal volunteer says the policy is real; the group-chat explanation is not reliable.",
+        body: "This is early 2024. The May 2023 border rule distinguishes scheduled presentation at a port from other arrivals and includes exceptions to its asylum-eligibility presumption. A CBP One appointment schedules inspection; it does not grant asylum, admission or release. The volunteer must check individual circumstances, not the group chat.",
       },
       {
         sender: "Liberty Stream",
         initial: "L",
-        role: "Fictional MAGA-style influencer · unverified commentary",
+        role: "Fictional political influencer · early-2024 commentary",
         time: "20:56",
         trusted: false,
         body: "The streamer cheers over footage of people boarding a deportation flight. Edwin recognizes cousin Mateo in the line. The video treats his removal as entertainment.",
       },
     ],
     known: [
-      "The enforcement order and expanded detention policy are public documents.",
+      "The dated border rule is different from the influencer’s commentary or an individual case decision.",
       "The influencer is commentary, not legal information.",
       "Cousin Mateo's phone no longer connects.",
     ],
@@ -2743,7 +2743,7 @@ export const EVENTS = {
         effects: { battery: -12, stress: -6, exposure: -10, progress: 5, trustAll: 1 },
         consequence: "Phone -12% · Stress -6 · Risk -10",
         outcomeTitle: "The lawyer separates policy from rumor",
-        outcome: "She cannot promise entry or release. She explains the appointment, detention, and return possibilities in plain language.",
+        outcome: "In this fictional call, the adviser distinguishes scheduling, inspection and the protection case. She cannot promise an appointment, entry, release or protection.",
         setFlags: { legalAdvice: true },
       },
       {
@@ -2780,7 +2780,7 @@ export const EVENTS = {
   northernWait: {
     id: "northernWait",
     region: "Northern Mexico",
-    location: "Migrant shelter waiting list",
+    location: "Shelter helping with CBP One requests",
     time: "09:30",
     weather: "Cold desert morning",
     weatherDetail: "The appointment system has failed twice this week",
@@ -2794,32 +2794,32 @@ export const EVENTS = {
         role: "Verified morning briefing",
         time: "09:08",
         trusted: true,
-        body: "The family may remain on the verified list, but the wait could be weeks. A local landlord offers a monthly room. A broker outside claims he can sell an earlier appointment; the clinic says appointments are not for sale.",
+        body: "In this early-2024 setting, CBP One requests require being in central or northern Mexico. The shelter can help with the phone, but cannot allocate appointments or promise a date. Slots, connectivity and identity checks can be obstacles. A broker’s payment does not create a confirmed appointment.",
       },
       {
         sender: "Edwin",
         initial: "E",
-        role: "Family notebook · Day forty-one",
+        role: "Family notebook · during the northern wait",
         time: "09:19",
         trusted: true,
         body: "I thought the road would be walking. Mostly it is waiting with shoes on, afraid the one time you sleep will be the time your name is called.",
       },
     ],
     known: [
-      "The shelter list is verified but has no guaranteed date.",
+      "Shelter assistance is not a government appointment list or a guaranteed place.",
       "A monthly room allows the family to stay together and seek temporary work.",
       "The legal clinic says the broker cannot sell official appointments.",
     ],
     assumed: [
-      "The verified list will move within three weeks.",
+      "Daily CBP One requests guarantee a booking within three weeks.",
       "A longer local stay will make the eventual process harder.",
       "The broker has a contact inside the appointment system.",
     ],
     choices: [
       {
         id: "verifiedWaitlist",
-        title: "Remain on the verified list",
-        hint: "Wait three weeks with the shelter network",
+        title: "Keep requesting through CBP One with shelter help",
+        hint: "Spend three weeks waiting; no booking date is promised",
         icon: "wait",
         tone: "trusted",
         route: "elmstead",
@@ -2828,12 +2828,12 @@ export const EVENTS = {
         effects: { cash: -210, supplies: 1, water: 2, stress: 10, exposure: -8, progress: 4, peopleAll: -2 },
         consequence: "21 days pass · Cash -$210 · Risk -8",
         outcomeTitle: "Three weeks are crossed out one square at a time",
-        outcome: "The family rotates between two shelters. On the twenty-first day, the clinic confirms a place in the next stage of the official process.",
+        outcome: "The family keeps requesting while rotating between shelters. In this fictional branch a CBP One appointment is eventually confirmed for the next scene. The twenty-one story days are not an official queue, expected wait or promise of a slot.",
       },
       {
         id: "rentNorthernRoom",
         title: "Rent a room for one month",
-        hint: "Pause, work locally, and keep checking the list",
+        hint: "Pause, work locally, and keep requesting an appointment",
         icon: "rest",
         tone: "uncertain",
         route: "quarry",
@@ -2843,7 +2843,7 @@ export const EVENTS = {
         effects: { cash: -260, supplies: 2, water: 4, stress: -6, exposure: 3, progress: 3, peopleAll: 5, trustAll: 1 },
         consequence: "30 days pass · Health +5 each · Cash -$260",
         outcomeTitle: "For one month, the key belongs to the family",
-        outcome: "Marisol works temporary shifts, Edwin studies with borrowed books, and Daniela learns the walk to the corner shop. The appointment still decides when they leave.",
+        outcome: "Marisol works temporary shifts, Edwin studies with borrowed books, and Daniela learns the walk to the corner shop. They keep requesting; a booking is confirmed later in this fictional continuation, not because renting a room creates priority.",
       },
       {
         id: "payAppointmentBroker",
@@ -2858,7 +2858,7 @@ export const EVENTS = {
         effects: { cash: -350, battery: -12, stress: 20, exposure: 16, progress: 6, trustAll: -1 },
         consequence: "Cash -$350 · Stress +20 · Risk +16",
         outcomeTitle: "The confirmation page disappears",
-        outcome: "The broker blocks Marisol's number. The appointment code never works, and the family returns to the shelter list with less money and five lost days.",
+        outcome: "The broker blocks Marisol's number. The appointment code never works, and the family returns to making its own requests. A valid booking is confirmed later in this fictional continuation; five story days do not predict a real wait.",
       },
     ],
   },
@@ -2880,7 +2880,7 @@ export const EVENTS = {
         role: "Verified adviser",
         time: "15:44",
         trusted: true,
-        body: "You may ask for protection through the official process, but detention is possible and the outcome is uncertain. A coyote outside is offering a crowded river boat. We cannot tell you what to choose.",
+        body: "For this fictional continuation, the family has a confirmed CBP One time and place. Presenting there leads to inspection, not automatic admission, parole or asylum. Detention and removal remain possible. Other arrivals and exceptions need individual advice; an appointment is not universally accessible. The river boat is still an unverified offer.",
       },
     ],
     known: [
@@ -2896,7 +2896,7 @@ export const EVENTS = {
     choices: [
       {
         id: "officialAppointment",
-        title: "Present through the official process",
+        title: "Present at the confirmed CBP One appointment",
         hint: "Accept detention risk and ask for protection",
         icon: "legal",
         tone: "trusted",
@@ -2906,7 +2906,7 @@ export const EVENTS = {
         effects: { cash: -160, supplies: -2, water: -3, stress: 16, exposure: -18, progress: 18 },
         consequence: "8 days pass · Stress +16 · Progress +18%",
         outcomeTitle: "The family receives numbered wristbands",
-        outcome: "Their phones and shoelaces are taken for storage. They are moved to a processing room where the lights stay on all night.",
+        outcome: "At the confirmed port appointment, officers inspect the family. In this fictional branch their belongings are stored and they enter a processing room. The eight story days do not model standard detention or processing time.",
         contextBonuses: [
           {
             flag: "legalAdvice",
@@ -3012,7 +3012,7 @@ export const EVENTS = {
         effects: { supplies: -1, water: -2, stress: 6, exposure: -8, progress: 4, people: { aurelia: -5 } },
         consequence: "Food -1 day · Progress slows · Family remains together",
         outcomeTitle: "The operator leaves without them",
-        outcome: "Marisol listens to the motor fade. At dawn, the legal clinic helps the family present at the official process.",
+        outcome: "Marisol listens to the motor fade. After further requests, a later CBP One booking is confirmed in this fictional branch. The clinic helps them prepare for inspection; turning back did not create priority or guarantee a slot.",
       },
       {
         id: "boardOverloaded",
@@ -3158,7 +3158,7 @@ export const EVENTS = {
         effects: { battery: -5, cash: -120, supplies: -1, stress: 8, exposure: -20, progress: 100, trustAll: 1 },
         consequence: "18 days pass · Case continues · Journey reaches an ending",
         outcomeTitle: "The lawyer starts at the beginning",
-        outcome: "The family is released to a sponsor while the protection case proceeds. Release is not asylum, and the next hearing is months away.",
+        outcome: "In this fictional outcome the family is released to a sponsor while the protection case proceeds. Requesting a lawyer did not guarantee release. Release is not asylum, and the next hearing is months away.",
         contextBonuses: [
           {
             flag: "landPapers",
@@ -7047,7 +7047,7 @@ export function createInitialGame(familyId = "ramirez") {
   const family = getFamilyPreset(familyId);
   return {
     version: GAME_VERSION,
-    narrativeEdition: family.id === "haddad" ? "haddad-2015" : null,
+    narrativeEdition: family.id === "haddad" ? "haddad-2015" : family.id === "ramirez" ? "ramirez-2024" : null,
     familyId: family.id,
     runId: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
     phase: "decision",
@@ -7989,21 +7989,6 @@ export function continueJourney(game, options = {}) {
   };
   if (!options.incidents || game.currentOutcome?.deferThresholdEnding) return nextGame;
   return maybeStartTravelIncident(nextGame, options.incidentRolls);
-}
-
-export function getJourneyScore(game) {
-  const living = Object.values(game.people).filter((person) => person.alive !== false);
-  const averageHealth = living.length
-    ? Math.round(living.reduce((sum, person) => sum + person.health, 0) / living.length)
-    : 0;
-  const averageTrust = living.length
-    ? living.reduce((sum, person) => sum + person.trust, 0) / living.length
-    : 0;
-  return clamp(
-    Math.round(averageHealth * 0.43 + averageTrust * 8 + game.resources.cash * 0.01 + (100 - game.resources.exposure) * 0.1 + (game.socialClimate ?? 50) * 0.06),
-    0,
-    100,
-  );
 }
 
 export function isSavedGameValid(value) {

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowCounterClockwise, ArrowLeft, ArrowRight, BookOpenText, MapPin, UsersThree, X } from "@phosphor-icons/react";
-import { FAMILY_PRESETS, getJourneyScore } from "./game.js";
+import { FAMILY_PRESETS } from "./game.js";
 import { getJourneyHistory } from "./journeyHistory.js";
 import { getJourneyChoices, journeyKeyIndex, scrollJourneyCard } from "./journeyChoices.js";
 import "./beginner.css";
@@ -86,7 +86,7 @@ export function FamilySelection({ currentFamilyId, required, saves, archive, onS
             </article>;
             const saved = saves[family.id];
             const savedStatus = saved?.phase === "ended"
-              ? `${saved.status === "won" ? "Completed" : "Journey stopped"} · Score ${getJourneyScore(saved)}`
+              ? `${saved.status === "won" ? "Completed" : "Journey stopped"}`
               : saved
                 ? `In progress · Day ${saved.day} · ${saved.progress}%`
                 : "Not started";
@@ -134,7 +134,6 @@ export function FamilySelection({ currentFamilyId, required, saves, archive, onS
                   <article key={entry.runId}>
                     <span><strong>{family.shortName}</strong><small>{entry.endingTitle}</small></span>
                     <em>{entry.status === "won" ? "Completed" : "Stopped"}</em>
-                    <span><strong>{entry.score}</strong><small>Score</small></span>
                     <span><strong>{entry.survivors}/{entry.travelers}</strong><small>Survived</small></span>
                     <span><strong>Day {entry.day}</strong><small>{entry.decisions} decisions</small></span>
                   </article>

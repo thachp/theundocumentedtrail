@@ -39,6 +39,8 @@ export function JourneyHistoryDialog({ game, introduction = false, onClose, stor
       <p className="history-fiction">{FICTION_NOTICE}</p>
       <p className="history-content-note"><strong>Content note:</strong> {context.contentNote}</p>
       {game.familyId === "haddad" && <p className="history-calendar-note">July 2015 is an editorial setting. The simulated calendar starts on 1 July and follows elapsed story days; the family’s exact dates and incidents are invented. Current story date: {getJourneyDate(game)}.</p>}
+      {game.familyId === "ramirez" && <p className="history-calendar-note">Historical setting: January–May 2024. The fictional calendar begins on 15 January; waits and appointments are authored, not real processing estimates. The story does not apply June 2024 or January 2025 changes. {getJourneyDate(game)}.</p>}
+      {game.ramirezNarrativeUpdated && <p className="history-calendar-note">This saved journey now uses the early-2024 setting. Decisions, resources and progress are preserved.</p>}
       {game.narrativeUpdated && <p className="history-calendar-note">This saved journey now uses the corrected 2015 setting. Your decisions, resources and progress are preserved.</p>}
       <details className="history-explore">
         <summary>Explore the history · Timeline &amp; sources</summary>

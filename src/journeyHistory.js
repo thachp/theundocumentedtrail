@@ -1,5 +1,5 @@
 // Shared editorial context. Dates in sources describe reporting, not the lives
-// of these fictional composites. Only the Haddad journey has a fixed calendar.
+// of these fictional composites. Ramírez and Haddad have authored calendars.
 export const HISTORY_SOURCES = Object.freeze({
   syriaUprising: { title: "UN Secretary-General: fourth anniversary of the Syrian crisis", date: "12 March 2015", url: "https://www.un.org/sg/en/content/former-secretary-general/statements/2015-03-12/statement-the-secretary-general-fulfilling-our-collective-responsibility-syria" },
   aleppo2015: { title: "UN report S/2015/368, paragraphs 7–8: attacks and interrupted schooling", date: "22 May 2015", url: "https://www.refworld.org/reference/countryrep/unsc/2015/105060" },
@@ -7,6 +7,8 @@ export const HISTORY_SOURCES = Object.freeze({
   turkey2014: { title: "Türkiye: Temporary Protection Regulation, 2014/6883", date: "22 October 2014; archive includes annotated later amendments", url: "https://www.refworld.org/legal/natleginstr/natlegbod/2014/151442" },
   balkans2015: { title: "UNHCR: concern at the Greece–FYR Macedonia border", date: "21 August 2015", url: "https://www.unhcr.org/africa/news/press-releases/unhcr-voices-concern-about-developments-border-fyr-macedonia-and-greece" },
   honduras: { title: "UNHCR: Gangs drive Hondurans from their homes and land", date: "8 September 2017 · background reporting", url: "https://www.unhcr.org/news/stories/gangs-drive-hondurans-their-homes-and-land" },
+  usBorder2023: { title: "DHS/DOJ: Circumvention of Lawful Pathways · rule text and CBP One access discussion", date: "16 May 2023 publication · effective 11 May 2023 · historical rule, not current guidance", url: "https://www.govinfo.gov/content/pkg/FR-2023-05-16/html/2023-10146.htm" },
+  cbpOne2024: { title: "CBP testimony: scheduling function distinct from asylum, parole and inspection · prepared statement pp. 23–25", date: "21 March 2024 hearing · agency testimony within a contested hearing, not endorsement of every speaker", url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg57673/html/CHRG-118hhrg57673.htm" },
   senegal: { title: "IOM: Senegal departure-area monitoring toward the Canary Islands", date: "Observation period: December 2025–January 2026", url: "https://dtm.iom.int/reports/senegal-departure-areas-monitoring-tool-movements-canary-islands-december-2025-january-2026" },
   vietnam: { title: "UK Home Office: Vietnam trafficking country information, sections 3.1.9–3.1.12", date: "February 2025 edition · webpage updated March 2026", url: "https://www.gov.uk/government/publications/vietnam-country-policy-and-information-notes/country-policy-and-information-note-trafficking-vietnam-february-2025-accessible" },
   ireland: { title: "Ireland: employment rights and protection of migrant workers", date: "Undated official guidance · checked 18 October 2026", url: "https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/economic-migration-policy/protection-of-migrant-workers.html" },
@@ -20,15 +22,17 @@ const contemporary = "Contemporary composite · calendar date unspecified";
 const fiction = "The people, dialogue, household details, incidents and outcomes are fictional composites. Sources document conditions, not this family's biography. No community review is claimed.";
 export const JOURNEY_HISTORY = Object.freeze({
   ramirez: {
-    place: "Northern Honduras", era: contemporary,
-    historicalSummary: "UNHCR's 2017 reporting describes Honduran households displaced by gang threats and losing access to homes and land. That reporting supplies background, not a claim that every Honduran leaves for the same reason or has the same legal status.",
-    familyStakes: "In this fictional household, threats against Edwin force Marisol to sell the family home below its value. She wants to protect both children; Aurelia worries about leaving familiar support behind. Daniela needs her inhaler, and food and transport must be paid for with what remains. Their first decision is whether to leave before sunrise, seek a safer place nearby, or spend time securing documents.",
+    place: "Northern Honduras", era: "January 2024 departure · historical early-2024 border setting", departureDate: "2024-01-15",
+    historicalSummary: "UNHCR's 2017 reporting documents gang-driven displacement and land loss. This fictional household leaves in January 2024, when CBP One could schedule U.S. port inspections from central or northern Mexico. Booking, admission, asylum and release were separate questions; access and outcomes were not guaranteed.",
+    familyStakes: "Threats against Edwin force Marisol to sell the home below its value. Aurelia worries about leaving familiar support; Daniela needs her inhaler. The family must pay for food and transport with what remains. They first choose whether to leave before sunrise, seek a safer place nearby, or secure documents. People, dates, waits and outcomes are authored fiction, not a typical case.",
     contentNote: "Threats against children, displacement, exploitation and possible loss.",
-    sourceIds: ["honduras"],
+    sourceIds: ["honduras", "usBorder2023", "cbpOne2024"],
     timeline: [
       { date: "8 September 2017", kind: "Documented reporting", text: "UNHCR reports gang-driven displacement and loss of homes and land.", sourceId: "honduras" },
+      { date: "11 May 2023", kind: "Historical rule effective", text: "The border rule establishes a rebuttable asylum-eligibility presumption for certain arrivals, with exceptions. It is not a universal ban or a promise of protection.", sourceId: "usBorder2023" },
+      { date: "15 January 2024", kind: "Fictional editorial setting", text: "The family departs. The authored route stays before June 2024 changes; this is not present-day guidance." },
+      { date: "21 March 2024", kind: "Documented agency testimony", text: "CBP describes scheduling in central/northern Mexico and distinguishes it from asylum, parole and inspection. Other hearing participants express competing political views.", sourceId: "cbpOne2024" },
       { date: "Before departure · fictional", kind: "Family story", text: "Marisol sells the home under pressure; the household's resources and choices belong to this composite." },
-      { date: "During the journey · fictional", kind: "Family story", text: "Transit and border decisions unfold in story days, not as a reconstruction of one dated real case." },
     ],
   },
   haddad: {
@@ -102,6 +106,7 @@ export function getJourneyHistory(gameOrId) {
 export function getJourneyDate(game) {
   const context = getJourneyHistory(game);
   if (!context.departureDate) return "Contemporary · story day " + game.day;
+  if (game.familyId === "ramirez" && game.day > 142) return "Historical early-2024 setting · saved story day " + game.day + " (calendar not reconstructed)";
   const date = new Date(context.departureDate + "T12:00:00Z");
   date.setUTCDate(date.getUTCDate() + Math.max(0, Math.floor(game.day || 1) - 1));
   return new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(date);
@@ -112,6 +117,7 @@ function scenes(familyId, ids, text, sourceIds) {
   for (const id of ids.split(" ")) sceneNotes[id] = { familyId, text, sourceIds };
 }
 scenes("ramirez", "home guideOffer roadRobbery guideAbandon blueDoorShelter waitingTown clinicQueue transport checkpointDelay policyNews northernWait borderCity riverCrossing memorial detention", "The Ramírez household is a fictional example of displacement under threat. The background reporting documents loss of homes and land; it does not determine this family's asylum eligibility, transit conditions or border outcome.", ["honduras"]);
+scenes("ramirez", "policyNews northernWait borderCity riverCrossing detention", "Historical early 2024, before the June 2024 rule change. CBP One scheduled port inspection from central/northern Mexico; it was not an asylum application, parole grant or admission decision. Access barriers, limited slots and individual requirements mattered. The family’s bookings, wait lengths, clinic assistance and processing outcomes are fictional continuations, not guaranteed procedures or current legal advice. Other arrivals and exceptions require individual assessment.", ["usBorder2023", "cbpOne2024"]);
 scenes("haddad", "haddadHome", "This is wartime Aleppo in 2015, four years after the uprising began. The UN report records civilian harm and interrupted schooling; the Haddads' workshop, papers and departure are authored family details.", ["syriaUprising", "aleppo2015"]);
 scenes("haddad", "haddadBorder haddadTurkey haddadAegean", "Türkiye's temporary-protection framework dates to October 2014. Registration concerns protection there, not a ticket to Europe or a promise of work. The family's rent, job offers and decisions are fictional circumstances within that setting.", ["turkey2014"]);
 scenes("haddad", "haddadMemorial haddadGreece", "The Türkiye–Greece crossing belongs to the broad route documented in 2015. Rescue, loss and registration in this story are fictional events; arrival does not itself decide a protection claim.", ["sea2015"]);
