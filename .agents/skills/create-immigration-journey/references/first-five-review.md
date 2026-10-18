@@ -48,3 +48,21 @@ Ramírez, Haddad, Diop and Bùi advanced to the next event. Punjab's initial cho
 This sample does not prove full endings/branches, 320px layout, native zoom, audio, keyboard/touch completeness, cross-family isolation or screen-reader acceptance. See docs/journey-authoring-skill-validation.md for reproducible commands and dry-run scope. Initial Planning harness timeouts used an incorrect introduction selector and were superseded by the corrected ten passing Planning cases; they are not application failures.
 
 Supplemental Punjab mobile checks traversed the required travel-plan interaction to Delhi in both modes: marker moved from [75.58,31.33] to [77.1,28.6], itinerary grew from one stop to two, and intermediate refresh preserved save bytes. Guided required a coordinator; Planning allowed pace selection immediately, confirming the parity gap.
+
+## Starting-party audit: four-person authoring standard
+
+User requirement added after the initial review: exactly four named **starting** travelers, family or coherent group, with distinct identities, relationships and meaningful roles. It does not prescribe a nuclear family or require four people to remain together/alive forever; justified later separation, births, reunification and loss retain their own continuity. Counts below come from starting roster data, not artwork estimates or end-state survivors. Audit baseline remains cc884455d036a7ec23c80a3b00530937e76b7914.
+
+| Chooser order / ID | Named starting party | Count | Standard |
+|---|---|---|---|
+| 1 ramirez | Marisol, Edwin, Daniela, Aurelia | 4 | Matches count |
+| 2 haddad | Kareem, Nadia, Sami, Mariam | 4 | Matches count |
+| 3 diop | Ibrahima, Mamadou, Cheikh, Lamine | 4 | Matches count |
+| 4 nguyen (Bùi) | Minh, Lan, Mai, Bảo | 4 | Matches count |
+| 5 punjab | Gurpreet, Simran, Arjun, Neha | 4 | Matches count |
+| 6 rohingya (Karim) | Yasmin, Hamida, Rafiq, Sadia | 4 | Matches count |
+| 7 cambodia-1979 | Dara, Vann, Maly | 3 | Mismatch: needs separately authorized story/art/adapter work |
+| 8 mariel-1980 (Valdés) | Elena, Rafael, Lucía | 3 | Mismatch: needs separately authorized story/art/adapter work |
+| 9 vietnam-bidong-1978 (Nguyễn) | Linh, Minh, Mai | 3 | Mismatch: needs separately authorized story/art/adapter work |
+
+Sources: game.js:FAMILY_PRESETS[*].people; cambodiaJourney.js:CAMBODIA_FAMILY.people; authoredStories.js registry and marielStory.js/vietnamBidongStory.js people tuples. All first five meet the numeric starting-party requirement; that alone does not certify all narrative-role or visual standards. Existing three-person journeys are flagged, not edited. Current authored portrait adapter has only three crop slots; future four-person authored work must resolve it explicitly. The retained Haitian dry-run also starts with three and now fails this new standard; it remains historical evaluation evidence, not an approved template or a new registered journey.

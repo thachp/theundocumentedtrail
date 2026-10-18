@@ -4,7 +4,8 @@
 
 | Surface | Invariant in Guided and Planning | Historically variable |
 |---|---|---|
-| Chooser / cover | Normal shared carousel; correct name, departure pressure, period, route, accessible controls and family-specific cover; resumable status | Family composition, starting context, dates and cover |
+| Starting party | Exactly four named starting travelers, each with distinct identity, relationships and meaningful role; count and unique IDs verified in data and both views | Family or other coherent group; no forced nuclear-family format. Later justified separation, birth, reunification or loss may change composition |
+| Chooser / cover | Normal shared carousel; correct name, departure pressure, period, route, accessible controls and family-specific cover; resumable status | Relationships and later party changes, starting context, dates and cover |
 | Intro / context | Fiction label; skippable/reopenable tutorial/context; content note; source/history dialog without changing a decision | Historical conditions, documented timeline, glossary, premise |
 | Scene | Explicit place/date, attributed voices, readable summary, visible select-one instruction; correct changing scene hero, informative alt/crop | Language, conflict, ordinary life, clothing, objects and actual pace |
 | Map / progress | Same geographic projection for land/routes/marker; text itinerary; honest uncertainty; progress describes scenes/distance rather than worth | Era-specific route, bounds, stops, returns and transit permissions |
@@ -23,6 +24,7 @@ Fill each cell with PASS + evidence, FAIL + reproduction, UNRUN + reason, or exp
 
 | Check | Guided desktop / mobile | Planning desktop / mobile | Engine / evidence |
 |---|---|---|---|
+| Four named starting travelers; distinct roles, cover/portraits/status match roster | Required | Required | Exactly four unique person IDs; meaningful roles; later composition changes tracked rather than erased |
 | Chooser order, cover, identity, start/continue/result | Required | Required | Registry + isolated saves |
 | Tutorial and history open/close/reopen; source links and fiction labels | Required | Required | Claim ledger resolves cited IDs |
 | Opening, intermediate and final scenes; changing artwork and safe crops | Required | Required | Every asset exists, distinct intended scene, rights/hash/alt manifest |

@@ -20,7 +20,7 @@ Baseline: main cc884455d036a7ec23c80a3b00530937e76b7914 (18 October 2026). Resol
 
 Story fields consumed today: id, title, name, shortName, origin, period, route, notice, contentNote, premise, people, sources, historicalSummary, scenes, callbacks, glossary.
 
-- people: tuples [id, name, age, pronouns, skills[], description]. Current storyFamily uses three hard-coded cover portrait crops; a different household size/composition needs explicit adapter/crop work and regression tests. Do not silently put a fourth person outside a crop or reuse someone else's portrait.
+- people: tuples [id, name, age, pronouns, skills[], description]. Current storyFamily uses three hard-coded cover portrait crops, while the authoring standard now requires four named starting travelers. A new authored journey therefore needs explicit four-person adapter/crop work and regression tests before acceptance; this documentation update does not implement that repair. Do not shrink the party to fit the adapter, silently put a fourth person outside a crop, reuse someone else's portrait or change existing story data without scope authorization.
 - sources: map of stable IDs to {title,date,url}; keep richer claim/section/verification ledger in the story documentation.
 - scenes: {id,date,place,title,prose,summary,context,sourceIds,coordinates:[longitude,latitude],landKey,bounds:[west,south,east,north],stage,choices}.
 - choices: {id,title,description,consequence,cost:[time,energy],flag:[key,value]}. Three visible options is the shared reference pattern. Each cost must fit current capacity 4; units reset per scene and are fictional. They are not cash, historical scarcity estimates or survival probabilities.

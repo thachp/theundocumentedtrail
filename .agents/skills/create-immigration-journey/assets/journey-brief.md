@@ -5,7 +5,16 @@ Status: brief / implementation. Ticket + claim: <URL, owner>. Base/head: <SHA>. 
 ## Household and chronology
 
 Stable story ID: <id>. Display family: <name>. Period + jurisdictions: <dated departure/transit/arrival>. Route: <supported stops; approximate/unknown marked>.
-People: <IDs, ages at each dated scene, pronouns, relationships, skills, aims, disagreement, visual continuity; language/paraphrase handling>. Include ordinary life, people staying and receiving-community perspectives without stereotypes.
+Starting party: **exactly four named travelers**, a family or another coherent group. Give each a distinct identity, relationships and meaningful role; do not force nuclear-family composition or add a token stereotype.
+
+| Stable person ID / name | Age by scene / pronouns | Relationship to the other travelers | Skills, personal aims, disagreement and meaningful role | Visual continuity / language handling |
+|---|---|---|---|---|
+| <traveler 1> | <details> | <relationships> | <role> | <continuity> |
+| <traveler 2> | <details> | <relationships> | <role> | <continuity> |
+| <traveler 3> | <details> | <relationships> | <role> | <continuity> |
+| <traveler 4> | <details> | <relationships> | <role> | <continuity> |
+
+Later party changes: <dated, narratively/historically justified separation, births, reunification or loss; preserve each person's continuity rather than forcing four survivors in every scene>. Include ordinary life, people staying and receiving-community perspectives without stereotypes; distinguish nontraveling contacts from the four starting members.
 Premise: <fixed fictional survival/arrival facts versus variable outcomes>. Legal distinctions: <terms and what this story cannot establish>.
 Implementation: <authored sequential / existing survival; why; adapter limitations requiring explicit work>.
 
@@ -28,7 +37,7 @@ Do not promote unavailable material to verified. Resolve disputed evidence expli
 For brief-only work, label each field PLANNED / UNVERIFIED / UNRUN as appropriate; do not invent files or measured properties.
 
 Cover + each scene: <prompt, household continuity/reference, era checks, generator/source/license, actual file, hash, dimensions/bytes, alt, focal/crops>. Original illustration, not archival photograph. Never substitute unrelated art; mark missing tool/assets.
-Portrait plan: <inspect current three-person hard-coded crop limitation before choosing household size>.
+Portrait plan: <all four identifiable at start in cover, portraits/status and scene continuity; explicitly resolve current authored three-person crop limitation, never silently omit the fourth traveler>.
 
 ## Integration and acceptance
 
