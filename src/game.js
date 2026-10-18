@@ -763,7 +763,7 @@ const CHOICE_REACTIONS = {
   rohingyaInformalWork: [{ personId: "hamida", trustDelta: -1, text: "A room tied to hidden work can become another place we are afraid to leave." }],
 };
 
-const STORY_THREAD_UPDATES = {
+export const STORY_THREAD_UPDATES = {
   leaveDawn: [{ id: "homeLight", title: "The porch light", status: "active", summary: "The family left without saying when they would return." }],
   safeHouse: [{ id: "shelterNetwork", title: "The verified shelter list", status: "active", summary: "A volunteer recorded every name and shared verified contacts." }],
   collectPapers: [{ id: "landEvidence", title: "Proof of home", status: "active", summary: "The land deed and school records survived the departure." }],
@@ -846,19 +846,19 @@ const STORY_THREAD_UPDATES = {
   punjabLeaseField: [{ id: "fieldLease", title: "The leased family field", status: "active", summary: "Gurpreet's household leases part of its field for three years to finance recruitment charges." }],
   punjabPayAgent: [{ id: "agentFees", title: "The placement-fee receipts", status: "setback", summary: "Large payments are labeled as training and consulting rather than employment-permit charges." }],
   punjabWaitPortal: [{ id: "permitOriginals", title: "Four verified permit records", status: "active", summary: "The official portal shows each named employer, occupation, salary, and application status before departure." }],
-  punjabTakePDF: [{ id: "permitScreenshots", title: "The agent's permit PDFs", status: "setback", summary: "The group travels with screenshots whose job descriptions and dates do not match the promises at home." }],
+  punjabTakePDF: [{ id: "permitScreenshots", title: "The agent's permit PDFs", status: "setback", summary: "The group reaches the airport with conflicting screenshots. Boarding must wait for issued permits and separate visa decisions; the PDFs confer neither." }],
   punjabPresentDocuments: [{ id: "truthfulDeparture", title: "The truthful departure interview", status: "active", summary: "The group presents its actual purpose of travel and preserves the questions asked before boarding." }],
   punjabRegisterDublin: [{ id: "irishRegistration", title: "The Irish registration records", status: "active", summary: "The four workers register their residence permissions and keep dated copies outside employer housing." }],
   punjabDocumentWork: [{ id: "workRecords", title: "The copied rosters and payslips", status: "active", summary: "Neha preserves hours, deductions, housing charges, and the wages actually received." }],
   punjabAcceptDeductions: [{ id: "housingDeductions", title: "The employer-controlled deductions", status: "setback", summary: "Pay slips show permit, transport, bedding, and housing charges deducted without clear agreement." }],
-  punjabContactReactivation: [{ id: "reactivationAdvice", title: "The reactivation eligibility letter", status: "active", summary: "An adviser records that the group entered on permits and fell out of the system after exploitation and dismissal." }],
+  punjabContactReactivation: [{ id: "reactivationAdvice", title: "The individual options checklist", status: "active", summary: "The adviser distinguishes redundancy notification and a new-employer application from reactivation eligibility. Closure alone establishes neither loss of permission nor reactivation approval." }],
   punjabCashJobs: [{ id: "cashWork", title: "The unrecorded cash shifts", status: "setback", summary: "The group takes unauthorized work without payslips while its immigration permission becomes less secure." }],
   punjabLegalAdvice: [{ id: "irelandLegalAdvice", title: "Independent Irish legal advice", status: "active", summary: "The adviser separates wage claims, temporary immigration permission, and reactivation-permit applications." }],
   punjabReactivationReview: [
     { id: "permitCheck", title: "The official permit check", status: "resolved", requiresThread: "permitCheck", summary: "The early verification shows what the recruiter knew before the group left India." },
     { id: "irishRegistration", title: "The Irish registration records", status: "resolved", requiresThread: "irishRegistration", summary: "The dated registration copies establish that the group originally entered the labor market lawfully." },
     { id: "workRecords", title: "The copied rosters and payslips", status: "resolved", requiresThread: "workRecords", summary: "The saved records support the account of unpaid hours and prohibited deductions." },
-    { id: "reactivationAdvice", title: "The reactivation eligibility letter", status: "resolved", requiresThread: "reactivationAdvice", summary: "The group reaches the correct temporary-permission and employment-permit process." },
+    { id: "reactivationAdvice", title: "The individual options checklist", status: "resolved", requiresThread: "reactivationAdvice", summary: "Each worker seeks the process appropriate to their permission and circumstances; no temporary permission or permit approval is presumed." },
     { id: "irelandLegalAdvice", title: "Independent Irish legal advice", status: "resolved", requiresThread: "irelandLegalAdvice", summary: "Each worker receives advice about an individual application rather than a group guarantee." },
   ],
   rohingyaVerifySister: [{ id: "familyTrace", title: "The family-tracing message", status: "active", summary: "A verified worker records Yasmin's sister in Aceh without promising reunion, status, or onward travel." }],
@@ -963,12 +963,20 @@ const sources = {
     label: "Ireland DETE: employment permits require a signed contract and verifiable application",
     url: "https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/employment-permits/",
   },
+  irelandVisa: {
+    label: "Ireland ISD: employment visa and separate border-entry checks · undated guidance checked 18 October 2026",
+    url: "https://www.irishimmigration.ie/coming-to-work-in-ireland/what-are-my-work-visa-options/applying-for-a-long-stay-employment-visa/employment-visa/",
+  },
+  irelandRedundancy: {
+    label: "Ireland DETE: redundancy notification and new-employer options · undated guidance checked 18 October 2026",
+    url: "https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/employment-permits/redundancy/employment-permit-holders-who-are-made-redundant.html",
+  },
   irelandMigrantRights: {
     label: "Ireland DETE: migrant workers have written-contract, wage, and permit-fee protections",
     url: "https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/economic-migration-policy/protection-of-migrant-workers.html",
   },
   irelandReactivation: {
-    label: "Ireland DETE: exploited workers who fall out of the permit system may qualify for a Reactivation Employment Permit",
+    label: "Ireland DETE: individual reactivation eligibility and temporary Stamp 1 prerequisites · undated guidance checked 18 October 2026",
     url: "https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/employment-permits/permit-types/reactivation-employment-permit/",
   },
   irelandWorkerRights: {
@@ -5623,7 +5631,7 @@ export const EVENTS = {
     location: "A recruitment office above a travel agency",
     time: "15:20",
     weather: "Dust and late-afternoon heat",
-    weatherDetail: "The agent has booked refundable flights before permits issue",
+    weatherDetail: "The agent has booked flights before permit and visa decisions",
     route: "quarry",
     contentNote: "Document fraud and pressure to travel before approval",
     source: sources.irelandPermits,
@@ -5634,7 +5642,7 @@ export const EVENTS = {
         role: "Official information",
         time: "15:04",
         trusted: true,
-        body: "A pending application is not permission to work or travel for employment. Verify the final permit, employer, occupation, salary, and signed contract before departure.",
+        body: "A pending permit application is not an issued permit. Check the employer, occupation, salary and contract. An employment permit is separate from a visa where required, border permission to enter, and residence registration. Do not travel on the agent's PDF alone.",
       },
     ],
     known: [
@@ -5660,7 +5668,7 @@ export const EVENTS = {
         effects: { cash: -320, supplies: -3, stress: 3, exposure: -8, progress: 10, trustAll: 1 },
         consequence: "Cash -$320 · Eighteen days pass · Risk falls",
         outcomeTitle: "Four permits appear in four worker accounts",
-        outcome: "Each traveler downloads an original permit naming the employer, occupation, and salary. The agent's fee remains unexplained and far above the official charge.",
+        outcome: "Each traveler downloads an issued permit naming the employer, occupation and salary. Separate employment-visa applications must still be decided before travel. The agent's fee remains unexplained.",
         setFlags: { permitOriginals: true },
       },
       {
@@ -5675,13 +5683,13 @@ export const EVENTS = {
         effects: { cash: 420, supplies: -2, water: -2, stress: 6, progress: 10, people: { gurpreet: -5, arjun: -5, simran: -3, neha: -3 } },
         consequence: "Cash +$420 · Twelve days pass · Health falls",
         outcomeTitle: "The portal updates during the final shift",
-        outcome: "The local jobs pay as written. By departure day, the four official records show issued permits, but the recruiter still refuses to provide the housing contract.",
+        outcome: "The local jobs pay as written. The four records now show issued permits; separate employment-visa decisions are still needed before travel. The recruiter still refuses to provide the housing contract.",
         setFlags: { permitOriginals: true },
       },
       {
         id: "punjabTakePDF",
-        title: "Travel with the agent's PDF copies",
-        hint: "Leave before every official portal record is complete",
+        title: "Go to the airport with the agent's PDF copies",
+        hint: "Reach the document desk before every official record is complete",
         icon: "navigate",
         tone: "danger",
         route: "ridge",
@@ -5691,7 +5699,7 @@ export const EVENTS = {
         effects: { cash: -600, battery: -10, stress: 18, exposure: 25, progress: 12, trustAll: -1 },
         consequence: "Cash -$600 · Risk +25 · The records do not match",
         outcomeTitle: "Two PDFs carry dates the portal does not show",
-        outcome: "The agent says the portal is slow and sends the group to the airport. Neha keeps screenshots of the conflicting occupation and salary pages.",
+        outcome: "The agent sends them to the airport, but pending records and conflicting PDFs cannot substitute for issued permits or visas. They do not board at this point. Neha saves the discrepancies; independent checks and separate visa applications still lie ahead.",
         setFlags: { permitScreenshots: true },
       },
     ],
@@ -5706,8 +5714,16 @@ export const EVENTS = {
     weatherDetail: "The agent is coaching answers by phone",
     route: "quarry",
     contentNote: "Immigration questioning and possible refusal to travel",
-    source: sources.irelandPermits,
+    source: sources.irelandVisa,
     messages: [
+      {
+        sender: "Story transition",
+        initial: "i",
+        role: "Fictional continuation · processing time not simulated",
+        time: "Before boarding",
+        trusted: true,
+        body: "After a further wait in India, all four permits are independently confirmed as issued and separate long-stay employment visas have been granted in this fictional continuation. This also applies after the premature airport trip with PDFs. The story-day costs do not model official processing times or visa fees. Neither a permit nor a visa guarantees admission to Ireland.",
+      },
       {
         sender: "Recruitment agent",
         initial: "R",
@@ -5718,7 +5734,7 @@ export const EVENTS = {
       },
     ],
     known: [
-      "The group can present its employment purpose, permits, and contracts truthfully.",
+      "Issued permits, separate employment visas and contracts are now available; airline document checks are not an Irish entry decision.",
       "The new hotel address is not part of any employer document.",
       "Airport staff can record suspected recruitment fraud before the group decides whether to fly.",
     ],
@@ -5731,7 +5747,7 @@ export const EVENTS = {
       {
         id: "punjabPresentDocuments",
         title: "Present the real employment purpose",
-        hint: "Show the portal records, contracts, and fee receipts together",
+        hint: "Show issued permits, employment visas, contracts and fee receipts",
         icon: "legal",
         tone: "trusted",
         route: "elmstead",
@@ -5741,7 +5757,7 @@ export const EVENTS = {
         effects: { cash: -700, battery: -9, stress: 9, exposure: -6, progress: 13, trustAll: 1 },
         consequence: "Cash -$700 · Risk falls · The interview is recorded",
         outcomeTitle: "The purpose of travel matches the permits",
-        outcome: "Airline staff verify the issued records. The group answers honestly about the jobs and preserves the agent's contradictory housing and fee messages.",
+        outcome: "The airline checks travel documents. At the Irish border, an immigration officer separately examines their employment purpose and documents and admits them in this fictional outcome. Registration remains a further step; the agent's housing and fee messages are preserved.",
         setFlags: { truthfulDeparture: true },
       },
       {
@@ -5757,7 +5773,7 @@ export const EVENTS = {
         effects: { cash: -650, battery: -14, stress: 23, exposure: 29, progress: 12, trustAll: -1 },
         consequence: "Cash -$650 · Stress +23 · Risk +29",
         outcomeTitle: "The rehearsed story fails at the document desk",
-        outcome: "The group is questioned for hours. Official checks eventually confirm issued work records, but the false explanation follows them into the arrival file.",
+        outcome: "The tourist explanation is challenged. The group corrects it and presents the issued permits and employment visas. After separate Irish border questioning, they are admitted in this fictional branch. Misrepresentation can lead to refusal; these documents do not guarantee entry. The false explanation remains in the file.",
       },
       {
         id: "punjabReportAgent",
@@ -5799,7 +5815,7 @@ export const EVENTS = {
         role: "Verified information",
         time: "08:18",
         trusted: true,
-        body: "Keep the original permit yourself. Employment permits and residence permission are related but separate. Register as required and keep copies outside employer-controlled housing.",
+        body: "Keep your permit and visa records. Border admission has occurred in this fictional branch; residence registration is a further process. Keep copies outside employer-controlled housing. The desk's availability and the story's timing are invented, not a service or appointment guarantee.",
       },
     ],
     known: [
@@ -5948,8 +5964,8 @@ export const EVENTS = {
     weather: "Cold rain under security lights",
     weatherDetail: "The employer has ended every shift without notice",
     route: "quarry",
-    contentNote: "Job loss, expiring status, and risk of undocumented work",
-    source: sources.irelandReactivation,
+    contentNote: "Redundancy, individual permission checks, and risk of undocumented work",
+    source: sources.irelandRedundancy,
     messages: [
       {
         sender: "Migrant-rights adviser",
@@ -5957,12 +5973,12 @@ export const EVENTS = {
         role: "Verified information",
         time: "18:12",
         trusted: true,
-        body: "Workers who entered on valid permits and fell out of the system through exploitation or circumstances outside their control may be able to request temporary permission and then apply for a Reactivation Employment Permit. Eligibility is individual and not guaranteed.",
+        body: "Closure does not itself establish that your permission has expired. Qualifying General or Critical Skills permit holders must notify redundancy within four weeks and have up to six months to seek a new job. Check each permit and permission first. Reactivation is a separate possibility for eligible former permit holders, including some who fell out of the system through no fault of their own; it is not an automatic consequence of redundancy.",
       },
     ],
     known: [
       "The employer has stopped trading and the named jobs no longer exist.",
-      "A reactivation application begins with Immigration Service Delivery and requires a genuine new job offer.",
+      "An adviser can distinguish redundancy/new-employer options from reactivation; eligibility, deadlines and permission must be checked individually.",
       "Cash-work recruiters outside the gate offer immediate jobs without payslips or permission checks.",
     ],
     assumed: [
@@ -5973,7 +5989,7 @@ export const EVENTS = {
     choices: [
       {
         id: "punjabContactReactivation",
-        title: "Ask for reactivation and temporary-permission advice",
+        title: "Check redundancy and individual permit options",
         hint: "Document lawful entry, exploitation, closure, and each person's skills",
         icon: "legal",
         tone: "trusted",
@@ -5983,7 +5999,7 @@ export const EVENTS = {
         effects: { cash: -260, battery: -10, stress: 4, exposure: -22, progress: 14, trustAll: 1 },
         consequence: "Cash -$260 · Risk falls · Four individual files begin",
         outcomeTitle: "The adviser refuses to promise one answer for four people",
-        outcome: "The group records how each worker entered, worked, and lost the named job. Temporary-permission and new-employer steps are explained separately.",
+        outcome: "In this fictional appointment, the adviser records dates and permit types, checks redundancy notification and new-employer options, and separately considers whether anyone needs reactivation advice. No loss of permission, eligibility letter or approval is presumed from the closure.",
         setFlags: { reactivationAdvice: true },
       },
       {
@@ -6014,7 +6030,7 @@ export const EVENTS = {
         effects: { cash: -700, battery: -16, stress: 22, exposure: 34, progress: 15, trustAll: -1 },
         consequence: "Cash -$700 · Risk +34 · The replacement record fails",
         outcomeTitle: "The company number belongs to a dissolved business",
-        outcome: "The new PDF cannot be verified. The agent blocks the group, leaving the workers without a named employer and with less time to regularize their position.",
+        outcome: "The new PDF cannot be verified. The agent blocks the group. The payment has not secured an employer change or established anyone's immigration status; individual notification and permission deadlines still need checking.",
         setFlags: { falseTransfer: true },
       },
     ],
@@ -6113,7 +6129,7 @@ export const EVENTS = {
     weather: "Bright sky between showers",
     weatherDetail: "Each worker enters a separate appointment",
     route: "elmstead",
-    contentNote: "Reactivation applications, voluntary return, and undocumented labor",
+    contentNote: "Individual permit options, voluntary return, and undocumented labor",
     source: sources.irelandReactivation,
     messages: [
       {
@@ -6122,7 +6138,7 @@ export const EVENTS = {
         role: "Official information",
         time: "09:12",
         trusted: true,
-        body: "A Reactivation Employment Permit is intended for eligible workers who entered legally and fell out of the system through no fault of their own or workplace exploitation. Temporary immigration permission and a genuine new job offer must be addressed first. Approval is not guaranteed.",
+        body: "First check whether redundancy and a new-employer application fit your existing permission. Reactivation has separate eligibility conditions. An eligible applicant first seeks ISD permission; a temporary Stamp 1 and a Reactivation Employment Permit letter are needed before the permit application, which also requires a genuine job offer. Neither permission nor a permit is guaranteed. This fictional appointment is not a promise of service availability.",
       },
     ],
     known: [
@@ -6138,7 +6154,7 @@ export const EVENTS = {
     choices: [
       {
         id: "punjabReactivationReview",
-        title: "Enter temporary-permission and reactivation review",
+        title: "Seek individual permission and employment-permit review",
         hint: "Complete the route with four individual outcomes still pending",
         icon: "legal",
         tone: "trusted",
@@ -6146,9 +6162,9 @@ export const EVENTS = {
         days: 42,
         next: null,
         effects: { cash: -220, stress: 5, exposure: -34, progress: 100, trustAll: 1 },
-        consequence: "Destination reached · Four reactivation reviews begin",
-        outcomeTitle: "The new applications name workers before employers",
-        outcome: "The group enters temporary support while each person seeks a genuine offer and files the correct permit application. Wage complaints continue separately, and no approval is promised.",
+        consequence: "Destination reached · Four individual reviews begin",
+        outcomeTitle: "Four files, without a shared eligibility decision",
+        outcome: "In this fictional outcome, advisers help each worker check the appropriate route and any unmet requirements. A new offer, permission letter or permit application is not presumed to exist. Wage complaints remain separate. No support placement, temporary permission or approval is guaranteed by asking for review.",
         contextBonuses: [
           {
             flag: "permitCheck",
@@ -6179,7 +6195,7 @@ export const EVENTS = {
           type: "ireland_reactivation_pending",
           status: "won",
           title: "Back inside a lawful process",
-          copy: "The Punjab group reaches temporary permission and reactivation review in Ireland. Their permit decisions, wage claims, family debts, and long-term residence remain unresolved.",
+          copy: "The Punjab group seeks individual permission and employment-permit review in Ireland, including reactivation only where eligible. No temporary permission or permit approval is presumed. Their wage claims, family debts and long-term residence remain unresolved.",
         },
       },
       {
