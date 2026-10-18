@@ -7,29 +7,35 @@ const RAMIREZ_PORTRAIT_STRIPS = {
   strained: "/assets/ramirez-family-portraits-strained.webp",
   critical: "/assets/ramirez-family-portraits-critical.webp",
 };
-const HADDAD_PORTRAIT_STRIP = "/assets/haddad-family-portraits.png";
+const HADDAD_PORTRAIT_STRIP = "/assets/haddad-family-portraits.webp";
 const HADDAD_PORTRAIT_STRIPS = {
   healthy: HADDAD_PORTRAIT_STRIP,
   strained: HADDAD_PORTRAIT_STRIP,
   critical: HADDAD_PORTRAIT_STRIP,
 };
-const DIOP_PORTRAIT_STRIP = "/assets/diop-group-portraits.png";
+const DIOP_PORTRAIT_STRIP = "/assets/diop-group-portraits.webp";
 const DIOP_PORTRAIT_STRIPS = {
   healthy: DIOP_PORTRAIT_STRIP,
   strained: DIOP_PORTRAIT_STRIP,
   critical: DIOP_PORTRAIT_STRIP,
 };
-const NGUYEN_PORTRAIT_STRIP = "/assets/nguyen-family-portraits.png";
+const NGUYEN_PORTRAIT_STRIP = "/assets/nguyen-family-portraits.webp";
 const NGUYEN_PORTRAIT_STRIPS = {
   healthy: NGUYEN_PORTRAIT_STRIP,
   strained: NGUYEN_PORTRAIT_STRIP,
   critical: NGUYEN_PORTRAIT_STRIP,
 };
-const PUNJAB_PORTRAIT_STRIP = "/assets/punjab-group-portraits.png";
+const PUNJAB_PORTRAIT_STRIP = "/assets/punjab-group-portraits.webp";
 const PUNJAB_PORTRAIT_STRIPS = {
   healthy: PUNJAB_PORTRAIT_STRIP,
   strained: PUNJAB_PORTRAIT_STRIP,
   critical: PUNJAB_PORTRAIT_STRIP,
+};
+const ROHINGYA_PORTRAIT_STRIP = "/assets/rohingya-family-portraits.webp";
+const ROHINGYA_PORTRAIT_STRIPS = {
+  healthy: ROHINGYA_PORTRAIT_STRIP,
+  strained: ROHINGYA_PORTRAIT_STRIP,
+  critical: ROHINGYA_PORTRAIT_STRIP,
 };
 
 const RAMIREZ_PEOPLE = [
@@ -247,6 +253,49 @@ const PUNJAB_PEOPLE = [
   },
 ];
 
+const ROHINGYA_PEOPLE = [
+  {
+    id: "yasmin",
+    name: "Yasmin",
+    pronouns: "she/her",
+    age: 38,
+    image: ROHINGYA_PORTRAIT_STRIP,
+    focus: "0% 42%",
+    skills: ["Community health", "Documents"],
+    story: "She helps neighbors understand clinic instructions and protects the family's registration papers in a waterproof folder. Her older sister reached Indonesia months ago, but contact has become intermittent.",
+  },
+  {
+    id: "hamida",
+    name: "Hamida",
+    pronouns: "she/her",
+    age: 62,
+    image: ROHINGYA_PORTRAIT_STRIP,
+    focus: "33.333% 42%",
+    skills: ["Cooking", "Community ties"],
+    story: "Yasmin's mother knows which camp volunteers keep their promises. She wants the children to keep learning and distrusts any broker who says questions will cost the family a place.",
+  },
+  {
+    id: "rafiq",
+    name: "Rafiq",
+    pronouns: "he/him",
+    age: 16,
+    image: ROHINGYA_PORTRAIT_STRIP,
+    focus: "66.667% 42%",
+    skills: ["Weather observation", "Phone repair"],
+    story: "He repairs shared phones and follows weather updates when the signal holds. He wants to continue school, but months without regular classes have made every promise of education feel temporary.",
+  },
+  {
+    id: "sadia",
+    name: "Sadia",
+    pronouns: "she/her",
+    age: 11,
+    image: ROHINGYA_PORTRAIT_STRIP,
+    focus: "100% 42%",
+    skills: ["Schoolwork", "Memory"],
+    story: "She keeps a blue notebook filled with English words, family phone numbers, and the name of every teacher she has had in the camp. She refuses to leave it behind.",
+  },
+];
+
 export const PEOPLE = RAMIREZ_PEOPLE;
 
 export const FAMILY_PRESETS = Object.freeze({
@@ -284,8 +333,8 @@ export const FAMILY_PRESETS = Object.freeze({
     startEventId: "haddadHome",
     startRoute: "elmstead",
     destination: "Asylum registration",
-    heroImage: "/assets/haddad-journey-hero.png",
-    mapImage: "/assets/haddad-route-map.png",
+    heroImage: "/assets/haddad-journey-hero.webp",
+    mapImage: "/assets/haddad-route-map.webp",
     mapAlt: "Non-navigational illustrated story map from Syria through Türkiye, Greece, and the Balkans toward Germany",
     portraitStrips: HADDAD_PORTRAIT_STRIPS,
     portraitSheet: { width: 2046, height: 768 },
@@ -308,8 +357,8 @@ export const FAMILY_PRESETS = Object.freeze({
     startEventId: "diopHome",
     startRoute: "elmstead",
     destination: "Canary Islands reception",
-    heroImage: "/assets/diop-journey-hero.png",
-    mapImage: "/assets/diop-route-map.png",
+    heroImage: "/assets/diop-journey-hero.webp",
+    mapImage: "/assets/diop-route-map.webp",
     mapAlt: "Non-navigational illustrated story map from Senegal through Mauritania and across the Atlantic toward the Canary Islands",
     portraitStrips: DIOP_PORTRAIT_STRIPS,
     portraitSheet: { width: 2046, height: 768 },
@@ -332,8 +381,8 @@ export const FAMILY_PRESETS = Object.freeze({
     startEventId: "nguyenHome",
     startRoute: "elmstead",
     destination: "United Kingdom review",
-    heroImage: "/assets/nguyen-journey-hero.png",
-    mapImage: "/assets/nguyen-route-map.png",
+    heroImage: "/assets/nguyen-journey-hero.webp",
+    mapImage: "/assets/nguyen-route-map.webp",
     mapAlt: "Non-navigational illustrated story map from Vietnam through continental Europe and France toward the United Kingdom",
     portraitStrips: NGUYEN_PORTRAIT_STRIPS,
     portraitSheet: { width: 2048, height: 768 },
@@ -356,8 +405,8 @@ export const FAMILY_PRESETS = Object.freeze({
     startEventId: "punjabHome",
     startRoute: "elmstead",
     destination: "Irish employment review",
-    heroImage: "/assets/punjab-journey-hero.png",
-    mapImage: "/assets/punjab-route-map.png",
+    heroImage: "/assets/punjab-journey-hero.webp",
+    mapImage: "/assets/punjab-route-map.webp",
     mapAlt: "Non-navigational illustrated story map from Punjab through Delhi and an international transit hub toward Ireland",
     portraitStrips: PUNJAB_PORTRAIT_STRIPS,
     portraitSheet: { width: 2048, height: 768 },
@@ -368,6 +417,30 @@ export const FAMILY_PRESETS = Object.freeze({
       simran: { health: 87, trust: 5, alive: true },
       arjun: { health: 92, trust: 4, alive: true },
       neha: { health: 89, trust: 5, alive: true },
+    },
+  },
+  rohingya: {
+    id: "rohingya",
+    name: "The Karim family",
+    shortName: "Karim",
+    origin: "Bangladesh · Statelessness and shrinking aid",
+    context: "A mother, grandmother, and two children weigh dwindling education and aid in Cox's Bazar against a broker's dangerous sea route and an uncertain chance of reuniting with family in Indonesia.",
+    journey: "Cox's Bazar, Bangladesh to temporary reception in Aceh, Indonesia",
+    startEventId: "rohingyaCamp",
+    startRoute: "elmstead",
+    destination: "Temporary reception in Aceh",
+    heroImage: "/assets/rohingya-journey-hero.webp",
+    mapImage: "/assets/rohingya-route-map.webp",
+    mapAlt: "Non-navigational illustrated story map from Cox's Bazar across the Bay of Bengal and Andaman Sea toward Aceh, Indonesia",
+    portraitStrips: ROHINGYA_PORTRAIT_STRIPS,
+    portraitSheet: { width: 2172, height: 724 },
+    people: ROHINGYA_PEOPLE,
+    resources: { cash: 1650, supplies: 8, water: 26, medicine: 1, battery: 86, stress: 46, exposure: 10 },
+    peopleState: {
+      yasmin: { health: 84, trust: 5, alive: true },
+      hamida: { health: 72, trust: 4, alive: true },
+      rafiq: { health: 89, trust: 4, alive: true },
+      sadia: { health: 83, trust: 5, alive: true },
     },
   },
 });
@@ -385,6 +458,7 @@ const JOURNEY_STAGE_BY_EVENT = Object.freeze({
   diopHome: "home",
   nguyenHome: "home",
   punjabHome: "home",
+  rohingyaCamp: "home",
   borderCity: "arrival",
   riverCrossing: "arrival",
   memorial: "arrival",
@@ -394,6 +468,7 @@ const JOURNEY_STAGE_BY_EVENT = Object.freeze({
   nguyenPolicy: "arrival",
   punjabDublin: "arrival",
   punjabWorksite: "arrival",
+  rohingyaLanding: "arrival",
   detention: "review",
   haddadGermany: "review",
   diopIslandWait: "review",
@@ -402,6 +477,7 @@ const JOURNEY_STAGE_BY_EVENT = Object.freeze({
   punjabInspection: "review",
   punjabPolicy: "review",
   punjabFinal: "review",
+  rohingyaAceh: "review",
 });
 
 export function getJourneyStage(game) {
@@ -463,6 +539,29 @@ export const TRAVEL_STRATEGIES = [
     title: "Pause to recover",
     hint: "Spend more for rest, meals, and safer shelter",
     tone: "trusted",
+  },
+];
+
+const TRAVEL_ROLE_RULES = [
+  {
+    id: "planning",
+    title: "Plan supplies",
+    keywords: ["planning", "teacher", "documents", "budgeting", "bookkeeping", "schoolwork", "memory", "problem solving"],
+  },
+  {
+    id: "route",
+    title: "Read the route",
+    keywords: ["observation", "navigation", "driving", "weather", "english", "french", "negotiation", "community ties", "fishing"],
+  },
+  {
+    id: "repair",
+    title: "Keep equipment working",
+    keywords: ["repair", "machinery", "welding", "electronics"],
+  },
+  {
+    id: "care",
+    title: "Hold the group together",
+    keywords: ["health", "care", "first aid", "cooking", "devout", "drawing", "curious", "asthma"],
   },
 ];
 
@@ -639,6 +738,29 @@ const CHOICE_REACTIONS = {
   punjabReactivationReview: [{ personId: "gurpreet", trustDelta: 1, text: "The new application is not a guarantee, but this time the permit belongs in our hands." }],
   punjabVoluntaryReturn: [{ personId: "simran", trustDelta: 1, text: "Returning does not make the recruiter honest. It gives us a safer place to challenge the debt." }],
   punjabHiddenWork: [{ personId: "neha", trustDelta: -1, text: "The new boss knows our permission has expired before he asks our names." }],
+  rohingyaVerifySister: [{ personId: "sadia", trustDelta: 1, text: "The tracing worker read Auntie's last message with us instead of turning it into a promise." }],
+  rohingyaStayForSchool: [{ personId: "rafiq", trustDelta: 1, text: "Staying is still a decision if we use the time to rebuild a place to learn." }],
+  rohingyaPayBroker: [{ personId: "hamida", trustDelta: -1, text: "He calls questions a delay because questions make his promise smaller." }],
+  rohingyaCopyPapers: [{ personId: "yasmin", trustDelta: 1, text: "Now one soaked bag cannot erase every name and date we have." }],
+  rohingyaGiveDocuments: [{ personId: "rafiq", trustDelta: -1, text: "He photographed the papers before he told us where the boat was." }],
+  rohingyaSealOriginals: [{ personId: "sadia", trustDelta: 1, text: "My notebook and our papers fit inside the same dry bag." }],
+  rohingyaCheckForecast: [{ personId: "rafiq", trustDelta: 1, text: "A calmer hour is not a safe sea, but the forecast is more honest than the broker." }],
+  rohingyaBoardTonight: [{ personId: "hamida", trustDelta: -1, text: "He made the weather sound like a door that would close behind us." }],
+  rohingyaReturnCamp: [{ personId: "sadia", trustDelta: 1, text: "If we go back, I still want a desk and a teacher." }],
+  rohingyaMeasuredWater: [{ personId: "yasmin", trustDelta: 1, text: "We count the water where everyone can see it. No one carries the fear alone." }],
+  rohingyaStrictRation: [{ personId: "sadia", trustDelta: -1, text: "I understand the numbers. I am still thirsty." }],
+  rohingyaTrustCrewWater: [{ personId: "hamida", trustDelta: -1, text: "A sealed bottle exists. The promised refill does not." }],
+  rohingyaShelterIsland: [{ personId: "rafiq", trustDelta: 1, text: "The clouds changed before the engine did. Turning now gives us time." }],
+  rohingyaFollowBoat: [{ personId: "yasmin", trustDelta: -1, text: "Another boat can be lost too. Its wake is not a plan." }],
+  rohingyaCallRescue: [{ personId: "sadia", trustDelta: 1, text: "They repeated our position and the number of children. Someone knows we are here." }],
+  rohingyaHideSignal: [{ personId: "rafiq", trustDelta: -1, text: "Saving the battery means nothing if nobody knows where to look." }],
+  rohingyaSendLocation: [{ personId: "yasmin", trustDelta: 1, text: "The message includes our position, not a photograph strangers can share." }],
+  rohingyaRegisterLanding: [{ personId: "hamida", trustDelta: 1, text: "They read four names back to us. That is arrival, even if it is not belonging." }],
+  rohingyaLeaveShore: [{ personId: "yasmin", trustDelta: -1, text: "The driver offers work before asking whether the children have eaten." }],
+  rohingyaCommunityHall: [{ personId: "sadia", trustDelta: 1, text: "The volunteers give me paper without asking me to give up my notebook." }],
+  rohingyaTemporaryReview: [{ personId: "yasmin", trustDelta: 1, text: "The document says temporary. We can still use it to keep our names together." }],
+  rohingyaFamilyTracing: [{ personId: "rafiq", trustDelta: 1, text: "Auntie's name enters the tracing request, not another broker's sales message." }],
+  rohingyaInformalWork: [{ personId: "hamida", trustDelta: -1, text: "A room tied to hidden work can become another place we are afraid to leave." }],
 };
 
 const STORY_THREAD_UPDATES = {
@@ -738,6 +860,25 @@ const STORY_THREAD_UPDATES = {
     { id: "workRecords", title: "The copied rosters and payslips", status: "resolved", requiresThread: "workRecords", summary: "The saved records support the account of unpaid hours and prohibited deductions." },
     { id: "reactivationAdvice", title: "The reactivation eligibility letter", status: "resolved", requiresThread: "reactivationAdvice", summary: "The group reaches the correct temporary-permission and employment-permit process." },
     { id: "irelandLegalAdvice", title: "Independent Irish legal advice", status: "resolved", requiresThread: "irelandLegalAdvice", summary: "Each worker receives advice about an individual application rather than a group guarantee." },
+  ],
+  rohingyaVerifySister: [{ id: "familyTrace", title: "The family-tracing message", status: "active", summary: "A verified worker records Yasmin's sister in Aceh without promising reunion, status, or onward travel." }],
+  rohingyaPayBroker: [{ id: "brokerDebt", title: "The broker's changing promise", status: "setback", summary: "A payment secures only a pickup time; the destination, boat, and landing permission remain unverified." }],
+  rohingyaCopyPapers: [{ id: "documentCopies", title: "Registration copies kept apart", status: "active", summary: "The family's camp records, family numbers, and photographs are stored in two sealed packets and one phone." }],
+  rohingyaGiveDocuments: [{ id: "documentControl", title: "Original papers outside the family", status: "setback", summary: "The broker photographs and holds the original registration papers while demanding another fee." }],
+  rohingyaCheckForecast: [{ id: "weatherCheck", title: "The saved marine forecast", status: "active", summary: "Rafiq saves the latest weather bulletin and the time the conditions are expected to change." }],
+  rohingyaMeasuredWater: [{ id: "waterLedger", title: "The shared water count", status: "active", summary: "Every container and daily ration is counted aloud so nobody is quietly excluded." }],
+  rohingyaCallRescue: [{ id: "rescueRecord", title: "The rescue position report", status: "active", summary: "A rescue service records the boat's position, passenger count, children, and remaining water without promising disembarkation." }],
+  rohingyaSendLocation: [{ id: "rescueRecord", title: "The private position message", status: "active", summary: "A trusted contact receives coordinates and passenger details without a public post exposing the family." }],
+  rohingyaRegisterLanding: [{ id: "landingRecord", title: "Four names at the shoreline", status: "active", summary: "An interpreter reads every name back and records immediate health needs before the family moves inland." }],
+  rohingyaTemporaryReview: [
+    { id: "familyTrace", title: "The family-tracing message", status: "resolved", requiresThread: "familyTrace", summary: "The earlier verified message gives the tracing request a real name and contact history." },
+    { id: "documentCopies", title: "Registration copies kept apart", status: "resolved", requiresThread: "documentCopies", summary: "The sealed records establish family names and camp registration after weeks at sea." },
+    { id: "rescueRecord", title: "The rescue position report", status: "resolved", requiresThread: "rescueRecord", summary: "The maritime record connects the family's arrival to the people counted on the boat." },
+    { id: "landingRecord", title: "Four names at the shoreline", status: "resolved", requiresThread: "landingRecord", summary: "The shoreline record keeps the family together during temporary reception." },
+  ],
+  rohingyaFamilyTracing: [
+    { id: "familyTrace", title: "The family-tracing message", status: "resolved", requiresThread: "familyTrace", summary: "A formal tracing request replaces the broker's claim that reunion could be bought." },
+    { id: "landingRecord", title: "Four names at the shoreline", status: "resolved", requiresThread: "landingRecord", summary: "The arrival record gives the tracing service a current location without promising the outcome." },
   ],
 };
 
@@ -841,6 +982,14 @@ const sources = {
   irelandDeportations: {
     label: "Ireland Department of Justice: chartered deportation flights resumed in 2025",
     url: "https://www.gov.ie/en/department-of-justice-home-affairs-and-migration/news/chartered-deportation-flights-recommence/",
+  },
+  rohingyaSea: {
+    label: "UNHCR: more Rohingya refugees are risking dangerous sea journeys as conditions worsen",
+    url: "https://www.unhcr.org/news/stories/more-refugees-risk-dangerous-sea-journeys-myanmar-crisis-worsens",
+  },
+  rohingyaEducation: {
+    label: "UNICEF: education for almost a quarter million Rohingya refugee children is at risk",
+    url: "https://www.unicef.org/bangladesh/en/press-releases/education-almost-quarter-million-rohingya-refugee-children-risk-unicef-calls-urgent",
   },
 };
 
@@ -1650,6 +1799,62 @@ export const SOCIAL_FEEDS = {
       support: "A local center combines language exchange with confidential employment-rights advice.",
       ignore: "The family avoids immediate attention, but the false caption becomes the version most people see.",
       respond: "The longer video corrects part of the story and makes Neha's account newly visible to hostile users.",
+    },
+  },
+  rohingyaAceh: {
+    id: "aceh-arrival-rumor",
+    eyebrow: "Shared inside temporary reception",
+    headline: "A reunion rumor turns one arrival into a promise for everyone",
+    location: "Aceh, Indonesia",
+    posts: [
+      {
+        id: "guaranteed-reunion",
+        author: "Sea Route Updates",
+        handle: "@searouteupdates",
+        initials: "SR",
+        label: "Unverified broker account",
+        tone: "hostile",
+        body: "Everyone who lands in Aceh gets papers, paid work, and family reunion. More boats are leaving now. Message privately to reserve a place.",
+        reach: "Forwarded across camp groups",
+      },
+      {
+        id: "reception-facts",
+        author: "Reception Information Desk",
+        handle: "@receptionfacts",
+        initials: "RI",
+        label: "Verified service notice",
+        tone: "verified",
+        body: "Emergency reception, family tracing, legal status, and permission to work are different processes. Arrival does not guarantee permanent residence or reunion.",
+        reach: "Translated notice attached",
+      },
+      {
+        id: "private-tracing",
+        author: "Family Links Network",
+        handle: "@familylinks",
+        initials: "FL",
+        label: "Community support",
+        tone: "support",
+        body: "Share names, dates, and contact histories through the private tracing desk. Do not post faces, locations, or document photographs in public groups.",
+        reach: "Private appointments available",
+      },
+    ],
+    evidence: [
+      "Temporary reception does not create nationality, permanent residence, or unrestricted work rights.",
+      "The broker account uses one family's reunion story to sell new journeys.",
+      "A private tracing service can check Yasmin's sister without exposing the children's location.",
+    ],
+    voice: {
+      personId: "rafiq",
+      verify: "The translated notice separates four things the broker squeezes into one promise.",
+      support: "We send Auntie's name to the tracing desk, not our faces to a public group.",
+      ignore: "I close the post, but families in the camp may still read it as a guarantee.",
+      respond: "I correct the promise. The account replies with our profile and asks where we landed.",
+    },
+    outcomes: {
+      verify: "The family compares the viral claim with the translated reception notice and saves the distinctions offline.",
+      support: "A private tracing appointment protects the family's location while checking Yasmin's sister's record.",
+      ignore: "The phone goes quiet for the family while the broker's guarantee continues circulating in camp groups.",
+      respond: "The public correction reaches some families and reveals Rafiq's account to the broker network.",
     },
   },
 };
@@ -6018,6 +6223,723 @@ export const EVENTS = {
       },
     ],
   },
+
+  rohingyaCamp: {
+    id: "rohingyaCamp",
+    region: "Cox's Bazar, Bangladesh · Present day",
+    location: "A learning shelter beside the family's camp block",
+    time: "05:35",
+    weather: "Rain before dawn",
+    weatherDetail: "The education notice has no reopening date",
+    route: "elmstead",
+    contentNote: "Statelessness, shrinking aid, disrupted education, and trafficking risk",
+    source: sources.rohingyaEducation,
+    messages: [
+      {
+        sender: "Yasmin",
+        initial: "Y",
+        role: "Family conversation",
+        time: "05:18",
+        trusted: true,
+        body: "The learning center closed again, the food ration is smaller, and your aunt's last message said she was alive in Aceh but still waiting for papers. A broker says four places leave tomorrow. He promises reunion, but will not name the boat, the captain, or where we would be allowed to land.",
+      },
+      {
+        sender: "Hamida",
+        initial: "H",
+        role: "Grandmother",
+        time: "05:24",
+        trusted: true,
+        body: "Staying keeps us near people we know. Leaving may bring us nearer to family. Neither choice gives these children a country, a classroom, or a future by itself.",
+      },
+    ],
+    known: [
+      "Aid and education services have been reduced or interrupted in the camp.",
+      "A verified family-tracing desk can check the sister's last message without charging a fee.",
+      "The broker refuses to provide a vessel name, passenger list, or written destination.",
+    ],
+    assumed: [
+      "A relative's arrival in Indonesia means the family will be admitted too.",
+      "Paying first guarantees four places together.",
+      "Remaining in the camp means nothing can change.",
+    ],
+    choices: [
+      {
+        id: "rohingyaVerifySister",
+        title: "Verify the message with family tracing",
+        hint: "Spend two days checking the contact and documenting the family link",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 2,
+        next: "rohingyaPapers",
+        effects: { cash: -30, supplies: 1, stress: -6, exposure: -3, progress: 8, trustAll: 1 },
+        consequence: "Cash -$30 · Food +1 day · The contact is verified",
+        outcomeTitle: "The message becomes evidence, not a promise",
+        outcome: "A tracing worker confirms that Yasmin's sister entered temporary reception in Aceh months ago. The worker records the relationship and warns that reunion, permission to remain, and permission to work are separate questions.",
+        setFlags: { familyTrace: true },
+      },
+      {
+        id: "rohingyaStayForSchool",
+        title: "Stay and rebuild the learning space",
+        hint: "End the sea route and use the family's skills where they are",
+        icon: "aid",
+        tone: "uncertain",
+        route: "quarry",
+        days: 30,
+        next: null,
+        effects: { cash: -120, supplies: 2, stress: -8, exposure: -8, progress: 10, trustAll: 1 },
+        consequence: "The sea route ends · A temporary classroom reopens",
+        outcomeTitle: "Sadia writes the first date on a new board",
+        outcome: "The family joins neighbors to reopen a small learning space while verified agencies pursue aid and tracing requests. The camp remains temporary, funding remains uncertain, and statelessness remains unchanged.",
+        ending: {
+          type: "camp_community",
+          status: "won",
+          title: "The road pauses inside the camp",
+          copy: "The Karim family does not board. They preserve safety and help restore education, while the legal and material pressures that shaped the decision remain unresolved.",
+        },
+      },
+      {
+        id: "rohingyaPayBroker",
+        title: "Pay the broker for four places",
+        hint: "Trust an unverified route before the price changes again",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 1,
+        next: "rohingyaPapers",
+        requires: { cash: 500 },
+        effects: { cash: -500, battery: -10, stress: 15, exposure: 18, progress: 9, trustAll: -1 },
+        consequence: "Cash -$500 · Risk +18 · The pickup point replaces the promise",
+        outcomeTitle: "The destination disappears from the next message",
+        outcome: "After payment, the broker sends a night pickup location and says the family will learn the boat and destination later. He deletes the message that promised reunion in Aceh.",
+        setFlags: { brokerPaid: true },
+      },
+    ],
+  },
+
+  rohingyaPapers: {
+    id: "rohingyaPapers",
+    region: "Cox's Bazar, Bangladesh · Present day",
+    location: "A documentation desk near the camp gate",
+    time: "13:20",
+    weather: "Heavy humid air",
+    weatherDetail: "Rain is expected overnight",
+    route: "elmstead",
+    contentNote: "Statelessness, identity documents, and broker control",
+    source: sources.rohingyaSea,
+    messages: [
+      {
+        sender: "Yasmin",
+        initial: "Y",
+        role: "Mother",
+        time: "13:04",
+        trusted: true,
+        body: "These pages do not give us citizenship, but they carry our names, camp registration, health notes, and the number for your aunt. If the bag is lost or a broker keeps it, proving even this much becomes harder.",
+      },
+    ],
+    known: [
+      "A volunteer can make paper and encrypted phone copies for a small fee.",
+      "The broker is asking to hold original documents until departure.",
+      "Waterproof bags are available, but space on the boat will be limited.",
+    ],
+    assumed: [
+      "Original camp papers guarantee admission in another country.",
+      "A broker needs to hold every original to arrange transport.",
+      "Phone photographs will always be reachable without signal or battery.",
+    ],
+    choices: [
+      {
+        id: "rohingyaCopyPapers",
+        title: "Make copies and keep them apart",
+        hint: "Protect identity records in two sealed packets and one phone",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 2,
+        next: "rohingyaCoast",
+        effects: { cash: -50, battery: -8, stress: -4, exposure: -4, progress: 10, trustAll: 1 },
+        consequence: "Cash -$50 · Phone -8% · Documents are duplicated",
+        outcomeTitle: "No single bag holds every proof",
+        outcome: "Yasmin keeps originals against her body, Hamida carries one sealed copy, and an encrypted set goes to the verified tracing contact.",
+        setFlags: { documentCopies: true },
+      },
+      {
+        id: "rohingyaSealOriginals",
+        title: "Seal the originals with Sadia's notebook",
+        hint: "Keep the papers close without creating backup copies",
+        icon: "rest",
+        tone: "uncertain",
+        route: "quarry",
+        days: 1,
+        next: "rohingyaCoast",
+        effects: { cash: -20, stress: 2, progress: 10 },
+        consequence: "Cash -$20 · One dry bag holds the records",
+        outcomeTitle: "The notebook and documents share one sealed bag",
+        outcome: "The package stays with the family. It is protected from rain, but loss or confiscation would still remove the only full record.",
+        setFlags: { sealedOriginals: true },
+      },
+      {
+        id: "rohingyaGiveDocuments",
+        title: "Let the broker hold the originals",
+        hint: "Accept his claim that documents must be checked before boarding",
+        icon: "legal",
+        tone: "danger",
+        route: "ridge",
+        days: 1,
+        next: "rohingyaCoast",
+        effects: { cash: -120, battery: -6, stress: 18, exposure: 24, progress: 11, trustAll: -1 },
+        consequence: "Cash -$120 · Risk +24 · Original papers leave the family",
+        outcomeTitle: "The documents return after another payment",
+        outcome: "The broker photographs every page and demands a handling fee before returning most of the folder. Nobody can confirm where the copies went.",
+        setFlags: { documentsCompromised: true },
+      },
+    ],
+  },
+
+  rohingyaCoast: {
+    id: "rohingyaCoast",
+    region: "Bangladesh coast · Present day",
+    location: "A rented room near the departure beach",
+    time: "18:40",
+    weather: "Wind rising offshore",
+    weatherDetail: "The forecast changes after midnight",
+    route: "quarry",
+    contentNote: "Unsafe boats, trafficking risk, and changing weather",
+    source: sources.rohingyaSea,
+    messages: [
+      {
+        sender: "Rafiq",
+        initial: "R",
+        role: "Son · weather observer",
+        time: "18:22",
+        trusted: true,
+        body: "The public forecast shows the wind turning after midnight. The broker says the first boat is our only boat, but the photograph he sent has no date and the water containers are not visible.",
+      },
+      {
+        sender: "Boat broker",
+        initial: "?",
+        role: "Unverified voice message",
+        time: "18:31",
+        trusted: false,
+        body: "Board tonight or lose the payment. The captain knows the sea. Bring papers, one bag, and no questions at the beach.",
+      },
+    ],
+    known: [
+      "The forecast predicts stronger wind after midnight.",
+      "A community safety contact can inspect the water and passenger count before departure.",
+      "Returning to the camp remains possible, but the broker will not refund the fare.",
+    ],
+    assumed: [
+      "A captain's experience makes an overcrowded boat safe.",
+      "Money already paid can only be protected by continuing.",
+      "Any boat leaving for Indonesia will be permitted to disembark there.",
+    ],
+    choices: [
+      {
+        id: "rohingyaCheckForecast",
+        title: "Delay and check the boat against the forecast",
+        hint: "Buy water, count passengers, and wait for the safer window",
+        icon: "wait",
+        tone: "trusted",
+        route: "elmstead",
+        days: 4,
+        next: "rohingyaSea",
+        effects: { cash: -140, supplies: 2, water: 6, stress: 4, exposure: -4, progress: 12 },
+        consequence: "Cash -$140 · Food +2 days · Water +6 L",
+        outcomeTitle: "The delay reveals what the photograph hid",
+        outcome: "The safety contact finds fewer water containers than promised. The family buys sealed water, saves the forecast offline, and refuses the first departure before boarding a later vessel.",
+        setFlags: { weatherCheck: true },
+      },
+      {
+        id: "rohingyaBoardTonight",
+        title: "Board before the weather changes",
+        hint: "Accept the broker's deadline and the supplies already aboard",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 2,
+        next: "rohingyaSea",
+        effects: { cash: -180, supplies: -2, water: -5, stress: 20, exposure: 25, progress: 14, peopleAll: -4, trustAll: -1 },
+        consequence: "Cash -$180 · Water -5 L · Risk +25",
+        outcomeTitle: "The boat leaves low in the water",
+        outcome: "More passengers arrive after the family boards. The crew stores the remaining water out of sight and says the crossing will take only a few days.",
+      },
+      {
+        id: "rohingyaReturnCamp",
+        title: "Walk away and return to the camp",
+        hint: "Lose the fare and end the sea route together",
+        icon: "aid",
+        tone: "uncertain",
+        route: "quarry",
+        days: 9,
+        next: null,
+        effects: { cash: -90, stress: 7, exposure: -25, progress: 24, trustAll: 1 },
+        consequence: "The sea route ends · All four return together",
+        outcomeTitle: "The boat leaves without the Karim family",
+        outcome: "The family returns with its documents and asks the tracing desk to continue the search for Yasmin's sister. Aid and education remain uncertain, but the broker no longer chooses the next night.",
+        ending: {
+          type: "returned_to_camp",
+          status: "won",
+          title: "The crossing ends before it begins",
+          copy: "The Karims return to Cox's Bazar alive and together. Turning back preserves safety; it does not resolve statelessness, shrinking aid, or the interrupted education that shaped the journey.",
+        },
+      },
+    ],
+  },
+
+  rohingyaSea: {
+    id: "rohingyaSea",
+    region: "Bay of Bengal · Present day",
+    location: "Open water beyond the coast",
+    time: "06:10",
+    weather: "Cloud cover and weak wind",
+    weatherDetail: "The engine has been stopped to conserve fuel",
+    route: "elmstead",
+    contentNote: "Prolonged sea travel, water scarcity, and children at risk",
+    source: sources.rohingyaSea,
+    messages: [
+      {
+        sender: "Yasmin",
+        initial: "Y",
+        role: "Mother · shared water count",
+        time: "05:52",
+        trusted: true,
+        body: "The captain now says the route may take two weeks. We have less water than the passenger count requires. If one person controls the containers, the smallest voices will disappear first.",
+      },
+    ],
+    known: [
+      "The crossing is taking longer than the broker promised.",
+      "The family can count its own sealed water and share a visible daily ration.",
+      "The crew says more water is hidden below deck but will not show it.",
+    ],
+    assumed: [
+      "A strict ration can prevent every illness.",
+      "The crew's hidden supply is large enough for everyone.",
+      "Children need the same amount of water as resting adults in heat.",
+    ],
+    choices: [
+      {
+        id: "rohingyaMeasuredWater",
+        title: "Make a visible family water plan",
+        hint: "Count every container and protect minimum shares for each person",
+        icon: "aid",
+        tone: "trusted",
+        route: "elmstead",
+        days: 8,
+        next: "rohingyaWeather",
+        effects: { supplies: -2, water: -8, stress: 7, exposure: 3, progress: 14, peopleAll: -2, trustAll: 1 },
+        consequence: "Food -2 days · Water -8 L · Health -2 each",
+        outcomeTitle: "Every cup is counted where all four can see",
+        outcome: "Yasmin adjusts the portions for heat and health instead of giving everyone the same amount. The plan cannot create water, but it keeps scarcity from becoming secrecy.",
+        setFlags: { waterPlan: true },
+      },
+      {
+        id: "rohingyaStrictRation",
+        title: "Cut every share to the same minimum",
+        hint: "Stretch the family supply longer at a higher health cost",
+        icon: "wait",
+        tone: "uncertain",
+        route: "quarry",
+        days: 8,
+        next: "rohingyaWeather",
+        effects: { supplies: -2, water: -5, stress: 15, exposure: 5, progress: 14, peopleAll: -6 },
+        consequence: "Water -5 L · Stress +15 · Health -6 each",
+        outcomeTitle: "The containers last; strength does not",
+        outcome: "The equal ration ignores age, heat, and illness. The water level falls slowly while headaches and weakness spread through the family.",
+      },
+      {
+        id: "rohingyaTrustCrewWater",
+        title: "Trade cash for the crew's promised supply",
+        hint: "Hand over more money for water that has not been shown",
+        icon: "aid",
+        tone: "danger",
+        route: "ridge",
+        days: 7,
+        next: "rohingyaWeather",
+        requires: { cash: 220 },
+        effects: { cash: -220, supplies: -2, water: -7, stress: 19, exposure: 16, progress: 14, peopleAll: -5, trustAll: -1 },
+        consequence: "Cash -$220 · Water -7 L · Risk +16",
+        outcomeTitle: "The promised containers are already half empty",
+        outcome: "The crew releases two containers after payment. Passengers argue over who paid for water that had been counted as part of the fare.",
+      },
+    ],
+  },
+
+  rohingyaWeather: {
+    id: "rohingyaWeather",
+    region: "Andaman Sea · Present day",
+    location: "Open water near a low island",
+    time: "15:45",
+    weather: "Dark squall line",
+    weatherDetail: "The wind is turning across the route",
+    route: "elmstead",
+    contentNote: "Changing weather, engine failure, and uncertain rescue",
+    source: sources.rohingyaSea,
+    messages: [
+      {
+        sender: "Rafiq",
+        initial: "R",
+        role: "Son · weather observer",
+        time: "15:31",
+        trusted: true,
+        body: "The saved forecast said the wind would turn from the west. That line is here now. There is shallow water behind the island, but the captain wants to follow another boat into open sea before we lose sight of it.",
+      },
+    ],
+    known: [
+      "The lee of the island offers temporary shelter from the strongest wind.",
+      "The other boat has no verified destination or working radio.",
+      "Changing course spends fuel and may lengthen the crossing.",
+    ],
+    assumed: [
+      "Following another boat means rescue will find both.",
+      "Sheltering for one night guarantees the weather will pass.",
+      "The captain can reach the original destination with the remaining fuel.",
+    ],
+    choices: [
+      {
+        id: "rohingyaShelterIsland",
+        title: "Shelter behind the island",
+        hint: "Spend fuel and one night reducing the immediate weather risk",
+        icon: "wait",
+        tone: "trusted",
+        route: "elmstead",
+        days: 3,
+        next: "rohingyaSignal",
+        effects: { water: -4, supplies: -1, stress: 5, exposure: -6, progress: 14, peopleAll: -2 },
+        consequence: "Water -4 L · Food -1 day · Risk falls",
+        outcomeTitle: "The strongest rain passes beyond the anchored boat",
+        outcome: "Passengers spend the night awake behind the island. The engine uses fuel to reposition, but the family avoids the open-water squall.",
+        contextBonuses: [
+          {
+            flag: "weatherCheck",
+            kind: "payoff",
+            label: "Rafiq's saved forecast confirms when the wind should ease",
+            effects: { stress: -4, exposure: -4 },
+          },
+        ],
+      },
+      {
+        id: "rohingyaTurnShippingLane",
+        title: "Turn toward the shipping lane",
+        hint: "Increase the chance of being seen while giving up the planned route",
+        icon: "navigate",
+        tone: "uncertain",
+        route: "quarry",
+        days: 4,
+        next: "rohingyaSignal",
+        effects: { water: -5, supplies: -2, stress: 10, exposure: 5, progress: 13, peopleAll: -3 },
+        consequence: "Water -5 L · Food -2 days · Four days pass",
+        outcomeTitle: "The boat moves toward larger vessels and no known shore",
+        outcome: "The change improves the chance that a ship will see them and removes any certainty about where rescue or interception might take the passengers.",
+      },
+      {
+        id: "rohingyaFollowBoat",
+        title: "Follow the other boat into open water",
+        hint: "Treat an unverified vessel as the only remaining guide",
+        icon: "navigate",
+        tone: "danger",
+        route: "ridge",
+        days: 4,
+        next: "rohingyaSignal",
+        effects: { water: -6, supplies: -2, stress: 21, exposure: 24, progress: 15, peopleAll: -6, trustAll: -1 },
+        consequence: "Water -6 L · Risk +24 · Health -6 each",
+        outcomeTitle: "The other boat disappears behind the rain",
+        outcome: "The captain spends fuel chasing a wake that vanishes before dark. The family reaches the next morning farther from shelter and no closer to verified help.",
+      },
+    ],
+  },
+
+  rohingyaSignal: {
+    id: "rohingyaSignal",
+    region: "Eastern Andaman Sea · Present day",
+    location: "A disabled boat with intermittent phone signal",
+    time: "09:05",
+    weather: "Low clouds lifting",
+    weatherDetail: "The engine no longer turns over",
+    route: "elmstead",
+    contentNote: "Distress at sea and uncertain disembarkation",
+    source: sources.rohingyaSea,
+    messages: [
+      {
+        sender: "Yasmin",
+        initial: "Y",
+        role: "Mother",
+        time: "08:52",
+        trusted: true,
+        body: "Calling for help may mean interception, return, or a shore that refuses us. Staying silent means nobody reliable knows the engine has stopped. The battery can send one careful message or many desperate ones.",
+      },
+    ],
+    known: [
+      "A regional rescue number can record position, passenger count, and medical needs.",
+      "A verified community contact can relay a private location message.",
+      "Rescue does not guarantee permission to choose the country of landing or remain there.",
+    ],
+    assumed: [
+      "Avoiding rescue preserves control of the route.",
+      "A public post will bring help faster than a direct distress report.",
+      "Any rescue vessel can guarantee disembarkation in Indonesia.",
+    ],
+    choices: [
+      {
+        id: "rohingyaCallRescue",
+        title: "Call the regional rescue service",
+        hint: "Report the boat and accept uncertainty about where help leads",
+        icon: "phone",
+        tone: "trusted",
+        route: "elmstead",
+        days: 2,
+        next: "rohingyaLanding",
+        requires: { battery: 12 },
+        effects: { battery: -12, stress: -7, exposure: -10, progress: 12, trustAll: 1 },
+        consequence: "Phone -12% · Stress -7 · The position is recorded",
+        outcomeTitle: "A responder repeats the coordinates twice",
+        outcome: "The service records the engine failure, children, remaining water, and document needs. It cannot promise which authority will respond or whether a port will permit landing.",
+        setFlags: { rescueRecord: true },
+      },
+      {
+        id: "rohingyaSendLocation",
+        title: "Send one private location message",
+        hint: "Ask a verified contact to relay the distress report",
+        icon: "phone",
+        tone: "uncertain",
+        route: "quarry",
+        days: 3,
+        next: "rohingyaLanding",
+        requires: { battery: 8 },
+        effects: { battery: -8, water: -2, stress: 3, exposure: -4, progress: 12 },
+        consequence: "Phone -8% · Water -2 L · The contact acknowledges",
+        outcomeTitle: "One check mark becomes a chain of calls",
+        outcome: "The contact forwards the position to rescue groups and Yasmin's sister without posting names or faces. The family waits without knowing who will arrive first.",
+        setFlags: { rescueRecord: true },
+      },
+      {
+        id: "rohingyaHideSignal",
+        title: "Save the battery and wait unseen",
+        hint: "Avoid interception and hope another vessel notices the boat",
+        icon: "wait",
+        tone: "danger",
+        route: "ridge",
+        days: 5,
+        next: "rohingyaLanding",
+        effects: { battery: 10, water: -5, supplies: -2, stress: 24, exposure: 25, progress: 11, peopleAll: -8, trustAll: -1 },
+        consequence: "Water -5 L · Stress +24 · Health -8 each",
+        outcomeTitle: "Five days pass before a fishing crew sees the boat",
+        outcome: "The battery survives while strength and water do not. A fishing crew eventually relays the position, with no official record of when the distress began.",
+      },
+    ],
+  },
+
+  rohingyaLanding: {
+    id: "rohingyaLanding",
+    region: "Aceh, Indonesia · Present day",
+    location: "A shoreline reception point",
+    time: "17:20",
+    weather: "Warm rain easing",
+    weatherDetail: "The family is on land and still waiting to be admitted inland",
+    route: "elmstead",
+    contentNote: "Emergency reception, uncertain admission, and trafficking risk after arrival",
+    source: sources.rohingyaSea,
+    messages: [
+      {
+        sender: "Local interpreter",
+        initial: "i",
+        role: "Verified reception volunteer",
+        time: "17:02",
+        trusted: true,
+        body: "We can record names, immediate health needs, and family contacts. This shoreline process does not grant citizenship, permanent residence, freedom of movement, or permission to work.",
+      },
+    ],
+    known: [
+      "The volunteer desk can register all four names together and arrange health screening.",
+      "A community hall is offering food and temporary cots while authorities decide next steps.",
+      "A driver outside the reception area offers cash work and housing with no written address.",
+    ],
+    assumed: [
+      "Reaching Indonesian land creates a right to remain permanently.",
+      "Avoiding registration protects the family from every future restriction.",
+      "A driver offering work after arrival is connected to Yasmin's sister.",
+    ],
+    choices: [
+      {
+        id: "rohingyaRegisterLanding",
+        title: "Register all four names together",
+        hint: "Accept temporary reception without treating it as permanent status",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 4,
+        next: "rohingyaAceh",
+        effects: { supplies: 3, water: 5, medicine: 1, stress: -8, exposure: -15, progress: 14, peopleAll: 3, trustAll: 1 },
+        consequence: "Food +3 days · Medicine +1 · Risk falls",
+        outcomeTitle: "The interpreter reads four names back",
+        outcome: "The family enters temporary reception together. The record begins health screening and tracing; it does not answer where they may live or whether Yasmin's sister can reach them.",
+        setFlags: { landingRecord: true },
+      },
+      {
+        id: "rohingyaCommunityHall",
+        title: "Rest first at the community hall",
+        hint: "Recover before completing the full reception interview",
+        icon: "rest",
+        tone: "uncertain",
+        route: "quarry",
+        days: 3,
+        next: "rohingyaAceh",
+        effects: { supplies: 2, water: 4, stress: -10, exposure: -6, progress: 13, peopleAll: 4 },
+        consequence: "Food +2 days · Health +4 each · Three days pass",
+        outcomeTitle: "For one night, the floor does not move",
+        outcome: "Local volunteers provide dry clothes, food, cots, and a place to charge the phone. The family still needs an official record before tracing and longer-term decisions can begin.",
+      },
+      {
+        id: "rohingyaLeaveShore",
+        title: "Leave with the driver offering work",
+        hint: "Trade reception and tracing for cash, housing, and another promise",
+        icon: "work",
+        tone: "danger",
+        route: "ridge",
+        days: 2,
+        next: "rohingyaAceh",
+        effects: { cash: 120, supplies: 1, stress: 20, exposure: 30, progress: 13, trustAll: -1 },
+        consequence: "Cash +$120 · Risk +30 · Reception contact is lost",
+        outcomeTitle: "The work address changes inside the van",
+        outcome: "The driver says the room depends on daily work and that leaving will create a transport debt. No employer name, wage, or contact appears in writing.",
+        setFlags: { informalDriver: true },
+      },
+    ],
+  },
+
+  rohingyaAceh: {
+    id: "rohingyaAceh",
+    region: "Aceh, Indonesia · Present day",
+    location: "A temporary reception and tracing interview",
+    time: "10:15",
+    weather: "Soft rain on the roof",
+    weatherDetail: "Weeks of uncertainty narrow into three imperfect choices",
+    route: "elmstead",
+    contentNote: "Statelessness, temporary reception, work restrictions, and family separation",
+    source: sources.rohingyaSea,
+    messages: [
+      {
+        sender: "Reception caseworker",
+        initial: "i",
+        role: "Verified information",
+        time: "09:56",
+        trusted: true,
+        body: "Temporary reception can provide immediate shelter and tracing. It does not create nationality, permanent residence, unrestricted movement, or a guaranteed right to work. Every next step remains uncertain.",
+      },
+      {
+        sender: "Yasmin",
+        initial: "Y",
+        role: "Mother",
+        time: "10:03",
+        trusted: true,
+        body: "We survived the water. Now we decide how to stay visible without pretending this paper is a home. If your aunt can be found, reunion still will not answer every legal question.",
+      },
+    ],
+    known: [
+      "The family can remain together during temporary reception and individual review.",
+      "A formal tracing request can search for Yasmin's sister without guaranteeing reunion.",
+      "Unrecorded work outside reception would create new risks around housing, debt, and exploitation.",
+    ],
+    assumed: [
+      "Temporary reception will automatically become permanent status.",
+      "Reuniting with one relative creates a legal right to remain and work.",
+      "Leaving for cash work makes the family less visible to exploiters as well as authorities.",
+    ],
+    choices: [
+      {
+        id: "rohingyaTemporaryReview",
+        title: "Enter temporary reception and individual review",
+        hint: "Complete the route with shelter now and legal status unresolved",
+        icon: "legal",
+        tone: "trusted",
+        route: "elmstead",
+        days: 28,
+        next: null,
+        effects: { cash: -80, stress: -5, exposure: -25, progress: 100, trustAll: 1 },
+        consequence: "Destination reached · Temporary review begins",
+        outcomeTitle: "Four names remain on one temporary file",
+        outcome: "The family receives shelter, health follow-up, interpretation, and tracing support. No document promises nationality, permanent residence, or unrestricted work.",
+        contextBonuses: [
+          {
+            flag: "familyTrace",
+            kind: "payoff",
+            label: "The verified message supports the family-tracing request",
+            effects: { stress: -3 },
+          },
+          {
+            flag: "documentCopies",
+            kind: "payoff",
+            label: "The separated copies preserve names and camp registration",
+            effects: { exposure: -4 },
+          },
+          {
+            flag: "weatherCheck",
+            kind: "payoff",
+            label: "The saved forecast helps reconstruct the crossing timeline",
+            effects: { exposure: -2 },
+          },
+          {
+            flag: "rescueRecord",
+            kind: "payoff",
+            label: "The distress report connects the family to the rescue record",
+            effects: { stress: -3, exposure: -3 },
+          },
+          {
+            flag: "landingRecord",
+            kind: "payoff",
+            label: "The shoreline record keeps all four cases connected",
+            effects: { exposure: -3 },
+          },
+        ],
+        ending: {
+          type: "aceh_temporary_reception",
+          status: "won",
+          title: "Survival is not the same as belonging",
+          copy: "The Karim family reaches temporary reception in Aceh. They are alive, together, and visible to services; they remain stateless, without permanent status or a guaranteed right to work.",
+        },
+      },
+      {
+        id: "rohingyaFamilyTracing",
+        title: "Prioritize the family-tracing request",
+        hint: "Wait for verified contact without treating reunion as legal status",
+        icon: "phone",
+        tone: "uncertain",
+        route: "quarry",
+        days: 35,
+        next: null,
+        effects: { battery: -10, cash: -60, stress: 2, exposure: -18, progress: 100, trustAll: 1 },
+        consequence: "35 days pass · Tracing continues · Status remains temporary",
+        outcomeTitle: "A verified call reaches Yasmin's sister",
+        outcome: "The sisters speak through a tracing service and begin asking whether a supervised visit is possible. The call confirms survival, not a right to reunite, settle, or work.",
+        ending: {
+          type: "aceh_family_tracing",
+          status: "won",
+          title: "A voice found, a future still unassigned",
+          copy: "The family reaches temporary safety and verified contact with Yasmin's sister. Reunion and legal status remain separate, uncertain processes.",
+        },
+      },
+      {
+        id: "rohingyaInformalWork",
+        title: "Leave reception for hidden cash work",
+        hint: "Trade the temporary file for immediate income and employer-controlled housing",
+        icon: "work",
+        tone: "danger",
+        route: "ridge",
+        days: 18,
+        next: null,
+        effects: { cash: 380, supplies: -3, stress: 28, exposure: 40, progress: 92, peopleAll: -7, trustAll: -1 },
+        consequence: "Cash +$380 · Risk +40 · Tracing contact is lost",
+        outcomeTitle: "The employer controls the room and the debt",
+        outcome: "The family moves to an unregistered worksite where transport, housing, and wages depend on one supervisor. Their arrival no longer protects them from another form of invisibility.",
+        ending: {
+          type: "aceh_hidden_work",
+          status: "stopped",
+          title: "Land reached, safety withheld",
+          copy: "The Karim family survives the sea and remains stateless in hidden work, dependent on someone who controls housing, wages, and fear of discovery.",
+        },
+      },
+    ],
+  },
 };
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
@@ -6099,6 +7021,9 @@ export const SUPPLY_STOPS = {
   punjabInspection: { title: "Support-center kiosk", detail: "The worker-support center keeps a small stock of essentials.", priceMultiplier: 0.9 },
   punjabPolicy: { title: "Community pharmacy", detail: "A pharmacy is open near the employment-rights clinic.", priceMultiplier: 1 },
   punjabFinal: { title: "Legal-center pharmacy", detail: "One last public shop is available before the appointment.", priceMultiplier: 1 },
+  rohingyaCamp: { title: "Camp market and clinic desk", detail: "The family can prepare while deciding whether to remain or travel.", priceMultiplier: 0.9 },
+  rohingyaCoast: { title: "Coastal supply stall", detail: "Sealed water and simple food are available before the family decides whether to board.", priceMultiplier: 1.2 },
+  rohingyaLanding: { title: "Reception aid desk", detail: "Essential food, water, and medicine are available after disembarkation.", priceMultiplier: 0.8 },
 };
 
 export function createInitialGame(familyId = "ramirez") {
@@ -6320,6 +7245,79 @@ export function getChoiceBonuses(game, choice) {
   return bonuses;
 }
 
+function getTravelRole(person) {
+  for (const skill of person.skills) {
+    const normalized = skill.toLocaleLowerCase();
+    const role = TRAVEL_ROLE_RULES.find((candidate) => candidate.keywords.some((keyword) => normalized.includes(keyword)));
+    if (role) return { ...role, skill };
+  }
+  return { ...TRAVEL_ROLE_RULES[3], skill: person.skills[0] };
+}
+
+function getTravelRoleStrength(trust) {
+  if (trust >= 4) return 1;
+  if (trust === 3) return 0.75;
+  return 0.5;
+}
+
+function getTravelRoleImpact(roleId, weeks, strength) {
+  if (roleId === "planning") return `Saves ${Math.max(1, Math.round(weeks * strength))} L water through rationing`;
+  if (roleId === "route") return `Lowers route risk by ${Math.max(1, Math.round(weeks * 2 * strength))}`;
+  if (roleId === "repair") return `Saves up to $${Math.max(5, Math.round(weeks * strength) * 5)} on paid travel`;
+  return `Lowers stress by ${Math.max(1, Math.round(weeks * 2 * strength))} and protects health`;
+}
+
+export function getTravelLeadOptions(game) {
+  const weeks = travelWeeks(game);
+  return getPeople(game)
+    .filter((person) => game.people[person.id]?.alive !== false)
+    .map((person) => {
+      const state = game.people[person.id];
+      const role = getTravelRole(person);
+      const strength = getTravelRoleStrength(state.trust);
+      return {
+        personId: person.id,
+        person,
+        skill: role.skill,
+        roleId: role.id,
+        roleTitle: role.title,
+        trust: state.trust,
+        health: state.health,
+        impact: getTravelRoleImpact(role.id, weeks, strength),
+        unavailable: state.health < 35 ? `${person.name} needs care before coordinating this leg` : null,
+      };
+    });
+}
+
+function getTravelLeadContribution(game, strategyEffects, lead) {
+  const weeks = travelWeeks(game);
+  const strength = getTravelRoleStrength(lead.trust);
+
+  if (lead.roleId === "planning") {
+    const waterSaved = Math.max(1, Math.round(weeks * strength));
+    return { effects: { water: waterSaved }, label: `${lead.person.name} saves ${waterSaved} L water` };
+  }
+  if (lead.roleId === "route") {
+    const riskReduced = Math.max(1, Math.round(weeks * 2 * strength));
+    return { effects: { exposure: -riskReduced }, label: `${lead.person.name} lowers risk by ${riskReduced}` };
+  }
+  if (lead.roleId === "repair") {
+    if ((strategyEffects.cash ?? 0) < 0) {
+      const cashSaved = Math.min(Math.abs(strategyEffects.cash), Math.max(5, Math.round(weeks * strength) * 5));
+      return { effects: { cash: cashSaved }, label: `${lead.person.name} saves $${cashSaved} in repairs` };
+    }
+    const batterySaved = Math.max(1, Math.round(weeks * 2 * strength));
+    return { effects: { battery: batterySaved }, label: `${lead.person.name} preserves ${batterySaved}% phone charge` };
+  }
+
+  const stressReduced = Math.max(1, Math.round(weeks * 2 * strength));
+  const healthProtected = Math.max(1, Math.round(weeks * strength));
+  return {
+    effects: { stress: -stressReduced, peopleAll: healthProtected },
+    label: `${lead.person.name} lowers stress by ${stressReduced} and protects health`,
+  };
+}
+
 function getChoiceReactions(game, choice) {
   return (CHOICE_REACTIONS[choice.id] ?? [])
     .filter((reaction) => game.people[reaction.personId]?.alive !== false);
@@ -6410,7 +7408,7 @@ export function requiresTravelPlan(game) {
   );
 }
 
-export function getTravelPlanOptions(game) {
+export function getTravelPlanOptions(game, leadPersonId = null) {
   const weeks = travelWeeks(game);
   const recoverCost = weeks * 25;
   const planDetails = {
@@ -6428,7 +7426,27 @@ export function getTravelPlanOptions(game) {
       unavailable: game.resources.cash < recoverCost ? `Requires $${recoverCost}` : null,
     },
   };
-  return TRAVEL_STRATEGIES.map((strategy) => ({ ...strategy, weeks, ...planDetails[strategy.id] }));
+  const lead = leadPersonId
+    ? getTravelLeadOptions(game).find((option) => option.personId === leadPersonId && !option.unavailable)
+    : null;
+  return TRAVEL_STRATEGIES.map((strategy) => {
+    const plan = { ...strategy, weeks, ...planDetails[strategy.id] };
+    if (!lead) return plan;
+    const contribution = getTravelLeadContribution(game, plan.effects, lead);
+    return {
+      ...plan,
+      effects: mergeEffects(plan.effects, contribution.effects),
+      consequence: `${plan.consequence} · ${contribution.label}`,
+      leadBonus: {
+        personId: lead.personId,
+        personName: lead.person.name,
+        skill: lead.skill,
+        roleId: lead.roleId,
+        roleTitle: lead.roleTitle,
+        label: contribution.label,
+      },
+    };
+  });
 }
 
 function applyEffects(game, effects = {}) {
@@ -6862,9 +7880,13 @@ export function respondToSocialFeed(game, responseId) {
     : nextGame;
 }
 
-export function planTravelLeg(game, strategyId) {
+export function planTravelLeg(game, strategyId, leadPersonId = null) {
   if (!requiresTravelPlan(game)) return game;
-  const strategy = getTravelPlanOptions(game).find((option) => option.id === strategyId);
+  if (leadPersonId) {
+    const lead = getTravelLeadOptions(game).find((option) => option.personId === leadPersonId);
+    if (!lead || lead.unavailable) return game;
+  }
+  const strategy = getTravelPlanOptions(game, leadPersonId).find((option) => option.id === strategyId);
   if (!strategy || strategy.unavailable) return game;
 
   const applied = applyEffects(game, strategy.effects);
@@ -6878,6 +7900,7 @@ export function planTravelLeg(game, strategyId) {
         title: strategy.title,
         consequence: strategy.consequence,
         tone: strategy.tone,
+        lead: strategy.leadBonus ?? null,
       },
     },
     activityLog: [
@@ -6886,7 +7909,7 @@ export function planTravelLeg(game, strategyId) {
         day: game.day,
         kind: "travel",
         title: strategy.title,
-        detail: `${game.currentOutcome.days} days planned · ${strategy.consequence}`,
+        detail: `${game.currentOutcome.days} days planned · ${strategy.consequence}${strategy.leadBonus ? ` · ${strategy.leadBonus.personName} coordinates with ${strategy.leadBonus.skill}` : ""}`,
         tone: strategy.tone,
       },
       ...getNewLossEntries(game, applied),

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowCounterClockwise,
+  ArrowLeft,
   ArrowRight,
   BatteryMedium,
   BookOpenText,
@@ -24,6 +25,7 @@ import {
   SpeakerHigh,
   Sparkle,
   UsersThree,
+  UserCircle,
   Wallet,
   WarningCircle,
   X,
@@ -35,7 +37,6 @@ import {
   buySupply,
   chooseOption,
   continueJourney,
-  getChoiceBonuses,
   getCondition,
   getEvent,
   getFamilyPreset,
@@ -48,6 +49,7 @@ import {
   getSocialFeed,
   getSocialResponseOptions,
   getSupplyStop,
+  getTravelLeadOptions,
   getTravelPlanOptions,
   hasCompletedRoadsideWork,
   hasRespondedToSocialFeed,
@@ -72,6 +74,7 @@ import {
 } from "./onboarding.js";
 import { SocialFeedModal, SocialFeedTrigger } from "./SocialFeed.jsx";
 import { Portrait } from "./Portrait.jsx";
+import { JourneyMap } from "./JourneyMap.jsx";
 import { SupplyShop, SupplyStopTrigger } from "./SupplyShop.jsx";
 import { TravelIncident } from "./TravelIncident.jsx";
 import { createInteractionSounds } from "./soundEffects.js";
@@ -93,7 +96,7 @@ const TUTORIAL_STEPS = [
     icon: Crosshair,
     eyebrow: "How decisions work",
     title: "Read the route before you choose",
-    copy: "Each decision is marked as trusted, uncertain, or high risk. Read what is known, notice what is only assumed, and check the immediate cost before committing.",
+    copy: "Read what the family knows and notice what is only a promise. Choose a path to discover its actual consequences; they appear after you commit.",
     lessons: ["Trusted does not mean guaranteed", "High-risk routes may be faster", "Research links explain the real-world basis"],
   },
   {
@@ -135,6 +138,9 @@ const sceneByEvent = {
   riverCrossing: "/assets/guided-night-camp.webp",
   memorial: "/assets/guided-night-camp.webp",
   detention: "/assets/guided-night-camp.webp",
+  rohingyaSea: "/assets/rohingya-sea-scene.webp",
+  rohingyaWeather: "/assets/rohingya-sea-scene.webp",
+  rohingyaSignal: "/assets/rohingya-sea-scene.webp",
 };
 
 const reducedDescriptions = {
@@ -147,6 +153,10 @@ const reducedDescriptions = {
   diopMemorial: "The three survivors are grieving Lamine's death. The memorial remains part of the story without detailed description.",
   nguyenSafeHouse: "The family faces forced labor and threats of sexual violence. The abuse is not described in detail, and Mai chooses what information to record.",
   nguyenChannel: "The family must decide whether to stop in France or attempt a dangerous Channel crossing. The risks are stated without graphic detail.",
+  rohingyaCoast: "The family must decide whether to return to the camp or accept an unsafe, unverified sea route. The risks are stated without graphic detail.",
+  rohingyaSea: "The crossing is taking longer than promised, and the family must ration limited water. Further details are shortened.",
+  rohingyaWeather: "Changing weather makes the current route unsafe. The family chooses how to reduce the immediate risk.",
+  rohingyaSignal: "The boat is disabled at sea. The family can seek rescue without knowing where landing will be permitted.",
 };
 
 const storyTitles = {
@@ -200,6 +210,14 @@ const storyTitles = {
   punjabInspection: "The plant closes. The permits do not move with it.",
   punjabPolicy: "A deportation flight becomes someone else's celebration.",
   punjabFinal: "Four workers ask to re-enter the system.",
+  rohingyaCamp: "A closed classroom and an unverified boat.",
+  rohingyaPapers: "Papers do not create citizenship. Losing them still matters.",
+  rohingyaCoast: "The broker calls changing weather a deadline.",
+  rohingyaSea: "Every cup of water becomes a family decision.",
+  rohingyaWeather: "The forecast changes faster than the promise.",
+  rohingyaSignal: "Rescue offers no choice of shore.",
+  rohingyaLanding: "Land is reached. Permission is not.",
+  rohingyaAceh: "Survival is not the same as belonging.",
 };
 
 const reducedFatalityNames = {
@@ -209,11 +227,40 @@ const reducedFatalityNames = {
   diopNightPirogue: "Lamine",
 };
 
-const toneLabels = {
-  trusted: "Trusted route",
-  uncertain: "Uncertain route",
-  danger: "High risk",
-};
+function StoryVoice({ message, game, people }) {
+  const speaker = people.find((person) => person.name.toLocaleLowerCase() === message.sender.toLocaleLowerCase());
+  const voiceTone = message.trusted === true ? "trusted" : message.trusted === false ? "unverified" : "context";
+  const sourceLabel = message.trusted === true
+    ? "Known voice"
+    : message.trusted === false
+      ? "Identity unverified"
+      : "Story context";
+
+  return (
+    <article className={`cinematic-voice ${voiceTone}`}>
+      <div className={`cinematic-speaker-avatar ${speaker ? "traveler" : "source"}`}>
+        {speaker ? (
+          <Portrait
+            person={speaker}
+            state={game.people[speaker.id]}
+            stress={game.resources.stress}
+            family={game}
+            alt={`${speaker.name} speaking`}
+          />
+        ) : (
+          <UserCircle weight="duotone" aria-hidden="true" />
+        )}
+      </div>
+      <div className="cinematic-voice-copy">
+        <header>
+          <span><strong>{message.sender}</strong><small>{message.role}</small></span>
+          <em>{sourceLabel}</em>
+        </header>
+        <blockquote>“{message.body}”</blockquote>
+      </div>
+    </article>
+  );
+}
 
 function loadContentMode() {
   return localStorage.getItem(CONTENT_MODE_KEY) ?? "standard";
@@ -300,11 +347,11 @@ function RoadsideWork({ opportunity, outcome, completed, onChoose, onClose }) {
         ) : (
           <div className="cinematic-work-choices" aria-label="Short-term work options">
             {opportunity.choices.map((choice) => (
-              <button key={choice.id} className={choice.tone} onClick={() => onChoose(choice.id)} data-sound={choice.tone === "danger" ? "warning" : "choice"}>
+              <button key={choice.id} className="" onClick={() => onChoose(choice.id)} data-sound="choice">
                 <small>{choice.tone === "danger" ? "Unverified offer" : "One-day shift"}</small>
                 <strong>{choice.title}</strong>
                 <span>{choice.hint}</span>
-                <em><Clock weight="bold" />{choice.consequence}</em>
+
               </button>
             ))}
           </div>
@@ -315,24 +362,66 @@ function RoadsideWork({ opportunity, outcome, completed, onChoose, onClose }) {
 }
 
 function TravelPlanner({ game, onChoose }) {
+  const [leadPersonId, setLeadPersonId] = useState(null);
+  const leadOptions = getTravelLeadOptions(game);
+  const selectedLead = leadOptions.find((option) => option.personId === leadPersonId) ?? null;
+  const strategies = getTravelPlanOptions(game, leadPersonId);
+
   return (
     <div className="cinematic-travel-planner" aria-label="Plan this travel leg">
       <header>
         <Clock weight="duotone" />
-        <span><small>The next leg lasts {game.currentOutcome.days} days</small><strong>How will the family manage the time?</strong></span>
+        <span><small>The next leg lasts {game.currentOutcome.days} days</small><strong>Assign a travel role, then choose the pace</strong></span>
       </header>
-      <div>
-        {getTravelPlanOptions(game).map((strategy) => (
+      <section className="cinematic-travel-leadership" aria-labelledby="travel-leadership-title">
+        <div className="cinematic-travel-step">
+          <small>Step 1 · Family role</small>
+          <strong id="travel-leadership-title">Who should coordinate this leg?</strong>
+          <span>Trust changes how strongly each skill helps.</span>
+        </div>
+        <div className="cinematic-travel-leads" role="group" aria-label="Choose a traveler to coordinate the leg">
+          {leadOptions.map((option) => (
+            <button
+              type="button"
+              className={leadPersonId === option.personId ? "selected" : ""}
+              key={option.personId}
+              onClick={() => setLeadPersonId(option.personId)}
+              disabled={Boolean(option.unavailable)}
+              aria-pressed={leadPersonId === option.personId}
+              title={option.unavailable ?? option.roleTitle}
+              data-sound="tap"
+            >
+              <Portrait
+                person={option.person}
+                state={game.people[option.personId]}
+                stress={game.resources.stress}
+                family={game}
+                alt=""
+              />
+              <span>
+                <strong>{option.person.name}</strong>
+                <small>{option.skill} · Trust {option.trust}/5</small>
+                <em>{option.unavailable ?? option.roleTitle}</em>
+              </span>
+            </button>
+          ))}
+        </div>
+      </section>
+      <div className="cinematic-travel-step cinematic-travel-pace-heading">
+        <small>Step 2 · Travel pace</small>
+        <strong>{selectedLead ? `${selectedLead.person.name} will coordinate. How should the group travel?` : "Choose a family role to unlock the travel plans"}</strong>
+      </div>
+      <div className="cinematic-travel-strategies">
+        {strategies.map((strategy) => (
           <button
             key={strategy.id}
-            className={strategy.tone}
-            onClick={() => onChoose(strategy.id)}
-            disabled={Boolean(strategy.unavailable)}
-            data-sound={strategy.tone === "danger" ? "warning" : "choice"}
+
+            onClick={() => onChoose(strategy.id, leadPersonId)}
+            disabled={!selectedLead || Boolean(strategy.unavailable)}
+            data-sound="choice"
           >
-            <small>{strategy.unavailable ?? strategy.hint}</small>
+            <small>{!selectedLead ? "Assign a travel role first" : strategy.unavailable ?? strategy.hint}</small>
             <strong>{strategy.title}</strong>
-            <span>{strategy.consequence}</span>
           </button>
         ))}
       </div>
@@ -427,7 +516,46 @@ function JourneyLog({ game, onClose }) {
 }
 
 function FamilySelection({ currentFamilyId, required, saves, archive, onSelect, onRestart, onClose }) {
+  const families = Object.values(FAMILY_PRESETS);
+  const initialIndex = Math.max(0, families.findIndex((family) => family.id === currentFamilyId));
+  const carouselRef = useRef(null);
+  const [carouselIndex, setCarouselIndex] = useState(initialIndex);
   const recentJourneys = archive.slice(0, 6);
+
+  const scrollToFamily = (index, behavior = "smooth") => {
+    const rail = carouselRef.current;
+    const nextIndex = Math.min(families.length - 1, Math.max(0, index));
+    const card = rail?.children[nextIndex];
+    if (!rail || !card) return;
+    const left = card.offsetLeft - ((rail.clientWidth - card.clientWidth) / 2);
+    rail.scrollTo({ left: Math.max(0, left), behavior });
+    setCarouselIndex(nextIndex);
+  };
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => scrollToFamily(initialIndex, "auto"));
+    return () => cancelAnimationFrame(frame);
+  }, [currentFamilyId]);
+
+  const updateCarouselIndex = () => {
+    const rail = carouselRef.current;
+    if (!rail) return;
+    const center = rail.scrollLeft + (rail.clientWidth / 2);
+    const nextIndex = [...rail.children].reduce((closest, card, index) => {
+      const cardCenter = card.offsetLeft + (card.clientWidth / 2);
+      return Math.abs(cardCenter - center) < closest.distance
+        ? { index, distance: Math.abs(cardCenter - center) }
+        : closest;
+    }, { index: 0, distance: Number.POSITIVE_INFINITY }).index;
+    setCarouselIndex(nextIndex);
+  };
+
+  const handleCarouselKeys = (event) => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    event.preventDefault();
+    scrollToFamily(carouselIndex + (event.key === "ArrowRight" ? 1 : -1));
+  };
+
   return (
     <div className="cinematic-family-backdrop">
       <section className="cinematic-family-dialog" role="dialog" aria-modal="true" aria-labelledby="family-selection-title">
@@ -436,8 +564,25 @@ function FamilySelection({ currentFamilyId, required, saves, archive, onSelect, 
         <small>Choose a journey</small>
         <h2 id="family-selection-title">Whose road will you follow?</h2>
         <p>Each traveling group is a fictional composite grounded in documented experiences. Every family now keeps its own progress, so you can leave one road and safely return later.</p>
-        <div className="cinematic-family-options">
-          {Object.values(FAMILY_PRESETS).map((family) => {
+        <div className="cinematic-family-carousel">
+          <div className="cinematic-family-carousel-controls">
+            <span aria-live="polite"><strong>{carouselIndex + 1} of {families.length}</strong><small>Drag, swipe, or use the arrows</small></span>
+            <div>
+              <button onClick={() => scrollToFamily(carouselIndex - 1)} disabled={carouselIndex === 0} aria-label="Previous journey" data-sound="tap"><ArrowLeft weight="bold" /></button>
+              <button onClick={() => scrollToFamily(carouselIndex + 1)} disabled={carouselIndex === families.length - 1} aria-label="Next journey" data-sound="tap"><ArrowRight weight="bold" /></button>
+            </div>
+          </div>
+          <div
+            className="cinematic-family-options"
+            ref={carouselRef}
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Journey choices"
+            tabIndex="0"
+            onScroll={updateCarouselIndex}
+            onKeyDown={handleCarouselKeys}
+          >
+          {families.map((family, index) => {
             const saved = saves[family.id];
             const savedStatus = saved?.phase === "ended"
               ? `${saved.status === "won" ? "Completed" : "Journey stopped"} · Score ${getJourneyScore(saved)}`
@@ -445,7 +590,13 @@ function FamilySelection({ currentFamilyId, required, saves, archive, onSelect, 
                 ? `In progress · Day ${saved.day} · ${saved.progress}%`
                 : "Not started";
             return (
-              <article className={`cinematic-family-card ${currentFamilyId === family.id ? "selected" : ""}`} key={family.id}>
+              <article
+                className={`cinematic-family-card ${currentFamilyId === family.id ? "selected" : ""}`}
+                key={family.id}
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`${index + 1} of ${families.length}: ${family.name}`}
+              >
                 <div className="cinematic-family-portrait">
                   <img src={family.portraitStrips.healthy} alt={`Portraits of ${family.name}`} />
                   <span className={saved?.phase === "ended" ? saved.status : saved ? "playing" : "new"}>{savedStatus}</span>
@@ -469,6 +620,7 @@ function FamilySelection({ currentFamilyId, required, saves, archive, onSelect, 
               </article>
             );
           })}
+          </div>
         </div>
         {recentJourneys.length > 0 && (
           <section className="cinematic-journey-archive" aria-label="Completed journey archive">
@@ -567,6 +719,7 @@ function Ending({ game, onTryAgain, onChooseFamily }) {
         <small>{reachedDestination ? "Destination reached · Route complete" : won ? "A new destination · Journey complete" : "The journey ends here"}</small>
         <h2 id="cinematic-ending-title">{game.ending.title}</h2>
         <p>{game.ending.copy}</p>
+        <JourneyMap game={game} compact />
 
         {won && (
           <div className="cinematic-arrival-route" aria-label={`${game.progress}% of the planned route completed`}>
@@ -652,8 +805,12 @@ export function BeginnerApp() {
   const [tutorialStep, setTutorialStep] = useState(0);
   const [showTutorial, setShowTutorial] = useState(initialOnboardingState.showTutorial);
   const [tutorialIsOnboarding, setTutorialIsOnboarding] = useState(initialOnboardingState.tutorialIsOnboarding);
+  const [showJourneyTools, setShowJourneyTools] = useState(false);
+  const [choicesVisible, setChoicesVisible] = useState(false);
   const soundtrackRef = useRef(null);
   const interactionSoundsRef = useRef(null);
+  const journeyToolsRef = useRef(null);
+  const choicesRef = useRef(null);
   const family = getFamilyPreset(game);
   const people = getPeople(game);
   const event = getEvent(game);
@@ -673,15 +830,24 @@ export function BeginnerApp() {
   const selectedPerson = people.find((person) => person.id === selectedPersonId) ?? null;
   const travelPlanRequired = requiresTravelPlan(game);
   const reducedFatalityName = reducedFatalityNames[game.currentOutcome?.id];
+  const reducedDecisionCopy = contentMode === "reduced" ? reducedDescriptions[event.id] : null;
   const storyCopy = game.phase === "decision"
-    ? (contentMode === "reduced" && reducedDescriptions[event.id]
-      ? reducedDescriptions[event.id]
+    ? (reducedDecisionCopy
+      ? reducedDecisionCopy
       : event.messages.map((message) => message.body).join(" "))
     : (contentMode === "reduced" && reducedFatalityName
       ? `The crossing ends with ${reducedFatalityName}'s death. The event is not described in detail.`
       : game.currentOutcome.copy);
+  const decisionMessages = reducedDecisionCopy
+    ? [{ sender: "Story context", role: "Non-graphic summary", body: reducedDecisionCopy }]
+    : event.messages;
   const restartGame = restartFamilyId ? (familySaves[restartFamilyId] ?? game) : null;
   const restartFamily = restartFamilyId ? getFamilyPreset(restartFamilyId) : null;
+  const optionalActionLabels = [
+    roadsideOpportunity ? "Work" : null,
+    supplyStop ? "Resupply" : null,
+    socialFeed ? "The Current" : null,
+  ].filter(Boolean);
 
   useEffect(() => {
     if (familySelectionRequired) return;
@@ -692,7 +858,43 @@ export function BeginnerApp() {
   useEffect(() => {
     setShowSocialFeed(false);
     setShowSupplyShop(false);
+    setShowJourneyTools(false);
   }, [game.eventId]);
+
+  useEffect(() => {
+    if (!showJourneyTools) return undefined;
+
+    const dismissMenu = (pointerEvent) => {
+      if (!journeyToolsRef.current?.contains(pointerEvent.target)) setShowJourneyTools(false);
+    };
+    const dismissOnEscape = (keyboardEvent) => {
+      if (keyboardEvent.key === "Escape") setShowJourneyTools(false);
+    };
+
+    document.addEventListener("pointerdown", dismissMenu);
+    document.addEventListener("keydown", dismissOnEscape);
+    return () => {
+      document.removeEventListener("pointerdown", dismissMenu);
+      document.removeEventListener("keydown", dismissOnEscape);
+    };
+  }, [showJourneyTools]);
+
+  useEffect(() => {
+    if (game.phase !== "decision") {
+      setChoicesVisible(false);
+      return undefined;
+    }
+
+    setChoicesVisible(false);
+    const choices = choicesRef.current;
+    if (!choices || typeof IntersectionObserver === "undefined") return undefined;
+    const observer = new IntersectionObserver(
+      ([entry]) => setChoicesVisible(entry.isIntersecting),
+      { threshold: 0.12 },
+    );
+    observer.observe(choices);
+    return () => observer.disconnect();
+  }, [game.eventId, game.phase]);
 
   useEffect(() => () => soundtrackRef.current?.dispose(), []);
   useEffect(() => () => interactionSoundsRef.current?.dispose(), []);
@@ -799,9 +1001,16 @@ export function BeginnerApp() {
   };
 
   const replayTutorial = () => {
+    setShowJourneyTools(false);
     setTutorialStep(0);
     setTutorialIsOnboarding(false);
     setShowTutorial(true);
+  };
+
+  const scrollToChoices = () => {
+    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    choicesRef.current?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    choicesRef.current?.focus({ preventScroll: true });
   };
 
   return (
@@ -816,48 +1025,56 @@ export function BeginnerApp() {
           <i />
           <small>Family<br />Safety<br />Tomorrow</small>
         </div>
-        <div className="cinematic-header-actions">
-          <button className="cinematic-music" onClick={() => setShowFamilySelection(true)} aria-label="Choose family journey" data-tooltip={`Playing ${family.name} · choose another family`} data-sound="tap"><UsersThree weight="duotone" /></button>
-          <button className="cinematic-music" onClick={replayTutorial} aria-label="Open tutorial" data-tooltip="How to play" data-sound="tap"><Question weight="duotone" /></button>
-          <button className="cinematic-music" onClick={() => setShowContentSettings(true)} aria-label="Open content settings" data-tooltip="Sensitive-content settings" data-sound="tap"><WarningCircle weight="duotone" /></button>
-          <button className="cinematic-music" onClick={() => setShowJourneyLog(true)} aria-label="Open journey log" data-tooltip="Journey log" data-sound="tap"><BookOpenText weight="duotone" /></button>
-          <a
-            className="cinematic-source-link"
-            href="https://github.com/thachp/theundocumentedtrail"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="View the open-source project on GitHub"
-            data-tooltip="Open source on GitHub · MIT license"
-          >
-            <GithubLogo weight="fill" aria-hidden="true" />
-          </a>
+        <div className="cinematic-tools" ref={journeyToolsRef}>
           <button
-            className={`cinematic-music ${soundtrackOn ? `playing ${soundtrackTheme.id}` : ""}`}
-            onClick={toggleSoundtrack}
-            aria-pressed={soundtrackOn}
-            aria-label={soundtrackOn ? `Pause music — ${soundtrackTheme.label}` : "Play soundtrack"}
-            data-tooltip={soundtrackOn ? `${soundtrackTheme.label} playing · pause music` : "Play the journey soundtrack"}
+            className="cinematic-tools-trigger"
+            onClick={() => setShowJourneyTools((current) => !current)}
+            aria-expanded={showJourneyTools}
+            aria-controls="cinematic-journey-tools"
             data-sound="tap"
           >
-            {soundtrackOn ? <SpeakerHigh weight="fill" /> : <MusicNotes weight="duotone" />}
+            <Compass weight="duotone" aria-hidden="true" />
+            <span>Journey tools</span>
+            <ArrowRight weight="bold" aria-hidden="true" />
           </button>
-          <a href="/?mode=full" className="cinematic-full-link" data-tooltip="Open the detailed planning view" data-tooltip-align="right">Planning view</a>
+          <div id="cinematic-journey-tools" className={`cinematic-header-actions ${showJourneyTools ? "open" : ""}`} role="group" aria-label="Journey tools">
+            <button className="cinematic-music" onClick={() => { setShowJourneyTools(false); setShowFamilySelection(true); }} aria-label="Choose family journey" data-tooltip={`Playing ${family.name} · choose another family`} data-sound="tap"><UsersThree weight="duotone" /><span className="cinematic-tool-label">Choose family</span></button>
+            <button className="cinematic-music" onClick={replayTutorial} aria-label="Open tutorial" data-tooltip="How to play" data-sound="tap"><Question weight="duotone" /><span className="cinematic-tool-label">How to play</span></button>
+            <button className="cinematic-music" onClick={() => { setShowJourneyTools(false); setShowContentSettings(true); }} aria-label="Open content settings" data-tooltip="Sensitive-content settings" data-sound="tap"><WarningCircle weight="duotone" /><span className="cinematic-tool-label">Content settings</span></button>
+            <button className="cinematic-music" onClick={() => { setShowJourneyTools(false); setShowJourneyLog(true); }} aria-label="Open journey log" data-tooltip="Journey log" data-sound="tap"><BookOpenText weight="duotone" /><span className="cinematic-tool-label">Journey log</span></button>
+            <a
+              className="cinematic-source-link"
+              href="https://github.com/thachp/theundocumentedtrail"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="View the open-source project on GitHub"
+              data-tooltip="Open source on GitHub · MIT license"
+              onClick={() => setShowJourneyTools(false)}
+            >
+              <GithubLogo weight="fill" aria-hidden="true" />
+              <span className="cinematic-tool-label">Open-source project</span>
+            </a>
+            <button
+              className={`cinematic-music ${soundtrackOn ? `playing ${soundtrackTheme.id}` : ""}`}
+              onClick={() => { setShowJourneyTools(false); toggleSoundtrack(); }}
+              aria-pressed={soundtrackOn}
+              aria-label={soundtrackOn ? `Pause music — ${soundtrackTheme.label}` : "Play soundtrack"}
+              data-tooltip={soundtrackOn ? `${soundtrackTheme.label} playing · pause music` : "Play the journey soundtrack"}
+              data-sound="tap"
+            >
+              {soundtrackOn ? <SpeakerHigh weight="fill" /> : <MusicNotes weight="duotone" />}
+              <span className="cinematic-tool-label">{soundtrackOn ? "Pause soundtrack" : "Play soundtrack"}</span>
+            </button>
+            <a href="/?mode=full" className="cinematic-full-link" data-tooltip="Open the detailed planning view" data-tooltip-align="right">Planning view</a>
+          </div>
         </div>
       </header>
 
       <section className="cinematic-stage">
         <div key={`${game.familyId}-${event.id}`} className="cinematic-scene" style={{ backgroundImage: `url("${sceneByEvent[event.id] ?? family.heroImage}")` }} aria-hidden="true" />
 
-        <aside className="cinematic-map" aria-label={`Journey map, ${game.progress}% complete`}>
-          <img src={family.mapImage} alt={family.mapAlt} />
-          <div className="cinematic-map-destination">
-            <HouseLine weight="fill" />
-            <span><strong>{family.destination}</strong><small>{100 - game.progress}% remains</small></span>
-          </div>
-          <div className="cinematic-map-route">
-            <Compass weight="duotone" />
-            <span><strong>{route.title}</strong><small>{route.kicker}</small></span>
-          </div>
+        <aside className="cinematic-map" aria-label="Journey geography">
+          <JourneyMap game={game} />
           <JourneyGauge game={game} event={event} />
         </aside>
 
@@ -865,7 +1082,15 @@ export function BeginnerApp() {
           <div className="cinematic-copy" key={`${event.id}-${game.phase}-${game.currentOutcome?.id ?? "decision"}`}>
             <span>{event.location} · Day {game.day}</span>
             <h1>{game.phase === "decision" ? (storyTitles[event.id] ?? event.location) : game.currentOutcome.title}</h1>
-            <p>{storyCopy}</p>
+            {game.phase === "decision" ? (
+              <div className={`cinematic-voices ${decisionMessages.length > 1 ? "multiple" : ""}`}>
+                {decisionMessages.map((message, index) => (
+                  <StoryVoice key={`${message.sender}-${message.time ?? index}`} message={message} game={game} people={people} />
+                ))}
+              </div>
+            ) : (
+              <p>{storyCopy}</p>
+            )}
             <div className="cinematic-context">
               <MapPin weight="fill" />
               <small>{event.weather} · {event.time} · {event.region}</small>
@@ -876,48 +1101,76 @@ export function BeginnerApp() {
                 {event.source && <a href={event.source.url} target="_blank" rel="noreferrer">Research basis: {event.source.label}</a>}
               </div>
             )}
-            {game.phase === "decision" && roadsideOpportunity && (
-              <button className={`cinematic-work-trigger ${roadsideWorkCompleted ? "completed" : ""}`} onClick={() => setShowRoadsideWork(true)} data-sound="tap">
-                <Briefcase weight="duotone" />
-                <span>
-                  <small>{roadsideWorkCompleted ? "Work completed here" : roadsideOpportunity.eyebrow}</small>
-                  <strong>{roadsideWorkCompleted ? roadsideOutcome?.title : "Find short-term work"}</strong>
-                </span>
-                <ArrowRight weight="bold" />
-              </button>
-            )}
-            {supplyStop && <SupplyStopTrigger stop={supplyStop} onOpen={() => setShowSupplyShop(true)} />}
-            {socialFeed && (
-              <SocialFeedTrigger
-                feed={socialFeed}
-                climate={game.socialClimate}
-                resolved={socialFeedResolved}
-                onOpen={() => setShowSocialFeed(true)}
-              />
+            {game.phase === "decision" && optionalActionLabels.length > 0 && (
+              <details className="cinematic-optional-actions" key={`optional-${event.id}`}>
+                <summary>
+                  <span><small>Optional before choosing</small><strong>{optionalActionLabels.join(" · ")}</strong></span>
+                  <ArrowRight weight="bold" aria-hidden="true" />
+                </summary>
+                <div className="cinematic-optional-list">
+                  {roadsideOpportunity && (
+                    <button className={`cinematic-work-trigger ${roadsideWorkCompleted ? "completed" : ""}`} onClick={() => setShowRoadsideWork(true)} data-sound="tap">
+                      <Briefcase weight="duotone" />
+                      <span>
+                        <small>{roadsideWorkCompleted ? "Work completed here" : roadsideOpportunity.eyebrow}</small>
+                        <strong>{roadsideWorkCompleted ? roadsideOutcome?.title : "Find short-term work"}</strong>
+                      </span>
+                      <ArrowRight weight="bold" />
+                    </button>
+                  )}
+                  {supplyStop && <SupplyStopTrigger stop={supplyStop} onOpen={() => setShowSupplyShop(true)} />}
+                  {socialFeed && (
+                    <SocialFeedTrigger
+                      feed={socialFeed}
+                      climate={game.socialClimate}
+                      resolved={socialFeedResolved}
+                      onOpen={() => setShowSocialFeed(true)}
+                    />
+                  )}
+                </div>
+              </details>
             )}
           </div>
 
+          {game.phase === "decision" && !choicesVisible && (
+            <button className="cinematic-choice-jump" onClick={scrollToChoices} aria-controls="guided-choice-options" data-sound="tap">
+              <Crosshair weight="duotone" aria-hidden="true" />
+              <span>View {event.choices.length} choices</span>
+              <ArrowRight weight="bold" aria-hidden="true" />
+            </button>
+          )}
+
           {game.phase === "decision" ? (
-            <div className="cinematic-choices" key={`choices-${event.id}`} aria-label="Decision options">
-              {event.choices.map((choice) => {
-                const unavailable = getRequirementFailure(game, choice);
-                const bonus = getChoiceBonuses(game, choice)[0];
-                return (
-                  <button
-                    key={choice.id}
-                    className={`cinematic-choice ${choice.tone}`}
-                    onClick={() => choose(choice)}
-                    disabled={Boolean(unavailable)}
-                    data-sound={choice.tone === "danger" ? "warning" : "choice"}
-                  >
-                    <small>{toneLabels[choice.tone]}</small>
-                    <strong>{choice.title}</strong>
-                    <span>{unavailable ?? choice.hint}</span>
-                    {bonus && <em><Sparkle weight="fill" />{bonus.label}</em>}
-                    <ArrowRight weight="bold" aria-hidden="true" />
-                  </button>
-                );
-              })}
+            <div className="cinematic-decision" id="guided-choice-options" ref={choicesRef} tabIndex="-1" key={`choices-${event.id}`}>
+              <div className="cinematic-choice-prompt" role="note">
+                <Crosshair weight="duotone" aria-hidden="true" />
+                <span>
+                  <small>Your decision</small>
+                  <strong id="guided-decision-prompt">Choose what the family does next</strong>
+                </span>
+                <em>{game.history.length === 0 ? "Read what is known, then choose. Consequences appear afterward. Progress saves automatically; How to play is always in Journey tools." : "Select one option below to continue"}</em>
+              </div>
+              <div className="cinematic-choices" aria-labelledby="guided-decision-prompt">
+                {event.choices.map((choice) => {
+                  const unavailable = getRequirementFailure(game, choice);
+                  return (
+                    <button
+                      key={choice.id}
+                      className="cinematic-choice"
+                      onClick={() => choose(choice)}
+                      disabled={Boolean(unavailable)}
+                      data-sound="choice"
+                    >
+                      <strong>{choice.title}</strong>
+                      <span>{unavailable ?? choice.hint}</span>
+                      <span className="cinematic-choice-action">
+                        {unavailable ? "Unavailable" : "Select this path"}
+                        <ArrowRight weight="bold" aria-hidden="true" />
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           ) : (
             <>
@@ -959,7 +1212,7 @@ export function BeginnerApp() {
                   {game.pendingEnding ? "See journey result" : "Continue the journey"}<ArrowRight weight="bold" />
                 </button>}
               </div>
-              {travelPlanRequired && <TravelPlanner game={game} onChoose={(strategyId) => setGame((current) => planTravelLeg(current, strategyId))} />}
+              {travelPlanRequired && <TravelPlanner game={game} onChoose={(strategyId, leadPersonId) => setGame((current) => planTravelLeg(current, strategyId, leadPersonId))} />}
             </>
           )}
         </section>

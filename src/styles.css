@@ -539,111 +539,6 @@ button:focus-visible {
   transition: width 350ms ease;
 }
 
-.current-location,
-.route-marker {
-  position: absolute;
-  border: 0;
-  cursor: pointer;
-  background: transparent;
-  text-align: left;
-}
-
-.current-location {
-  left: 22.5%;
-  top: 60%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.current-location > svg {
-  width: 44px;
-  height: 44px;
-  padding: 9px;
-  color: #ffffff;
-  background: rgba(43, 186, 217, 0.94);
-  border: 3px solid rgba(218, 247, 252, 0.82);
-  border-radius: 50%;
-  box-shadow: 0 0 0 8px rgba(73, 211, 235, 0.16), 0 10px 30px rgba(0, 0, 0, 0.52);
-}
-
-.current-location span,
-.route-marker-copy {
-  display: flex;
-  flex-direction: column;
-  padding: 7px 9px;
-  color: #f4f8f9;
-  background: rgba(4, 15, 20, 0.73);
-  border-radius: 4px;
-  text-shadow: 0 2px 5px #000;
-}
-
-.current-location strong,
-.route-marker-copy strong {
-  font-size: 14px;
-  line-height: 1.15;
-}
-
-.current-location small,
-.route-marker-copy small {
-  margin-top: 3px;
-  color: #c0cdd0;
-  font-size: 11px;
-}
-
-.route-marker {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  opacity: 0.82;
-  transition: opacity 160ms ease, transform 160ms ease;
-}
-
-.route-marker:hover,
-.route-marker.active {
-  opacity: 1;
-  transform: translateY(-3px);
-}
-
-.route-marker-dot {
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  color: #05141b;
-  background: #e8f2f3;
-  border: 3px solid #0b1b24;
-  box-shadow: 0 0 0 2px currentColor, 0 8px 24px rgba(0, 0, 0, 0.45);
-}
-
-.route-marker-dot svg {
-  width: 18px;
-  height: 18px;
-}
-
-.route-marker.trusted .route-marker-dot { color: var(--cyan); }
-.route-marker.uncertain .route-marker-dot { color: var(--amber); }
-.route-marker.danger .route-marker-dot { color: var(--coral); }
-
-.route-marker-copy em {
-  align-self: flex-start;
-  margin-top: 6px;
-  padding: 3px 6px;
-  border-radius: 2px;
-  font-style: normal;
-  font-family: "Rajdhani", sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  color: #fff;
-  background: rgba(5, 18, 24, 0.88);
-  border: 1px solid var(--line);
-}
-
-.marker-ridge { left: 52%; top: 10%; }
-.marker-quarry { left: 49%; top: 72%; }
-.marker-elmstead { right: 7%; top: 41%; }
-
 .map-caption {
   position: absolute;
   left: 30px;
@@ -2195,14 +2090,6 @@ button:focus-visible {
     width: auto;
   }
 
-  .marker-ridge { left: 44%; top: 19%; }
-  .marker-quarry { left: 36%; top: 72%; }
-  .marker-elmstead { right: 2%; top: 43%; }
-
-  .route-marker-copy small {
-    display: none;
-  }
-
   .map-legend {
     left: 12px;
     right: 12px;
@@ -2211,15 +2098,6 @@ button:focus-visible {
   }
 
   .map-caption {
-    display: none;
-  }
-
-  .current-location {
-    left: 8%;
-    top: 58%;
-  }
-
-  .current-location span {
     display: none;
   }
 

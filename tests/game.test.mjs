@@ -20,6 +20,7 @@ import {
   getSupplyOptions,
   getSupplyStop,
   getTravelIncidentOptions,
+  getTravelLeadOptions,
   getTravelPlanOptions,
   getJourneyScore,
   getJourneyStage,
@@ -49,6 +50,7 @@ const WINNING_ROUTES = {
   diop: ["diopVerifyOffice", "diopRepairShift", "diopLicensedCoach", "diopForecastWait", "diopSmallerPirogue", "diopRecordLamine", "diopRegisterArrival", "diopVerifySpainRules", "diopLegalReview"],
   nguyen: ["nguyenVerifyOffer", "nguyenDemandContract", "nguyenCallHotline", "nguyenReportThreats", "nguyenShelterFrance", "nguyenSmallBoat", "nguyenTellTruth", "nguyenLegalAdvice", "nguyenSafeguardingReview"],
   punjab: ["punjabVerifyPermits", "punjabWaitPortal", "punjabPresentDocuments", "punjabRegisterDublin", "punjabDocumentWork", "punjabContactReactivation", "punjabLegalAdvice", "punjabReactivationReview"],
+  rohingya: ["rohingyaVerifySister", "rohingyaCopyPapers", "rohingyaCheckForecast", "rohingyaMeasuredWater", "rohingyaShelterIsland", "rohingyaCallRescue", "rohingyaRegisterLanding", "rohingyaTemporaryReview"],
 };
 
 test("starts the Ramirez family at home with journey resources", () => {
@@ -81,7 +83,7 @@ test("starts the Haddad family in Syria with a distinct journey preset", () => {
   assert.equal(FAMILY_PRESETS.haddad.origin, "Syria · Conflict displacement");
   assert.match(FAMILY_PRESETS.haddad.context, /return/i);
   assert.equal(FAMILY_PRESETS.haddad.destination, "Asylum registration");
-  assert.equal(FAMILY_PRESETS.haddad.heroImage, "/assets/haddad-journey-hero.png");
+  assert.equal(FAMILY_PRESETS.haddad.heroImage, "/assets/haddad-journey-hero.webp");
   assert.equal(
     Object.values(EVENTS)
       .filter((event) => event.id.startsWith("haddad"))
@@ -99,7 +101,7 @@ test("starts the Diop brothers and cousins in Senegal as a four-person group", (
   assert.equal(getPeople(game)[3].name, "Lamine");
   assert.equal(getPeople(game)[3].age, 12);
   assert.equal(FAMILY_PRESETS.diop.destination, "Canary Islands reception");
-  assert.equal(FAMILY_PRESETS.diop.heroImage, "/assets/diop-journey-hero.png");
+  assert.equal(FAMILY_PRESETS.diop.heroImage, "/assets/diop-journey-hero.webp");
 });
 
 test("starts the Bùi family in Vietnam with a distinct United Kingdom journey", () => {
@@ -113,7 +115,7 @@ test("starts the Bùi family in Vietnam with a distinct United Kingdom journey",
   assert.equal(FAMILY_PRESETS.nguyen.name, "The Bùi family");
   assert.equal(FAMILY_PRESETS.nguyen.shortName, "Bùi");
   assert.equal(FAMILY_PRESETS.nguyen.destination, "United Kingdom review");
-  assert.equal(FAMILY_PRESETS.nguyen.heroImage, "/assets/nguyen-journey-hero.png");
+  assert.equal(FAMILY_PRESETS.nguyen.heroImage, "/assets/nguyen-journey-hero.webp");
 });
 
 test("starts the Punjab work group in India with a distinct Ireland journey", () => {
@@ -125,7 +127,20 @@ test("starts the Punjab work group in India with a distinct Ireland journey", ()
   assert.equal(getPeople(game)[0].name, "Gurpreet");
   assert.equal(getPeople(game)[3].age, 22);
   assert.equal(FAMILY_PRESETS.punjab.destination, "Irish employment review");
-  assert.equal(FAMILY_PRESETS.punjab.heroImage, "/assets/punjab-journey-hero.png");
+  assert.equal(FAMILY_PRESETS.punjab.heroImage, "/assets/punjab-journey-hero.webp");
+});
+
+test("starts the Karim family in Cox's Bazar with a distinct statelessness journey", () => {
+  const game = createInitialGame("rohingya");
+
+  assert.equal(game.familyId, "rohingya");
+  assert.equal(game.eventId, "rohingyaCamp");
+  assert.deepEqual(Object.keys(game.people), ["yasmin", "hamida", "rafiq", "sadia"]);
+  assert.equal(getPeople(game)[3].name, "Sadia");
+  assert.equal(getPeople(game)[3].age, 11);
+  assert.equal(FAMILY_PRESETS.rohingya.destination, "Temporary reception in Aceh");
+  assert.equal(FAMILY_PRESETS.rohingya.heroImage, "/assets/rohingya-journey-hero.webp");
+  assert.match(FAMILY_PRESETS.rohingya.context, /education|aid/i);
 });
 
 test("journey choices describe the pressure behind each departure", () => {
@@ -137,6 +152,7 @@ test("journey choices describe the pressure behind each departure", () => {
       diop: "Senegal · Debt and lost livelihoods",
       nguyen: "Vietnam · Recruitment debt",
       punjab: "India · Job-recruitment fraud",
+      rohingya: "Bangladesh · Statelessness and shrinking aid",
     },
   );
 });
@@ -148,6 +164,7 @@ test("every family begins at a resupply stop and later reaches another one", () 
     diop: "diopDakar",
     nguyen: "nguyenTransit",
     punjab: "punjabDelhi",
+    rohingya: "rohingyaCoast",
   };
 
   for (const [familyId, laterEventId] of Object.entries(laterStops)) {
@@ -207,6 +224,8 @@ test("journey stages distinguish physical arrival from later legal review", () =
     ["nguyen", "nguyenFinal", 88, "review"],
     ["punjab", "punjabDublin", 29, "arrival"],
     ["punjab", "punjabPolicy", 69, "review"],
+    ["rohingya", "rohingyaLanding", 72, "arrival"],
+    ["rohingya", "rohingyaAceh", 86, "review"],
   ];
 
   for (const [familyId, eventId, progress, expectedStage] of cases) {
@@ -420,6 +439,29 @@ test("a long leg requires one simple travel plan before continuing", () => {
   assert.equal(game.currentOutcome.travelPlan.id, "steady");
   assert.equal(game.activityLog.at(-1).kind, "travel");
   assert.equal(continueJourney(game).eventId, "waitingTown");
+});
+
+test("a trusted traveler can coordinate a long leg with a skill-based benefit", () => {
+  let game = createInitialGame();
+  game = chooseAndContinue(game, "safeHouse");
+  game = chooseAndContinue(game, "churchBus");
+  game = chooseAndContinue(game, "callForHelp");
+  game = chooseOption(game, "stayShelter");
+
+  const leads = getTravelLeadOptions(game);
+  assert.deepEqual(leads.map((lead) => lead.personId), ["marisol", "edwin", "daniela", "aurelia"]);
+  assert.equal(leads.find((lead) => lead.personId === "marisol").roleId, "planning");
+  assert.equal(leads.find((lead) => lead.personId === "edwin").roleId, "route");
+
+  const waterBefore = game.resources.water;
+  const ledPlan = getTravelPlanOptions(game, "marisol").find((option) => option.id === "steady");
+  assert.match(ledPlan.consequence, /Marisol saves 1 L water/);
+
+  game = planTravelLeg(game, "steady", "marisol");
+  assert.equal(game.resources.water, waterBefore);
+  assert.equal(game.currentOutcome.travelPlan.lead.personId, "marisol");
+  assert.equal(game.currentOutcome.travelPlan.lead.skill, "Former teacher");
+  assert.match(game.activityLog.at(-1).detail, /Marisol coordinates with Former teacher/);
 });
 
 test("medicine is visible game state and can restore a traveler's health", () => {
@@ -799,4 +841,14 @@ test("authored content links to valid events and keeps the three-choice rhythm",
     assert.ok(EVENTS[eventId], `${opportunity.id} belongs to a missing event`);
     assert.equal(opportunity.choices.length, 2, `${opportunity.id} should offer two work choices`);
   }
+});
+
+test("repeated commitment cannot apply the same decision twice", () => {
+  const initial = createInitialGame();
+  const choice = EVENTS[initial.eventId].choices[0];
+  const committed = chooseOption(initial, choice.id);
+  assert.equal(committed.phase, "outcome");
+  assert.equal(committed.currentOutcome.consequence, choice.consequence);
+  assert.equal(committed.history.length, 1);
+  assert.strictEqual(chooseOption(committed, choice.id), committed);
 });

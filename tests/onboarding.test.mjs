@@ -5,14 +5,14 @@ import {
   createInitialOnboardingState,
 } from "../src/onboarding.js";
 
-test("a new player sees the tutorial before journey selection", () => {
+test("a new player chooses a family without a tutorial gate", () => {
   assert.deepEqual(
     createInitialOnboardingState({ tutorialComplete: false, familySelected: false }),
     {
       familySelectionRequired: true,
-      showFamilySelection: false,
-      showTutorial: true,
-      tutorialIsOnboarding: true,
+      showFamilySelection: true,
+      showTutorial: false,
+      tutorialIsOnboarding: false,
     },
   );
 });

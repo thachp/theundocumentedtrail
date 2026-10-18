@@ -109,14 +109,14 @@ export function SocialFeedModal({ feed, climate, options, outcome, resolved, onR
                 const Icon = actionIcons[option.id] ?? ChatCircleDots;
                 return (
                   <button
-                    className={option.tone}
+
                     key={option.id}
                     onClick={() => onRespond(option.id)}
                     disabled={Boolean(option.unavailable)}
-                    data-sound={option.tone === "danger" ? "warning" : "choice"}
+                    data-sound="choice"
                   >
                     <Icon weight="duotone" />
-                    <span><strong>{option.title}</strong><small>{option.unavailable ?? option.hint}</small><em>{option.consequence}</em></span>
+                    <span><strong>{option.title}</strong><small>{option.unavailable ?? option.hint}</small></span>
                   </button>
                 );
               })}

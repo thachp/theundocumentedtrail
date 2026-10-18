@@ -1,9 +1,9 @@
 export function createInitialOnboardingState({ tutorialComplete, familySelected }) {
   return {
     familySelectionRequired: !familySelected,
-    showFamilySelection: tutorialComplete,
-    showTutorial: !tutorialComplete,
-    tutorialIsOnboarding: !tutorialComplete,
+    showFamilySelection: true,
+    showTutorial: false,
+    tutorialIsOnboarding: false,
   };
 }
 
