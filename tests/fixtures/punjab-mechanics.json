@@ -1,0 +1,59 @@
+{
+  "version": 14,
+  "scenes": {
+    "punjabHome": [
+      {"id":"punjabVerifyPermits","icon":"legal","tone":"trusted","route":"elmstead","days":3,"next":"punjabDelhi","effects":{"cash":-45,"battery":-8,"stress":-7,"exposure":-4,"progress":6,"trustAll":1},"setFlags":{"permitCheck":true}},
+      {"id":"punjabLeaseField","icon":"home","tone":"uncertain","route":"quarry","days":4,"next":"punjabDelhi","effects":{"cash":2400,"stress":15,"exposure":5,"progress":7,"trustAll":-1},"setFlags":{"fieldLease":true}},
+      {"id":"punjabPayAgent","icon":"navigate","tone":"danger","route":"ridge","days":1,"next":"punjabDelhi","requires":{"cash":1100},"effects":{"cash":-1100,"stress":14,"exposure":17,"progress":8,"trustAll":-1},"setFlags":{"agentFees":true}}
+    ],
+    "punjabDelhi": [
+      {"id":"punjabWaitPortal","icon":"wait","tone":"trusted","route":"elmstead","days":18,"next":"punjabAirport","effects":{"cash":-320,"supplies":-3,"stress":3,"exposure":-8,"progress":10,"trustAll":1},"setFlags":{"permitOriginals":true}},
+      {"id":"punjabLocalWork","icon":"work","tone":"uncertain","route":"quarry","days":12,"next":"punjabAirport","effects":{"cash":420,"supplies":-2,"water":-2,"stress":6,"progress":10,"people":{"gurpreet":-5,"arjun":-5,"simran":-3,"neha":-3}},"setFlags":{"permitOriginals":true}},
+      {"id":"punjabTakePDF","icon":"navigate","tone":"danger","route":"ridge","days":3,"next":"punjabAirport","requires":{"cash":600},"effects":{"cash":-600,"battery":-10,"stress":18,"exposure":25,"progress":12,"trustAll":-1},"setFlags":{"permitScreenshots":true}}
+    ],
+    "punjabAirport": [
+      {"id":"punjabPresentDocuments","icon":"legal","tone":"trusted","route":"elmstead","days":2,"next":"punjabDublin","requires":{"cash":700},"effects":{"cash":-700,"battery":-9,"stress":9,"exposure":-6,"progress":13,"trustAll":1},"setFlags":{"truthfulDeparture":true}},
+      {"id":"punjabTouristStory","icon":"talk","tone":"danger","route":"ridge","days":3,"next":"punjabDublin","requires":{"cash":650},"effects":{"cash":-650,"battery":-14,"stress":23,"exposure":29,"progress":12,"trustAll":-1}},
+      {"id":"punjabReportAgent","icon":"wait","tone":"uncertain","route":"quarry","days":9,"next":null,"effects":{"cash":-180,"stress":8,"exposure":-28,"progress":24,"trustAll":1},"ending":{"type":"recruitment_fraud_reported","status":"won","title":"The journey stops before the debt travels farther"}}
+    ],
+    "punjabDublin": [
+      {"id":"punjabRegisterDublin","icon":"legal","tone":"trusted","route":"elmstead","days":4,"next":"punjabWorksite","effects":{"cash":-180,"battery":-8,"stress":4,"exposure":-12,"progress":11,"trustAll":1},"setFlags":{"irishRegistration":true}},
+      {"id":"punjabCallEmployer","icon":"phone","tone":"trusted","route":"elmstead","days":2,"next":"punjabWorksite","effects":{"battery":-18,"cash":-90,"stress":-3,"exposure":-7,"progress":10,"trustAll":1},"setFlags":{"employerConfirmed":true}},
+      {"id":"punjabAgentShuttle","icon":"car","tone":"danger","route":"ridge","days":1,"next":"punjabWorksite","effects":{"cash":-240,"battery":-12,"stress":17,"exposure":22,"progress":12,"trustAll":-1},"setFlags":{"passportsWithDriver":true}}
+    ],
+    "punjabWorksite": [
+      {"id":"punjabDocumentWork","icon":"legal","tone":"trusted","route":"elmstead","days":21,"next":"punjabInspection","effects":{"cash":720,"supplies":-3,"water":-2,"stress":14,"progress":15,"peopleAll":-7,"trustAll":1},"setFlags":{"workRecords":true}},
+      {"id":"punjabAcceptDeductions","icon":"work","tone":"uncertain","route":"quarry","days":35,"next":"punjabInspection","effects":{"cash":480,"supplies":-4,"water":-3,"stress":24,"exposure":10,"progress":16,"peopleAll":-11,"trustAll":-1},"setFlags":{"housingDeductions":true}},
+      {"id":"punjabLeaveHousing","icon":"home","tone":"trusted","route":"elmstead","days":12,"next":"punjabInspection","effects":{"cash":-520,"supplies":-2,"stress":8,"exposure":-8,"progress":14,"trustAll":1},"setFlags":{"independentHousing":true}}
+    ],
+    "punjabInspection": [
+      {"id":"punjabContactReactivation","icon":"legal","tone":"trusted","route":"elmstead","days":12,"next":"punjabPolicy","effects":{"cash":-260,"battery":-10,"stress":4,"exposure":-22,"progress":14,"trustAll":1},"setFlags":{"reactivationAdvice":true}},
+      {"id":"punjabCashJobs","icon":"work","tone":"uncertain","route":"quarry","days":18,"next":"punjabPolicy","effects":{"cash":620,"supplies":-3,"stress":18,"exposure":28,"progress":15,"peopleAll":-6,"trustAll":-1},"setFlags":{"cashWork":true}},
+      {"id":"punjabAgentTransfer","icon":"navigate","tone":"danger","route":"ridge","days":6,"next":"punjabPolicy","requires":{"cash":700},"effects":{"cash":-700,"battery":-16,"stress":22,"exposure":34,"progress":15,"trustAll":-1},"setFlags":{"falseTransfer":true}}
+    ],
+    "punjabPolicy": [
+      {"id":"punjabLegalAdvice","icon":"legal","tone":"trusted","route":"elmstead","days":7,"next":"punjabFinal","effects":{"battery":-8,"stress":-10,"exposure":-15,"progress":9,"trustAll":1},"setFlags":{"irelandLegalAdvice":true}},
+      {"id":"punjabCloseFeed","icon":"rest","tone":"uncertain","route":"quarry","days":4,"next":"punjabFinal","effects":{"battery":12,"stress":-6,"progress":9}},
+      {"id":"punjabReplyVideo","icon":"talk","tone":"danger","route":"ridge","days":2,"next":"punjabFinal","effects":{"battery":-24,"stress":20,"exposure":28,"progress":9,"trustAll":-1}}
+    ],
+    "punjabFinal": [
+      {"id":"punjabReactivationReview","icon":"legal","tone":"trusted","route":"elmstead","days":42,"next":null,"effects":{"cash":-220,"stress":5,"exposure":-34,"progress":100,"trustAll":1},"contextBonuses":[{"flag":"permitCheck","kind":"payoff","label":"The pre-departure check shows the agent knew the real permit terms","effects":{"stress":-3,"exposure":-3}},{"flag":"irishRegistration","kind":"payoff","label":"The registration copies establish lawful entry and residence dates","effects":{"exposure":-4}},{"flag":"workRecords","kind":"payoff","label":"The saved rosters and payslips support the exploitation account","effects":{"stress":-4}},{"flag":"irelandLegalAdvice","kind":"payoff","label":"Independent advice prevents another fraudulent agent payment","effects":{"cash":120,"exposure":-3}}],"ending":{"type":"ireland_reactivation_pending","status":"won","title":"Back inside a lawful process"}},
+      {"id":"punjabVoluntaryReturn","icon":"wait","tone":"uncertain","route":"quarry","days":30,"next":null,"effects":{"stress":5,"exposure":-38,"progress":84,"trustAll":1},"ending":{"type":"ireland_voluntary_return","status":"won","title":"Returning by choice, with the evidence intact"}},
+      {"id":"punjabHiddenWork","icon":"work","tone":"danger","route":"ridge","days":20,"next":null,"effects":{"cash":520,"supplies":-3,"stress":28,"exposure":42,"progress":95,"peopleAll":-8,"trustAll":-1},"ending":{"type":"ireland_hidden_work","status":"stopped","title":"Ireland reached, stability withheld"}}
+    ]
+  },
+  "work": {
+    "punjabDelhi": [
+      {"id":"punjabRepairPump","tone":"trusted","days":1,"effects":{"cash":145,"battery":12,"stress":-2,"people":{"gurpreet":-2,"arjun":-2}},"skillBonus":{"personId":"gurpreet","skill":"Farm machinery","label":"Gurpreet recognizes the damaged impeller","effects":{"cash":35,"stress":-2}}},
+      {"id":"punjabClinicRecords","tone":"trusted","days":1,"effects":{"cash":95,"supplies":1,"stress":-3,"people":{"simran":-2,"neha":-2}},"skillBonus":{"personId":"neha","skill":"Bookkeeping","label":"Neha finds duplicate charges in the supply ledger","effects":{"cash":25,"people":{"neha":1}}}}
+    ],
+    "punjabDublin": [
+      {"id":"punjabKitchenVolunteer","tone":"trusted","days":1,"effects":{"supplies":2,"battery":16,"stress":-4,"people":{"simran":-1,"neha":-1}}},
+      {"id":"punjabTranslateLeaflets","tone":"trusted","days":1,"effects":{"battery":22,"stress":-5,"exposure":-4,"people":{"neha":-1}},"setFlags":{"wrcContacts":true}}
+    ],
+    "punjabWorksite": [
+      {"id":"punjabRepairConveyor","tone":"trusted","days":1,"effects":{"cash":120,"stress":3,"people":{"gurpreet":-3,"arjun":-3}},"skillBonus":{"personId":"arjun","skill":"Diesel repair","label":"Arjun identifies the motor fault before parts are replaced","effects":{"cash":30,"stress":-2}}},
+      {"id":"punjabFirstAidInventory","tone":"trusted","days":1,"effects":{"cash":75,"medicine":1,"stress":-2,"people":{"simran":-2}},"skillBonus":{"personId":"simran","skill":"First aid","label":"Simran's training finds a damaged emergency kit","effects":{"medicine":1,"people":{"simran":1}}}}
+    ]
+  }
+}

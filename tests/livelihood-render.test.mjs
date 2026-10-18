@@ -26,3 +26,21 @@ test("actual activity controls disclose commitment, hide uncertain outcomes, and
   const css=await readFile(new URL("../src/livelihoodActivity.css",import.meta.url),"utf8");assert.match(css,/prefers-reduced-motion/);assert.match(css,/min-height:44px/);
  }finally{await server.close();}
 });
+
+test("integration keeps the Cambodia adapter isolated and reduces motion on the activity surface itself", async()=>{
+ const {cambodiaGame}=await import('../src/cambodiaJourney.js');
+ const {createCambodiaState}=await import('../src/cambodiaState.js');
+ const {getEvent}=await import('../src/game.js');
+ const story=cambodiaGame(createCambodiaState());
+ for(const action of [beginRepair,advanceRepair,g=>settleRepair(g,{summary:true})])assert.equal(action(story),story);
+ assert.equal(getEvent(story).id,'C01');
+ const css=await readFile(new URL('../src/livelihoodActivity.css',import.meta.url),'utf8');
+ const reduced=css.match(/@media\(prefers-reduced-motion:reduce\)\s*\{([^\n]+)/)?.[1];
+ assert.match(reduced,/\.livelihood-dialog,\.livelihood-dialog \*,\.livelihood-trigger/);
+ assert.match(reduced,/animation:none !important/);assert.match(reduced,/transition:none !important/);assert.match(reduced,/scroll-behavior:auto !important/);
+ for(const file of ['App.jsx','BeginnerApp.jsx']){
+  const source=await readFile(new URL(`../src/${file}`,import.meta.url),'utf8');
+  assert.match(source,/showLivelihood && isRepairScene\(game\) && <LivelihoodDialog/);
+  assert.match(source,/onUpdate=\{action => setGame\(current => action\(current\)\)\}/);
+ }
+});

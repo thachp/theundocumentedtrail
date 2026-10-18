@@ -22,7 +22,6 @@ import {
   getTravelIncidentOptions,
   getTravelLeadOptions,
   getTravelPlanOptions,
-  getJourneyScore,
   getJourneyStage,
   getPeople,
   getPortraitImage,
@@ -147,7 +146,7 @@ test("journey choices describe the pressure behind each departure", () => {
   assert.deepEqual(
     Object.fromEntries(Object.entries(FAMILY_PRESETS).map(([id, family]) => [id, family.origin])),
     {
-      ramirez: "Honduras · Gang threats",
+    ramirez: "Honduras · Gang threats · January 2024",
       haddad: "Syria · Wartime displacement · July 2015",
       diop: "Senegal · Debt and lost livelihoods",
       nguyen: "Vietnam · Recruitment debt",
@@ -743,7 +742,7 @@ test("a support-network route can end in release while the case continues", () =
   assert.equal(game.progress, 100);
   assert.equal(game.history.length, 12);
   assert.equal(game.day, 82);
-  assert.ok(getJourneyScore(game) >= 40);
+  assert.equal(game.ending.type, "released");
 });
 
 test("the overloaded boat branch records Daniela's death and continues to a memorial", () => {

@@ -1,4 +1,5 @@
 import { repairActive, repairFollowUp } from "./livelihoodActivity.js";
+import { CAMBODIA_FAMILY, isCambodiaJourney, newCambodiaGame, cambodiaEvent, chooseCambodiaJourney, continueCambodiaJourney } from "./cambodiaJourney.js";
 export const GAME_VERSION = 14;
 export const GAME_SAVE_KEY = "the-long-road-save-v14";
 
@@ -304,9 +305,9 @@ export const FAMILY_PRESETS = Object.freeze({
     id: "ramirez",
     name: "The Ramírez family",
     shortName: "Ramírez",
-    origin: "Honduras · Gang threats",
-    context: "Gang threats force a teacher, her children, and their grandmother to leave after the family home is sold under pressure.",
-    journey: "Honduras to a United States border process",
+    origin: "Honduras · Gang threats · January 2024",
+    context: "January 2024: gang threats force a teacher, her children and their grandmother to leave after the home is sold under pressure. Their border process belongs to this historical setting.",
+    journey: "Honduras toward a U.S. border process in early 2024",
     startEventId: "home",
     startRoute: "elmstead",
     destination: "Border process",
@@ -482,12 +483,14 @@ const JOURNEY_STAGE_BY_EVENT = Object.freeze({
 });
 
 export function getJourneyStage(game) {
+  if (isCambodiaJourney(game)) return JOURNEY_STAGES[game.eventId < "C03" ? 0 : game.eventId < "C05" ? 1 : game.eventId < "C08" ? 2 : 3];
   const stageId = game.progress >= 100 ? "review" : (JOURNEY_STAGE_BY_EVENT[game.eventId] ?? "transit");
   return JOURNEY_STAGES.find((stage) => stage.id === stageId);
 }
 
 export function getFamilyPreset(gameOrId = "ramirez") {
   const familyId = typeof gameOrId === "string" ? gameOrId : gameOrId?.familyId;
+  if (familyId === CAMBODIA_FAMILY.id) return CAMBODIA_FAMILY;
   return FAMILY_PRESETS[familyId] ?? FAMILY_PRESETS.ramirez;
 }
 
@@ -601,7 +604,7 @@ export const TRAVEL_INCIDENTS = [
   },
 ];
 
-const CHOICE_REACTIONS = {
+export const CHOICE_REACTIONS = {
   leaveDawn: [{ personId: "edwin", trustDelta: 1, text: "If we leave now, they cannot make me join them tonight." }],
   safeHouse: [{ personId: "aurelia", trustDelta: 1, text: "A verified door is worth losing two days." }],
   collectPapers: [{ personId: "aurelia", trustDelta: -1, text: "The papers matter, but I wish you had not gone back alone." }],
@@ -632,7 +635,7 @@ const CHOICE_REACTIONS = {
   callLegalAid: [{ personId: "edwin", trustDelta: 1, text: "Now we know which part was policy and which part was rumor." }],
   comfortChildren: [{ personId: "daniela", trustDelta: 1, text: "Tell me what you know. Do not leave the video talking." }],
   argueOnline: [{ personId: "aurelia", trustDelta: -1, text: "Those strangers wanted a fight, not the truth about Mateo." }],
-  verifiedWaitlist: [{ personId: "aurelia", trustDelta: 1, text: "A slow list is still better than a purchased lie." }],
+  verifiedWaitlist: [{ personId: "aurelia", trustDelta: 1, text: "We keep requesting. The shelter cannot promise when a booking will come." }],
   rentNorthernRoom: [{ personId: "edwin", trustDelta: 1, text: "For one month, I can leave a book on a table." }],
   payAppointmentBroker: [{ personId: "edwin", trustDelta: -1, text: "The clinic told us appointments were not for sale." }],
   officialAppointment: [{ personId: "edwin", trustDelta: 1, text: "At least the lawyer explained what the wristbands might mean." }],
@@ -764,7 +767,7 @@ const CHOICE_REACTIONS = {
   rohingyaInformalWork: [{ personId: "hamida", trustDelta: -1, text: "A room tied to hidden work can become another place we are afraid to leave." }],
 };
 
-const STORY_THREAD_UPDATES = {
+export const STORY_THREAD_UPDATES = {
   leaveDawn: [{ id: "homeLight", title: "The porch light", status: "active", summary: "The family left without saying when they would return." }],
   safeHouse: [{ id: "shelterNetwork", title: "The verified shelter list", status: "active", summary: "A volunteer recorded every name and shared verified contacts." }],
   collectPapers: [{ id: "landEvidence", title: "Proof of home", status: "active", summary: "The land deed and school records survived the departure." }],
@@ -847,19 +850,19 @@ const STORY_THREAD_UPDATES = {
   punjabLeaseField: [{ id: "fieldLease", title: "The leased family field", status: "active", summary: "Gurpreet's household leases part of its field for three years to finance recruitment charges." }],
   punjabPayAgent: [{ id: "agentFees", title: "The placement-fee receipts", status: "setback", summary: "Large payments are labeled as training and consulting rather than employment-permit charges." }],
   punjabWaitPortal: [{ id: "permitOriginals", title: "Four verified permit records", status: "active", summary: "The official portal shows each named employer, occupation, salary, and application status before departure." }],
-  punjabTakePDF: [{ id: "permitScreenshots", title: "The agent's permit PDFs", status: "setback", summary: "The group travels with screenshots whose job descriptions and dates do not match the promises at home." }],
+  punjabTakePDF: [{ id: "permitScreenshots", title: "The agent's permit PDFs", status: "setback", summary: "The group reaches the airport with conflicting screenshots. Boarding must wait for issued permits and separate visa decisions; the PDFs confer neither." }],
   punjabPresentDocuments: [{ id: "truthfulDeparture", title: "The truthful departure interview", status: "active", summary: "The group presents its actual purpose of travel and preserves the questions asked before boarding." }],
   punjabRegisterDublin: [{ id: "irishRegistration", title: "The Irish registration records", status: "active", summary: "The four workers register their residence permissions and keep dated copies outside employer housing." }],
   punjabDocumentWork: [{ id: "workRecords", title: "The copied rosters and payslips", status: "active", summary: "Neha preserves hours, deductions, housing charges, and the wages actually received." }],
   punjabAcceptDeductions: [{ id: "housingDeductions", title: "The employer-controlled deductions", status: "setback", summary: "Pay slips show permit, transport, bedding, and housing charges deducted without clear agreement." }],
-  punjabContactReactivation: [{ id: "reactivationAdvice", title: "The reactivation eligibility letter", status: "active", summary: "An adviser records that the group entered on permits and fell out of the system after exploitation and dismissal." }],
+  punjabContactReactivation: [{ id: "reactivationAdvice", title: "The individual options checklist", status: "active", summary: "The adviser distinguishes redundancy notification and a new-employer application from reactivation eligibility. Closure alone establishes neither loss of permission nor reactivation approval." }],
   punjabCashJobs: [{ id: "cashWork", title: "The unrecorded cash shifts", status: "setback", summary: "The group takes unauthorized work without payslips while its immigration permission becomes less secure." }],
   punjabLegalAdvice: [{ id: "irelandLegalAdvice", title: "Independent Irish legal advice", status: "active", summary: "The adviser separates wage claims, temporary immigration permission, and reactivation-permit applications." }],
   punjabReactivationReview: [
     { id: "permitCheck", title: "The official permit check", status: "resolved", requiresThread: "permitCheck", summary: "The early verification shows what the recruiter knew before the group left India." },
     { id: "irishRegistration", title: "The Irish registration records", status: "resolved", requiresThread: "irishRegistration", summary: "The dated registration copies establish that the group originally entered the labor market lawfully." },
     { id: "workRecords", title: "The copied rosters and payslips", status: "resolved", requiresThread: "workRecords", summary: "The saved records support the account of unpaid hours and prohibited deductions." },
-    { id: "reactivationAdvice", title: "The reactivation eligibility letter", status: "resolved", requiresThread: "reactivationAdvice", summary: "The group reaches the correct temporary-permission and employment-permit process." },
+    { id: "reactivationAdvice", title: "The individual options checklist", status: "resolved", requiresThread: "reactivationAdvice", summary: "Each worker seeks the process appropriate to their permission and circumstances; no temporary permission or permit approval is presumed." },
     { id: "irelandLegalAdvice", title: "Independent Irish legal advice", status: "resolved", requiresThread: "irelandLegalAdvice", summary: "Each worker receives advice about an individual application rather than a group guarantee." },
   ],
   rohingyaVerifySister: [{ id: "familyTrace", title: "The family-tracing message", status: "active", summary: "A verified worker records Yasmin's sister in Aceh without promising reunion, status, or onward travel." }],
@@ -901,8 +904,8 @@ const sources = {
     url: "https://www.unhcr.org/asia/news/joint-press-release-forcibly-displaced-women-high-risk-gender-based-violence-latin-america",
   },
   policy: {
-    label: "White House: January 2025 immigration enforcement order",
-    url: "https://www.whitehouse.gov/presidential-actions/2025/01/protecting-the-american-people-against-invasion/",
+    label: "DHS/DOJ: May 2023 border rule · historical early-2024 context",
+    url: "https://www.govinfo.gov/content/pkg/FR-2023-05-16/html/2023-10146.htm",
   },
   missing: {
     label: "IOM Missing Migrants: deaths and disappearances in the Americas",
@@ -964,12 +967,20 @@ const sources = {
     label: "Ireland DETE: employment permits require a signed contract and verifiable application",
     url: "https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/employment-permits/",
   },
+  irelandVisa: {
+    label: "Ireland ISD: employment visa and separate border-entry checks · updated 23 September 2024; checked 18 October 2026",
+    url: "https://www.irishimmigration.ie/coming-to-work-in-ireland/what-are-my-work-visa-options/applying-for-a-long-stay-employment-visa/employment-visa/",
+  },
+  irelandRedundancy: {
+    label: "Ireland DETE: redundancy notification and new-employer options · undated guidance checked 18 October 2026",
+    url: "https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/employment-permits/redundancy/employment-permit-holders-who-are-made-redundant.html",
+  },
   irelandMigrantRights: {
     label: "Ireland DETE: migrant workers have written-contract, wage, and permit-fee protections",
     url: "https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/economic-migration-policy/protection-of-migrant-workers.html",
   },
   irelandReactivation: {
-    label: "Ireland DETE: exploited workers who fall out of the permit system may qualify for a Reactivation Employment Permit",
+    label: "Ireland DETE: individual reactivation eligibility and temporary Stamp 1 prerequisites · undated guidance checked 18 October 2026",
     url: "https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/employment-permits/permit-types/reactivation-employment-permit/",
   },
   irelandWorkerRights: {
@@ -1162,7 +1173,7 @@ export const ROADSIDE_OPPORTUNITIES = {
     id: "northernWaitWork",
     eyebrow: "Work during the long wait",
     title: "The shelter board lists temporary work",
-    copy: "The appointment queue may take weeks. The family can use one day for paid laundry work or sort donations in exchange for supplies.",
+    copy: "Appointment requests may go unanswered for weeks. The family can use one day for paid laundry work or sort donations in exchange for supplies.",
     choices: [
       {
         id: "cooperativeLaundry",
@@ -1545,7 +1556,7 @@ export const SOCIAL_FEEDS = {
         initials: "CD",
         label: "Verified local reporting",
         tone: "verified",
-        body: "The enforcement announcement is real. Individual notices and hearings still differ, and the viral bus video is from an unrelated event.",
+        body: "The May 2023 rule is real in this early-2024 setting. A scheduled port inspection is not an asylum decision; the fictional viral bus video is unrelated.",
         reach: "Source links attached",
       },
       {
@@ -1560,7 +1571,7 @@ export const SOCIAL_FEEDS = {
       },
     ],
     evidence: [
-      "The enforcement announcement can be confirmed through an official notice.",
+      "The dated rule can be checked separately from the fictional video and each person’s circumstances.",
       "The most-shared video is old and does not show the shelter named in the caption.",
       "Publishing a shelter location could expose unrelated families to harassment.",
     ],
@@ -2336,7 +2347,7 @@ export const EVENTS = {
       {
         sender: "Marisol",
         initial: "M",
-        role: "Family notebook · Day twelve",
+        role: "Family notebook · during the wait",
         time: "17:12",
         trusted: true,
         body: "The room is paid by the week. The landlord wants the next payment tomorrow. Every morning someone says the buses will move; every evening the same bags are still against the wall.",
@@ -2690,7 +2701,7 @@ export const EVENTS = {
     location: "Crowded waiting room",
     time: "21:05",
     weather: "Dust outside",
-    weatherDetail: "Rules at the border changed again",
+    weatherDetail: "A dated notice and a viral clip describe different things",
     route: "quarry",
     contentNote: "Hostile political rhetoric and deportation",
     source: sources.policy,
@@ -2701,19 +2712,19 @@ export const EVENTS = {
         role: "Verified public policy report",
         time: "20:48",
         trusted: true,
-        body: "A clip of President Donald Trump plays beside a White House order calling for broader enforcement, detention capacity, and removals. The legal volunteer says the policy is real; the group-chat explanation is not reliable.",
+        body: "This is early 2024. The May 2023 border rule distinguishes scheduled presentation at a port from other arrivals and includes exceptions to its asylum-eligibility presumption. A CBP One appointment schedules inspection; it does not grant asylum, admission or release. The volunteer must check individual circumstances, not the group chat.",
       },
       {
         sender: "Liberty Stream",
         initial: "L",
-        role: "Fictional MAGA-style influencer · unverified commentary",
+        role: "Fictional political influencer · early-2024 commentary",
         time: "20:56",
         trusted: false,
         body: "The streamer cheers over footage of people boarding a deportation flight. Edwin recognizes cousin Mateo in the line. The video treats his removal as entertainment.",
       },
     ],
     known: [
-      "The enforcement order and expanded detention policy are public documents.",
+      "The dated border rule is different from the influencer’s commentary or an individual case decision.",
       "The influencer is commentary, not legal information.",
       "Cousin Mateo's phone no longer connects.",
     ],
@@ -2736,7 +2747,7 @@ export const EVENTS = {
         effects: { battery: -12, stress: -6, exposure: -10, progress: 5, trustAll: 1 },
         consequence: "Phone -12% · Stress -6 · Risk -10",
         outcomeTitle: "The lawyer separates policy from rumor",
-        outcome: "She cannot promise entry or release. She explains the appointment, detention, and return possibilities in plain language.",
+        outcome: "In this fictional call, the adviser distinguishes scheduling, inspection and the protection case. She cannot promise an appointment, entry, release or protection.",
         setFlags: { legalAdvice: true },
       },
       {
@@ -2773,7 +2784,7 @@ export const EVENTS = {
   northernWait: {
     id: "northernWait",
     region: "Northern Mexico",
-    location: "Migrant shelter waiting list",
+    location: "Shelter helping with CBP One requests",
     time: "09:30",
     weather: "Cold desert morning",
     weatherDetail: "The appointment system has failed twice this week",
@@ -2787,32 +2798,32 @@ export const EVENTS = {
         role: "Verified morning briefing",
         time: "09:08",
         trusted: true,
-        body: "The family may remain on the verified list, but the wait could be weeks. A local landlord offers a monthly room. A broker outside claims he can sell an earlier appointment; the clinic says appointments are not for sale.",
+        body: "In this early-2024 setting, CBP One requests require being in central or northern Mexico. The shelter can help with the phone, but cannot allocate appointments or promise a date. Slots, connectivity and identity checks can be obstacles. A broker’s payment does not create a confirmed appointment.",
       },
       {
         sender: "Edwin",
         initial: "E",
-        role: "Family notebook · Day forty-one",
+        role: "Family notebook · during the northern wait",
         time: "09:19",
         trusted: true,
         body: "I thought the road would be walking. Mostly it is waiting with shoes on, afraid the one time you sleep will be the time your name is called.",
       },
     ],
     known: [
-      "The shelter list is verified but has no guaranteed date.",
+      "Shelter assistance is not a government appointment list or a guaranteed place.",
       "A monthly room allows the family to stay together and seek temporary work.",
       "The legal clinic says the broker cannot sell official appointments.",
     ],
     assumed: [
-      "The verified list will move within three weeks.",
+      "Daily CBP One requests guarantee a booking within three weeks.",
       "A longer local stay will make the eventual process harder.",
       "The broker has a contact inside the appointment system.",
     ],
     choices: [
       {
         id: "verifiedWaitlist",
-        title: "Remain on the verified list",
-        hint: "Wait three weeks with the shelter network",
+        title: "Keep requesting through CBP One with shelter help",
+        hint: "Spend three weeks waiting; no booking date is promised",
         icon: "wait",
         tone: "trusted",
         route: "elmstead",
@@ -2821,12 +2832,12 @@ export const EVENTS = {
         effects: { cash: -210, supplies: 1, water: 2, stress: 10, exposure: -8, progress: 4, peopleAll: -2 },
         consequence: "21 days pass · Cash -$210 · Risk -8",
         outcomeTitle: "Three weeks are crossed out one square at a time",
-        outcome: "The family rotates between two shelters. On the twenty-first day, the clinic confirms a place in the next stage of the official process.",
+        outcome: "The family keeps requesting while rotating between shelters. In this fictional branch a CBP One appointment is eventually confirmed for the next scene. The twenty-one story days are not an official queue, expected wait or promise of a slot.",
       },
       {
         id: "rentNorthernRoom",
         title: "Rent a room for one month",
-        hint: "Pause, work locally, and keep checking the list",
+        hint: "Pause, work locally, and keep requesting an appointment",
         icon: "rest",
         tone: "uncertain",
         route: "quarry",
@@ -2836,7 +2847,7 @@ export const EVENTS = {
         effects: { cash: -260, supplies: 2, water: 4, stress: -6, exposure: 3, progress: 3, peopleAll: 5, trustAll: 1 },
         consequence: "30 days pass · Health +5 each · Cash -$260",
         outcomeTitle: "For one month, the key belongs to the family",
-        outcome: "Marisol works temporary shifts, Edwin studies with borrowed books, and Daniela learns the walk to the corner shop. The appointment still decides when they leave.",
+        outcome: "Marisol works temporary shifts, Edwin studies with borrowed books, and Daniela learns the walk to the corner shop. They keep requesting; a booking is confirmed later in this fictional continuation, not because renting a room creates priority.",
       },
       {
         id: "payAppointmentBroker",
@@ -2851,7 +2862,7 @@ export const EVENTS = {
         effects: { cash: -350, battery: -12, stress: 20, exposure: 16, progress: 6, trustAll: -1 },
         consequence: "Cash -$350 · Stress +20 · Risk +16",
         outcomeTitle: "The confirmation page disappears",
-        outcome: "The broker blocks Marisol's number. The appointment code never works, and the family returns to the shelter list with less money and five lost days.",
+        outcome: "The broker blocks Marisol's number. The appointment code never works, and the family returns to making its own requests. A valid booking is confirmed later in this fictional continuation; five story days do not predict a real wait.",
       },
     ],
   },
@@ -2873,7 +2884,7 @@ export const EVENTS = {
         role: "Verified adviser",
         time: "15:44",
         trusted: true,
-        body: "You may ask for protection through the official process, but detention is possible and the outcome is uncertain. A coyote outside is offering a crowded river boat. We cannot tell you what to choose.",
+        body: "For this fictional continuation, the family has a confirmed CBP One time and place. Presenting there leads to inspection, not automatic admission, parole or asylum. Detention and removal remain possible. Other arrivals and exceptions need individual advice; an appointment is not universally accessible. The river boat is still an unverified offer.",
       },
     ],
     known: [
@@ -2889,7 +2900,7 @@ export const EVENTS = {
     choices: [
       {
         id: "officialAppointment",
-        title: "Present through the official process",
+        title: "Present at the confirmed CBP One appointment",
         hint: "Accept detention risk and ask for protection",
         icon: "legal",
         tone: "trusted",
@@ -2899,7 +2910,7 @@ export const EVENTS = {
         effects: { cash: -160, supplies: -2, water: -3, stress: 16, exposure: -18, progress: 18 },
         consequence: "8 days pass · Stress +16 · Progress +18%",
         outcomeTitle: "The family receives numbered wristbands",
-        outcome: "Their phones and shoelaces are taken for storage. They are moved to a processing room where the lights stay on all night.",
+        outcome: "At the confirmed port appointment, officers inspect the family. In this fictional branch their belongings are stored and they enter a processing room. The eight story days do not model standard detention or processing time.",
         contextBonuses: [
           {
             flag: "legalAdvice",
@@ -3005,7 +3016,7 @@ export const EVENTS = {
         effects: { supplies: -1, water: -2, stress: 6, exposure: -8, progress: 4, people: { aurelia: -5 } },
         consequence: "Food -1 day · Progress slows · Family remains together",
         outcomeTitle: "The operator leaves without them",
-        outcome: "Marisol listens to the motor fade. At dawn, the legal clinic helps the family present at the official process.",
+        outcome: "Marisol listens to the motor fade. After further requests, a later CBP One booking is confirmed in this fictional branch. The clinic helps them prepare for inspection; turning back did not create priority or guarantee a slot.",
       },
       {
         id: "boardOverloaded",
@@ -3151,7 +3162,7 @@ export const EVENTS = {
         effects: { battery: -5, cash: -120, supplies: -1, stress: 8, exposure: -20, progress: 100, trustAll: 1 },
         consequence: "18 days pass · Case continues · Journey reaches an ending",
         outcomeTitle: "The lawyer starts at the beginning",
-        outcome: "The family is released to a sponsor while the protection case proceeds. Release is not asylum, and the next hearing is months away.",
+        outcome: "In this fictional outcome the family is released to a sponsor while the protection case proceeds. Requesting a lawyer did not guarantee release. Release is not asylum, and the next hearing is months away.",
         contextBonuses: [
           {
             flag: "landPapers",
@@ -5624,7 +5635,7 @@ export const EVENTS = {
     location: "A recruitment office above a travel agency",
     time: "15:20",
     weather: "Dust and late-afternoon heat",
-    weatherDetail: "The agent has booked refundable flights before permits issue",
+    weatherDetail: "The agent has booked flights before permit and visa decisions",
     route: "quarry",
     contentNote: "Document fraud and pressure to travel before approval",
     source: sources.irelandPermits,
@@ -5635,7 +5646,7 @@ export const EVENTS = {
         role: "Official information",
         time: "15:04",
         trusted: true,
-        body: "A pending application is not permission to work or travel for employment. Verify the final permit, employer, occupation, salary, and signed contract before departure.",
+        body: "A pending permit application is not an issued permit. Check the employer, occupation, salary and contract. An employment permit is separate from a visa where required, border permission to enter, and residence registration. Do not travel on the agent's PDF alone.",
       },
     ],
     known: [
@@ -5661,7 +5672,7 @@ export const EVENTS = {
         effects: { cash: -320, supplies: -3, stress: 3, exposure: -8, progress: 10, trustAll: 1 },
         consequence: "Cash -$320 · Eighteen days pass · Risk falls",
         outcomeTitle: "Four permits appear in four worker accounts",
-        outcome: "Each traveler downloads an original permit naming the employer, occupation, and salary. The agent's fee remains unexplained and far above the official charge.",
+        outcome: "Each traveler downloads an issued permit naming the employer, occupation and salary. Separate employment-visa applications must still be decided before travel. The agent's fee remains unexplained.",
         setFlags: { permitOriginals: true },
       },
       {
@@ -5676,13 +5687,13 @@ export const EVENTS = {
         effects: { cash: 420, supplies: -2, water: -2, stress: 6, progress: 10, people: { gurpreet: -5, arjun: -5, simran: -3, neha: -3 } },
         consequence: "Cash +$420 · Twelve days pass · Health falls",
         outcomeTitle: "The portal updates during the final shift",
-        outcome: "The local jobs pay as written. By departure day, the four official records show issued permits, but the recruiter still refuses to provide the housing contract.",
+        outcome: "The local jobs pay as written. The four records now show issued permits; separate employment-visa decisions are still needed before travel. The recruiter still refuses to provide the housing contract.",
         setFlags: { permitOriginals: true },
       },
       {
         id: "punjabTakePDF",
-        title: "Travel with the agent's PDF copies",
-        hint: "Leave before every official portal record is complete",
+        title: "Go to the airport with the agent's PDF copies",
+        hint: "Reach the document desk before every official record is complete",
         icon: "navigate",
         tone: "danger",
         route: "ridge",
@@ -5692,7 +5703,7 @@ export const EVENTS = {
         effects: { cash: -600, battery: -10, stress: 18, exposure: 25, progress: 12, trustAll: -1 },
         consequence: "Cash -$600 · Risk +25 · The records do not match",
         outcomeTitle: "Two PDFs carry dates the portal does not show",
-        outcome: "The agent says the portal is slow and sends the group to the airport. Neha keeps screenshots of the conflicting occupation and salary pages.",
+        outcome: "The agent sends them to the airport, but pending records and conflicting PDFs cannot substitute for issued permits or visas. They do not board at this point. Neha saves the discrepancies; independent checks and separate visa applications still lie ahead.",
         setFlags: { permitScreenshots: true },
       },
     ],
@@ -5707,8 +5718,16 @@ export const EVENTS = {
     weatherDetail: "The agent is coaching answers by phone",
     route: "quarry",
     contentNote: "Immigration questioning and possible refusal to travel",
-    source: sources.irelandPermits,
+    source: sources.irelandVisa,
     messages: [
+      {
+        sender: "Story transition",
+        initial: "i",
+        role: "Fictional continuation · processing time not simulated",
+        time: "Before boarding",
+        trusted: true,
+        body: "After a further wait in India, all four permits are independently confirmed as issued and separate long-stay employment visas have been granted in this fictional continuation. This also applies after the premature airport trip with PDFs. The story-day costs do not model official processing times or visa fees. Neither a permit nor a visa guarantees admission to Ireland.",
+      },
       {
         sender: "Recruitment agent",
         initial: "R",
@@ -5719,7 +5738,7 @@ export const EVENTS = {
       },
     ],
     known: [
-      "The group can present its employment purpose, permits, and contracts truthfully.",
+      "Issued permits, separate employment visas and contracts are now available; airline document checks are not an Irish entry decision.",
       "The new hotel address is not part of any employer document.",
       "Airport staff can record suspected recruitment fraud before the group decides whether to fly.",
     ],
@@ -5732,7 +5751,7 @@ export const EVENTS = {
       {
         id: "punjabPresentDocuments",
         title: "Present the real employment purpose",
-        hint: "Show the portal records, contracts, and fee receipts together",
+        hint: "Show issued permits, employment visas, contracts and fee receipts",
         icon: "legal",
         tone: "trusted",
         route: "elmstead",
@@ -5742,7 +5761,7 @@ export const EVENTS = {
         effects: { cash: -700, battery: -9, stress: 9, exposure: -6, progress: 13, trustAll: 1 },
         consequence: "Cash -$700 · Risk falls · The interview is recorded",
         outcomeTitle: "The purpose of travel matches the permits",
-        outcome: "Airline staff verify the issued records. The group answers honestly about the jobs and preserves the agent's contradictory housing and fee messages.",
+        outcome: "The airline checks travel documents. At the Irish border, an immigration officer separately examines their employment purpose and documents and admits them in this fictional outcome. Registration remains a further step; the agent's housing and fee messages are preserved.",
         setFlags: { truthfulDeparture: true },
       },
       {
@@ -5758,7 +5777,7 @@ export const EVENTS = {
         effects: { cash: -650, battery: -14, stress: 23, exposure: 29, progress: 12, trustAll: -1 },
         consequence: "Cash -$650 · Stress +23 · Risk +29",
         outcomeTitle: "The rehearsed story fails at the document desk",
-        outcome: "The group is questioned for hours. Official checks eventually confirm issued work records, but the false explanation follows them into the arrival file.",
+        outcome: "The tourist explanation is challenged. The group corrects it and presents the issued permits and employment visas. After separate Irish border questioning, they are admitted in this fictional branch. Misrepresentation can lead to refusal; these documents do not guarantee entry. The false explanation remains in the file.",
       },
       {
         id: "punjabReportAgent",
@@ -5800,7 +5819,7 @@ export const EVENTS = {
         role: "Verified information",
         time: "08:18",
         trusted: true,
-        body: "Keep the original permit yourself. Employment permits and residence permission are related but separate. Register as required and keep copies outside employer-controlled housing.",
+        body: "Keep your permit and visa records. Border admission has occurred in this fictional branch; residence registration is a further process. Keep copies outside employer-controlled housing. The desk's availability and the story's timing are invented, not a service or appointment guarantee.",
       },
     ],
     known: [
@@ -5949,8 +5968,8 @@ export const EVENTS = {
     weather: "Cold rain under security lights",
     weatherDetail: "The employer has ended every shift without notice",
     route: "quarry",
-    contentNote: "Job loss, expiring status, and risk of undocumented work",
-    source: sources.irelandReactivation,
+    contentNote: "Redundancy, individual permission checks, and risk of undocumented work",
+    source: sources.irelandRedundancy,
     messages: [
       {
         sender: "Migrant-rights adviser",
@@ -5958,12 +5977,12 @@ export const EVENTS = {
         role: "Verified information",
         time: "18:12",
         trusted: true,
-        body: "Workers who entered on valid permits and fell out of the system through exploitation or circumstances outside their control may be able to request temporary permission and then apply for a Reactivation Employment Permit. Eligibility is individual and not guaranteed.",
+        body: "Closure does not itself establish that your permission has expired. Qualifying General or Critical Skills permit holders must notify redundancy within four weeks and have up to six months to seek a new job. Check each permit and permission first. Reactivation is a separate possibility for eligible former permit holders, including some who fell out of the system through no fault of their own; it is not an automatic consequence of redundancy.",
       },
     ],
     known: [
       "The employer has stopped trading and the named jobs no longer exist.",
-      "A reactivation application begins with Immigration Service Delivery and requires a genuine new job offer.",
+      "An adviser can distinguish redundancy/new-employer options from reactivation; eligibility, deadlines and permission must be checked individually.",
       "Cash-work recruiters outside the gate offer immediate jobs without payslips or permission checks.",
     ],
     assumed: [
@@ -5974,7 +5993,7 @@ export const EVENTS = {
     choices: [
       {
         id: "punjabContactReactivation",
-        title: "Ask for reactivation and temporary-permission advice",
+        title: "Check redundancy and individual permit options",
         hint: "Document lawful entry, exploitation, closure, and each person's skills",
         icon: "legal",
         tone: "trusted",
@@ -5984,7 +6003,7 @@ export const EVENTS = {
         effects: { cash: -260, battery: -10, stress: 4, exposure: -22, progress: 14, trustAll: 1 },
         consequence: "Cash -$260 · Risk falls · Four individual files begin",
         outcomeTitle: "The adviser refuses to promise one answer for four people",
-        outcome: "The group records how each worker entered, worked, and lost the named job. Temporary-permission and new-employer steps are explained separately.",
+        outcome: "In this fictional appointment, the adviser records dates and permit types, checks redundancy notification and new-employer options, and separately considers whether anyone needs reactivation advice. No loss of permission, eligibility letter or approval is presumed from the closure.",
         setFlags: { reactivationAdvice: true },
       },
       {
@@ -6015,7 +6034,7 @@ export const EVENTS = {
         effects: { cash: -700, battery: -16, stress: 22, exposure: 34, progress: 15, trustAll: -1 },
         consequence: "Cash -$700 · Risk +34 · The replacement record fails",
         outcomeTitle: "The company number belongs to a dissolved business",
-        outcome: "The new PDF cannot be verified. The agent blocks the group, leaving the workers without a named employer and with less time to regularize their position.",
+        outcome: "The new PDF cannot be verified. The agent blocks the group. The payment has not secured an employer change or established anyone's immigration status; individual notification and permission deadlines still need checking.",
         setFlags: { falseTransfer: true },
       },
     ],
@@ -6114,7 +6133,7 @@ export const EVENTS = {
     weather: "Bright sky between showers",
     weatherDetail: "Each worker enters a separate appointment",
     route: "elmstead",
-    contentNote: "Reactivation applications, voluntary return, and undocumented labor",
+    contentNote: "Individual permit options, voluntary return, and undocumented labor",
     source: sources.irelandReactivation,
     messages: [
       {
@@ -6123,7 +6142,7 @@ export const EVENTS = {
         role: "Official information",
         time: "09:12",
         trusted: true,
-        body: "A Reactivation Employment Permit is intended for eligible workers who entered legally and fell out of the system through no fault of their own or workplace exploitation. Temporary immigration permission and a genuine new job offer must be addressed first. Approval is not guaranteed.",
+        body: "First check whether redundancy and a new-employer application fit your existing permission. Reactivation has separate eligibility conditions. An eligible applicant first seeks ISD permission; a temporary Stamp 1 and a Reactivation Employment Permit letter are needed before the permit application, which also requires a genuine job offer. Neither permission nor a permit is guaranteed. This fictional appointment is not a promise of service availability.",
       },
     ],
     known: [
@@ -6139,7 +6158,7 @@ export const EVENTS = {
     choices: [
       {
         id: "punjabReactivationReview",
-        title: "Enter temporary-permission and reactivation review",
+        title: "Seek individual permission and employment-permit review",
         hint: "Complete the route with four individual outcomes still pending",
         icon: "legal",
         tone: "trusted",
@@ -6147,9 +6166,9 @@ export const EVENTS = {
         days: 42,
         next: null,
         effects: { cash: -220, stress: 5, exposure: -34, progress: 100, trustAll: 1 },
-        consequence: "Destination reached · Four reactivation reviews begin",
-        outcomeTitle: "The new applications name workers before employers",
-        outcome: "The group enters temporary support while each person seeks a genuine offer and files the correct permit application. Wage complaints continue separately, and no approval is promised.",
+        consequence: "Destination reached · Four individual reviews begin",
+        outcomeTitle: "Four files, without a shared eligibility decision",
+        outcome: "In this fictional outcome, advisers help each worker check the appropriate route and any unmet requirements. A new offer, permission letter or permit application is not presumed to exist. Wage complaints remain separate. No support placement, temporary permission or approval is guaranteed by asking for review.",
         contextBonuses: [
           {
             flag: "permitCheck",
@@ -6180,7 +6199,7 @@ export const EVENTS = {
           type: "ireland_reactivation_pending",
           status: "won",
           title: "Back inside a lawful process",
-          copy: "The Punjab group reaches temporary permission and reactivation review in Ireland. Their permit decisions, wage claims, family debts, and long-term residence remain unresolved.",
+          copy: "The Punjab group seeks individual permission and employment-permit review in Ireland, including reactivation only where eligible. No temporary permission or permit approval is presumed. Their wage claims, family debts and long-term residence remain unresolved.",
         },
       },
       {
@@ -7029,10 +7048,11 @@ export const SUPPLY_STOPS = {
 };
 
 export function createInitialGame(familyId = "ramirez") {
+  if (familyId === CAMBODIA_FAMILY.id) return newCambodiaGame();
   const family = getFamilyPreset(familyId);
   return {
     version: GAME_VERSION,
-    narrativeEdition: family.id === "haddad" ? "haddad-2015" : null,
+    narrativeEdition: family.id === "haddad" ? "haddad-2015" : family.id === "ramirez" ? "ramirez-2024" : null,
     familyId: family.id,
     runId: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
     phase: "decision",
@@ -7068,6 +7088,7 @@ export function createInitialGame(familyId = "ramirez") {
 }
 
 export function getEvent(game) {
+  if (isCambodiaJourney(game)) return cambodiaEvent(game);
   const event = EVENTS[game.eventId];
   const followUp = repairFollowUp(game);
   return followUp ? { ...event, messages: [...event.messages, { sender: "Ibrahima", initial: "I", role: "Group notebook", time: event.time, trusted: true, body: followUp }] } : event;
@@ -7404,6 +7425,7 @@ function defersThresholdEnding(game) {
 }
 
 export function requiresTravelPlan(game) {
+  if (isCambodiaJourney(game)) return false;
   return Boolean(
     game.phase === "outcome"
       && game.status === "playing"
@@ -7719,6 +7741,7 @@ export function resolveTravelIncident(game, responseId) {
 }
 
 export function chooseOption(game, choiceId) {
+  if (isCambodiaJourney(game)) return chooseCambodiaJourney(game, choiceId);
   if (game.phase !== "decision" || game.status !== "playing" || game.pendingIncident) return game;
   const event = getEvent(game);
   const choice = event.choices.find((item) => item.id === choiceId);
@@ -7929,6 +7952,7 @@ export function planTravelLeg(game, strategyId, leadPersonId = null) {
 
 export function useMedicine(game, personId) {
   if (repairActive(game)) return game;
+  if (isCambodiaJourney(game)) return game;
   const traveler = game.people[personId];
   if (game.status !== "playing" || !traveler || traveler.alive === false || traveler.health >= 100 || game.resources.medicine < 1) return game;
   const person = getPeople(game).find((item) => item.id === personId);
@@ -7955,6 +7979,7 @@ export function useMedicine(game, personId) {
 }
 
 export function continueJourney(game, options = {}) {
+  if (isCambodiaJourney(game)) return continueCambodiaJourney(game);
   if (game.phase !== "outcome" || game.pendingIncident) return game;
   if (requiresTravelPlan(game)) return game;
   if (game.pendingEnding) {
@@ -7980,21 +8005,6 @@ export function continueJourney(game, options = {}) {
   };
   if (!options.incidents || game.currentOutcome?.deferThresholdEnding) return nextGame;
   return maybeStartTravelIncident(nextGame, options.incidentRolls);
-}
-
-export function getJourneyScore(game) {
-  const living = Object.values(game.people).filter((person) => person.alive !== false);
-  const averageHealth = living.length
-    ? Math.round(living.reduce((sum, person) => sum + person.health, 0) / living.length)
-    : 0;
-  const averageTrust = living.length
-    ? living.reduce((sum, person) => sum + person.trust, 0) / living.length
-    : 0;
-  return clamp(
-    Math.round(averageHealth * 0.43 + averageTrust * 8 + game.resources.cash * 0.01 + (100 - game.resources.exposure) * 0.1 + (game.socialClimate ?? 50) * 0.06),
-    0,
-    100,
-  );
 }
 
 export function isSavedGameValid(value) {

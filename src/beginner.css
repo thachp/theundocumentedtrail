@@ -1232,6 +1232,14 @@
   animation: interface-overlay-in 160ms ease-out both;
 }
 
+dialog.cinematic-family-backdrop { width:100%; height:100%; max-width:none; max-height:none; margin:0; border:0; }
+dialog.cinematic-family-backdrop:not([open]) { display:none; }
+.cinematic-family-dialog :focus-visible { outline:3px solid #edc778; outline-offset:3px; }
+.cinematic-story-cover { min-height:138px; display:flex; flex-direction:column; justify-content:center; gap:8px; padding:18px; color:#ead6af; background:linear-gradient(135deg,#233f40,#102328); }
+.cinematic-story-cover span { font:20px/1.2 Georgia,serif; letter-spacing:0.1em; }
+.cinematic-story-cover strong { font:26px/1.2 Georgia,serif; }
+.cinematic-story-cover small { font-size:13px; }
+
 .cinematic-family-dialog {
   width: min(1180px, 100%);
   max-height: calc(100vh - 40px);
@@ -1277,8 +1285,8 @@
 .cinematic-family-copy em { display: flex; align-items: center; gap: 6px; margin-top: auto; color: #e6bd70; font-size: 9px; line-height: 1.35; font-style: normal; }
 .cinematic-family-copy em svg { width: 13px; height: 13px; flex: 0 0 auto; }
 .cinematic-family-actions { display: grid; gap: 6px; margin-top: auto; padding: 0 12px 12px; }
-.cinematic-family-actions button { min-height: 36px; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 7px 9px; cursor: pointer; font-size: 9px; font-weight: 600; }
-.cinematic-family-actions button svg { width: 13px; height: 13px; }
+.cinematic-family-actions button,.cinematic-family-actions a { min-height: 44px; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 7px 9px; cursor: pointer; font-size: 12px; font-weight: 600; text-decoration:none; }
+.cinematic-family-actions button svg,.cinematic-family-actions a svg { width: 13px; height: 13px; }
 .cinematic-family-actions .continue { color: #08201e; border: 1px solid #a2eedf; background: var(--cinematic-teal); }
 .cinematic-family-actions .restart { color: #b8c5c1; border: 1px solid var(--cinematic-line); background: transparent; }
 .cinematic-family-actions .restart:hover { color: #f0b0a4; border-color: rgba(229, 131, 114, 0.58); }
@@ -1289,7 +1297,7 @@
 .cinematic-journey-archive > header small { color: var(--cinematic-teal); font-size: 7px; text-transform: uppercase; letter-spacing: 0.15em; }
 .cinematic-journey-archive > header strong { font-family: Georgia, "Times New Roman", serif; font-size: 16px; font-weight: 500; }
 .cinematic-journey-archive > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-.cinematic-journey-archive article { min-width: 0; display: grid; grid-template-columns: minmax(140px, 1.7fr) auto repeat(3, minmax(46px, auto)); align-items: center; gap: 10px; padding: 9px 11px; border: 1px solid rgba(197, 209, 208, 0.2); background: rgba(12, 34, 39, 0.72); }
+.cinematic-journey-archive article { min-width: 0; display: grid; grid-template-columns: minmax(140px, 1.7fr) auto repeat(2, minmax(46px, auto)); align-items: center; gap: 10px; padding: 9px 11px; border: 1px solid rgba(197, 209, 208, 0.2); background: rgba(12, 34, 39, 0.72); }
 .cinematic-journey-archive article > span { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .cinematic-journey-archive article > span:first-child strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .cinematic-journey-archive article strong { font-size: 10px; }
@@ -1432,7 +1440,7 @@
 
 .cinematic-ending-stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin: 18px 0;
   border-top: 1px solid var(--cinematic-line);
   border-bottom: 1px solid var(--cinematic-line);
@@ -1614,8 +1622,7 @@
   .cinematic-family-carousel-controls > span small { max-width: 150px; }
   .cinematic-family-portrait img { height: 112px; }
   .cinematic-family-copy { min-height: 158px; }
-  .cinematic-journey-archive article { grid-template-columns: minmax(120px, 1.5fr) auto repeat(2, minmax(44px, auto)); }
-  .cinematic-journey-archive article > span:last-child { display: none; }
+  .cinematic-journey-archive article { grid-template-columns: minmax(0, 1fr) auto; }
   .cinematic-tutorial { padding: 24px 18px 18px; }
   .cinematic-tutorial-lessons { grid-template-columns: 1fr; }
   .cinematic-tutorial-lessons span { min-height: 64px; flex-direction: row; align-items: center; }

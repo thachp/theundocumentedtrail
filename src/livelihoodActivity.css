@@ -15,4 +15,4 @@
 .livelihood-ledger { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px 20px; }
 .livelihood-ledger dd { margin:0; }
 @media(max-width:480px) { .livelihood-dialog { padding:16px; } .livelihood-actions { display:grid; } }
-@media(prefers-reduced-motion:reduce) { .livelihood-dialog * { animation:none !important; transition:none !important; } }
+@media(prefers-reduced-motion:reduce) { .livelihood-dialog,.livelihood-dialog *,.livelihood-trigger { animation:none !important; transition:none !important; scroll-behavior:auto !important; } }

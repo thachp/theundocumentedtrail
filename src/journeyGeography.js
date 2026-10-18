@@ -1,4 +1,5 @@
 import { EVENTS, FAMILY_PRESETS } from "./game.js";
+import { getCambodiaGeography } from "./cambodiaGeography.js";
 
 // Coordinates are [longitude, latitude] in decimal degrees. These are regional
 // anchors for the authored story, never addresses, GPS fixes, or navigable tracks.
@@ -77,6 +78,7 @@ const ENDING_LOCATIONS = Object.freeze({
 });
 
 export function getJourneyGeography(game) {
+  if (game.familyId === "cambodia-1979") return getCambodiaGeography(game.cambodiaState);
   const family = FAMILY_PRESETS[game.familyId];
   const validLocation = (id) => EVENT_LOCATIONS[id]?.familyId === family?.id;
   const eventId = validLocation(game.eventId) ? game.eventId : family?.startEventId;

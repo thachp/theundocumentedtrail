@@ -4,9 +4,10 @@ import land from "./mapLand.json";
 import { getJourneyDate } from "./journeyHistory.js";
 import "./journeyMap.css";
 
-export function JourneyMap({ game, compact = false, fitViewport = false }) {
+export function JourneyMap({ game, compact = false, fitViewport = false, geography }) {
   const id = useId();
-  const { family, bounds, itinerary, current, points } = getJourneyGeography(game);
+  const model = geography ?? getJourneyGeography(game);
+  const { family, bounds, itinerary, current, points } = model;
   const path = (ring) => ring.map((coordinate, i) => `${i ? "L" : "M"}${projectCoordinate(coordinate, bounds).map((n) => n.toFixed(2)).join(",")}`).join(" ") + "Z";
   const currentPoint = points.at(-1);
   const same = (a, b) => a[0] === b[0] && a[1] === b[1];
@@ -17,12 +18,12 @@ export function JourneyMap({ game, compact = false, fitViewport = false }) {
     <small>{entry.uncertainty}</small>
   </li>)}</ol>;
   const mapKey = <div className="journey-map-key"><span><i />Current</span><span><i />Visited</span><span><i />Story connection</span></div>;
-  const mapNote = <p className="journey-map-note">Dashed connections show story order, not exact roads, flights or sea tracks. Unspecified places use regional anchors.</p>;
+  const mapNote = <p className="journey-map-note">{model.note ?? "Dashed connections show story order, not exact roads, flights or sea tracks. Unspecified places use regional anchors."}</p>;
   const mapCredit = <a className="journey-map-credit" href="https://www.naturalearthdata.com/about/terms-of-use/" target="_blank" rel="noreferrer">Land: Natural Earth · Equirectangular projection</a>;
   return (
     <figure className={`journey-map ${compact ? "journey-map-compact" : ""} ${fitViewport ? "journey-map-fit" : ""}`} data-family={family.id} data-event={current.eventId}>
       <figcaption>
-        <span>{family.shortName} · {getJourneyDate(game)}</span>
+        <span>{family.shortName} · {model.dateLabel ?? getJourneyDate(game)}</span>
         <strong>{current.label}</strong>
         <small>{current.uncertainty}</small>
       </figcaption>
@@ -31,7 +32,7 @@ export function JourneyMap({ game, compact = false, fitViewport = false }) {
         <desc id={`${id}-description`}>North is up. Approximate event locations joined in visited story order. Current location: {current.label}. {current.uncertainty}. Read the text itinerary below.</desc>
         <defs><pattern id={`${id}-grid`} width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0H0V50" fill="none" stroke="#45675f" strokeOpacity=".12" /></pattern></defs>
         <rect width="600" height="500" fill={`url(#${id}-grid)`} />
-        <g className="journey-map-land" aria-hidden="true">{land[family.id].map((country) => <path key={country.name} d={country.rings.map(path).join(" ")} />)}</g>
+        <g className="journey-map-land" aria-hidden="true">{land[model.landKey ?? family.id].map((country) => <path key={country.name} d={country.rings.map(path).join(" ")} />)}</g>
         <g className="journey-map-traveled" aria-hidden="true">
           <polyline points={points.map((point) => point.join(",")).join(" ")} />
           {uniquePoints.map(([x, y], index) => <circle key={`${x}-${y}`} cx={x} cy={y} r="5"><title>{`Visited location ${index + 1}`}</title></circle>)}
