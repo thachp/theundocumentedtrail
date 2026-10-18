@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-18",
+  "baseline": "b62c59e08d9a7bfba7feb088a4d6d09bbfd98727",
+  "ticket": 26,
+  "scenes": 10,
+  "choices": 30,
+  "exhaustiveChoiceCombinations": 59049,
+  "testCommand": "npm test",
+  "expectedTests": 143,
+  "buildCommand": "npm run build",
+  "buildArtifacts": [
+    "dist/client/index.html",
+    "dist/server/index.js",
+    "dist/.openai/hosting.json"
+  ],
+  "focusedCoverage": {
+    "command": "node --test --experimental-test-coverage tests/authoredJourney.test.mjs",
+    "authoredJourney": {
+      "lines": 100,
+      "branches": 91.49,
+      "functions": 100
+    },
+    "authoredJourneyStore": {
+      "lines": 100,
+      "branches": 73.58,
+      "functions": 76.92
+    }
+  },
+  "browser": {
+    "engine": "Installed Chromium through Playwright",
+    "widths": [
+      1365,
+      390,
+      320
+    ],
+    "reducedMotion": "Emulated reduce; computed hero animation duration 0.00001s",
+    "checks": [
+      "complete every scene",
+      "hero request/current scene association",
+      "refresh resume",
+      "Guided to Planning and back",
+      "Back restores previous choice",
+      "Home and End chooser keyboard discovery",
+      "switch to Ramirez and back preserves story save",
+      "no horizontal overflow in initial Guided view",
+      "no page errors",
+      "blocked scene image falls back only to this family cover",
+      "stable-main Planning map is 440px high on desktop and bounded at narrow widths; no horizontal overflow or generic phone"
+    ],
+    "supportingLogs": [
+      "/tmp/browser-full-stable.log",
+      "/tmp/browser-chooser-stable.log",
+      "/tmp/browser-assets-stable.log",
+      "/tmp/browser-fallback-stable.log",
+      "/tmp/browser-map-stable.log"
+    ],
+    "screenshots": [
+      "/tmp/mariel-1980-1365-final-guided.png",
+      "/tmp/mariel-1980-390-final-guided.png",
+      "/tmp/mariel-1980-320-final-guided.png"
+    ]
+  },
+  "limits": [
+    "No actual screen-reader pass",
+    "No actual touch device",
+    "No full browser zoom or platform-specific bfcache certification",
+    "No external community, language, legal or historical review",
+    "Root exact-head QA and owner approval still required",
+    "No merge, deployment or publication performed"
+  ],
+  "testsPassed": 143,
+  "buildPassed": true,
+  "preservedBaselineTree": "926b070c270fa106156e2135310840b321152ea5"
+}

@@ -481,7 +481,11 @@ const JOURNEY_STAGE_BY_EVENT = Object.freeze({
   rohingyaAceh: "review",
 });
 
+import { authoredStory } from "./authoredStories.js";
+import { isAuthoredJourney, authoredGame, storyFamily, authoredEvent, chooseAuthored, continueAuthored, storyScene } from "./authoredJourney.js";
+
 export function getJourneyStage(game) {
+  if (isAuthoredJourney(game)) return JOURNEY_STAGES[storyScene(game).stage];
   if (isCambodiaJourney(game)) return JOURNEY_STAGES[game.eventId < "C03" ? 0 : game.eventId < "C05" ? 1 : game.eventId < "C08" ? 2 : 3];
   const stageId = game.progress >= 100 ? "review" : (JOURNEY_STAGE_BY_EVENT[game.eventId] ?? "transit");
   return JOURNEY_STAGES.find((stage) => stage.id === stageId);
@@ -489,6 +493,7 @@ export function getJourneyStage(game) {
 
 export function getFamilyPreset(gameOrId = "ramirez") {
   const familyId = typeof gameOrId === "string" ? gameOrId : gameOrId?.familyId;
+  if (authoredStory(familyId)) return storyFamily(authoredStory(familyId));
   if (familyId === CAMBODIA_FAMILY.id) return CAMBODIA_FAMILY;
   return FAMILY_PRESETS[familyId] ?? FAMILY_PRESETS.ramirez;
 }
@@ -7047,6 +7052,7 @@ export const SUPPLY_STOPS = {
 };
 
 export function createInitialGame(familyId = "ramirez") {
+  if (authoredStory(familyId)) return authoredGame(authoredStory(familyId));
   if (familyId === CAMBODIA_FAMILY.id) return newCambodiaGame();
   const family = getFamilyPreset(familyId);
   return {
@@ -7087,6 +7093,7 @@ export function createInitialGame(familyId = "ramirez") {
 }
 
 export function getEvent(game) {
+  if (isAuthoredJourney(game)) return authoredEvent(game);
   if (isCambodiaJourney(game)) return cambodiaEvent(game);
   return EVENTS[game.eventId];
 }
@@ -7420,6 +7427,7 @@ function defersThresholdEnding(game) {
 }
 
 export function requiresTravelPlan(game) {
+  if (isAuthoredJourney(game)) return false;
   if (isCambodiaJourney(game)) return false;
   return Boolean(
     game.phase === "outcome"
@@ -7736,6 +7744,7 @@ export function resolveTravelIncident(game, responseId) {
 }
 
 export function chooseOption(game, choiceId) {
+  if (isAuthoredJourney(game)) return chooseAuthored(game, choiceId);
   if (isCambodiaJourney(game)) return chooseCambodiaJourney(game, choiceId);
   if (game.phase !== "decision" || game.status !== "playing" || game.pendingIncident) return game;
   const event = getEvent(game);
@@ -7945,6 +7954,7 @@ export function planTravelLeg(game, strategyId, leadPersonId = null) {
 }
 
 export function useMedicine(game, personId) {
+  if (isAuthoredJourney(game)) return game;
   if (isCambodiaJourney(game)) return game;
   const traveler = game.people[personId];
   if (game.status !== "playing" || !traveler || traveler.alive === false || traveler.health >= 100 || game.resources.medicine < 1) return game;
@@ -7972,6 +7982,7 @@ export function useMedicine(game, personId) {
 }
 
 export function continueJourney(game, options = {}) {
+  if (isAuthoredJourney(game)) return continueAuthored(game);
   if (isCambodiaJourney(game)) return continueCambodiaJourney(game);
   if (game.phase !== "outcome" || game.pendingIncident) return game;
   if (requiresTravelPlan(game)) return game;

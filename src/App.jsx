@@ -1,5 +1,5 @@
 import { commitJourneyChoice } from "./journeyChoiceActions.js";
-import { isCambodiaJourney } from "./cambodiaJourney.js";
+import { isSharedHouseholdJourney as isCambodiaJourney } from "./sharedHouseholdJourney.js";
 import { CambodiaResources, CambodiaJourneyContext, CambodiaPersonDialog } from "./CambodiaJourneyUI.jsx";
 import { selectJourneyGame as selectFamilyGame } from "./selectJourney.js";
 import { EndingDialog } from "./EndingDialog.jsx";
@@ -146,7 +146,7 @@ function CharacterCard({ person, state, stress, familyId, active, onClick }) {
           <span><Sparkle weight="duotone" aria-hidden="true" />{person.skills[0]}</span>
           <span><Handshake weight="duotone" aria-hidden="true" />{person.skills[1]}</span>
         </span>
-        {familyId !== "cambodia-1979" && <><span className={`condition ${condition.tone}`}>
+        {!isCambodiaJourney({familyId}) && <><span className={`condition ${condition.tone}`}>
           <i />{state.alive === false ? condition.label : `${condition.label} · ${state.health}%`}
         </span>
         <span className="trust-row">
@@ -610,7 +610,7 @@ export function App() {
           <span className="header-actions">
             <button className="planning-journey-select" onClick={() => setShowFamilySelection(true)} aria-label="Choose a journey" data-sound="tap">Journeys</button>
             <button onClick={() => setShowHistory(true)} aria-label="Explore the history" data-tooltip="Historical context and sources" data-sound="tap"><BookOpenText weight="duotone" /></button>
-            <a data-ending-return className="guided-return" href={isCambodiaJourney(game) ? "/?story=cambodia-1979" : "/"} data-tooltip="Switch to the simpler story view">Guided view</a>
+            <a data-ending-return className="guided-return" href={isCambodiaJourney(game) ? `/?story=${game.familyId}` : "/"} data-tooltip="Switch to the simpler story view">Guided view</a>
             <a
               className="source-link"
               href="https://github.com/thachp/theundocumentedtrail"
@@ -647,7 +647,7 @@ export function App() {
         </div>}</>
       </header>
 
-      {isCambodiaJourney(game) && <><img className="planning-cambodia-hero" src={event.heroImage} alt={event.heroAlt} /><p className="cambodia-hero-credit">Illustrative fictional household · {event.time}</p><CambodiaJourneyContext game={game} onChange={setGame} /></>}
+      {isCambodiaJourney(game) && <><img className="planning-cambodia-hero" style={{objectPosition:event.heroFocalPoint ?? "50% 45%"}} onError={e=>{if(e.currentTarget.dataset.fallback!=="cover"){e.currentTarget.dataset.fallback="cover";e.currentTarget.src=getFamilyPreset(game).heroImage;}}} src={event.heroImage} alt={event.heroAlt} /><p className="cambodia-hero-credit">Illustrative fictional household · {event.time}</p><CambodiaJourneyContext game={game} onChange={setGame} /></>}
       <div className="game-grid">
         <section className="map-stage geographic-map-stage" aria-label="Journey geography">
           <JourneyMap game={game} fitViewport />

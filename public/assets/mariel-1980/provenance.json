@@ -1,0 +1,129 @@
+{
+  "generator": "OpenAI image_gen tool; model version/seed not exposed",
+  "date": "2026-10-18",
+  "reference": "Original generated fictional family cover; no third-party image reference",
+  "rightsLimit": "Generated illustrations, not archival photos. No exclusive copyright or external rights certification claimed.",
+  "assets": [
+    {
+      "sceneId": "cover",
+      "path": "/assets/mariel-1980/cover.webp",
+      "sourceOriginal": "exec-8b5a5d99-5d1c-47c6-ace9-8e2783fa5961.png",
+      "originalSHA256": "f6d91eaf62885ab050a13dd553d6d48fa029e6d921963ed9b17f6f1b27123c0f",
+      "webpSHA256": "f523b1a83ad5fbad591f2f033a865041463219cc9e24bd306874757770fbdee1",
+      "dimensions": "1672x941",
+      "bytes": 142916,
+      "focalPoint": "50% 45%",
+      "alt": "Original fictional The Valdés family family cover"
+    },
+    {
+      "sceneId": "mariel-01",
+      "path": "/assets/mariel-1980/mariel-01.webp",
+      "sourceOriginal": "exec-cb7d2c7f-a5fb-4d99-ab7b-0862b680634b.png",
+      "originalSHA256": "6c41f170ff16b7702fb094d562ec241d1794f74708825a9bebd2e83266cefeaa",
+      "webpSHA256": "d52ee6fcac739d43bbca1797fb5818d5fdd2db1c788af91564cfa99d133957bd",
+      "dimensions": "1672x941",
+      "bytes": 209252,
+      "focalPoint": "50% 45%",
+      "alt": "Original illustration: A table with three voices, Havana, Cuba, May 1980; fictional The Valdés family, not archival imagery"
+    },
+    {
+      "sceneId": "mariel-02",
+      "path": "/assets/mariel-1980/mariel-02.webp",
+      "sourceOriginal": "exec-b775d615-bfcc-4b0b-b028-a5fd5dcc034c.png",
+      "originalSHA256": "c35feccb4227ccf9c4544c48ebd96b2a69662c66b1c4643f0be62611a65c709f",
+      "webpSHA256": "ac2bb8f38fb9bd294d028e6e8a7530c3fcc3e28e246a0f87d0213d1f12f27b1c",
+      "dimensions": "1672x941",
+      "bytes": 201198,
+      "focalPoint": "50% 45%",
+      "alt": "Original illustration: Room in a small bag, Havana, Cuba, May 1980; fictional The Valdés family, not archival imagery"
+    },
+    {
+      "sceneId": "mariel-03",
+      "path": "/assets/mariel-1980/mariel-03.webp",
+      "sourceOriginal": "exec-3d7d6ce3-cc2e-48c4-af3d-d3b92c691960.png",
+      "originalSHA256": "35b841427164e14b4ccd51fabbf11190a344aae764c7d3953882d0f504c7da63",
+      "webpSHA256": "e91dd750bc5588066a6eea00b3f7af831559835253e2e1d4a2a46311dfb4aac2",
+      "dimensions": "1672x941",
+      "bytes": 186942,
+      "focalPoint": "50% 45%",
+      "alt": "Original illustration: Waiting without a timetable, Mariel harbor, Cuba, May 1980; fictional The Valdés family, not archival imagery"
+    },
+    {
+      "sceneId": "mariel-04",
+      "path": "/assets/mariel-1980/mariel-04.webp",
+      "sourceOriginal": "exec-2f23ba54-4172-4d23-ad86-e8437107dda2.png",
+      "originalSHA256": "ba8dcf9b475a9c566dca95b6b61c7013ad927f67f331df1dc035a92524c25938",
+      "webpSHA256": "1f84b064d16e1626c3e5011143aa0fce491d9082c07f0a02df4c1f84809a33dd",
+      "dimensions": "1672x941",
+      "bytes": 188506,
+      "focalPoint": "50% 45%",
+      "alt": "Original illustration: The hours between shores, Florida Straits · approximate sea region, May 1980; fictional The Valdés family, not archival imagery"
+    },
+    {
+      "sceneId": "mariel-05",
+      "path": "/assets/mariel-1980/mariel-05.webp",
+      "sourceOriginal": "exec-b74f0680-a65a-48a8-b3aa-00883cc0a836.png",
+      "originalSHA256": "ef56eeb0ef114d2381408a01f15f70e8747131b37d3a449133b95a00bf4bfd93",
+      "webpSHA256": "83e243adf48fd77e354e4b0851da4bded930f4be7a92a8d7e76f7d77e483b046",
+      "dimensions": "1672x941",
+      "bytes": 162480,
+      "focalPoint": "50% 45%",
+      "alt": "Original illustration: Arrival is a beginning, Key West, Florida, May 1980; fictional The Valdés family, not archival imagery"
+    },
+    {
+      "sceneId": "mariel-06",
+      "path": "/assets/mariel-1980/mariel-06.webp",
+      "sourceOriginal": "exec-7b510866-5b10-460a-b16b-e6358e55b5f5.png",
+      "originalSHA256": "2d28c37e889e0d15fe17b1ae9612777d18efdc5fa8a058185de21d991185e530",
+      "webpSHA256": "d7d89b25ba2a495431c6ebbd1e9b407defa626f1e825097c59b86ba9ce215c26",
+      "dimensions": "1672x941",
+      "bytes": 154010,
+      "focalPoint": "50% 45%",
+      "alt": "Original illustration: Temporary rooms, Eglin area, Florida, May–June 1980; fictional The Valdés family, not archival imagery"
+    },
+    {
+      "sceneId": "mariel-07",
+      "path": "/assets/mariel-1980/mariel-07.webp",
+      "sourceOriginal": "exec-ac48decb-dae3-405d-a154-1756fae4b090.png",
+      "originalSHA256": "3da578e9e76608a6e1eb717fc8ef73ac05d624c438566db40c6200a23fc41580",
+      "webpSHA256": "230978f3047373236925872572f758ceb891b55816c82ebb9b39c00d7936dd9f",
+      "dimensions": "1672x941",
+      "bytes": 167614,
+      "focalPoint": "50% 45%",
+      "alt": "Original illustration: Isabel’s spare room, Miami, Florida, Summer 1980; fictional The Valdés family, not archival imagery"
+    },
+    {
+      "sceneId": "mariel-08",
+      "path": "/assets/mariel-1980/mariel-08.webp",
+      "sourceOriginal": "exec-f6dce731-77f9-4d02-98ec-fbb366b1f866.png",
+      "originalSHA256": "76b5a247385644ccd83c2cfcd4dbbe9be8321df620b6d0bad1ff59aa4ae1ea4a",
+      "webpSHA256": "88efe55c7805786c16e9c92c36096e0ca0b03adacf161f1cdd6e510d9abf5846",
+      "dimensions": "1672x941",
+      "bytes": 163132,
+      "focalPoint": "50% 45%",
+      "alt": "Original illustration: Work without a promise, Miami, Florida, Late summer 1980; fictional The Valdés family, not archival imagery"
+    },
+    {
+      "sceneId": "mariel-09",
+      "path": "/assets/mariel-1980/mariel-09.webp",
+      "sourceOriginal": "exec-1440a830-af6e-45e0-a525-7cc0e883b026.png",
+      "originalSHA256": "d5a4278417bc36645bb9cd1c0c84f386aaafd4040ba0b6847fd5abd6704e3c3f",
+      "webpSHA256": "2012c0696f0133159b18f4d2e4cb0eac141af35f717b0728054e5109af2565d5",
+      "dimensions": "1672x941",
+      "bytes": 146948,
+      "focalPoint": "50% 45%",
+      "alt": "Original illustration: A school day and a workday, Miami, Florida, After 10 October 1980; fictional The Valdés family, not archival imagery"
+    },
+    {
+      "sceneId": "mariel-10",
+      "path": "/assets/mariel-1980/mariel-10.webp",
+      "sourceOriginal": "exec-83018be4-9b26-4eb7-a890-d8474ed34238.png",
+      "originalSHA256": "19787ff5d2a85f215a854863532533a7882254e79088707d89f391e93a6c9895",
+      "webpSHA256": "7d641bd8fca4d96c5bf227a483def590a14ede0b398f0a6087defebdf5888b8f",
+      "dimensions": "1672x941",
+      "bytes": 165326,
+      "focalPoint": "50% 45%",
+      "alt": "Original illustration: A table of their own making, Miami, Florida, 1981; fictional The Valdés family, not archival imagery"
+    }
+  ]
+}

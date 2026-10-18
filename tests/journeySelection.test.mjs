@@ -1,3 +1,4 @@
+import { AUTHORED_STORIES } from "../src/authoredStories.js";
 import assert from "node:assert/strict";
 import test from "node:test";
 import React from "react";
@@ -11,12 +12,12 @@ import { CAMBODIA_SAVE_KEY, createCambodiaState, loadCambodia } from "../src/cam
 
 test("the normal chooser includes Cambodia without adding a survival preset or changing its direct route",()=>{
   const choices=getJourneyChoices({PROD:true});
-  assert.equal(choices.length,7);
+  assert.equal(choices.length,7+AUTHORED_STORIES.length);
   assert.deepEqual(choices.slice(0,6).map(c=>c.id),Object.keys(FAMILY_PRESETS));
   assert.equal(Object.keys(FAMILY_PRESETS).length,6);
-  const story=choices.at(-1);
+  const story=choices.find(c=>c.id==="cambodia-1979");
   assert.equal(story.kind,"historical");assert.equal(story.name,"A Place for Tomorrow");assert.match(story.origin,/Cambodia/);assert.equal(story.period,"1979–1982");assert.equal(story.href,"/?story=cambodia-1979");
-  assert.equal(getJourneyChoices({VITE_ENABLE_CAMBODIA_STORY:"false"}).length,6);
+  assert.equal(getJourneyChoices({VITE_ENABLE_CAMBODIA_STORY:"false"}).length,6+AUTHORED_STORIES.length);
 });
 
 test("keyboard End/Home/arrows scroll and focus all seven choices at mobile and desktop widths",()=>{
@@ -45,9 +46,9 @@ test("actual shared chooser renders seven slides, native dialog and direct story
     const {FamilySelection}=await server.ssrLoadModule("/src/JourneySelection.jsx");
     for(const view of ["Guided","Planning"]){
       const html=renderToStaticMarkup(React.createElement(FamilySelection,{currentFamilyId:"ramirez",required:false,saves:saved,archive:[],onSelect:()=>assert.fail("render does not select a family"),onRestart:view==="Guided"?()=>{}:undefined,onClose:()=>{}}));
-      assert.equal((html.match(/aria-roledescription="slide"/g)??[]).length,7);
+      assert.equal((html.match(/aria-roledescription="slide"/g)??[]).length,7+AUTHORED_STORIES.length);
       assert.match(html,/<dialog[^>]*aria-labelledby="family-selection-title"/);
-      assert.match(html,/7 of 7: Cambodia/);assert.match(html,/href="\/\?story=cambodia-1979"/);assert.match(html,/1979–1982/);assert.match(html,/A Place for Tomorrow/);
+      assert.match(html,new RegExp(`7 of ${7+AUTHORED_STORIES.length}: Cambodia`));assert.match(html,/href="\/\?story=cambodia-1979"/);assert.match(html,/1979–1982/);assert.match(html,/A Place for Tomorrow/);
       assert.match(html,/Separate saved progress/);assert.doesNotMatch(html,/Historical stories<\/h3>/);
     }
     assert.deepEqual([...data],before);
