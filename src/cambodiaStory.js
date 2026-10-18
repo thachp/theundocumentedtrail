@@ -1,7 +1,7 @@
 // Review prototype for issue #2. Fictional household; no survival/admission model.
 export const STORY_ID = "cambodia-1979";
 export const STORY_NOTICE = "Fictional composite · No community or external historical review or endorsement is claimed.";
-export const CONTENT_NOTE = "Non-graphic references to genocide, forced displacement and labor, hunger, bereavement, family separation and uncertainty. No timed choices, violence scenes or audio.";
+export const CONTENT_NOTE = "Non-graphic references to genocide, forced displacement and labor, hunger, bereavement, family separation and uncertainty. No timed choices or violence scenes. The optional soundtrack starts off.";
 export const CAMBODIA_SOURCES = {
   C1: { title: "ECCC · Case 002/01: forced population movement", date: "Court case summary · retrospective judicial findings", url: "https://www.eccc.gov.kh/en/cases/case-002/trial-01" },
   C2: { title: "ECCC · Guide to the ECCC: displacement and worksites", date: "Court-issued institutional synthesis · 2025 · printed pp. 7, 12–16 read; not the judgment itself", url: "https://backend.eccc.gov.kh/uploads/Guide_to_The_ECCC_EN_digital_preview_63c9203337.pdf" },

@@ -54,7 +54,7 @@ test("actual shared chooser renders seven slides, native dialog and direct story
     assert.deepEqual(loadCambodia(storage),story);
     assert.ok(data.has(FAMILY_SAVES_KEY)&&data.has(GAME_SAVE_KEY)&&data.has(CAMBODIA_SAVE_KEY));
     for(const file of ["App.jsx","BeginnerApp.jsx"]){const source=await readFile(new URL(`../src/${file}`,import.meta.url),"utf8");assert.match(source,/import \{ FamilySelection \} from "\.\/JourneySelection.jsx"/);assert.match(source,/<FamilySelection/);}
-    const planning=await readFile(new URL("../src/App.jsx",import.meta.url),"utf8");assert.match(planning,/\[showFamilySelection, setShowFamilySelection\] = useState\(true\)/);assert.match(planning,/aria-label="Choose a journey"/);
+    const planning=await readFile(new URL("../src/App.jsx",import.meta.url),"utf8");assert.match(planning,/\[showFamilySelection, setShowFamilySelection\] = useState\(\(\) => !isCambodiaJourney\(game\)\)/);assert.match(planning,/aria-label="Choose a journey"/);
     const css=await readFile(new URL("../src/beginner.css",import.meta.url),"utf8");assert.match(css,/\.cinematic-family-actions a[^}]*min-height:\s*44px/s);assert.match(css,/grid-auto-columns:\s*calc\(100% - 26px\)/);
   }finally{await server.close();}
 });

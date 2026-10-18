@@ -1,3 +1,6 @@
+import { isCambodiaJourney } from "./cambodiaJourney.js";
+import { CambodiaResources, CambodiaJourneyContext, CambodiaPersonDialog } from "./CambodiaJourneyUI.jsx";
+import { selectJourneyGame as selectFamilyGame } from "./selectJourney.js";
 import { EndingDialog } from "./EndingDialog.jsx";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useJourneyGame } from "./useJourneyGame.js";
@@ -67,7 +70,7 @@ import {
   resolveTravelIncident,
   useMedicine,
 } from "./game.js";
-import { hasSelectedFamily, loadFamilySaves, loadJourneyArchive, selectFamilyGame } from "./saveStore.js";
+import { hasSelectedFamily, loadFamilySaves, loadJourneyArchive } from "./saveStore.js";
 import { FamilySelection } from "./JourneySelection.jsx";
 import { SocialFeedModal, SocialFeedTrigger } from "./SocialFeed.jsx";
 import { Portrait } from "./Portrait.jsx";
@@ -143,7 +146,7 @@ function CharacterCard({ person, state, stress, familyId, active, onClick }) {
           <span><Sparkle weight="duotone" aria-hidden="true" />{person.skills[0]}</span>
           <span><Handshake weight="duotone" aria-hidden="true" />{person.skills[1]}</span>
         </span>
-        <span className={`condition ${condition.tone}`}>
+        {familyId !== "cambodia-1979" && <><span className={`condition ${condition.tone}`}>
           <i />{state.alive === false ? condition.label : `${condition.label} · ${state.health}%`}
         </span>
         <span className="trust-row">
@@ -153,7 +156,7 @@ function CharacterCard({ person, state, stress, familyId, active, onClick }) {
               <i key={level} className={level <= state.trust ? "filled" : ""} />
             ))}
           </span>
-        </span>
+        </span></>}
       </span>
     </button>
   );
@@ -347,7 +350,7 @@ function ChoiceModal({ choice, game, onCancel, onConfirm }) {
       <section className="choice-modal" role="dialog" aria-modal="true" aria-labelledby="choice-title" onMouseDown={(event) => event.stopPropagation()}>
         <button className="modal-close" onClick={onCancel} aria-label="Close decision" data-sound="dismiss"><X weight="bold" /></button>
         <span className="modal-symbol"><Icon weight="fill" /></span>
-        <small>Day {game.day} · choose carefully</small>
+        <small>{isCambodiaJourney(game) ? "Scene" : "Day"} {game.day} · choose carefully</small>
         <h2 id="choice-title">{choice.title}?</h2>
         <p>{choice.hint}. The family cannot know the outcome in advance. Actual consequences appear after you commit.</p>
         <div className="modal-actions">
@@ -390,7 +393,7 @@ function JourneyLog({ game, onClose }) {
           <ol>
             {entries.map((entry) => (
               <li key={`${entry.day}-${entry.id}`}>
-                <span>Day {entry.day}</span>
+                <span>{isCambodiaJourney(game) ? "Scene" : "Day"} {entry.day}</span>
                 <div><strong>{entry.title}</strong><small>{entry.detail}</small></div>
               </li>
             ))}
@@ -428,15 +431,15 @@ function EndingModal({ game, onRestart, onExploreHistory }) {
           </div>
         )}
         <div className="ending-stats">
-          <div><strong>{game.day - 1}</strong><span>Days traveled</span></div>
-          <div><strong>{averageHealth}%</strong><span>Average health</span></div>
+          <div><strong>{isCambodiaJourney(game) ? game.history.length : game.day - 1}</strong><span>{isCambodiaJourney(game) ? "Scenes completed" : "Days traveled"}</span></div>
+          <div><strong>{isCambodiaJourney(game) ? "Recorded" : `${averageHealth}%`}</strong><span>{isCambodiaJourney(game) ? "Household continuity" : "Average health"}</span></div>
           <div><strong>{game.history.length}</strong><span>Choices made</span></div>
         </div>
         <div className="ending-people">
           {people.map((person) => (
             <div key={person.id}>
               <Portrait person={person} state={game.people[person.id]} stress={game.resources.stress} family={game} />
-              <span><strong>{person.name}</strong><small>{game.people[person.id].alive === false ? "Remembered" : `${game.people[person.id].health}% health`}</small></span>
+              <span><strong>{person.name}</strong><small>{isCambodiaJourney(game) ? "Continuing life" : game.people[person.id].alive === false ? "Remembered" : `${game.people[person.id].health}% health`}</small></span>
             </div>
           ))}
         </div>
@@ -465,8 +468,8 @@ function RestartModal({ onCancel, onConfirm }) {
 
 export function App() {
   const [game, setGame] = useJourneyGame();
-  const [showFamilySelection, setShowFamilySelection] = useState(true);
-  const [familySelectionRequired, setFamilySelectionRequired] = useState(() => !hasSelectedFamily());
+  const [showFamilySelection, setShowFamilySelection] = useState(() => !isCambodiaJourney(game));
+  const [familySelectionRequired, setFamilySelectionRequired] = useState(() => !isCambodiaJourney(game) && !hasSelectedFamily());
   const [selectedRoute, setSelectedRoute] = useState(game.route);
   const [selectedPersonId, setSelectedPersonId] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -607,7 +610,7 @@ export function App() {
           <span className="header-actions">
             <button className="planning-journey-select" onClick={() => setShowFamilySelection(true)} aria-label="Choose a journey" data-sound="tap">Journeys</button>
             <button onClick={() => setShowHistory(true)} aria-label="Explore the history" data-tooltip="Historical context and sources" data-sound="tap"><BookOpenText weight="duotone" /></button>
-            <a data-ending-return className="guided-return" href="/" data-tooltip="Switch to the simpler story view">Guided view</a>
+            <a data-ending-return className="guided-return" href={isCambodiaJourney(game) ? "/?story=cambodia-1979" : "/"} data-tooltip="Switch to the simpler story view">Guided view</a>
             <a
               className="source-link"
               href="https://github.com/thachp/theundocumentedtrail"
@@ -633,7 +636,7 @@ export function App() {
           </span>
           {soundtrackError && <span className="soundtrack-error" role="status">Sound is unavailable in this browser.</span>}
         </div>
-        <div className="status-strip" aria-label="Group resources">
+        <>{isCambodiaJourney(game) ? <CambodiaResources game={game} /> : <div className="status-strip" aria-label="Group resources">
           <StatusMetric key={`cash-${metrics.cash}`} icon={Wallet} value={metrics.cash} label="Cash" tone="safe" tooltip="Money available for transport, shelter, food, and official fees." />
           <StatusMetric key={`supplies-${metrics.supplies}`} icon={ForkKnife} value={metrics.supplies} label="Supplies" tone={getResourceTone("supplies", game.resources.supplies)} tooltip="Food for the group. Reaching zero harms health and raises stress." />
           <StatusMetric key={`water-${metrics.water}`} icon={Drop} value={metrics.water} label="Water" tone={getResourceTone("water", game.resources.water)} tooltip="Drinking water carried by the group. Reaching zero causes dehydration." />
@@ -641,23 +644,25 @@ export function App() {
           <StatusMetric key={`medicine-${game.resources.medicine}`} icon={Pill} value={game.resources.medicine} label="Medicine" tone={getResourceTone("medicine", game.resources.medicine)} tooltip="Doses that can restore an injured or exhausted traveler’s health." />
           <StatusMetric key={`stress-${metrics.stress}`} icon={ShieldWarning} value={`${metrics.stress}%`} label="Stress" tone={getResourceTone("stress", game.resources.stress)} tooltip="Shared emotional strain. At 100%, the group cannot safely continue." />
           <StatusMetric key={`exposure-${metrics.exposure}`} icon={Eye} value={`${metrics.exposure}%`} label="Exposure" tone={getResourceTone("exposure", game.resources.exposure)} tooltip="How visible the group is to danger or enforcement. At 100%, the run ends." />
-        </div>
+        </div>}</>
       </header>
 
+      {isCambodiaJourney(game) && <><img className="planning-cambodia-hero" src={event.heroImage} alt={event.heroAlt} /><p className="cambodia-hero-credit">Illustrative fictional household · {event.time}</p><CambodiaJourneyContext game={game} onChange={setGame} /></>}
       <div className="game-grid">
         <section className="map-stage geographic-map-stage" aria-label="Journey geography">
           <JourneyMap game={game} fitViewport />
           <details className="planning-map-approaches">
             <summary>Weather and travel approach details</summary>
             <div className="planning-map-context">
-              <strong>Day {game.day} · {event.time} · {event.weather}</strong>
+              <strong>{isCambodiaJourney(game) ? "Scene" : "Day"} {game.day} · {event.time} · {event.weather}</strong>
               <small>{event.weatherDetail}</small>
             </div>
             <p>These approaches describe support and risk, not geographic waypoints.</p>
-            {Object.entries(ROUTES).map(([id, approach]) => <button key={id} onClick={() => inspectRoute(id)} data-sound="tap">{approach.title}</button>)}
+            {!isCambodiaJourney(game) && Object.entries(ROUTES).map(([id, approach]) => <button key={id} onClick={() => inspectRoute(id)} data-sound="tap">{approach.title}</button>)}
           </details>
 
-          {drawerOpen && (
+          {drawerOpen && selectedPerson && isCambodiaJourney(game) && <CambodiaPersonDialog person={selectedPerson} onClose={() => setDrawerOpen(false)} />}
+          {drawerOpen && !isCambodiaJourney(game) && (
             <DetailDrawer
               person={selectedPerson}
               personState={selectedPerson ? game.people[selectedPerson.id] : null}
@@ -675,7 +680,7 @@ export function App() {
         <section className="team-strip" aria-label="Traveling group">
           <header>
             <UsersThree weight="duotone" aria-hidden="true" />
-            <div><strong>Traveling together</strong><small>Select a person to review health, trust, and skills</small></div>
+            <div><strong>Traveling together</strong><small>{isCambodiaJourney(game) ? "Select a person to read their story" : "Select a person to review health, trust, and skills"}</small></div>
           </header>
           <div className="team-grid">
             {people.map((person) => (
@@ -709,7 +714,7 @@ export function App() {
       </div>
 
       <ChoiceModal choice={pendingChoice} game={game} onCancel={() => setPendingChoice(null)} onConfirm={confirmChoice} />
-      {showFamilySelection && <FamilySelection currentFamilyId={game.familyId} required={familySelectionRequired} saves={loadFamilySaves()} archive={loadJourneyArchive()} onSelect={familyId => { setGame(selectFamilyGame(familyId)); setFamilySelectionRequired(false); setShowFamilySelection(false); }} onClose={() => setShowFamilySelection(false)} />}
+      {showFamilySelection && <FamilySelection mode="full" currentFamilyId={game.familyId} required={familySelectionRequired} saves={loadFamilySaves()} archive={loadJourneyArchive()} onSelect={familyId => { setGame(selectFamilyGame(familyId)); setFamilySelectionRequired(false); setShowFamilySelection(false); }} onClose={() => setShowFamilySelection(false)} />}
       {showHistory && <JourneyHistoryDialog game={game} onClose={() => setShowHistory(false)} />}
       {showLog && <JourneyLog game={game} onClose={() => setShowLog(false)} />}
       {showRestart && <RestartModal onCancel={() => setShowRestart(false)} onConfirm={restart} />}

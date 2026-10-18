@@ -5,7 +5,7 @@ import { getJourneyHistory } from "./journeyHistory.js";
 import { getJourneyChoices, journeyKeyIndex, scrollJourneyCard } from "./journeyChoices.js";
 import "./beginner.css";
 
-export function FamilySelection({ currentFamilyId, required, saves, archive, onSelect, onRestart, onClose }) {
+export function FamilySelection({ currentFamilyId, required, saves, archive, onSelect, onRestart, onClose, mode = "guided" }) {
   const families = getJourneyChoices(import.meta.env);
   const initialIndex = Math.max(0, families.findIndex((family) => family.id === currentFamilyId));
   const carouselRef = useRef(null);
@@ -80,9 +80,9 @@ export function FamilySelection({ currentFamilyId, required, saves, archive, onS
           >
           {families.map((family, index) => {
             if (family.kind === "historical") return <article className="cinematic-family-card" key={family.id} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${families.length}: Cambodia · ${family.name} · ${family.period}`}>
-              <div className="cinematic-story-cover" aria-hidden="true"><span>CAMBODIA</span><strong>{family.period}</strong><small>A historical story</small></div>
-              <div className="cinematic-family-copy"><small>{family.origin}</small><span className="history-chooser-setting">Cambodia → Thailand → United States · {family.period}</span><strong>{family.name}</strong><p>{family.context}</p><em><MapPin weight="fill" />{family.journey}</em><p>Unscored story · Separate saved progress</p></div>
-              <div className="cinematic-family-actions"><a className="continue" href={family.href}>Open Cambodian story<ArrowRight weight="bold" /></a></div>
+              <div className="cinematic-family-portrait"><img src="/assets/cambodia/cover.webp" alt="Illustrative fictional household: Dara, Vann and Maly in late-1979 Cambodia" /><span>Family journey · 1979–1982</span></div>
+              <div className="cinematic-family-copy"><small>{family.origin}</small><span className="history-chooser-setting">Cambodia → Thailand → United States · {family.period}</span><strong>{family.name}</strong><p>{family.context}</p><em><MapPin weight="fill" />{family.journey}</em><p>Shared journey · Separate saved progress</p></div>
+              <div className="cinematic-family-actions"><a className="continue" href={mode === "full" ? `${family.href}&mode=full` : family.href}>Open Cambodian story<ArrowRight weight="bold" /></a></div>
             </article>;
             const saved = saves[family.id];
             const savedStatus = saved?.phase === "ended"

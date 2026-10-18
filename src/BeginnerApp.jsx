@@ -1,3 +1,6 @@
+import { isCambodiaJourney } from "./cambodiaJourney.js";
+import { CambodiaResources, CambodiaJourneyContext, CambodiaPersonDialog } from "./CambodiaJourneyUI.jsx";
+import { selectJourneyGame as selectFamilyGame } from "./selectJourney.js";
 import { FamilySelection } from "./JourneySelection.jsx";
 import { EndingDialog } from "./EndingDialog.jsx";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -66,7 +69,6 @@ import {
   hasSelectedFamily,
   loadFamilySaves,
   loadJourneyArchive,
-  selectFamilyGame,
 } from "./saveStore.js";
 import {
   completeTutorialOverlayState,
@@ -85,6 +87,14 @@ import "./beginner.css";
 
 const CONTENT_MODE_KEY = "the-long-road-content-mode-v1";
 const TUTORIAL_COMPLETE_KEY = "the-undocumented-trail-tutorial-v2";
+
+const CAMBODIA_TUTORIAL_STEPS = [
+ {icon:Compass,eyebrow:"Historical fictional household",title:"Meet Dara, Vann and Maly",copy:"Follow nine scenes from Cambodia through refuge in Thailand to rebuilding in Minnesota. This is a sourced fictional composite, not a survivor biography.",lessons:["Survival and 1981 admission are fixed premises","Sensitive context is non-graphic","Read the source and fiction labels"]},
+ {icon:Crosshair,eyebrow:"Choose with incomplete information",title:"Read, then select one option",copy:"Care, contact and household planning decisions carry forward. Their exact consequences appear after commitment. The map labels approximate locations honestly.",lessons:["Each scene has its original authored choices","Use the text itinerary with the map","Back navigation revisits an earlier choice"]},
+ {icon:FirstAidKit,eyebrow:"Household planning",title:"Allocate attention and effort",copy:"Time and energy are fictional planning units for each scene. They do not measure historical nutrition, survival odds or admission eligibility.",lessons:["Later scenes are new planning occasions","Portraits explain each person’s story","No health or mortality statistics are assigned"]},
+ {icon:BookOpenText,eyebrow:"Historical context",title:"Separate evidence from fiction",copy:"Scene sources and labeled testimony explain the historical background. Other people’s experiences are never presented as Dara’s biography.",lessons:["Explore context on demand","Admission follows the original story premise","No action earns humanitarian eligibility"]},
+ {icon:ChatCircleDots,eyebrow:"Choices have a memory",title:"Resume this household’s story",copy:"Original decisions and callbacks are retained in a separate Cambodia save. Guided and Planning share that progress.",lessons:["Other families retain their saves","Restart replaces only this story","Earlier relationships return later"]},
+];
 
 const TUTORIAL_STEPS = [
   {
@@ -295,9 +305,10 @@ const journeyStageIcons = {
 };
 
 function JourneyGauge({ game, event }) {
-  const currentStage = getJourneyStage(game);
-  const currentIndex = JOURNEY_STAGES.findIndex((stage) => stage.id === currentStage.id);
-  const stageProgress = (currentIndex / (JOURNEY_STAGES.length - 1)) * 100;
+  const stages = isCambodiaJourney(game) ? JOURNEY_STAGES.map((stage,i)=>({...stage,label:["Recollection","Displacement","Refuge","Rebuilding"][i]})) : JOURNEY_STAGES;
+  const currentStage = stages.find(stage=>stage.id===getJourneyStage(game).id);
+  const currentIndex = stages.findIndex((stage) => stage.id === currentStage.id);
+  const stageProgress = (currentIndex / (stages.length - 1)) * 100;
 
   return (
     <section
@@ -311,7 +322,7 @@ function JourneyGauge({ game, event }) {
         <em>{game.progress}%</em>
       </header>
       <div className="cinematic-stage-gauge" aria-hidden="true">
-        {JOURNEY_STAGES.map((stage, index) => {
+        {stages.map((stage, index) => {
           const Icon = journeyStageIcons[stage.id];
           const state = index < currentIndex ? "complete" : index === currentIndex ? "active" : "upcoming";
           return (
@@ -508,7 +519,7 @@ function JourneyLog({ game, onClose }) {
         )}
         {entries.length ? <ol>{entries.map((entry, index) => (
           <li key={`${entry.day}-${entry.title}-${index}`}>
-            <span>Day {entry.day}<small>{entry.kind}</small></span>
+            <span>{isCambodiaJourney(game) ? "Scene" : "Day"} {entry.day}<small>{entry.kind}</small></span>
             <div><strong>{entry.title}</strong><small>{entry.detail}</small></div>
           </li>
         ))}</ol> : <p>The first decision begins at the family home.</p>}
@@ -540,10 +551,11 @@ function ContentSettings({ currentMode, onSelect, onClose }) {
   );
 }
 
-function Tutorial({ step, onBack, onNext, onFinish }) {
-  const item = TUTORIAL_STEPS[step];
+function Tutorial({ step, onBack, onNext, onFinish, historical = false }) {
+  const steps = historical ? CAMBODIA_TUTORIAL_STEPS : TUTORIAL_STEPS;
+  const item = steps[step];
   const Icon = item.icon;
-  const isLastStep = step === TUTORIAL_STEPS.length - 1;
+  const isLastStep = step === steps.length - 1;
   return (
     <div className="cinematic-tutorial-backdrop" onKeyDown={(event) => event.key === "Escape" && onFinish()}>
       <section className="cinematic-tutorial" role="dialog" aria-modal="true" aria-labelledby="tutorial-title">
@@ -558,9 +570,9 @@ function Tutorial({ step, onBack, onNext, onFinish }) {
           {item.lessons.map((lesson, index) => <span key={lesson}><i>{index + 1}</i>{lesson}</span>)}
         </div>
         <footer>
-          <div className="cinematic-tutorial-progress" aria-label={`Tutorial step ${step + 1} of ${TUTORIAL_STEPS.length}`}>
-            {TUTORIAL_STEPS.map((tutorialStep, index) => <i className={index === step ? "active" : index < step ? "complete" : ""} key={tutorialStep.title} />)}
-            <small>{step + 1} / {TUTORIAL_STEPS.length}</small>
+          <div className="cinematic-tutorial-progress" aria-label={`Tutorial step ${step + 1} of ${steps.length}`}>
+            {steps.map((tutorialStep, index) => <i className={index === step ? "active" : index < step ? "complete" : ""} key={tutorialStep.title} />)}
+            <small>{step + 1} / {steps.length}</small>
           </div>
           <div>
             {step > 0 && <button className="tutorial-back" onClick={onBack} data-sound="dismiss">Back</button>}
@@ -602,7 +614,7 @@ function Ending({ game, onTryAgain, onChooseFamily, onExploreHistory }) {
         )}
 
         <div className="cinematic-ending-stats" aria-label="Journey results">
-          <div><strong>{Math.max(1, game.day - 1)}</strong><span>Days traveled</span></div>
+          <div><strong>{isCambodiaJourney(game) ? game.history.length : Math.max(1, game.day - 1)}</strong><span>{isCambodiaJourney(game) ? "Scenes completed" : "Days traveled"}</span></div>
           <div><strong>{survivors.length}/{people.length}</strong><span>Survived</span></div>
           <div><strong>{game.history.length}</strong><span>Decisions</span></div>
         </div>
@@ -614,7 +626,7 @@ function Ending({ game, onTryAgain, onChooseFamily, onExploreHistory }) {
             return (
               <div className={alive ? "survived" : "remembered"} key={person.id}>
                 <Portrait person={person} state={state} stress={game.resources.stress} family={game} />
-                <span><strong>{person.name}</strong><small>{alive ? `${state.health}% health` : "Remembered"}</small></span>
+                <span><strong>{person.name}</strong><small>{isCambodiaJourney(game) ? "Continuing life" : alive ? `${state.health}% health` : "Remembered"}</small></span>
               </div>
             );
           })}
@@ -659,8 +671,8 @@ export function BeginnerApp() {
     familySelected: hasSelectedFamily(),
   }));
   const [game, setGame] = useJourneyGame();
-  const [familySelectionRequired, setFamilySelectionRequired] = useState(initialOnboardingState.familySelectionRequired);
-  const [showFamilySelection, setShowFamilySelection] = useState(initialOnboardingState.showFamilySelection);
+  const [familySelectionRequired, setFamilySelectionRequired] = useState(initialOnboardingState.familySelectionRequired && !isCambodiaJourney(game));
+  const [showFamilySelection, setShowFamilySelection] = useState(initialOnboardingState.showFamilySelection && !isCambodiaJourney(game));
   const [familySaves, setFamilySaves] = useState(loadFamilySaves);
   const [journeyArchive, setJourneyArchive] = useState(loadJourneyArchive);
   const [soundtrackOn, setSoundtrackOn] = useState(false);
@@ -944,13 +956,13 @@ export function BeginnerApp() {
               {soundtrackOn ? <SpeakerHigh weight="fill" /> : <MusicNotes weight="duotone" />}
               <span className="cinematic-tool-label">{soundtrackOn ? "Pause soundtrack" : "Play soundtrack"}</span>
             </button>
-            <a href="/?mode=full" className="cinematic-full-link" data-tooltip="Open the detailed planning view" data-tooltip-align="right">Planning view</a>
+            <a href={isCambodiaJourney(game) ? "/?mode=full&story=cambodia-1979" : "/?mode=full"} className="cinematic-full-link" data-tooltip="Open the detailed planning view" data-tooltip-align="right">Planning view</a>
           </div>
         </div>
       </header>
 
       <section className="cinematic-stage">
-        <div key={`${game.familyId}-${event.id}`} className="cinematic-scene" style={{ backgroundImage: `url("${sceneByEvent[event.id] ?? family.heroImage}")` }} aria-hidden="true" />
+        {isCambodiaJourney(game) ? <img key={event.id} className="cinematic-scene" src={event.heroImage} alt={event.heroAlt} /> : <div key={`${game.familyId}-${event.id}`} className="cinematic-scene" style={{ backgroundImage: `url("${sceneByEvent[event.id] ?? family.heroImage}")` }} aria-hidden="true" />}
 
         <aside className="cinematic-map" aria-label="Journey geography">
           <JourneyMap game={game} />
@@ -970,6 +982,7 @@ export function BeginnerApp() {
             ) : (
               <p>{storyCopy}</p>
             )}
+            {isCambodiaJourney(game) && <CambodiaJourneyContext game={game} onChange={setGame} />}
             <SceneHistory game={game} onExplore={() => setHistoryMode("explore")} />
             <div className="cinematic-context">
               <MapPin weight="fill" />
@@ -1099,7 +1112,7 @@ export function BeginnerApp() {
       </section>
 
       <footer className="cinematic-footer">
-        <section className="cinematic-resources" aria-label="Group resources">
+        {isCambodiaJourney(game) ? <CambodiaResources game={game} /> : <section className="cinematic-resources" aria-label="Group resources">
           <StatusItem key={`water-${game.resources.water}`} icon={Drop} label="Water" value={`${game.resources.water} L`} tone={game.resources.water <= 3 ? "danger" : ""} tooltip="Drinking water carried by the group. Reaching zero causes dehydration." />
           <StatusItem key={`food-${game.resources.supplies}`} icon={ForkKnife} label="Food" value={`${game.resources.supplies} ${game.resources.supplies === 1 ? "day" : "days"}`} tone={game.resources.supplies <= 1 ? "danger" : ""} tooltip="Food for the group. Reaching zero harms health and raises stress." />
           <StatusItem key={`cash-${game.resources.cash}`} icon={Wallet} label="Cash" value={`$${game.resources.cash}`} tooltip="Money available for transport, shelter, food, and official fees." />
@@ -1108,7 +1121,7 @@ export function BeginnerApp() {
           <StatusItem key={`health-${groupHealth}`} icon={FirstAidKit} label="Health" value={getCondition(groupHealth).label} tone={groupHealth < 55 ? "danger" : ""} tooltip="Average health of the travelers who are still alive." />
           <StatusItem key={`cohesion-${averageTrust}`} icon={Handshake} label="Cohesion" value={averageTrust >= 4 ? "Strong" : averageTrust >= 3 ? "Steady" : "Fragile"} tooltip="How strongly the group trusts the decisions being made." />
           <StatusItem key={`risk-${game.resources.exposure}`} icon={Eye} label="Risk" value={`${game.resources.exposure}%`} tone={game.resources.exposure >= 75 ? "danger" : ""} tooltip="Visibility to danger or enforcement. At 100%, the journey stops." />
-        </section>
+        </section>}
 
         <section className="cinematic-people" aria-label="People traveling together">
           {people.map((person) => (
@@ -1121,6 +1134,7 @@ export function BeginnerApp() {
         </section>
       </footer>
 
+      {selectedPerson && isCambodiaJourney(game) && <CambodiaPersonDialog person={selectedPerson} onClose={() => setSelectedPersonId(null)} />}
       {historyMode && !showFamilySelection && <JourneyHistoryDialog game={game} introduction={historyMode === "intro"} onClose={closeHistory} />}
       {game.phase === "ended" && !showFamilySelection && !historyMode && !restartFamilyId && (
         <Ending
@@ -1157,7 +1171,7 @@ export function BeginnerApp() {
           onClose={() => setShowSupplyShop(false)}
         />
       )}
-      {selectedPerson && <CareDialog game={game} person={selectedPerson} onUseMedicine={(personId) => setGame((current) => useMedicine(current, personId))} onClose={() => setSelectedPersonId(null)} />}
+      {selectedPerson && !isCambodiaJourney(game) && <CareDialog game={game} person={selectedPerson} onUseMedicine={(personId) => setGame((current) => useMedicine(current, personId))} onClose={() => setSelectedPersonId(null)} />}
       {showJourneyLog && <JourneyLog game={game} onClose={() => setShowJourneyLog(false)} />}
       {showContentSettings && <ContentSettings currentMode={contentMode} onSelect={selectContentMode} onClose={() => setShowContentSettings(false)} />}
       {game.pendingIncident && <TravelIncident game={game} onResolve={(responseId) => setGame((current) => resolveTravelIncident(current, responseId))} />}
@@ -1183,6 +1197,7 @@ export function BeginnerApp() {
       )}
       {showTutorial && !showContentSettings && !showFamilySelection && (
         <Tutorial
+          historical={isCambodiaJourney(game)}
           step={tutorialStep}
           onBack={() => setTutorialStep((current) => Math.max(0, current - 1))}
           onNext={() => setTutorialStep((current) => Math.min(TUTORIAL_STEPS.length - 1, current + 1))}
