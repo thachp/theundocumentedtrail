@@ -1,6 +1,8 @@
 // Shared editorial context. Dates in sources describe reporting, not the lives
 // of these fictional composites. Ramírez and Haddad have authored calendars.
+import { CAMBODIA, CAMBODIA_SOURCES, sceneFor } from "./cambodiaStory.js";
 export const HISTORY_SOURCES = Object.freeze({
+  ...CAMBODIA_SOURCES,
   syriaUprising: { title: "UN Secretary-General: fourth anniversary of the Syrian crisis", date: "12 March 2015", url: "https://www.un.org/sg/en/content/former-secretary-general/statements/2015-03-12/statement-the-secretary-general-fulfilling-our-collective-responsibility-syria" },
   aleppo2015: { title: "UN report S/2015/368, paragraphs 7–8: attacks and interrupted schooling", date: "22 May 2015", url: "https://www.refworld.org/reference/countryrep/unsc/2015/105060" },
   sea2015: { title: "UNHCR: The sea route to Europe", date: "1 July 2015", url: "https://www.unhcr.org/us/media/sea-route-europe-mediterranean-passage-age-refugees" },
@@ -101,9 +103,11 @@ export const JOURNEY_HISTORY = Object.freeze({
 
 export const FICTION_NOTICE = fiction;
 export function getJourneyHistory(gameOrId) {
+  if ((typeof gameOrId === "string" ? gameOrId : gameOrId.familyId) === "cambodia-1979") return CAMBODIA.history;
   return JOURNEY_HISTORY[typeof gameOrId === "string" ? gameOrId : gameOrId.familyId];
 }
 export function getJourneyDate(game) {
+  if (game.familyId === "cambodia-1979") return sceneFor(game.cambodiaState).date;
   const context = getJourneyHistory(game);
   if (!context.departureDate) return "Contemporary · story day " + game.day;
   if (game.familyId === "ramirez" && game.day > 142) return "Historical early-2024 setting · saved story day " + game.day + " (calendar not reconstructed)";
@@ -131,6 +135,7 @@ scenes("punjab", "punjabInspection punjabFinal", "Employer closure alone does no
 scenes("rohingya", "rohingyaCamp rohingyaPapers rohingyaCoast rohingyaSea rohingyaWeather rohingyaSignal rohingyaLanding rohingyaAceh", "UNICEF's June 2025 funding warning concerns education and service capacity in Bangladesh. The Karim family's sea journey and reception are fictional possibilities, not a claim that aid shortages force every family to leave or that landing resolves statelessness.", ["rohingya"]);
 export const SCENE_HISTORY = Object.freeze(sceneNotes);
 export function getSceneHistory(game) {
+  if (game.familyId === "cambodia-1979") { const scene=sceneFor(game.cambodiaState); return {text:scene.context,sourceIds:scene.sourceIds}; }
   const note = SCENE_HISTORY[game.eventId];
   return note?.familyId === game.familyId ? note : null;
 }

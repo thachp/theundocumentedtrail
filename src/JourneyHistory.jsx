@@ -1,5 +1,6 @@
 import { SharedPlaceContext } from "./SharedPlaceContext.jsx";
 import { UsFiscalEvidence } from "./UsFiscalEvidence.jsx";
+import { CAMBODIA } from "./cambodiaStory.js";
 import { useEffect, useId, useRef } from "react";
 import { getEvent, getFamilyPreset } from "./game.js";
 import { FICTION_NOTICE, HISTORY_SOURCES, getJourneyDate, getJourneyHistory, getSceneHistory } from "./journeyHistory.js";
@@ -13,6 +14,7 @@ function SourceLinks({ ids, sources = HISTORY_SOURCES }) {
 }
 
 export function JourneyHistoryDialog({ game, introduction = false, onClose, story }) {
+  if (!story && game.familyId === "cambodia-1979") story = CAMBODIA;
   const dialogRef = useRef(null);
   const headingId = useId();
   const context = story?.history ?? getJourneyHistory(game);

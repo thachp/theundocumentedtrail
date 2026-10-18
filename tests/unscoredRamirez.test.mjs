@@ -11,12 +11,12 @@ const ramirezEvents=Object.values(EVENTS).filter(e=>! /^(haddad|diop|nguyen|punj
 
 test("overall score computation and every UI/archive consumer are removed, including the death denominator", async()=>{
   assert.equal(gameApi.getJourneyScore,undefined);
-  for(const file of ["App.jsx","BeginnerApp.jsx","saveStore.js"]){
+  for(const file of ["App.jsx","BeginnerApp.jsx","saveStore.js","JourneySelection.jsx"]){
     const text=await readFile(new URL(`../src/${file}`,import.meta.url),"utf8");
     assert.doesNotMatch(text,/getJourneyScore|Journey score|entry\.score|\bscore:/);
   }
   const guided=await readFile(new URL("../src/BeginnerApp.jsx",import.meta.url),"utf8");
-  assert.match(guided,/Days traveled/);assert.match(guided,/Decisions/);assert.match(guided,/entry\.survivors/);assert.match(guided,/entry\.day/);
+  assert.match(guided,/Days traveled/);assert.match(guided,/Decisions/);const chooser=await readFile(new URL("../src/JourneySelection.jsx",import.meta.url),"utf8");assert.match(chooser,/entry\.survivors/);assert.match(chooser,/entry\.day/);
   const planning=await readFile(new URL("../src/App.jsx",import.meta.url),"utf8");
   assert.match(planning,/Average health/);assert.match(planning,/Choices made/);
 });

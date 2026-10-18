@@ -1,3 +1,4 @@
+import { CAMBODIA_FAMILY, isCambodiaJourney, newCambodiaGame, cambodiaEvent, chooseCambodiaJourney, continueCambodiaJourney } from "./cambodiaJourney.js";
 export const GAME_VERSION = 14;
 export const GAME_SAVE_KEY = "the-long-road-save-v14";
 
@@ -481,12 +482,14 @@ const JOURNEY_STAGE_BY_EVENT = Object.freeze({
 });
 
 export function getJourneyStage(game) {
+  if (isCambodiaJourney(game)) return JOURNEY_STAGES[game.eventId < "C03" ? 0 : game.eventId < "C05" ? 1 : game.eventId < "C08" ? 2 : 3];
   const stageId = game.progress >= 100 ? "review" : (JOURNEY_STAGE_BY_EVENT[game.eventId] ?? "transit");
   return JOURNEY_STAGES.find((stage) => stage.id === stageId);
 }
 
 export function getFamilyPreset(gameOrId = "ramirez") {
   const familyId = typeof gameOrId === "string" ? gameOrId : gameOrId?.familyId;
+  if (familyId === CAMBODIA_FAMILY.id) return CAMBODIA_FAMILY;
   return FAMILY_PRESETS[familyId] ?? FAMILY_PRESETS.ramirez;
 }
 
@@ -7044,6 +7047,7 @@ export const SUPPLY_STOPS = {
 };
 
 export function createInitialGame(familyId = "ramirez") {
+  if (familyId === CAMBODIA_FAMILY.id) return newCambodiaGame();
   const family = getFamilyPreset(familyId);
   return {
     version: GAME_VERSION,
@@ -7083,6 +7087,7 @@ export function createInitialGame(familyId = "ramirez") {
 }
 
 export function getEvent(game) {
+  if (isCambodiaJourney(game)) return cambodiaEvent(game);
   return EVENTS[game.eventId];
 }
 
@@ -7415,6 +7420,7 @@ function defersThresholdEnding(game) {
 }
 
 export function requiresTravelPlan(game) {
+  if (isCambodiaJourney(game)) return false;
   return Boolean(
     game.phase === "outcome"
       && game.status === "playing"
@@ -7730,6 +7736,7 @@ export function resolveTravelIncident(game, responseId) {
 }
 
 export function chooseOption(game, choiceId) {
+  if (isCambodiaJourney(game)) return chooseCambodiaJourney(game, choiceId);
   if (game.phase !== "decision" || game.status !== "playing" || game.pendingIncident) return game;
   const event = getEvent(game);
   const choice = event.choices.find((item) => item.id === choiceId);
@@ -7938,6 +7945,7 @@ export function planTravelLeg(game, strategyId, leadPersonId = null) {
 }
 
 export function useMedicine(game, personId) {
+  if (isCambodiaJourney(game)) return game;
   const traveler = game.people[personId];
   if (game.status !== "playing" || !traveler || traveler.alive === false || traveler.health >= 100 || game.resources.medicine < 1) return game;
   const person = getPeople(game).find((item) => item.id === personId);
@@ -7964,6 +7972,7 @@ export function useMedicine(game, personId) {
 }
 
 export function continueJourney(game, options = {}) {
+  if (isCambodiaJourney(game)) return continueCambodiaJourney(game);
   if (game.phase !== "outcome" || game.pendingIncident) return game;
   if (requiresTravelPlan(game)) return game;
   if (game.pendingEnding) {
