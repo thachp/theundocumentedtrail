@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create Immigration Journey"
+  short_description: "Author consistent, sourced family journeys"
+  default_prompt: "Use $create-immigration-journey to author a sourced journey in the shared Guided and Planning experience."
