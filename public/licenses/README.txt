@@ -17,6 +17,6 @@ Font notices preserve installed @fontsource package license text, with actual
 font copyright taken from the bundled WOFF name table. Fonts are unmodified.
 
 These notices concern the map/font fallback. They grant no rights to reproduce
-MNHS interview transcripts, photographs or recordings. The Cambodia pilot
+MNHS interview transcripts, photographs or recordings. The Cambodia story
 uses original fictional prose, brief original factual attributions and outbound
 source links, with no copied transcript excerpts, images or audio.

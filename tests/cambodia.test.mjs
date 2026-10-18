@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
 import { CAMBODIA_SCENES, CAMBODIA_SOURCES, callbacks, sceneFor } from "../src/cambodiaStory.js";
-import { createCambodiaState, startCambodia, chooseCambodia, continueCambodia, backCambodia, validateCambodiaSave, loadCambodia, saveCambodia, CAMBODIA_SAVE_KEY, reviewStoriesEnabled } from "../src/cambodiaState.js";
+import { createCambodiaState, startCambodia, chooseCambodia, continueCambodia, backCambodia, validateCambodiaSave, loadCambodia, saveCambodia, CAMBODIA_SAVE_KEY, cambodiaStoryEnabled } from "../src/cambodiaState.js";
 import { getCambodiaGeography, PILOT_MAP_BOUNDS } from "../src/cambodiaGeography.js";
 import { MAP_BOUNDS } from "../src/journeyGeography.js";
 import { FAMILY_SAVES_KEY, JOURNEY_ARCHIVE_KEY, FAMILY_SELECTION_KEY, loadFamilySaves, saveFamilyGame } from "../src/saveStore.js";
@@ -98,12 +98,12 @@ test("geography uses bounded projected regional anchors and complete text chrono
     for (const country of land[key]) for (const ring of country.rings) for (const [x,y] of ring) assert.ok(x >= w && x <= e && y >= s && y <= n);
   }
 });
-test("review gate defaults off for production, source kinds and review limitations stay visible", () => {
-  assert.equal(reviewStoriesEnabled({}), false);
-  assert.equal(reviewStoriesEnabled({ PROD:true }), false);
-  assert.equal(reviewStoriesEnabled({ DEV:true }), true);
-  assert.equal(reviewStoriesEnabled({ VITE_ENABLE_REVIEW_STORIES:"true" }), true);
-  assert.equal(reviewStoriesEnabled({ VITE_ENABLE_REVIEW_STORIES:"false" }), false);
+test("authorized public entry defaults on with an explicit off switch; source limitations stay visible", () => {
+  assert.equal(cambodiaStoryEnabled({}), true);
+  assert.equal(cambodiaStoryEnabled({ PROD:true }), true);
+  assert.equal(cambodiaStoryEnabled({ DEV:true }), true);
+  assert.equal(cambodiaStoryEnabled({ VITE_ENABLE_CAMBODIA_STORY:"true" }), true);
+  assert.equal(cambodiaStoryEnabled({ VITE_ENABLE_CAMBODIA_STORY:"false" }), false);
   assert.match(CAMBODIA_SOURCES.C7.date, /Individual retrospective testimony/);
   assert.match(CAMBODIA_SOURCES.C6.date, /Statute/);
   assert.match(CAMBODIA_SOURCES.C4.date, /retrieval pending/);

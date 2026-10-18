@@ -2,7 +2,7 @@ import { CAMBODIA_SCENES, STORY_ID, sceneFor } from "./cambodiaStory.js";
 // One bounded, linear, story-local record. The active route never mounts the
 // survival game alongside this reader. No RNG, statistics, inventory or scoring.
 export const CAMBODIA_SAVE_KEY = "undocumented-trail:review:cambodia-1979:v1";
-export function reviewStoriesEnabled(env = {}) { return env.DEV === true || env.VITE_ENABLE_REVIEW_STORIES === "true"; }
+export function cambodiaStoryEnabled(env = {}) { return env.VITE_ENABLE_CAMBODIA_STORY !== "false"; }
 export function createCambodiaState() { return { version: 1, storyId: STORY_ID, sceneId: "C01", phase: "intro", flags: {}, history: [] }; }
 export function startCambodia(state) { return state.phase === "intro" ? { ...state, phase: "scene" } : state; }
 export function chooseCambodia(state, id) {
@@ -48,7 +48,7 @@ export function loadCambodia(storage) {
     const saved = storage.getItem(CAMBODIA_SAVE_KEY);
     if (!saved) return { state: createCambodiaState(), warning: "", writable: true };
     const state = validateCambodiaSave(JSON.parse(saved));
-    return state ? { state, warning: "", writable: true } : { state: createCambodiaState(), warning: "This review save could not be read. It has been preserved. Choose Start a new review to replace only this pilot save.", writable: false };
+    return state ? { state, warning: "", writable: true } : { state: createCambodiaState(), warning: "This story save could not be read. It has been preserved. Choose Start a new story to replace only this story save.", writable: false };
   } catch { return { state: createCambodiaState(), warning: "Saving is unavailable. You can read this story during this visit.", writable: false }; }
 }
 export function saveCambodia(storage, state) {

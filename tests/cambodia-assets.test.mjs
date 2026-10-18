@@ -43,3 +43,15 @@ test("the built fallback ships unchanged installed licenses and actual font copy
   assert.equal(await read("../dist/client/licenses/world-atlas-ISC.txt"),await read("../docs/world-atlas-LICENSE"));
   assert.match(await read("../dist/client/licenses/README.txt"), /public domain/);
 });
+
+test("public preparation records the owner waiver without pretending review occurred or copying source media", async () => {
+  const story=await read("../src/cambodiaStory.js"),ui=await read("../src/CambodiaApp.jsx"),docs=await read("../docs/cambodia-pilot.md");
+  assert.doesNotMatch(story,/await Khmer cultural review|review pending/);
+  assert.doesNotMatch(ui,/reviews are required before public release|About this review prototype|Start a new review/);
+  assert.match(ui,/No external community or historical\/pathway review has been performed/);
+  assert.match(docs,/owner waived the paid Khmer community/);
+  assert.match(docs,/authorized preparation of a publicly playable Cambodia entry/);
+  assert.doesNotMatch(docs,/Sentinel_/);
+  assert.match(story,/authored fiction/);assert.match(story,/reproduction permission obtained/);
+  assert.match(CAMBODIA_SOURCES.C10.date,/paragraphs 296–298 read/);
+});
