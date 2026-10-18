@@ -1,5 +1,7 @@
+import { EndingDialog } from "./EndingDialog.jsx";
 import { cambodiaStoryEnabled } from "./cambodiaState.js";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useJourneyGame } from "./useJourneyGame.js";
 import {
   ArrowCounterClockwise,
   ArrowLeft,
@@ -62,10 +64,8 @@ import {
 } from "./game.js";
 import {
   hasSelectedFamily,
-  loadCurrentGame,
   loadFamilySaves,
   loadJourneyArchive,
-  saveFamilyGame,
   selectFamilyGame,
 } from "./saveStore.js";
 import {
@@ -713,13 +713,13 @@ function Ending({ game, onTryAgain, onChooseFamily, onExploreHistory }) {
   const losses = people.filter((person) => game.people[person.id].alive === false);
   const reachedDestination = won && game.progress >= 100;
   return (
-    <div className={`cinematic-ending-backdrop ${won ? "arrival" : "journey-stopped"}`}>
-      <section className={`cinematic-ending ${game.status}`} role="dialog" aria-modal="true" aria-labelledby="cinematic-ending-title">
+    <EndingDialog className={`cinematic-ending-backdrop ${won ? "arrival" : "journey-stopped"}`} labelledBy="cinematic-ending-title">
+      <section className={`cinematic-ending ${game.status}`}>
         <span className="cinematic-ending-symbol">
           {won ? <HouseLine weight="fill" /> : <Heartbeat weight="duotone" />}
         </span>
         <small>{reachedDestination ? "Destination reached · Route complete" : won ? "A new destination · Journey complete" : "The journey ends here"}</small>
-        <h2 id="cinematic-ending-title">{game.ending.title}</h2>
+        <h2 id="cinematic-ending-title" tabIndex="-1">{game.ending.title}</h2>
         <p>{game.ending.copy}</p>
         <p className="history-ending-period">{getJourneyDate(game)}</p>
         <button className="history-ending-button" onClick={onExploreHistory}>Explore the history</button>
@@ -764,7 +764,7 @@ function Ending({ game, onTryAgain, onChooseFamily, onExploreHistory }) {
           <button className="choose-family" onClick={onChooseFamily} data-sound="tap"><UsersThree weight="duotone" />Choose another family</button>
         </div>
       </section>
-    </div>
+    </EndingDialog>
   );
 }
 
@@ -790,7 +790,7 @@ export function BeginnerApp() {
     tutorialComplete: hasCompletedTutorial(),
     familySelected: hasSelectedFamily(),
   }));
-  const [game, setGame] = useState(loadCurrentGame);
+  const [game, setGame] = useJourneyGame();
   const [familySelectionRequired, setFamilySelectionRequired] = useState(initialOnboardingState.familySelectionRequired);
   const [showFamilySelection, setShowFamilySelection] = useState(initialOnboardingState.showFamilySelection);
   const [familySaves, setFamilySaves] = useState(loadFamilySaves);
@@ -855,7 +855,7 @@ export function BeginnerApp() {
 
   useEffect(() => {
     if (familySelectionRequired) return;
-    setFamilySaves(saveFamilyGame(game));
+    setFamilySaves(loadFamilySaves());
     setJourneyArchive(loadJourneyArchive());
   }, [familySelectionRequired, game]);
 
@@ -1026,7 +1026,7 @@ export function BeginnerApp() {
   return (
     <main className="cinematic-shell" onClickCapture={playInteractionSound}>
       <header className="cinematic-header">
-        <a className="cinematic-brand" href="/" aria-label="The Undocumented Trail journey">
+        <a data-ending-return className="cinematic-brand" href="/" aria-label="The Undocumented Trail journey">
           <strong>The Undocumented Trail</strong>
           <span>Everything they carry</span>
         </a>
@@ -1254,7 +1254,7 @@ export function BeginnerApp() {
       </footer>
 
       {historyMode && !showFamilySelection && <JourneyHistoryDialog game={game} introduction={historyMode === "intro"} onClose={closeHistory} />}
-      {game.phase === "ended" && (
+      {game.phase === "ended" && !showFamilySelection && !historyMode && !restartFamilyId && (
         <Ending
           game={game}
           onExploreHistory={() => setHistoryMode("explore")}

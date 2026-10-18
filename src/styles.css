@@ -2198,3 +2198,7 @@ button:focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Native modality contains keyboard focus; nested tools mount after this closes. */
+dialog.native-ending-dialog { width:100%; height:100%; max-width:none; max-height:none; margin:0; border:0; color:inherit; }
+dialog.native-ending-dialog:not([open]) { display:none; }

@@ -3,7 +3,7 @@ import test from "node:test";
 import { readFile } from "node:fs/promises";
 import * as gameApi from "../src/game.js";
 import { EVENTS, ROADSIDE_OPPORTUNITIES, createInitialGame, chooseOption, GAME_SAVE_KEY } from "../src/game.js";
-import { FAMILY_SAVES_KEY, JOURNEY_ARCHIVE_KEY, loadCurrentGame, loadJourneyArchive, saveFamilyGame } from "../src/saveStore.js";
+import { FAMILY_SAVES_KEY, JOURNEY_ARCHIVE_KEY, loadCurrentGame, loadJourneyArchive, saveFamilyGame, selectFamilyGame } from "../src/saveStore.js";
 import { HISTORY_SOURCES, JOURNEY_HISTORY, getJourneyDate, getSceneHistory } from "../src/journeyHistory.js";
 import { refreshNarrative } from "../src/narrativeMigration.js";
 const memory=()=>{const m=new Map();return {getItem:k=>m.get(k)??null,setItem:(k,v)=>m.set(k,String(v))};};
@@ -29,7 +29,8 @@ test("new archives record history without scores; existing scored archives and s
   const before=storage.getItem(GAME_SAVE_KEY), loaded=loadCurrentGame(storage);
   assert.equal(loaded.day,51);assert.equal(loaded.score,82);assert.equal(storage.getItem(GAME_SAVE_KEY),before);
   assert.deepEqual(loadJourneyArchive(storage),old,"old fields retained rather than destructively migrated");
-  saveFamilyGame({...loaded,runId:"new-record",phase:"ended",status:"won",ending:{type:"released",title:"Case pending",copy:"Uncertain"}},storage);
+  const fresh=selectFamilyGame("ramirez",{storage,restart:true});
+  saveFamilyGame({...fresh,day:51,phase:"ended",status:"won",ending:{type:"released",title:"Case pending",copy:"Uncertain"}},storage);
   const entries=loadJourneyArchive(storage);
   assert.equal(Object.hasOwn(entries[0],"score"),false);
   assert.equal(entries[1].score,92);

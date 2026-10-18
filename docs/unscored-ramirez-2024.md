@@ -36,3 +36,11 @@ Tests cover score API/consumers and archive behavior, legacy data preservation, 
 Integration with PR 23's narrative refresh and PR 24's save boundary needs a separate combined retest after their own review. This branch does not absorb or modify either pending head and contains no PR 20 activity. The broader audit choices (fixed deaths, public-climate mechanics and generic custody threshold) remain outside this approved scope.
 
 Verification receipt: production/Sites build and all **113 tests passed** (main's 108 plus five new regressions). Direct comparison against the base confirms non-display mechanics and ending identities for all 174 choices. The conservative calendar bound ends 29 May 2024. Existing large-chunk warning remains; native visual/accessibility QA is pending.
+
+## Integration and ending-focus follow-up
+
+Integrated merged main `e018af8fb9930bedcc7c9ed3250f7673283c3091`, preserving both Punjab's procedural display refresh and Ramírez's historical refresh. Both regression suites and the revision-aware save boundary remain. The archive test now uses explicit restart before creating a new run, matching the stale-write contract rather than attempting an unauthorized run replacement.
+
+Mac QA found an inherited ending-modal keyboard escape. Both endings now use a native modal dialog, focus the heading, prevent unsupported dismissal and return focus to a connected trigger or a visible stable header link. The ending closes while history, restart or family selection is open, avoiding competing modal layers. No ending mechanics or score is added. Two regression checks cover native dialog markup, focus/return lifecycle and overlay suspension; they do not constitute a browser Tab/Shift+Tab pass.
+
+Integrated verification: **127 tests and production/Sites build pass**. Native-browser retest of ending focus, nested tools and combined save/calendar behavior remains required. Cambodia's larger journey migration is separate and publication remains gated on final combined QA.
