@@ -1,3 +1,4 @@
+import { EndingDialog } from "./EndingDialog.jsx";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useJourneyGame } from "./useJourneyGame.js";
 import {
@@ -51,7 +52,6 @@ import {
   getCondition,
   getEvent,
   getFamilyPreset,
-  getJourneyScore,
   getPeople,
   getPortraitMood,
   getRequirementFailure,
@@ -403,20 +403,19 @@ function JourneyLog({ game, onClose }) {
 }
 
 function EndingModal({ game, onRestart, onExploreHistory }) {
-  const score = getJourneyScore(game);
   const people = getPeople(game);
   const livingPeople = Object.values(game.people).filter((person) => person.alive !== false);
   const won = game.status === "won";
   const reachedDestination = won && game.progress >= 100;
   const averageHealth = livingPeople.length ? Math.round(livingPeople.reduce((sum, person) => sum + person.health, 0) / livingPeople.length) : 0;
   return (
-    <div className="modal-backdrop ending-backdrop">
-      <section className={`ending-modal ${game.status} ${reachedDestination ? "destination-reached" : ""}`} role="dialog" aria-modal="true" aria-labelledby="ending-title">
+    <EndingDialog className="modal-backdrop ending-backdrop" labelledBy="ending-title">
+      <section className={`ending-modal ${game.status} ${reachedDestination ? "destination-reached" : ""}`}>
         <span className="ending-symbol">
           {won ? <HouseLine weight="fill" /> : <Heartbeat weight="duotone" />}
         </span>
         <small>{reachedDestination ? "Destination reached · Route complete" : won ? "Journey complete · A new destination" : "The journey ends here"}</small>
-        <h2 id="ending-title">{game.ending.title}</h2>
+        <h2 id="ending-title" tabIndex="-1">{game.ending.title}</h2>
         <p>{game.ending.copy}</p>
         <p className="history-ending-period">{getJourneyDate(game)}</p>
         <button className="history-ending-button" onClick={onExploreHistory}>Explore the history</button>
@@ -428,7 +427,6 @@ function EndingModal({ game, onRestart, onExploreHistory }) {
           </div>
         )}
         <div className="ending-stats">
-          <div><strong>{score}</strong><span>Journey score</span></div>
           <div><strong>{game.day - 1}</strong><span>Days traveled</span></div>
           <div><strong>{averageHealth}%</strong><span>Average health</span></div>
           <div><strong>{game.history.length}</strong><span>Choices made</span></div>
@@ -443,7 +441,7 @@ function EndingModal({ game, onRestart, onExploreHistory }) {
         </div>
         <button className="start-again" onClick={onRestart} data-sound="confirm"><ArrowCounterClockwise weight="bold" />Begin a new journey</button>
       </section>
-    </div>
+    </EndingDialog>
   );
 }
 
@@ -605,7 +603,7 @@ export function App() {
           </div>
           <span className="header-actions">
             <button onClick={() => setShowHistory(true)} aria-label="Explore the history" data-tooltip="Historical context and sources" data-sound="tap"><BookOpenText weight="duotone" /></button>
-            <a className="guided-return" href="/" data-tooltip="Switch to the simpler story view">Guided view</a>
+            <a data-ending-return className="guided-return" href="/" data-tooltip="Switch to the simpler story view">Guided view</a>
             <a
               className="source-link"
               href="https://github.com/thachp/theundocumentedtrail"
@@ -729,7 +727,7 @@ export function App() {
         />
       )}
       {game.pendingIncident && <TravelIncident game={game} onResolve={(responseId) => setGame((current) => resolveTravelIncident(current, responseId))} />}
-      {game.phase === "ended" && <EndingModal game={game} onRestart={restart} onExploreHistory={() => setShowHistory(true)} />}
+      {game.phase === "ended" && !showHistory && !showRestart && <EndingModal game={game} onRestart={restart} onExploreHistory={() => setShowHistory(true)} />}
     </main>
   );
 }

@@ -1289,7 +1289,7 @@
 .cinematic-journey-archive > header small { color: var(--cinematic-teal); font-size: 7px; text-transform: uppercase; letter-spacing: 0.15em; }
 .cinematic-journey-archive > header strong { font-family: Georgia, "Times New Roman", serif; font-size: 16px; font-weight: 500; }
 .cinematic-journey-archive > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-.cinematic-journey-archive article { min-width: 0; display: grid; grid-template-columns: minmax(140px, 1.7fr) auto repeat(3, minmax(46px, auto)); align-items: center; gap: 10px; padding: 9px 11px; border: 1px solid rgba(197, 209, 208, 0.2); background: rgba(12, 34, 39, 0.72); }
+.cinematic-journey-archive article { min-width: 0; display: grid; grid-template-columns: minmax(140px, 1.7fr) auto repeat(2, minmax(46px, auto)); align-items: center; gap: 10px; padding: 9px 11px; border: 1px solid rgba(197, 209, 208, 0.2); background: rgba(12, 34, 39, 0.72); }
 .cinematic-journey-archive article > span { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .cinematic-journey-archive article > span:first-child strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .cinematic-journey-archive article strong { font-size: 10px; }
@@ -1432,7 +1432,7 @@
 
 .cinematic-ending-stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin: 18px 0;
   border-top: 1px solid var(--cinematic-line);
   border-bottom: 1px solid var(--cinematic-line);
@@ -1614,8 +1614,7 @@
   .cinematic-family-carousel-controls > span small { max-width: 150px; }
   .cinematic-family-portrait img { height: 112px; }
   .cinematic-family-copy { min-height: 158px; }
-  .cinematic-journey-archive article { grid-template-columns: minmax(120px, 1.5fr) auto repeat(2, minmax(44px, auto)); }
-  .cinematic-journey-archive article > span:last-child { display: none; }
+  .cinematic-journey-archive article { grid-template-columns: minmax(0, 1fr) auto; }
   .cinematic-tutorial { padding: 24px 18px 18px; }
   .cinematic-tutorial-lessons { grid-template-columns: 1fr; }
   .cinematic-tutorial-lessons span { min-height: 64px; flex-direction: row; align-items: center; }
