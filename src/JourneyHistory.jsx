@@ -30,7 +30,7 @@ export function JourneyHistoryDialog({ game, introduction = false, onClose, stor
     dialog.showModal();
     return () => {
       dialog.close();
-      if (previous?.isConnected) previous.focus();
+      if (previous?.isConnected && previous !== document.body && previous.getClientRects().length) previous.focus();
       else document.querySelector("[data-history-return]")?.focus();
     };
   }, []);
