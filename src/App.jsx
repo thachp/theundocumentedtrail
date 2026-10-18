@@ -1,3 +1,4 @@
+import { commitJourneyChoice } from "./journeyChoiceActions.js";
 import { isCambodiaJourney } from "./cambodiaJourney.js";
 import { CambodiaResources, CambodiaJourneyContext, CambodiaPersonDialog } from "./CambodiaJourneyUI.jsx";
 import { selectJourneyGame as selectFamilyGame } from "./selectJourney.js";
@@ -50,7 +51,6 @@ import {
   EVENTS,
   ROUTES,
   buySupply,
-  chooseOption,
   continueJourney,
   getCondition,
   getEvent,
@@ -171,7 +171,7 @@ function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop,
           <ChatCircleDots weight="duotone" aria-hidden="true" />
           <h2 tabIndex="-1" data-history-return>{game.phase === "outcome" ? "What happened" : "Decision point"}</h2>
         </div>
-        <span><Phone weight="duotone" aria-hidden="true" /> {game.resources.battery}%</span>
+        {!isCambodiaJourney(game) && <span aria-label="Phone charge"><Phone weight="duotone" aria-hidden="true" /> {game.resources.battery}%</span>}
       </header>
 
       <SceneHistory game={game} onExplore={onExploreHistory} />
@@ -548,7 +548,7 @@ export function App() {
   };
 
   const confirmChoice = () => {
-    setGame((current) => chooseOption(current, pendingChoice.id));
+    commitJourneyChoice(game, pendingChoice, setGame, () => setShowHistory(true));
     setPendingChoice(null);
   };
 
@@ -596,7 +596,7 @@ export function App() {
   };
 
   return (
-    <main className="game-shell" onClickCapture={playInteractionSound}>
+    <main className={`game-shell${isCambodiaJourney(game) ? " cambodia-planning" : ""}`} onClickCapture={playInteractionSound}>
       <header className="game-header">
         <div className="brand-lockup">
           <div><h1>The Undocumented Trail</h1><p>Everything they carry</p></div>

@@ -5,3 +5,13 @@
 .cambodia-person-dialog{max-width:min(560px,calc(100vw - 28px));padding:24px;color:#ece4d0;background:#102328;font:16px/1.6 "IBM Plex Sans",sans-serif;border:1px solid #71867d;}.cambodia-person-dialog::backdrop{background:#000b;}
 img.cinematic-scene{width:100%;height:100%;object-fit:cover;object-position:50% 45%;}.planning-cambodia-hero{display:block;width:100%;max-height:280px;object-fit:cover;object-position:50% 45%;}.cambodia-hero-credit{font-size:12px;color:#cbd3c7;margin:8px 16px;}
 @media(max-width:480px){.cambodia-resources{gap:8px;padding:12px;}.cambodia-resources strong{font-size:21px;}.cambodia-resources span{font-size:12px;}}
+
+/* Cambodia adds a cover and historical context above the planning grid. Let
+   this page grow rather than squeezing geography into the viewport remainder. */
+@media (min-width:981px) {
+  .game-shell.cambodia-planning {height:auto;min-height:100dvh;overflow:visible;}
+  .cambodia-planning .game-grid {flex:none;grid-template-rows:auto 240px;overflow:visible;}
+  .cambodia-planning .map-stage.geographic-map-stage {display:block;overflow:visible;}
+  .cambodia-planning .geographic-map-stage > .journey-map-fit {display:block;overflow:visible;}
+  .cambodia-planning .journey-map-fit > .journey-map-canvas {height:clamp(320px,44vh,520px);min-height:320px;}
+}

@@ -48,7 +48,8 @@ test('both actual shared views render every scene with original choices, geograp
    for(const View of [App,BeginnerApp]){
     const html=renderToStaticMarkup(React.createElement(View));
     assert.match(html,/data-family="cambodia-1979"/);assert.match(html,new RegExp(`data-event="${scene.id}"`));assert.match(html,/Text itinerary/);assert.match(html,/Household planning resources/);
-    assert.ok(html.includes(cambodiaHero(scene.id)));assert.match(html,/fictional household/);assert.doesNotMatch(html,/undefined|NaN|% health|Use medicine|Group resources/);
+    if(View===App){assert.match(html,/class="game-shell cambodia-planning"/);assert.doesNotMatch(html.match(/<header class="panel-header">([\s\S]*?)<\/header>/)[1],/%|Phone charge/);}
+    assert.ok(html.includes(cambodiaHero(scene.id)));assert.match(html,/fictional household/);assert.doesNotMatch(html,/undefined|NaN|% health|Use medicine|Group resources|Phone charge/);
     for(const choice of scene.choices)assert.ok(html.includes(choice.title.replaceAll('&','&amp;')),choice.title);
    }
    game=chooseOption(game,scene.choices[0].id);
@@ -60,4 +61,22 @@ test('both actual shared views render every scene with original choices, geograp
   for(const View of [App,BeginnerApp]){const html=renderToStaticMarkup(React.createElement(View));assert.match(html,/Their lives continue beyond the frame/);assert.doesNotMatch(html,/% health|NaN|undefined/);}
   let total=0;for(const id of ['cover','C01','C02','C04','C05','C06','C07','C08','C09']){const size=(await stat(`public/assets/cambodia/${id}.webp`)).size;assert.ok(size<200000);total+=size;}assert.ok(total<1500000);
  }finally{await server.close();delete globalThis.window;delete globalThis.localStorage;}
+});
+
+test('C02 historical-context action commits the canonical choice and opens sources in both view handlers',async()=>{
+ const {commitJourneyChoice}=await import('../src/journeyChoiceActions.js');
+ const {readFile}=await import('node:fs/promises');
+ const initial=continueJourney(chooseOption(cambodiaGame(createCambodiaState()),'drawing'));
+ for(const [file,callback] of [['App.jsx','setShowHistory(true)'],['BeginnerApp.jsx','setHistoryMode("explore")']]){
+  const source=await readFile(`src/${file}`,'utf8');assert.ok(source.includes(`commitJourneyChoice(game, ${file==='App.jsx'?'pendingChoice':'choice'}, setGame, () => ${callback})`));
+  let next,opened=0;commitJourneyChoice(initial,{id:'history'},fn=>{next=fn(initial);},()=>opened++);
+  assert.equal(opened,1);assert.deepEqual(next.cambodiaState,chooseOption(initial,'summary').cambodiaState);
+  commitJourneyChoice(initial,{id:'summary'},()=>{},()=>assert.fail('summary does not open history'));
+ }
+});
+test('Cambodia planning has an independent desktop map height rather than a compressed viewport remainder',async()=>{
+ const {readFile}=await import('node:fs/promises');const css=await readFile('src/cambodiaJourney.css','utf8');
+ assert.match(css,/\.game-shell\.cambodia-planning\s*\{height:auto;min-height:100dvh;overflow:visible;/);
+ assert.match(css,/\.cambodia-planning \.game-grid\s*\{flex:none;grid-template-rows:auto 240px;/);
+ assert.match(css,/\.cambodia-planning \.journey-map-fit > \.journey-map-canvas\s*\{height:clamp\(320px,44vh,520px\);min-height:320px;/);
 });

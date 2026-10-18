@@ -1,3 +1,4 @@
+import { commitJourneyChoice } from "./journeyChoiceActions.js";
 import { isCambodiaJourney } from "./cambodiaJourney.js";
 import { CambodiaResources, CambodiaJourneyContext, CambodiaPersonDialog } from "./CambodiaJourneyUI.jsx";
 import { selectJourneyGame as selectFamilyGame } from "./selectJourney.js";
@@ -41,7 +42,6 @@ import {
   JOURNEY_STAGES,
   ROUTES,
   buySupply,
-  chooseOption,
   continueJourney,
   getCondition,
   getEvent,
@@ -869,7 +869,7 @@ export function BeginnerApp() {
     if (restartFamilyId) selectFamily(restartFamilyId, { restart: true });
   };
 
-  const choose = (choice) => setGame((current) => chooseOption(current, choice.id));
+  const choose = (choice) => commitJourneyChoice(game, choice, setGame, () => setHistoryMode("explore"));
   const takeWork = (choiceId) => setGame((current) => takeRoadsideJob(current, choiceId));
   const respondToPost = (responseId) => setGame((current) => respondToSocialFeed(current, responseId));
   const continueWithIncidents = () => {
