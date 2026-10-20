@@ -1663,3 +1663,26 @@ dialog.cinematic-family-backdrop:not([open]) { display:none; }
 .cinematic-family-copy small, .cinematic-family-copy em { font-size: 12px; letter-spacing: 0.04em; }
 .cinematic-family-actions button { min-height: 44px; font-size: 13px; }
 .cinematic-family-dialog > footer { font-size: 12px; }
+
+/* Journey selection: fit a complete card before asking players to scroll. */
+.cinematic-family-dialog { padding: 18px 22px; }
+.cinematic-family-dialog > small { margin-top: 0; font-size: 11px; }
+.cinematic-family-dialog h2 { font-size: clamp(28px, 3vw, 34px); margin-top: 4px; }
+.cinematic-family-dialog > p { font-size: 14px; }
+.cinematic-family-carousel { margin-top: 10px; }
+.cinematic-family-portrait img { height: 84px; }
+.cinematic-family-copy { min-height: 0; padding: 10px 12px; gap: 5px; }
+.cinematic-family-copy strong { margin-top: 0; font-size: 20px; }
+.cinematic-family-copy p { margin: 0; font-size: 14px; line-height: 1.4; }
+.cinematic-family-copy small { font-size: 12px; letter-spacing: 0; }
+.cinematic-family-copy em { margin-top: 3px; font-size: 12px; }
+.cinematic-family-actions { grid-auto-flow: column; grid-auto-columns: 1fr; padding: 0 10px 10px; }
+.cinematic-family-actions button { min-height: 44px; }
+.cinematic-family-dialog > footer { margin-top: 10px; padding-top: 10px; }
+@media (max-width: 600px) {
+  .cinematic-family-dialog { padding: 14px 12px; max-height: calc(100dvh - 16px); }
+  .cinematic-family-dialog > p { display: none; }
+  .cinematic-family-dialog h2 { font-size: 28px; }
+  .cinematic-family-portrait img { height: 64px; }
+  .cinematic-family-copy { padding: 8px 10px; }
+}
