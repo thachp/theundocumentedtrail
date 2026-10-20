@@ -295,10 +295,18 @@ function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop,
 }
 
 function DetailDrawer({ person, personState, relationshipNote, route, medicine, stress, familyId, onUseMedicine, onClose }) {
+  const drawerRef = useRef(null);
+  useEffect(() => {
+    const previous = document.activeElement;
+    drawerRef.current?.querySelector('.drawer-close')?.focus({preventScroll:true});
+    const dismiss = event => { if (event.key === 'Escape') { event.preventDefault(); onClose(); } };
+    window.addEventListener('keydown', dismiss);
+    return () => { window.removeEventListener('keydown', dismiss); if (previous?.isConnected) previous.focus({preventScroll:true}); };
+  }, []);
   const selectedRoute = route ? ROUTES[route] : null;
   const condition = personState ? getCondition(personState.health, personState.alive !== false) : null;
   return (
-    <div className="detail-drawer" role="dialog" aria-modal="false" aria-label="Planning details">
+    <div ref={drawerRef} className="detail-drawer" role="dialog" aria-modal="false" aria-label="Planning details">
       <button className="drawer-close" onClick={onClose} aria-label="Close details" data-sound="dismiss"><X weight="bold" /></button>
       {person ? (
         <>
@@ -667,7 +675,7 @@ export function App() {
         </div>}</>
       </header>
 
-      {isCambodiaJourney(game) && <><img className="planning-cambodia-hero" style={{objectPosition:event.heroFocalPoint ?? "50% 45%"}} onError={e=>{if(e.currentTarget.dataset.fallback!=="cover"){e.currentTarget.dataset.fallback="cover";e.currentTarget.src=getFamilyPreset(game).heroImage;}}} src={event.heroImage} alt={event.heroAlt} /><p className="cambodia-hero-credit">Illustrative fictional household · {event.time}</p><CambodiaJourneyContext game={game} onChange={setGame} /></>}
+      {isCambodiaJourney(game) && <><img className="planning-cambodia-hero" style={{objectPosition:event.heroFocalPoint ?? "50% 45%"}} onError={e=>{if(e.currentTarget.dataset.fallback!=="cover"){e.currentTarget.dataset.fallback="cover";e.currentTarget.src=getFamilyPreset(game).heroImage;}}} src={event.heroImage} alt={event.heroAlt} /><p className="cambodia-hero-credit">{event.time}</p><CambodiaJourneyContext game={game} onChange={setGame} /></>}
       <div className="game-grid">
         <section className="map-stage geographic-map-stage" aria-label="Journey geography">
           <JourneyMap game={game} fitViewport />

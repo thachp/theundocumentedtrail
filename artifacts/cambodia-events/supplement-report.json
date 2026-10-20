@@ -1,0 +1,53 @@
+{
+  "head": "125fbab2b6d35ae5a7ef7f0aa5f85c1a1b345b4f",
+  "rows": [
+    {
+      "mode": "guided",
+      "width": 1365,
+      "chooser": true,
+      "sourceLinks": 10,
+      "dialogClosed": true,
+      "focusReturned": true,
+      "person": true,
+      "modeEditionPreserved": true,
+      "ending": true,
+      "errors": []
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "chooser": true,
+      "sourceLinks": 10,
+      "dialogClosed": true,
+      "focusReturned": true,
+      "person": true,
+      "modeEditionPreserved": true,
+      "ending": true,
+      "errors": []
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "chooser": true,
+      "sourceLinks": 10,
+      "dialogClosed": true,
+      "focusReturned": true,
+      "person": true,
+      "modeEditionPreserved": true,
+      "ending": true,
+      "errors": []
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "chooser": true,
+      "sourceLinks": 10,
+      "dialogClosed": true,
+      "focusReturned": true,
+      "person": true,
+      "modeEditionPreserved": true,
+      "ending": true,
+      "errors": []
+    }
+  ]
+}

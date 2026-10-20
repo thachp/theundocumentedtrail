@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {STORY} from '../src/cambodiaExpanded/story.js';
 import {createState,startState,chooseState,continueState,backState,validateState} from '../src/cambodiaExpanded/state.js';
 import {cambodiaGame} from '../src/cambodiaExpanded/journey.js';
-const opening=()=>startState(createState(STORY));
+const opening=()=>startState(createState(STORY,2));
 test('water and food use carry between road occasions; shortages have consequences; notes help without a battery',()=>{
  let state=continueState(STORY,chooseState(STORY,opening(),'notes'));
  const before=state.resources.water;
@@ -26,7 +26,7 @@ test('legacy v3 saves replay their original resources, and Back preserves their 
  assert.deepEqual(validateState(STORY,old),old);
  assert.equal(validateState(STORY,{...old,resourceRulesVersion:99}),null);
 });
-test('new rules replay without undo without changing saved choice consequences',()=>{
+test('saved occasion rules replay without undo without changing saved choice consequences',()=>{
  let state=opening();for(const id of ['food','pause','help','food','wait','water','relief','help','meal','relative','contact','classes','tomorrow']){
  const chosen=chooseState(STORY,state,id);assert.notEqual(chosen,state,`${state.sceneId}:${id}`);
  assert.deepEqual(validateState(STORY,chosen),chosen);assert.equal(backState(STORY,chosen),chosen);

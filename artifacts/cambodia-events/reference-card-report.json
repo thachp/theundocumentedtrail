@@ -1,0 +1,29 @@
+[
+  {
+    "width": 1365,
+    "top": 447,
+    "bottom": 676,
+    "overflow": false,
+    "focusedClose": true,
+    "escape": true,
+    "focusRestored": true
+  },
+  {
+    "width": 390,
+    "top": 378.5,
+    "bottom": 688,
+    "overflow": false,
+    "focusedClose": true,
+    "escape": true,
+    "focusRestored": true
+  },
+  {
+    "width": 320,
+    "top": 362,
+    "bottom": 688,
+    "overflow": false,
+    "focusedClose": true,
+    "escape": true,
+    "focusRestored": true
+  }
+]

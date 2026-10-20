@@ -1,0 +1,14 @@
+[
+  {
+    "mode": "guided",
+    "cancel": true,
+    "explicitRestart": true,
+    "archivePreserved": true
+  },
+  {
+    "mode": "full",
+    "cancel": true,
+    "explicitRestart": true,
+    "archivePreserved": true
+  }
+]
