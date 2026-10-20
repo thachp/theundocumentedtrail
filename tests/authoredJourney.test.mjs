@@ -10,7 +10,7 @@ import { getJourneyHistory, getSceneHistory } from '../src/journeyHistory.js';
 import { stat } from 'node:fs/promises';
 const memory=()=>{const data=new Map();return {data,getItem:k=>data.get(k)??null,setItem:(k,v)=>data.set(k,String(v))};};
 for(const story of AUTHORED_STORIES){
- test(`${story.id}: each choice, callback variant, Back and map/source target works through both shared controller modes`,()=>{
+ test(`${story.id}: each irreversible choice, callback variant and map/source target works through both shared controller modes`,()=>{
   for(let side=0;side<3;side++){
    let game=authoredGame(story);const ids=new Set();
    for(const scene of story.scenes){
@@ -20,7 +20,7 @@ for(const story of AUTHORED_STORIES){
     for(const id of getSceneHistory(game).sourceIds)assert.ok(story.sources[id]?.url.startsWith('https://'));
     const choice=scene.choices[side];assert.ok(!ids.has(choice.id));ids.add(choice.id);
     const old=game;game=chooseOption(game,choice.id);assert.equal(game.currentOutcome.copy,choice.consequence);assert.ok(game.planning.time>=0&&game.planning.energy>=0);assert.equal(game.status,'playing');
-    assert.deepEqual(backAuthored(game).storyState,old.storyState);
+    assert.equal(backAuthored(game),game);
     game=continueJourney(game);
    }
    assert.equal(game.phase,'ended');assert.equal(game.history.length,story.scenes.length);assert.ok(storyCallbacks(game).length>=2);assert.equal(game.losses.length,0);

@@ -1,3 +1,4 @@
+import {preservesCommittedChoices} from './committedChoices.js';
 import { authoredEdition } from './authoredStories.js';
 import { authoredGame, chooseAuthored, continueAuthored } from './authoredJourney.js';
 export const authoredArchiveKey=(id,edition=2)=>`undocumented-trail:household:${id}:archive:v${edition}`;
@@ -33,6 +34,8 @@ export function applyAuthoredAction(snapshot,action,storage) {
  if(stored.saveWritable&&typeof action==='function'&&(snapshot.runId!==stored.runId||snapshot.saveRevision!==stored.saveRevision))return stored;
  const next=typeof action==='function'?action(snapshot):action;
  if(next?.familyId!==snapshot.familyId||next.householdEdition!==edition||!validateAuthored(authoredEdition(next.familyId,edition),{...next.storyState,version:edition,storyId:next.familyId}))return snapshot;
+ if(stored.saveWritable&&(next.runId!==stored.runId||next.saveRevision!==stored.saveRevision))return stored;
+ if(!preservesCommittedChoices(stored.saveWritable?stored.storyState:snapshot.storyState,next.storyState))return stored.saveWritable?stored:snapshot;
  if(!stored.saveWritable)return {...next,saveWritable:false,saveWarning:stored.saveWarning};
  if(JSON.stringify(next.storyState)===JSON.stringify(stored.storyState))return stored;
  const revision=stored.saveRevision+1;

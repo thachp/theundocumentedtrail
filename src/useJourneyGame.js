@@ -10,11 +10,13 @@ import { cambodiaStoryEnabled } from "./cambodiaState.js";
 export function observeJourneyRestore(restore, windowTarget = window, documentTarget = document) {
   const visible = () => { if (documentTarget.visibilityState === "visible") restore(); };
   windowTarget.addEventListener("pageshow", restore);
+  windowTarget.addEventListener("popstate", restore);
   windowTarget.addEventListener("storage", restore);
   documentTarget.addEventListener("visibilitychange", visible);
   restore();
   return () => {
     windowTarget.removeEventListener("pageshow", restore);
+    windowTarget.removeEventListener("popstate", restore);
     windowTarget.removeEventListener("storage", restore);
     documentTarget.removeEventListener("visibilitychange", visible);
   };

@@ -1,0 +1,31 @@
+{
+  "aggregateTests": {
+    "passed": 189,
+    "failed": 0
+  },
+  "build": "passed; existing chunk-size warning",
+  "browser": {
+    "committedChoice": "notes",
+    "foodBefore": 5,
+    "foodAfter": 4,
+    "contacts": "Notes kept",
+    "guidedPlanningBackForwardRefresh": "passed; food remained 4",
+    "uncommittedKeepThinking": "passed",
+    "guided390": {
+      "undo": false,
+      "horizontalOverflow": false
+    },
+    "planning320": {
+      "undo": false,
+      "horizontalOverflow": false
+    }
+  },
+  "screenReader": "unrun; deferred issue #31",
+  "libraryAfterVersion": 3,
+  "blockedOperation": {
+    "action": "reload stale browser handle",
+    "target": "unrelated YouTube tab",
+    "status": "denied before execution",
+    "resolution": "fresh authorized localhost tab succeeded"
+  }
+}

@@ -48,18 +48,13 @@ test("C02 reading alternatives have identical persistent state; earlier flags ar
   assert.match(callbacks(b).join(" "), /sharing bundles/);
   assert.notEqual(callbacks(a).join(" "), callbacks(b).join(" "));
 });
-test("back, revise and refresh rebuild flags without duplicating consequences", () => {
-  let state = step(step(step(started())));
-  assert.equal(state.flags.contact, "asked");
-  state = backCambodia(state);
-  assert.equal(state.sceneId, "C03"); assert.equal(state.phase, "scene");
-  assert.equal(state.flags.contact, undefined);
-  state = chooseCambodia(state, "prepare");
-  assert.equal(state.flags.contact, "unresolved");
-  assert.deepEqual(validateCambodiaSave(JSON.parse(JSON.stringify(state))), state);
-  state = backCambodia(state);
-  assert.equal(state.sceneId, "C03"); assert.equal(state.flags.contact, undefined);
-  assert.deepEqual(backCambodia(started()), createCambodiaState());
+test("committed choices and flags survive old Back handlers and refresh", () => {
+ const state=step(step(step(started())));
+ assert.equal(state.flags.contact,"asked");
+ assert.equal(backCambodia(state),state);
+ assert.equal(chooseCambodia(state,"prepare"),state);
+ assert.deepEqual(validateCambodiaSave(JSON.parse(JSON.stringify(state))),state);
+ const initial=started();assert.equal(backCambodia(initial),initial);
 });
 test("pilot save leaves all existing family saves and archives byte-for-byte intact", () => {
   const data = new Map([[FAMILY_SAVES_KEY, JSON.stringify(Object.fromEntries(Object.keys(FAMILY_PRESETS).map(id => [id, createInitialGame(id)])))], [JOURNEY_ARCHIVE_KEY, "[]"], [GAME_SAVE_KEY, JSON.stringify(createInitialGame("haddad"))], [FAMILY_SELECTION_KEY, "diop"]]);

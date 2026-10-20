@@ -1,3 +1,4 @@
+import {preservesCommittedChoices} from '../committedChoices.js';
 import { CAMBODIA_SCENES, STORY_ID, sceneFor } from "./cambodiaStory.js";
 // One bounded, linear, story-local record. The active route never mounts the
 // survival game alongside this reader. No RNG, statistics, inventory or scoring.
@@ -19,14 +20,8 @@ export function continueCambodia(state) {
   const i = CAMBODIA_SCENES.findIndex(s => s.id === state.sceneId);
   return i === CAMBODIA_SCENES.length - 1 ? { ...state, phase: "complete" } : { ...state, sceneId: CAMBODIA_SCENES[i + 1].id, phase: "scene" };
 }
-export function backCambodia(state) {
-  if (state.phase === "intro") return state;
-  if (!state.history.length) return { ...state, phase: "intro" };
-  const retained = state.history.slice(0, -1);
-  let restored = startCambodia(createCambodiaState());
-  for (const entry of retained) restored = continueCambodia(chooseCambodia(restored, entry.choiceId));
-  return restored;
-}
+// Retained compatibility API: committed decisions cannot be undone.
+export function backCambodia(state) { return state; }
 // Replay validates a bounded save and derives flags, rather than trusting stored
 // values. Invalid/newer saves are retained in storage; never touch family keys.
 export function validateCambodiaSave(raw) {
@@ -51,7 +46,12 @@ export function loadCambodia(storage) {
     return state ? { state, warning: "", writable: true } : { state: createCambodiaState(), warning: "This story save could not be read. It has been preserved. Choose Start a new story to replace only this story save.", writable: false };
   } catch { return { state: createCambodiaState(), warning: "Saving is unavailable. You can read this story during this visit.", writable: false }; }
 }
-export function saveCambodia(storage, state) {
+export function saveCambodia(storage, state, {restart=false}={}) {
   if (!validateCambodiaSave(state)) return false;
-  try { storage.setItem(CAMBODIA_SAVE_KEY, JSON.stringify(state)); return true; } catch { return false; }
+  try {
+    if(restart){storage.setItem(CAMBODIA_SAVE_KEY, JSON.stringify(state));return true;}
+    const text=storage.getItem(CAMBODIA_SAVE_KEY),stored=text===null?null:validateCambodiaSave(JSON.parse(text));
+    if(!restart && text!==null && (!stored||!preservesCommittedChoices(stored,state)))return false;
+    storage.setItem(CAMBODIA_SAVE_KEY, JSON.stringify(state)); return true;
+  } catch { return false; }
 }

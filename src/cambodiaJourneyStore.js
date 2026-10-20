@@ -1,3 +1,4 @@
+import {preservesCommittedChoices} from './committedChoices.js';
 import * as expanded from './cambodiaExpanded/journey.js';
 import * as revisedState from './cambodiaState.js';
 import * as originalState from './legacyHouseholds/cambodiaState.js';
@@ -24,6 +25,7 @@ export function applyCambodiaJourneyAction(snapshot,action,storage) {
  if(typeof action==='function'&&stored.saveWritable&&(snapshot.runId!==stored.runId||snapshot.saveRevision!==stored.saveRevision))return stored;
  const next=typeof action==='function'?action(snapshot):action;
  if(next?.householdEdition!==edition||!api.validateCambodiaSave(next?.cambodiaState))return stored;
+ if(!preservesCommittedChoices(stored.saveWritable?stored.cambodiaState:snapshot.cambodiaState,next.cambodiaState))return stored.saveWritable?stored:snapshot;
  if(!stored.saveWritable)return {...next,saveWritable:false,saveWarning:stored.saveWarning};
  if(next.runId!==stored.runId||next.saveRevision!==stored.saveRevision)return stored;
  if(JSON.stringify(next.cambodiaState)===JSON.stringify(stored.cambodiaState))return stored;

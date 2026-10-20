@@ -1,3 +1,4 @@
+import {preservesCommittedChoices} from './committedChoices.js';
 import {
   FAMILY_PRESETS,
   GAME_SAVE_KEY,
@@ -109,6 +110,7 @@ export function saveFamilyGame(game, storage, options = {}) {
   // A restored page must not overwrite a later revision, even if its next
   // action produces a valid game. Only explicit family restart replaces a run.
   if (stored && !options.replaceRun && !sameSaveBase(game, stored)) return saves;
+  if (stored && !options.replaceRun && !preservesCommittedChoices(stored,game)) return saves;
   const committed = { ...game, saveRevision: (stored?.saveRevision ?? 0) + 1 };
   const nextSaves = { ...saves, [game.familyId]: committed };
   target.setItem(FAMILY_SAVES_KEY, JSON.stringify(nextSaves));

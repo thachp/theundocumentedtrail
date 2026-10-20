@@ -87,14 +87,16 @@ test("restoration observer refreshes on Back/Forward pageshow, storage and visib
   assert.equal(restores,1);
   windowTarget.dispatchEvent(new Event("pageshow")); // Back
   windowTarget.dispatchEvent(new Event("pageshow")); // Forward
+  windowTarget.dispatchEvent(new Event("popstate"));
+  windowTarget.dispatchEvent(new Event("popstate"));
   windowTarget.dispatchEvent(new Event("storage"));
   documentTarget.visibilityState="hidden"; documentTarget.dispatchEvent(new Event("visibilitychange"));
-  assert.equal(restores,4);
+  assert.equal(restores,6);
   documentTarget.visibilityState="visible"; documentTarget.dispatchEvent(new Event("visibilitychange"));
-  assert.equal(restores,5);
+  assert.equal(restores,7);
   cleanup();
   windowTarget.dispatchEvent(new Event("pageshow"));windowTarget.dispatchEvent(new Event("storage"));documentTarget.dispatchEvent(new Event("visibilitychange"));
-  assert.equal(restores,5);
+  assert.equal(restores,7);
 });
 
 test("both actual views use the synchronous boundary and contain no post-render save writer or activity feature", async () => {
