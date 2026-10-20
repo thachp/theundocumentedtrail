@@ -3,13 +3,13 @@ import assert from 'node:assert/strict';
 import {createState,startState,chooseState,continueState,backState,validateState} from '../src/cambodiaExpanded/state.js';
 const story={id:'test',start:'leave',scenes:[{id:'leave',choices:[{id:'rest',next:'care',effects:{water:-1,health:4},flags:{care:'rest'},time:2},{id:'share',next:'contact',effects:{cohesion:1}}]},{id:'care',next:'contact',choices:[{id:'help',effects:{supplies:-2}}]},{id:'contact',choices:[{id:'wait',effects:{cash:1}}]}]};
 test('expanded branch replay preserves resources and actual itinerary; Back cannot undo',()=>{
- let state=startState(createState(story));state=chooseState(story,state,'rest');
+ let state=startState(createState(story,2));state=chooseState(story,state,'rest');
  assert.equal(state.resources.water,3);assert.equal(state.people.maly.health,84);assert.equal(state.elapsed,2);
  assert.equal(chooseState(story,state,'rest'),state);
  assert.deepEqual(validateState(story,{...state,resources:{water:99}}),state);
  state=continueState(story,state);assert.equal(state.sceneId,'care');
  assert.equal(backState(story,state),state);assert.equal(state.resources.water,3);
- state=continueState(story,chooseState(story,startState(createState(story)),'share'));assert.equal(state.sceneId,'contact');
+ state=continueState(story,chooseState(story,startState(createState(story,2)),'share'));assert.equal(state.sceneId,'contact');
  assert.equal(state.history.some(h=>h.sceneId==='care'),false);
  state=continueState(story,chooseState(story,state,'wait'));assert.equal(state.phase,'complete');assert.deepEqual(validateState(story,state),state);
  assert.equal(validateState(story,{...state,history:[{sceneId:'care',choiceId:'help'}]}),null);
@@ -22,7 +22,7 @@ import {getEvent,chooseOption,continueJourney,getRequirementFailure} from '../sr
 import {getJourneyGeography} from '../src/journeyGeography.js';
 import {loadCambodiaJourney,restartCambodiaJourney,applyCambodiaJourneyAction,CAMBODIA_EXPANDED_ARCHIVE_KEY} from '../src/cambodiaJourneyStore.js';
 const memory=()=>{const data=new Map();return {data,getItem:k=>data.get(k)??null,setItem:(k,v)=>data.set(k,String(v))};};
-function prefixes(){const states=new Map(),queue=[startState(createState(STORY))];while(queue.length){const state=queue.shift();if(states.has(state.sceneId))continue;states.set(state.sceneId,state);for(const choice of sceneFor(state).choices){const next=continueState(STORY,chooseState(STORY,state,choice.id));if(next.phase!=='complete')queue.push(next);}}return states;}
+function prefixes(){const states=new Map(),queue=[startState(createState(STORY,2))];while(queue.length){const state=queue.shift();if(states.has(state.sceneId))continue;states.set(state.sceneId,state);for(const choice of sceneFor(state).choices){const next=continueState(STORY,chooseState(STORY,state,choice.id));if(next.phase!=='complete')queue.push(next);}}return states;}
 test('all 48 authored edges are reachable, dated, sourced, replayable and irreversible with bounded consequences',()=>{
  const states=prefixes();assert.equal(states.size,16);let edges=0;
  for(const [id,state]of states){const scene=sceneFor(state);assert.equal(scene.choices.length,3);for(const source of scene.sourceIds)assert.ok(CAMBODIA_SOURCES[source]?.url,`${id} ${source}`);

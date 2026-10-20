@@ -1,0 +1,269 @@
+[
+  {
+    "mode": "guided",
+    "width": 390,
+    "overflow": false,
+    "hero": {
+      "x": 0,
+      "y": 84,
+      "width": 390,
+      "height": 160,
+      "right": 390,
+      "bottom": 244
+    },
+    "map": {
+      "x": 0,
+      "y": 84,
+      "width": 390,
+      "height": 529.25,
+      "right": 390,
+      "bottom": 613.25
+    },
+    "choice": {
+      "x": 14,
+      "y": 1453.25,
+      "width": 362,
+      "height": 151,
+      "right": 376,
+      "bottom": 1604.25
+    },
+    "stage": {
+      "x": 0,
+      "y": 84,
+      "width": 390,
+      "height": 1864.25,
+      "right": 390,
+      "bottom": 1948.25
+    },
+    "hud": {
+      "x": 0,
+      "y": 1949.25,
+      "width": 390,
+      "height": 200,
+      "right": 390,
+      "bottom": 2149.25
+    },
+    "confirmation": "direct commit",
+    "refreshStable": true,
+    "errors": []
+  },
+  {
+    "mode": "full",
+    "width": 390,
+    "overflow": false,
+    "hero": {
+      "x": 0,
+      "y": 962.53125,
+      "width": 390,
+      "height": 179.390625,
+      "right": 390,
+      "bottom": 1141.921875
+    },
+    "map": {
+      "x": 0,
+      "y": 432.28125,
+      "width": 390,
+      "height": 529.25,
+      "right": 390,
+      "bottom": 961.53125
+    },
+    "choice": {
+      "x": 20,
+      "y": 1535.4375,
+      "width": 350,
+      "height": 69.84375,
+      "right": 370,
+      "bottom": 1605.28125
+    },
+    "stage": null,
+    "hud": {
+      "x": 0,
+      "y": 232.28125,
+      "width": 390,
+      "height": 199,
+      "right": 390,
+      "bottom": 431.28125
+    },
+    "confirmation": "cancel and commit",
+    "refreshStable": true,
+    "errors": []
+  },
+  {
+    "mode": "guided",
+    "width": 1365,
+    "overflow": false,
+    "hero": {
+      "x": 395.84375,
+      "y": 116,
+      "width": 969.140625,
+      "height": 689.625,
+      "right": 1364.984375,
+      "bottom": 805.625
+    },
+    "map": {
+      "x": 0,
+      "y": 116,
+      "width": 395.84375,
+      "height": 689.625,
+      "right": 395.84375,
+      "bottom": 805.625
+    },
+    "choice": {
+      "x": 429.84375,
+      "y": 610.125,
+      "width": 294.375,
+      "height": 175.5,
+      "right": 724.21875,
+      "bottom": 785.625
+    },
+    "stage": {
+      "x": 0,
+      "y": 116,
+      "width": 1365,
+      "height": 689.625,
+      "right": 1365,
+      "bottom": 805.625
+    },
+    "hud": {
+      "x": 0,
+      "y": 806.625,
+      "width": 716.609375,
+      "height": 163,
+      "right": 716.609375,
+      "bottom": 969.625
+    },
+    "confirmation": "direct commit",
+    "refreshStable": true,
+    "errors": []
+  },
+  {
+    "mode": "guided",
+    "width": 320,
+    "overflow": false,
+    "hero": {
+      "x": 0,
+      "y": 89.953125,
+      "width": 320,
+      "height": 160,
+      "right": 320,
+      "bottom": 249.953125
+    },
+    "map": {
+      "x": 0,
+      "y": 89.953125,
+      "width": 320,
+      "height": 573.5,
+      "right": 320,
+      "bottom": 663.453125
+    },
+    "choice": {
+      "x": 14,
+      "y": 1694.890625,
+      "width": 292,
+      "height": 173.5,
+      "right": 306,
+      "bottom": 1868.390625
+    },
+    "stage": {
+      "x": 0,
+      "y": 89.953125,
+      "width": 320,
+      "height": 2122.4375,
+      "right": 320,
+      "bottom": 2212.390625
+    },
+    "hud": {
+      "x": 0,
+      "y": 2213.390625,
+      "width": 320,
+      "height": 200,
+      "right": 320,
+      "bottom": 2413.390625
+    },
+    "confirmation": "direct commit",
+    "refreshStable": true,
+    "errors": []
+  },
+  {
+    "mode": "full",
+    "width": 320,
+    "overflow": false,
+    "hero": {
+      "x": 0,
+      "y": 957.78125,
+      "width": 320,
+      "height": 160,
+      "right": 320,
+      "bottom": 1117.78125
+    },
+    "map": {
+      "x": 0,
+      "y": 432.28125,
+      "width": 320,
+      "height": 524.5,
+      "right": 320,
+      "bottom": 956.78125
+    },
+    "choice": {
+      "x": 20,
+      "y": 1561.078125,
+      "width": 280,
+      "height": 100.6875,
+      "right": 300,
+      "bottom": 1661.765625
+    },
+    "stage": null,
+    "hud": {
+      "x": 0,
+      "y": 232.28125,
+      "width": 320,
+      "height": 199,
+      "right": 320,
+      "bottom": 431.28125
+    },
+    "confirmation": "cancel and commit",
+    "refreshStable": true,
+    "errors": []
+  },
+  {
+    "mode": "full",
+    "width": 1365,
+    "overflow": false,
+    "hero": {
+      "x": 620.453125,
+      "y": 232.78125,
+      "width": 744.546875,
+      "height": 225,
+      "right": 1365,
+      "bottom": 457.78125
+    },
+    "map": {
+      "x": 0,
+      "y": 232.78125,
+      "width": 620.453125,
+      "height": 689.40625,
+      "right": 620.453125,
+      "bottom": 922.1875
+    },
+    "choice": {
+      "x": 640.453125,
+      "y": 764.34375,
+      "width": 704.546875,
+      "height": 60,
+      "right": 1345,
+      "bottom": 824.34375
+    },
+    "stage": null,
+    "hud": {
+      "x": 0,
+      "y": 119.78125,
+      "width": 1365,
+      "height": 112,
+      "right": 1365,
+      "bottom": 231.78125
+    },
+    "confirmation": "cancel and commit",
+    "refreshStable": true,
+    "errors": []
+  }
+]

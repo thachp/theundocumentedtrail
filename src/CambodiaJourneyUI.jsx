@@ -20,7 +20,7 @@ export function CambodiaResources({game,variant='planning'}) {
    {icon:FirstAidKit,label:'Health',value:`${health}/100`,hint:'Average fictional health units. Read each person’s state through their portrait.',danger:health<55},
    {icon:Handshake,label:'Cohesion',value:cohesion>=4?'Strong':cohesion>=3?'Steady':'Fragile',hint:'Shared trust. Select a person’s portrait to read their individual state.'},
    {icon:WarningCircle,label:'Stress',value:`${game.resources.stress}/20`,hint:'Fictional strain units. Shortages can increase strain; this is not a clinical measure.',danger:game.resources.stress>=12},
-   {icon:Clock,label:'Turns',value:game.planning.time,hint:'Elapsed authored planning turns, not elapsed days.'},
+   {icon:Clock,label:game.cambodiaState.resourceRulesVersion===3?'Days':'Turns',value:game.planning.time,hint:game.cambodiaState.resourceRulesVersion===3?`Active journey days; ${game.cambodiaState.travelDays??0} spent traveling. Dated waiting periods between events are summarized, not rationed.`:'Elapsed authored planning turns, not elapsed days.'},
   ];
   return <section className={`cambodia-hud ${variant==='guided'?'cinematic-resources':''}`} aria-label="Household resources">
    {metrics.map(({icon:Icon,label,value,hint,danger})=><div key={label} className={`cinematic-status-item${danger?' danger':''}`} aria-label={`${label}: ${value}. ${hint}`} title={hint}>
@@ -45,5 +45,5 @@ export function CambodiaJourneyContext({game,onChange}) {
 export function CambodiaPersonDialog({person,onClose,game}) {
  const ref=useRef(null);
  useEffect(()=>{const previous=document.activeElement,dialog=ref.current;dialog.showModal();return()=>{dialog.close();if(previous?.isConnected)previous.focus();};},[]);
- return <dialog className="cambodia-person-dialog" ref={ref} onCancel={event=>{event.preventDefault();onClose();}} aria-labelledby="cambodia-person-title"><button onClick={onClose}>Close</button><h2 id="cambodia-person-title">{person.name}</h2><p>{person.story}</p><p>{game?.householdEdition===3?`Fictional health units: ${game.people[person.id].health}/100. Cohesion: ${game.people[person.id].trust}/5. These describe authored circumstances, not medical measurements or worth. All four survive as a story premise.`:"Health and mortality are not measured for this historical household. They survive as an authored premise."}</p></dialog>;
+ return <dialog className="cambodia-person-dialog" ref={ref} onCancel={event=>{event.preventDefault();onClose();}} aria-labelledby="cambodia-person-title"><button onClick={onClose}>Close</button><h2 id="cambodia-person-title">{person.name}</h2><p>{person.story}</p><p>{game?.householdEdition===3?`Health: ${game.people[person.id].health}/100. Cohesion: ${game.people[person.id].trust}/5. ${game.people[person.id].condition??"No current condition reported"}.`:"Health and mortality are not measured for this historical household. They survive as an authored premise."}</p></dialog>;
 }

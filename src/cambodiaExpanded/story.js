@@ -119,6 +119,28 @@ for(const scene of CAMBODIA_SCENES){
 CAMBODIA_SCENES.find(s=>s.id==='E03').choices.find(c=>c.id==='offer').requires={cash:2};
 const classChoice=CAMBODIA_SCENES.find(s=>s.id==='E10').choices.find(c=>c.id==='classes');
 classChoice.when={resource:'cash',below:2};classChoice.conditionalEffects={stress:1};classChoice.conditionalNote='Earlier exchange decisions leave little budget room. Their relative shares materials while the household postpones another purchase; learning remains possible, with a tighter timetable.';
+// Additional obstacles are reachable only under new-run event rules.
+CAMBODIA_SCENES.push(
+ s('T01','Late November 1979 · a delayed departure',1979.925,'Thai–Cambodian border region · broad anchor','Another day without a departure',
+ 'The expected assistance is delayed. Maly needs water and Vann is worn out. Nobody can verify a shortcut. Decide how to manage the wait; the crossing remains offscreen.',[
+ c('share','Pool food with known companions','Share preparation and ask openly about water.','A shared meal stretches what remains; Sophea takes time to collect water with companions.',{supplies:2,water:2,cohesion:1},{delay:'shared'},undefined,2),
+ c('exchange','Exchange a remaining belonging for supplies','Use portable means while keeping the party together.','The agreed exchange brings food and water, leaving fewer belongings to exchange later.',{cash:-1,supplies:3,water:2},{delay:'exchange'}),
+ c('rest','Protect rest and request relief','Wait for help without accepting an unsupported route offer.','They receive a small meal and water. Vann rests, but the extra waiting takes effort.',{supplies:1,water:1,health:3,stress:1},{delay:'rest'},undefined,3),
+ ],'E05','C04'),
+ s('H01','Early 1980 · the next care day',1980.06,'Khao-I-Dang area, Thailand','Maly still needs assessment',
+ 'Yesterday’s coordination has not yet brought Maly to assessment. Food collection and accompanying her both need someone’s time. They agree who can help and what must wait.',[
+ c('accompany','Dara accompanies Maly','Give care the day; use the household’s stored food.','Maly is assessed and begins resting. Dara postpones the repair opportunity.',{supplies:-1,stress:-1},{followup:'care'},'E08',2),
+ c('rotate','Sophea offers to take a turn','Sophea accompanies Maly while Vann collects relief.','Maly is assessed. Supplies arrive; Sophea asks for a lighter day afterward.',{supplies:2,water:1},{followup:'rotate'},'E07',2),
+ c('neighbor','Ask a trusted neighbor to help with collection','Keep Dara beside Maly and accept practical help.','Maly receives assessment while a neighbor helps collect food. The shared meal will take the next available hours.',{supplies:1,water:2,cohesion:1},{followup:'neighbor'},'E07',3),
+ ],'E07','C06',[102.5,14],['C10','E3']),
+ s('F01','1980 · a shortage interrupts plans',1980.32,'Khao-I-Dang area, Thailand','The next meal cannot wait',
+ 'Their supplies are low after earlier decisions. Dara’s learning hour is interrupted by the need to collect food and water. Choose how to cover today before returning to the household’s questions.',[
+ c('relief','Spend the day seeking relief','Explain the shortage; assistance does not depend on payment.','A distribution replenishes supplies. The questions about resettlement wait another day.',{supplies:3,water:3},{shortage:'relief'},undefined,2),
+ c('exchange','Use a belonging for food and water','Keep time for other tasks at the cost of exchange means.','They agree a modest exchange. Food and water arrive; less remains for later expenses.',{cash:-1,supplies:2,water:2},{shortage:'exchange'}),
+ c('meal','Join shared meal preparation','Contribute within their limits and ask for water help.','Vann helps prepare a meal; the household eats and carries water back together.',{supplies:2,water:2,cohesion:1},{shortage:'meal'},undefined,3),
+ ],'E08','expanded-camp-work',[102.5,14],['C10'])
+);
+for(const id of ['T01','F01'])CAMBODIA_SCENES.find(s=>s.id===id).choices.find(c=>c.id==='exchange').requires={cash:1};
 export const STORY={id:'cambodia-1979',start:'E01',scenes:CAMBODIA_SCENES};
 export const sceneFor=state=>CAMBODIA_SCENES.find(s=>s.id===state.sceneId);
 export function callbacks(state){const f=state.flags;return [

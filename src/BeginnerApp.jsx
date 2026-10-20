@@ -572,7 +572,7 @@ function Tutorial({ step, onBack, onNext, onFinish, historical = false, expanded
     if (event.shiftKey && (document.activeElement === first || outside)) { event.preventDefault(); last.focus(); }
     else if (!event.shiftKey && (document.activeElement === last || outside)) { event.preventDefault(); first.focus(); }
   };
-  const steps = expanded ? CAMBODIA_TUTORIAL_STEPS.map((item,index)=>index===2?{...item,title:"Plan food, water and contact",copy:"Food, clean water, exchange means, health and stress carry between selected occasions. Protect paper names and addresses, seek relief and share tasks. Exact changes appear after each choice.",lessons:["Empty stores add fatigue and stress","Paper notes help later household questions","Resources never earn admission"]}:item) : historical ? CAMBODIA_TUTORIAL_STEPS : TUTORIAL_STEPS;
+  const steps = expanded ? CAMBODIA_TUTORIAL_STEPS.map((item,index)=>index===0?{...item,eyebrow:"A Place for Tomorrow",title:"Meet Dara’s household",copy:"All journeys are fictional composites grounded in historical accounts. People, incidents and game quantities are invented. Follow Dara, Vann, Maly and Sophea as they manage supplies, travel and care.",lessons:["Choices carry forward without undo","Sources explain the historical setting","Open portraits for individual conditions"]}:index===2?{...item,title:"Plan supplies, travel and care",copy:"Travel uses carried food and water each day. Delays, shortages and care can change the next event. Effort affects individual relatives. Long waits between dated events happen offscreen; supplies are not counted across those months.",lessons:["Active days and travel days carry forward","Select portraits to inspect individual conditions","Resources never earn admission"]}:item) : historical ? CAMBODIA_TUTORIAL_STEPS : TUTORIAL_STEPS;
   const item = steps[step];
   const Icon = item.icon;
   const isLastStep = step === steps.length - 1;
@@ -985,7 +985,7 @@ export function BeginnerApp() {
         {isCambodiaJourney(game) ? <img key={event.id} className="cinematic-scene" style={{backgroundImage:"none",objectPosition:event.heroFocalPoint ?? "50% 45%"}} onError={e=>{if(e.currentTarget.dataset.fallback!=="cover"){e.currentTarget.dataset.fallback="cover";e.currentTarget.src=family.heroImage;}}} src={event.heroImage} alt={event.heroAlt} /> : <div key={`${game.familyId}-${event.id}`} className="cinematic-scene" style={{ backgroundImage: `url("${sceneByEvent[event.id] ?? family.heroImage}")` }} aria-hidden="true" />}
 
         <aside className="cinematic-map" aria-label="Journey geography">
-          <JourneyMap game={game} />
+          <JourneyMap game={game} fitViewport={game.familyId==="cambodia-1979" && game.householdEdition===3} />
           <JourneyGauge game={game} event={event} />
         </aside>
 

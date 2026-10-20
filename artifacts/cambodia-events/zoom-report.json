@@ -1,0 +1,602 @@
+{
+  "head": "125fbab2b6d35ae5a7ef7f0aa5f85c1a1b345b4f",
+  "dirty": true,
+  "setup": "Persistent fresh profiles; headless Chromium; viewport:null; fixed Browser window bounds; chrome://settings/appearance Page zoom select #zoomLevel = 2; no deviceScaleFactor or CSS zoom applied",
+  "zoom": [
+    {
+      "mode": "guided",
+      "width": 1440,
+      "baseline": {
+        "bounds": {
+          "left": 10,
+          "top": 10,
+          "width": 1440,
+          "height": 1000,
+          "windowState": "normal"
+        },
+        "outer": [
+          1440,
+          1000
+        ],
+        "inner": [
+          1440,
+          913
+        ],
+        "dpr": 1,
+        "visualScale": 1,
+        "cssZoom": "1"
+      },
+      "zoomed": {
+        "bounds": {
+          "left": 10,
+          "top": 10,
+          "width": 1440,
+          "height": 1000,
+          "windowState": "normal"
+        },
+        "outer": [
+          1440,
+          1000
+        ],
+        "inner": [
+          720,
+          456
+        ],
+        "dpr": 2,
+        "visualScale": 1,
+        "cssZoom": "1"
+      }
+    },
+    {
+      "mode": "full",
+      "width": 1440,
+      "baseline": {
+        "bounds": {
+          "left": 10,
+          "top": 10,
+          "width": 1440,
+          "height": 1000,
+          "windowState": "normal"
+        },
+        "outer": [
+          1440,
+          1000
+        ],
+        "inner": [
+          1440,
+          913
+        ],
+        "dpr": 1,
+        "visualScale": 1,
+        "cssZoom": "1"
+      },
+      "zoomed": {
+        "bounds": {
+          "left": 10,
+          "top": 10,
+          "width": 1440,
+          "height": 1000,
+          "windowState": "normal"
+        },
+        "outer": [
+          1440,
+          1000
+        ],
+        "inner": [
+          720,
+          456
+        ],
+        "dpr": 2,
+        "visualScale": 1,
+        "cssZoom": "1"
+      }
+    },
+    {
+      "mode": "guided",
+      "width": 780,
+      "baseline": {
+        "bounds": {
+          "left": 10,
+          "top": 10,
+          "width": 780,
+          "height": 1000,
+          "windowState": "normal"
+        },
+        "outer": [
+          780,
+          1000
+        ],
+        "inner": [
+          780,
+          913
+        ],
+        "dpr": 1,
+        "visualScale": 1,
+        "cssZoom": "1"
+      },
+      "zoomed": {
+        "bounds": {
+          "left": 10,
+          "top": 10,
+          "width": 780,
+          "height": 1000,
+          "windowState": "normal"
+        },
+        "outer": [
+          780,
+          1000
+        ],
+        "inner": [
+          390,
+          456
+        ],
+        "dpr": 2,
+        "visualScale": 1,
+        "cssZoom": "1"
+      }
+    },
+    {
+      "mode": "full",
+      "width": 780,
+      "baseline": {
+        "bounds": {
+          "left": 10,
+          "top": 10,
+          "width": 780,
+          "height": 1000,
+          "windowState": "normal"
+        },
+        "outer": [
+          780,
+          1000
+        ],
+        "inner": [
+          780,
+          913
+        ],
+        "dpr": 1,
+        "visualScale": 1,
+        "cssZoom": "1"
+      },
+      "zoomed": {
+        "bounds": {
+          "left": 10,
+          "top": 10,
+          "width": 780,
+          "height": 1000,
+          "windowState": "normal"
+        },
+        "outer": [
+          780,
+          1000
+        ],
+        "inner": [
+          390,
+          456
+        ],
+        "dpr": 2,
+        "visualScale": 1,
+        "cssZoom": "1"
+      }
+    },
+    {
+      "mode": "guided",
+      "width": 640,
+      "baseline": {
+        "bounds": {
+          "left": 10,
+          "top": 10,
+          "width": 640,
+          "height": 1000,
+          "windowState": "normal"
+        },
+        "outer": [
+          640,
+          1000
+        ],
+        "inner": [
+          640,
+          913
+        ],
+        "dpr": 1,
+        "visualScale": 1,
+        "cssZoom": "1"
+      },
+      "zoomed": {
+        "bounds": {
+          "left": 10,
+          "top": 10,
+          "width": 640,
+          "height": 1000,
+          "windowState": "normal"
+        },
+        "outer": [
+          640,
+          1000
+        ],
+        "inner": [
+          320,
+          456
+        ],
+        "dpr": 2,
+        "visualScale": 1,
+        "cssZoom": "1"
+      }
+    },
+    {
+      "mode": "full",
+      "width": 640,
+      "baseline": {
+        "bounds": {
+          "left": 10,
+          "top": 10,
+          "width": 640,
+          "height": 1000,
+          "windowState": "normal"
+        },
+        "outer": [
+          640,
+          1000
+        ],
+        "inner": [
+          640,
+          913
+        ],
+        "dpr": 1,
+        "visualScale": 1,
+        "cssZoom": "1"
+      },
+      "zoomed": {
+        "bounds": {
+          "left": 10,
+          "top": 10,
+          "width": 640,
+          "height": 1000,
+          "windowState": "normal"
+        },
+        "outer": [
+          640,
+          1000
+        ],
+        "inner": [
+          320,
+          456
+        ],
+        "dpr": 2,
+        "visualScale": 1,
+        "cssZoom": "1"
+      }
+    }
+  ],
+  "scenes": [
+    {
+      "mode": "guided",
+      "width": 720,
+      "id": "T01",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "Dara24 · Clothing repairVann23 · Sharing tasksMaly49 · Household planningSophea22 · Contact notes",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "guided",
+      "width": 720,
+      "id": "H01",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "Dara25 · Clothing repairVann24 · Sharing tasksMaly50 · Household planningSophea23 · Contact notes",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "guided",
+      "width": 720,
+      "id": "F01",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "Dara25 · Clothing repairVann24 · Sharing tasksMaly50 · Household planningSophea23 · Contact notes",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "guided",
+      "width": 720,
+      "id": "E10",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "Dara26 · Clothing repairVann25 · Sharing tasksMaly51 · Household planningSophea24 · Contact notes",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "full",
+      "width": 720,
+      "id": "T01",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "full",
+      "width": 720,
+      "id": "H01",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "full",
+      "width": 720,
+      "id": "F01",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "full",
+      "width": 720,
+      "id": "E10",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "id": "T01",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "Dara24 · Clothing repairVann23 · Sharing tasksMaly49 · Household planningSophea22 · Contact notes",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "id": "H01",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "Dara25 · Clothing repairVann24 · Sharing tasksMaly50 · Household planningSophea23 · Contact notes",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "id": "F01",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "Dara25 · Clothing repairVann24 · Sharing tasksMaly50 · Household planningSophea23 · Contact notes",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "id": "E10",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "Dara26 · Clothing repairVann25 · Sharing tasksMaly51 · Household planningSophea24 · Contact notes",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "id": "T01",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "id": "H01",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "id": "F01",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "id": "E10",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "id": "T01",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "Dara24 · Clothing repairVann23 · Sharing tasksMaly49 · Household planningSophea22 · Contact notes",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "id": "H01",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "Dara25 · Clothing repairVann24 · Sharing tasksMaly50 · Household planningSophea23 · Contact notes",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "id": "F01",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "Dara25 · Clothing repairVann24 · Sharing tasksMaly50 · Household planningSophea23 · Contact notes",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "id": "E10",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "Dara26 · Clothing repairVann25 · Sharing tasksMaly51 · Household planningSophea24 · Contact notes",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "id": "T01",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "id": "H01",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "id": "F01",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "id": "E10",
+      "dpr": 2,
+      "overflow": false,
+      "images": [],
+      "roster": "",
+      "reducedMotion": true,
+      "motion": "1e-05s"
+    }
+  ],
+  "flows": [
+    {
+      "mode": "guided",
+      "width": 1440,
+      "sourceAndRosterRepeatDismiss": true,
+      "focusContainedAndRestored": true,
+      "decisionDismissRepeat": "direct choice",
+      "outcomeResume": true,
+      "decisionResume": true,
+      "reducedMotion": "emulated preference; computed animation duration recorded"
+    },
+    {
+      "mode": "full",
+      "width": 1440,
+      "sourceAndRosterRepeatDismiss": true,
+      "focusContainedAndRestored": true,
+      "decisionDismissRepeat": 3,
+      "outcomeResume": true,
+      "decisionResume": true,
+      "reducedMotion": "emulated preference; computed animation duration recorded"
+    },
+    {
+      "mode": "guided",
+      "width": 780,
+      "sourceAndRosterRepeatDismiss": true,
+      "focusContainedAndRestored": true,
+      "decisionDismissRepeat": "direct choice",
+      "outcomeResume": true,
+      "decisionResume": true,
+      "reducedMotion": "emulated preference; computed animation duration recorded"
+    },
+    {
+      "mode": "full",
+      "width": 780,
+      "sourceAndRosterRepeatDismiss": true,
+      "focusContainedAndRestored": true,
+      "decisionDismissRepeat": 3,
+      "outcomeResume": true,
+      "decisionResume": true,
+      "reducedMotion": "emulated preference; computed animation duration recorded"
+    },
+    {
+      "mode": "guided",
+      "width": 640,
+      "sourceAndRosterRepeatDismiss": true,
+      "focusContainedAndRestored": true,
+      "decisionDismissRepeat": "direct choice",
+      "outcomeResume": true,
+      "decisionResume": true,
+      "reducedMotion": "emulated preference; computed animation duration recorded"
+    },
+    {
+      "mode": "full",
+      "width": 640,
+      "sourceAndRosterRepeatDismiss": true,
+      "focusContainedAndRestored": true,
+      "decisionDismissRepeat": 3,
+      "outcomeResume": true,
+      "decisionResume": true,
+      "reducedMotion": "emulated preference; computed animation duration recorded"
+    }
+  ],
+  "errors": [],
+  "browserChromeFocusTransitions": 53,
+  "browser": "154.0.8037.57"
+}

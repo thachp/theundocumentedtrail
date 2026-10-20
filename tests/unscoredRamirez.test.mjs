@@ -16,7 +16,7 @@ test("overall score computation and every UI/archive consumer are removed, inclu
     assert.doesNotMatch(text,/getJourneyScore|Journey score|entry\.score|\bscore:/);
   }
   const guided=await readFile(new URL("../src/BeginnerApp.jsx",import.meta.url),"utf8");
-  assert.match(guided,/Days traveled/);assert.match(guided,/Decisions/);const chooser=await readFile(new URL("../src/JourneySelection.jsx",import.meta.url),"utf8");assert.match(chooser,/entry\.survivors/);assert.match(chooser,/entry\.day/);
+  assert.match(guided,/Days traveled/);assert.match(guided,/Decisions/);const chooser=await readFile(new URL("../src/JourneySelection.jsx",import.meta.url),"utf8");assert.doesNotMatch(chooser,/Completed journeys|Completed journey archive|entry\.score/);
   const planning=await readFile(new URL("../src/App.jsx",import.meta.url),"utf8");
   assert.match(planning,/Average health/);assert.match(planning,/Choices made/);
 });

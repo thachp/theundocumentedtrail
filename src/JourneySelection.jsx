@@ -1,9 +1,9 @@
-import { loadCambodiaJourney, loadCambodiaArchive } from "./cambodiaJourneyStore.js";
+import { loadCambodiaJourney } from "./cambodiaJourneyStore.js";
 import { authoredStory } from "./authoredStories.js";
 import { storyHero } from "./authoredJourney.js";
-import { loadAuthoredJourney, loadAuthoredArchive } from "./authoredJourneyStore.js";
+import { loadAuthoredJourney } from "./authoredJourneyStore.js";
 import { useEffect, useRef, useState } from "react";
-import { ArrowCounterClockwise, ArrowLeft, ArrowRight, BookOpenText, MapPin, X } from "@phosphor-icons/react";
+import { ArrowCounterClockwise, ArrowLeft, ArrowRight, MapPin, X } from "@phosphor-icons/react";
 import { FAMILY_PRESETS } from "./game.js";
 import { getJourneyChoices, journeyKeyIndex, scrollJourneyCard } from "./journeyChoices.js";
 import "./beginner.css";
@@ -25,7 +25,6 @@ export function FamilySelection({ currentFamilyId, required, saves, archive, onS
   const dialogRef = useRef(null);
   const headingRef = useRef(null);
   const [carouselIndex, setCarouselIndex] = useState(initialIndex);
-  const recentJourneys = archive.slice(0, 6);
 
   const scrollToFamily = (index, behavior = "smooth", focus = false) => {
     const nextIndex = scrollJourneyCard(carouselRef.current, index, { behavior, focus, reducedMotion: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches });
@@ -92,13 +91,13 @@ export function FamilySelection({ currentFamilyId, required, saves, archive, onS
           >
           {families.map((family, index) => {
             if (family.kind === "authored-household") {
-              const saved=loadAuthoredJourney(family.id), completed=loadAuthoredArchive(family.id);
+              const saved=loadAuthoredJourney(family.id);
               const started=saved.storyState.history.length>0;
-              return <article className="cinematic-family-card" key={family.id} role="group" aria-roledescription="slide" aria-label={`${index+1} of ${families.length}: ${family.name} · ${family.period}`}><div className="cinematic-family-portrait"><img src={storyHero(authoredStory(saved))} alt={`Original illustration of the fictional household · ${family.name}`} /><span>{saved.phase==='ended'?'Completed':started?`In progress · Scene ${saved.day}`:'Not started'} · {family.period}</span></div><div className="cinematic-family-copy"><small>{family.origin}</small><strong>{family.name}</strong><p>{chooserSummary[family.id] ?? family.context}</p><em><MapPin weight="fill" />{family.journey}</em><p>{saved.householdEdition===1?"Original three-person save · Revised four-person edition available inside":"Four-person journey · Separate saved progress"}</p>{completed.length>0&&<details><summary>Completed journeys · {completed.length}</summary>{completed.map(run=><p key={run.runId}>{run.householdEdition===1?"Original edition":"Four-person edition"} · {run.endingTitle} · {run.decisions} decisions</p>)}</details>}</div><div className="cinematic-family-actions"><button className="continue" onClick={()=>onSelect(family.id)}>{saved.phase==='ended'?'View result':started?'Continue':'Start journey'}<ArrowRight weight="bold" /></button>{started&&onRestart&&<button className="restart" onClick={()=>onRestart(family.id)}><ArrowCounterClockwise weight="bold" />Start again</button>}</div></article>;
+              return <article className="cinematic-family-card" key={family.id} role="group" aria-roledescription="slide" aria-label={`${index+1} of ${families.length}: ${family.name} · ${family.period}`}><div className="cinematic-family-portrait"><img src={storyHero(authoredStory(saved))} alt={`Original illustration of the fictional household · ${family.name}`} /><span>{saved.phase==='ended'?'Completed':started?`In progress · Scene ${saved.day}`:'Not started'} · {family.period}</span></div><div className="cinematic-family-copy"><small>{family.origin}</small><strong>{family.name}</strong><p>{chooserSummary[family.id] ?? family.context}</p><em><MapPin weight="fill" />{family.journey}</em><p>{saved.householdEdition===1?"Original three-person save · Revised four-person edition available inside":"Four-person journey · Separate saved progress"}</p></div><div className="cinematic-family-actions"><button className="continue" onClick={()=>onSelect(family.id)}>{saved.phase==='ended'?'View result':started?'Continue':'Start journey'}<ArrowRight weight="bold" /></button>{started&&onRestart&&<button className="restart" onClick={()=>onRestart(family.id)}><ArrowCounterClockwise weight="bold" />Start again</button>}</div></article>;
             }
-            if (family.kind === "historical") {const saved=loadCambodiaJourney(),completed=loadCambodiaArchive();return <article className="cinematic-family-card" key={family.id} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${families.length}: Cambodia · ${family.name} · ${family.period}`}>
+            if (family.kind === "historical") {const saved=loadCambodiaJourney();return <article className="cinematic-family-card" key={family.id} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${families.length}: Cambodia · ${family.name} · ${family.period}`}>
               <div className="cinematic-family-portrait"><img src={saved.householdEdition===1?"/assets/legacy-households/cambodia/cover.webp":"/assets/cambodia/cover.webp"} alt={saved.householdEdition===1?"Original fictional household: Dara, Vann and Maly":"Illustrative fictional household: Dara, Vann, Maly and Sophea in late-1979 Cambodia"} /><span>Family journey · {saved.householdEdition===3?"1979–1982 · optional 1985 chapter":"1979–1982"}</span></div>
-              <div className="cinematic-family-copy"><small>{family.origin}</small><strong>{family.name}</strong><p>{chooserSummary[family.id] ?? family.context}</p><em><MapPin weight="fill" />{family.journey}</em>{completed.length>0&&<details><summary>Completed journeys · {completed.length}</summary>{completed.map(run=><p key={run.runId}>{run.endingTitle}</p>)}</details>}</div><div className="cinematic-family-actions"><a className="continue" href={mode === "full" ? `${family.href}&mode=full` : family.href}>Open Cambodian story<ArrowRight weight="bold" /></a></div>
+              <div className="cinematic-family-copy"><small>{family.origin}</small><strong>{family.name}</strong><p>{chooserSummary[family.id] ?? family.context}</p><em><MapPin weight="fill" />{family.journey}</em></div><div className="cinematic-family-actions"><a className="continue" href={mode === "full" ? `${family.href}&mode=full` : family.href}>Open Cambodian story<ArrowRight weight="bold" /></a></div>
             </article>;}
             const saved = saves[family.id];
             const savedStatus = saved?.phase === "ended"
@@ -140,25 +139,8 @@ export function FamilySelection({ currentFamilyId, required, saves, archive, onS
           })}
           </div>
         </div>
-        {recentJourneys.length > 0 && (
-          <section className="cinematic-journey-archive" aria-label="Completed journey archive">
-            <header><BookOpenText weight="duotone" /><span><small>Journey archive</small><strong>Roads already traveled</strong></span></header>
-            <div>
-              {recentJourneys.map((entry) => {
-                const family = FAMILY_PRESETS[entry.familyId];
-                return (
-                  <article key={entry.runId}>
-                    <span><strong>{family.shortName}</strong><small>{entry.endingTitle}</small></span>
-                    <em>{entry.status === "won" ? "Completed" : "Stopped"}</em>
-                    <span><strong>{entry.survivors}/{entry.travelers}</strong><small>Survived</small></span>
-                    <span><strong>Day {entry.day}</strong><small>{entry.decisions} decisions</small></span>
-                  </article>
-                );
-              })}
-            </div>
-          </section>
-        )}
-        <footer>Stories include displacement, exploitation, detention, family loss, and uncertain legal outcomes. Difficult events remain non-graphic.</footer>
+
+        <footer>All journeys are fictional composites grounded in historical sources; people, incidents and game quantities are invented. Stories include displacement, exploitation, detention, family loss, and uncertain legal outcomes. Difficult events remain non-graphic.</footer>
       </section>
     </dialog>
   );
