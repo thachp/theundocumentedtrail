@@ -985,7 +985,7 @@ export function BeginnerApp() {
         {isCambodiaJourney(game) ? <img key={event.id} className="cinematic-scene" style={{backgroundImage:"none",objectPosition:event.heroFocalPoint ?? "50% 45%"}} onError={e=>{if(e.currentTarget.dataset.fallback!=="cover"){e.currentTarget.dataset.fallback="cover";e.currentTarget.src=family.heroImage;}}} src={event.heroImage} alt={event.heroAlt} /> : <div key={`${game.familyId}-${event.id}`} className="cinematic-scene" style={{ backgroundImage: `url("${sceneByEvent[event.id] ?? family.heroImage}")` }} aria-hidden="true" />}
 
         <aside className="cinematic-map" aria-label="Journey geography">
-          <JourneyMap game={game} />
+          <JourneyMap game={game} fitViewport={game.familyId==="cambodia-1979" && game.householdEdition===3} />
           <JourneyGauge game={game} event={event} />
         </aside>
 

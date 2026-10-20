@@ -48,5 +48,36 @@ dialog.cambodia-choice-dialog::backdrop {background:rgba(2,10,15,.82);}
 }
 @media(min-width:681px){
  .cambodia-expanded .cinematic-story {justify-content:space-between;}
- .cambodia-expanded .cinematic-stage {min-height:820px;}
+ .cambodia-expanded .cinematic-stage {min-height:610px;}
+}
+
+/* Restore the shared map-left / scene-right Planning composition for edition 3. */
+.cambodia-expanded-planning .messages-panel {overflow:visible;}
+.cambodia-expanded-planning .messages-panel > .planning-cambodia-hero {
+ width:100%;height:clamp(180px,25vh,260px);max-height:none;object-fit:cover;flex:none;
+}
+.cambodia-expanded-planning .panel-header {position:static;}
+@media(min-width:981px){
+ .cambodia-expanded-planning .game-grid {grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);grid-template-rows:auto auto;align-items:start;}
+ .cambodia-expanded-planning .team-strip {height:auto;min-height:200px;}
+ .cambodia-expanded-planning .team-strip > header {width:100%;}
+ .cambodia-expanded-planning .journey-map-fit > .journey-map-canvas {height:clamp(280px,36vh,400px);min-height:280px;}
+}
+@media(max-width:980px){
+ .cambodia-expanded-planning .map-stage {min-height:0;}
+ .cambodia-expanded-planning .messages-panel > .planning-cambodia-hero {height:clamp(160px,46vw,240px);}
+}
+@media(max-width:720px){
+ .cambodia-expanded .cinematic-stage > .cinematic-scene {height:160px;}
+ .cambodia-expanded .cinematic-stage > .cinematic-map {padding-top:160px;}
+ .cambodia-expanded .cinematic-map .journey-map-canvas {height:180px;max-height:180px;aspect-ratio:auto;}
+}
+
+.cambodia-expanded .cinematic-map .journey-map-fit > .journey-map-canvas {height:280px;}
+.cambodia-expanded img.cinematic-scene {width:calc(100% - min(29vw,410px));}
+.cambodia-expanded-planning .map-stage {background:#d8c397;align-self:stretch;}
+@media(max-width:1120px) and (min-width:721px){.cambodia-expanded img.cinematic-scene {width:69%;}}
+@media(max-width:720px){
+ .cambodia-expanded img.cinematic-scene {width:100%;}
+ .cambodia-expanded .cinematic-map .journey-map-fit > .journey-map-canvas {height:180px;}
 }
