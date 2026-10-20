@@ -100,3 +100,12 @@ PASS: Guided and Planning at 1536/390/320 widths; all eight HUD cells, history/s
 Updated after Library attachment: `libfile_16adad53878481919fb0ba75481c1b1d`, version 2. Initial browser failures recovered using normal navigation in the existing Chrome preview. No P0/P1/P2 finding remains; no replacement panel or unrequested global redesign was introduced.
 
 final result: passed
+
+
+# Current follow-up: irreversible committed choices
+
+Supersedes the previous standalone Back design and successful undo claims. Desktop screenshot inspected at 1536×1024: cinematic scene, route/sidebar, choice cards, eight resource HUD cells and portraits remain; Back and Household notes/resources are absent. Screenshot records scene 2 after a committed contact-note choice (Food 4, Notes kept). Updated responsive captures: Guided 390×844 and Planning 320×740, no horizontal overflow and no undo control. Sources and read-only history remain accessible. Library after item version 3.
+
+PASS: actual Chrome Back/Forward/refresh retained paid food cost across Guided/Planning. Keep thinking canceled an uncommitted Planning confirmation. Aggregate 189 tests passed; build passed. AT/screen-reader, full zoom/contrast/reduced-motion review remain unrun. The unrelated-origin stale-handle reload was denied before execution; a fresh local preview worked.
+
+final result: passed for focused removal/navigation scope

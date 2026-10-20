@@ -36,7 +36,8 @@ export function continueState(story,state) {
  const next=choice.next===undefined?scene.next:choice.next;
  return next?{...state,sceneId:next,phase:'scene'}:{...state,phase:'complete'};
 }
-export function backState(story,state) {
+// Replay helper for consequence reporting only; never a gameplay action.
+export function stateBeforeLastChoice(story,state) {
  if(state.phase==='intro')return state;
  if(!state.history.length)return createState(story,state.resourceRulesVersion??1);
  let restored=startState(createState(story,state.resourceRulesVersion??1));
@@ -56,3 +57,6 @@ export function validateState(story,raw) {
  else if(raw.phase==='scene'&&raw.history.length||raw.phase==='complete')state=continueState(story,state);
  return state.phase===raw.phase&&state.sceneId===raw.sceneId?state:null;
 }
+
+// Compatibility for old handlers: navigation never rewinds a committed choice.
+export function backState(story,state) { return state; }

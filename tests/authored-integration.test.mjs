@@ -5,7 +5,7 @@ import { authoredGame, chooseAuthored, continueAuthored } from '../src/authoredJ
 import { loadAuthoredJourney, applyAuthoredAction, restartAuthoredJourney, authoredSaveKey, loadAuthoredArchive } from '../src/authoredJourneyStore.js';
 import { getJourneyChoices } from '../src/journeyChoices.js';
 
-test('both registered households share adapters while retaining independent saves, Back/restart and archives',()=>{
+test('both registered households share adapters while retaining independent saves, restart and archives',()=>{
  assert.deepEqual(AUTHORED_STORIES.map(s=>s.id),['mariel-1980','vietnam-bidong-1978']);
  assert.equal(getJourneyChoices().length,9);
  const data=new Map([['legacy-family','preserved'],['undocumented-trail:review:cambodia-1979:v1','preserved-cambodia']]);

@@ -29,12 +29,8 @@ export function continueAuthored(game) {
  if(game.phase!=='outcome')return game;const story=authoredStory(game),last=game.storyState.index===story.scenes.length-1;
  return authoredGame(story,{...game.storyState,index:game.storyState.index+(last?0:1),phase:last?'ended':'decision'},game);
 }
-export function backAuthored(game) {
- if(!game.storyState.history.length)return game;
- let next=authoredGame(authoredStory(game),undefined,game);
- for(const h of game.storyState.history.slice(0,-1))next=continueAuthored(chooseAuthored(next,h.choiceId));
- return next;
-}
+// Retained compatibility API; committed gameplay decisions are irreversible.
+export function backAuthored(game) { return game; }
 export function authoredEvent(game) {
  const story=authoredStory(game),s=storyScene(game),source=story.sources[s.sourceIds[0]];
  return {id:s.id,region:s.place,location:s.title,time:s.date,weather:'Historical fictional composite',weatherDetail:story.premise,route:'elmstead',contentNote:story.contentNote,heroImage:storyHero(story,s.id),heroFocalPoint:'50% 45%',heroAlt:`Original illustration: ${s.title}, ${s.place}, ${s.date}; fictional ${story.name}, not archival imagery`,source:{label:source.title,url:source.url},messages:[{sender:'Household account',initial:story.people[0][1][0],role:'Authored fictional narrative',body:s.prose}],known:[story.premise,'Choose one option. Exact planning consequences appear afterward.'],assumed:['Choices can earn immigration approval.'],choices:s.choices.map(c=>({...c,hint:c.description,icon:'talk',tone:'uncertain',days:0,route:'elmstead',next:null,effects:{},outcomeTitle:'After this choice',outcome:c.consequence}))};

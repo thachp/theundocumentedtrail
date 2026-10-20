@@ -2,14 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createState,startState,chooseState,continueState,backState,validateState} from '../src/cambodiaExpanded/state.js';
 const story={id:'test',start:'leave',scenes:[{id:'leave',choices:[{id:'rest',next:'care',effects:{water:-1,health:4},flags:{care:'rest'},time:2},{id:'share',next:'contact',effects:{cohesion:1}}]},{id:'care',next:'contact',choices:[{id:'help',effects:{supplies:-2}}]},{id:'contact',choices:[{id:'wait',effects:{cash:1}}]}]};
-test('expanded branch replay preserves resources and actual itinerary; Back undoes once',()=>{
+test('expanded branch replay preserves resources and actual itinerary; Back cannot undo',()=>{
  let state=startState(createState(story));state=chooseState(story,state,'rest');
  assert.equal(state.resources.water,3);assert.equal(state.people.maly.health,84);assert.equal(state.elapsed,2);
  assert.equal(chooseState(story,state,'rest'),state);
  assert.deepEqual(validateState(story,{...state,resources:{water:99}}),state);
  state=continueState(story,state);assert.equal(state.sceneId,'care');
- state=backState(story,state);assert.equal(state.sceneId,'leave');assert.equal(state.resources.water,4);
- state=continueState(story,chooseState(story,state,'share'));assert.equal(state.sceneId,'contact');
+ assert.equal(backState(story,state),state);assert.equal(state.resources.water,3);
+ state=continueState(story,chooseState(story,startState(createState(story)),'share'));assert.equal(state.sceneId,'contact');
  assert.equal(state.history.some(h=>h.sceneId==='care'),false);
  state=continueState(story,chooseState(story,state,'wait'));assert.equal(state.phase,'complete');assert.deepEqual(validateState(story,state),state);
  assert.equal(validateState(story,{...state,history:[{sceneId:'care',choiceId:'help'}]}),null);
@@ -23,21 +23,21 @@ import {getJourneyGeography} from '../src/journeyGeography.js';
 import {loadCambodiaJourney,restartCambodiaJourney,applyCambodiaJourneyAction,CAMBODIA_EXPANDED_ARCHIVE_KEY} from '../src/cambodiaJourneyStore.js';
 const memory=()=>{const data=new Map();return {data,getItem:k=>data.get(k)??null,setItem:(k,v)=>data.set(k,String(v))};};
 function prefixes(){const states=new Map(),queue=[startState(createState(STORY))];while(queue.length){const state=queue.shift();if(states.has(state.sceneId))continue;states.set(state.sceneId,state);for(const choice of sceneFor(state).choices){const next=continueState(STORY,chooseState(STORY,state,choice.id));if(next.phase!=='complete')queue.push(next);}}return states;}
-test('all 48 authored edges are reachable, dated, sourced, replayable and reversible with bounded consequences',()=>{
+test('all 48 authored edges are reachable, dated, sourced, replayable and irreversible with bounded consequences',()=>{
  const states=prefixes();assert.equal(states.size,16);let edges=0;
  for(const [id,state]of states){const scene=sceneFor(state);assert.equal(scene.choices.length,3);for(const source of scene.sourceIds)assert.ok(CAMBODIA_SOURCES[source]?.url,`${id} ${source}`);
   const geography=getJourneyGeography(expanded.cambodiaGame(state));assert.equal(geography.current.eventId,id);assert.ok(geography.points.flat().every(Number.isFinite));
-  for(const choice of scene.choices){edges++;const committed=chooseState(STORY,state,choice.id);assert.equal(committed.phase,'consequence');assert.deepEqual(validateState(STORY,committed),committed);assert.equal(chooseState(STORY,committed,choice.id),committed);assert.deepEqual(backState(STORY,committed),state);
+  for(const choice of scene.choices){edges++;const committed=chooseState(STORY,state,choice.id);assert.equal(committed.phase,'consequence');assert.deepEqual(validateState(STORY,committed),committed);assert.equal(chooseState(STORY,committed,choice.id),committed);assert.equal(backState(STORY,committed),committed);
    const next=continueState(STORY,committed);assert.deepEqual(validateState(STORY,next),next);if(next.phase!=='complete')assert.ok(sceneFor(next).order>=scene.order,`${id} -> ${next.sceneId}`);
    for(const value of Object.values(next.resources))assert.ok(value>=0&&value<=20);for(const person of Object.values(next.people))assert.ok(person.alive&&person.health>0&&person.health<=100&&person.trust>=0&&person.trust<=5);
   }
  }
  assert.equal(edges,48);
 });
-test('shortages carry forward to care/work; camp exchange and Back settle once; admission has no resource gate',()=>{
+test('shortages carry forward to care/work; camp exchange settles once and cannot be undone; admission has no resource gate',()=>{
  const state=prefixes().get('E07');const low={...state,resources:{...state.resources,supplies:0}},high={...state,resources:{...state.resources,supplies:8}};
  const a=chooseState(STORY,low,'repair'),b=chooseState(STORY,high,'repair');assert.equal(a.people.dara.health,b.people.dara.health-5);assert.match(a.lastNote,/earlier decisions/);assert.equal(a.resources.cash,low.resources.cash+1);
- assert.equal(chooseState(STORY,a,'repair'),a);assert.equal(backState(STORY,a).resources.cash,state.resources.cash);
+ assert.equal(chooseState(STORY,a,'repair'),a);assert.equal(backState(STORY,a).resources.cash,a.resources.cash);
  const poor={...prefixes().get('E03'),resources:{cash:0,supplies:0,water:0,stress:2}};assert.equal(chooseState(STORY,poor,'offer'),poor);assert.match(getRequirementFailure(expanded.cambodiaGame(poor),getEvent(expanded.cambodiaGame(poor)).choices[2]),/no longer/);
  const application=prefixes().get('E08');for(const choice of sceneFor(application).choices){const result=continueState(STORY,chooseState(STORY,{...application,resources:{cash:0,supplies:0,water:0,stress:20}},choice.id));assert.equal(result.sceneId,'E09');}
 });

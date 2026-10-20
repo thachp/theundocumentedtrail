@@ -50,7 +50,3 @@ dialog.cambodia-choice-dialog::backdrop {background:rgba(2,10,15,.82);}
  .cambodia-expanded .cinematic-story {justify-content:space-between;}
  .cambodia-expanded .cinematic-stage {min-height:820px;}
 }
-
-.cambodia-back-choice {min-height:44px;margin:8px 0;padding:8px 12px;border:1px solid #9eae9c;background:#102328;color:#f0e7d1;font:13px "IBM Plex Sans",sans-serif;cursor:pointer;}
-.cambodia-back-choice:disabled {opacity:.5;cursor:default;}
-.cambodia-back-choice:focus-visible {outline:3px solid #edc778;outline-offset:3px;}

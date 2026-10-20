@@ -26,10 +26,10 @@ test('legacy v3 saves replay their original resources, and Back preserves their 
  assert.deepEqual(validateState(STORY,old),old);
  assert.equal(validateState(STORY,{...old,resourceRulesVersion:99}),null);
 });
-test('new rules replay and reverse without changing saved choice consequences',()=>{
+test('new rules replay without undo without changing saved choice consequences',()=>{
  let state=opening();for(const id of ['food','pause','help','food','wait','water','relief','help','meal','relative','contact','classes','tomorrow']){
  const chosen=chooseState(STORY,state,id);assert.notEqual(chosen,state,`${state.sceneId}:${id}`);
- assert.deepEqual(validateState(STORY,chosen),chosen);assert.deepEqual(backState(STORY,chosen),state);
+ assert.deepEqual(validateState(STORY,chosen),chosen);assert.equal(backState(STORY,chosen),chosen);
  state=continueState(STORY,chosen);assert.deepEqual(validateState(STORY,state),state);
  }
  assert.equal(state.phase,'complete');assert.ok(state.people.dara.alive);
@@ -82,7 +82,7 @@ test('both actual views render period resources at departure, reception and Cali
     storage.setItem(CAMBODIA_SAVE_KEY,JSON.stringify(state));
     for(const View of [App,BeginnerApp]) {
      const html=renderToStaticMarkup(React.createElement(View));
-     assert.match(html,/Household resources/);assert.equal((html.match(/class="cinematic-status-item/g)??[]).length,8);assert.match(html,/Stress:/);assert.doesNotMatch(html,/Household notes|Carried information/);assert.match(html,/Back to the previous choice/);assert.match(html,/Why this setting matters/);
+     assert.match(html,/Household resources/);assert.equal((html.match(/class="cinematic-status-item/g)??[]).length,8);assert.match(html,/Stress:/);assert.doesNotMatch(html,/Household notes|Carried information/);assert.doesNotMatch(html,/Back to the previous choice/);assert.match(html,/Why this setting matters/);
      assert.match(html,state.sceneId==='E10'?/Budget:/:/Exchange:/);
      assert.doesNotMatch(html,/Phone charge|% phone|Use medicine|Available cash|undefined|NaN/);
     }

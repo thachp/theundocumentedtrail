@@ -1,5 +1,5 @@
 import { CAMBODIA_SCENES, CAMBODIA_SOURCES, STORY_ID, STORY_NOTICE, callbacks, sceneFor } from "./cambodiaStory.js";
-import { backCambodia, chooseCambodia, continueCambodia, createCambodiaState, startCambodia } from "./cambodiaState.js";
+import { chooseCambodia, continueCambodia, createCambodiaState, startCambodia } from "./cambodiaState.js";
 
 export const isCambodiaJourney = game => game?.familyId === STORY_ID;
 export const CAMBODIA_COVER = "/assets/legacy-households/cambodia/cover.webp";
@@ -49,4 +49,4 @@ export function cambodiaGame(state,meta={}) {
 export function newCambodiaGame() {return cambodiaGame(createCambodiaState(),{runId:`cambodia-${Date.now()}-${Math.random().toString(16).slice(2)}`});}
 export function chooseCambodiaJourney(game,id) {return cambodiaGame(chooseCambodia(game.cambodiaState.phase==="intro"?startCambodia(game.cambodiaState):game.cambodiaState,id),game);}
 export function continueCambodiaJourney(game) {return cambodiaGame(continueCambodia(game.cambodiaState),game);}
-export function backCambodiaJourney(game) {return cambodiaGame(backCambodia(game.cambodiaState),game);}
+export function backCambodiaJourney(game) {return game;}

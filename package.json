@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "test": "npm run test:game && npm run test:saves && npm run test:onboarding && npm run test:soundtrack && npm run test:layout && npm run test:maps && npm run test:history && npm run test:pilot && npm run test:perspectives && npm run test:sites && npm run test:authored",
     "test:game": "node --test tests/game.test.mjs",
-    "test:saves": "node --test tests/saveStore.test.mjs tests/staleJourneySave.test.mjs",
+    "test:saves": "node --test tests/saveStore.test.mjs tests/staleJourneySave.test.mjs tests/committedChoices.test.mjs",
     "test:onboarding": "node --test tests/onboarding.test.mjs tests/journeySelection.test.mjs",
     "test:soundtrack": "node --test tests/soundtrack.test.mjs",
     "test:layout": "node --test tests/layout.test.mjs",

@@ -1,7 +1,7 @@
 import {resourceHint,resourceChoiceHint,resourceContext,householdInventory} from './resources.js';
 import {cambodiaGame as originalGame,CAMBODIA_FAMILY as originalFamily} from '../cambodiaJourney.js';
 import {createCambodiaState as originalState} from '../cambodiaState.js';
-import {createState,startState,chooseState,continueState,backState,validateState} from './state.js';
+import {createState,startState,chooseState,continueState,stateBeforeLastChoice,validateState} from './state.js';
 import {STORY,sceneFor,callbacks,CAMBODIA_SOURCES,STORY_NOTICE} from './story.js';
 export const CAMBODIA_SAVE_KEY='undocumented-trail:review:cambodia-1979:v3';
 export const createCambodiaState=()=>createState(STORY);
@@ -15,7 +15,7 @@ export function cambodiaGame(state,meta={}){
  const base=originalGame(originalState(),meta),scene=sceneFor(state),entry=state.history.at(-1),choice=scene.choices.find(c=>c.id===entry?.choiceId),terminal=(choice?.next===undefined?scene.next:choice.next)===null;
  const ending={type:'cambodia_continuing_life',status:'won',title:state.flags.border?'Their future remains undecided':'Their lives continue beyond the frame',copy:choice?.consequence??scene.summary};
  const notes=callbacks(state),completed=state.phase==='complete';
- const before=state.phase==='consequence'||completed?backState(STORY,state):state;
+ const before=state.phase==='consequence'||completed?stateBeforeLastChoice(STORY,state):state;
  const changes=[...Object.keys(state.resources).map(key=>[key,state.resources[key]-before.resources[key]]),['health per traveler',state.people.dara.health-before.people.dara.health],['cohesion per traveler',state.people.dara.trust-before.people.dara.trust]].filter(([,delta])=>delta).map(([key,delta])=>`${key} ${delta>0?'+':''}${delta}`).join(' · ');
  return {...base,householdEdition:3,cambodiaState:state,eventId:scene.id,day:state.history.length+(state.phase==='scene'||state.phase==='intro'?1:0),progress:completed?100:Math.min(95,state.history.length*7),phase:completed?'ended':state.phase==='consequence'?'outcome':'decision',status:completed?'won':'playing',resources:{...state.resources},inventory:householdInventory(state),resourceContext:resourceContext(state),people:state.people,flags:state.flags,planning:{time:state.elapsed,energy:0,limit:'Fictional resource and health units, cohesion and elapsed planning turns carry between scenes. They are not historical quantities, medical advice, survival odds or legal eligibility. All four survive as an authored premise.'},
  history:state.history.map((h,i)=>{const s=STORY.scenes.find(s=>s.id===h.sceneId),c=s.choices.find(c=>c.id===h.choiceId);return {eventId:s.id,choiceId:c.id,choiceTitle:c.title,outcomeTitle:c.consequence,location:s.place,day:i+1,date:s.date};}),storyThreads:Object.fromEntries(notes.map((summary,i)=>[i,{id:String(i),title:'Earlier choice',summary,status:'active'}])),
@@ -25,4 +25,4 @@ export function cambodiaGame(state,meta={}){
 export const newCambodiaGame=()=>cambodiaGame(createCambodiaState(),{runId:`cambodia-expanded-${Date.now()}-${Math.random().toString(16).slice(2)}`});
 export const chooseCambodiaJourney=(game,id)=>cambodiaGame(chooseState(STORY,startState(game.cambodiaState),id),game);
 export const continueCambodiaJourney=game=>cambodiaGame(continueState(STORY,game.cambodiaState),game);
-export const backCambodiaJourney=game=>cambodiaGame(backState(STORY,game.cambodiaState),game);
+export const backCambodiaJourney=game=>game;
