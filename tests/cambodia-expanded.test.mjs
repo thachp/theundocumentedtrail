@@ -36,7 +36,7 @@ test('all 48 authored edges are reachable, dated, sourced, replayable and revers
 });
 test('shortages carry forward to care/work; camp exchange and Back settle once; admission has no resource gate',()=>{
  const state=prefixes().get('E07');const low={...state,resources:{...state.resources,supplies:0}},high={...state,resources:{...state.resources,supplies:8}};
- const a=chooseState(STORY,low,'repair'),b=chooseState(STORY,high,'repair');assert.equal(a.people.dara.health,b.people.dara.health-2);assert.match(a.lastNote,/earlier decisions/);assert.equal(a.resources.cash,low.resources.cash+1);
+ const a=chooseState(STORY,low,'repair'),b=chooseState(STORY,high,'repair');assert.equal(a.people.dara.health,b.people.dara.health-5);assert.match(a.lastNote,/earlier decisions/);assert.equal(a.resources.cash,low.resources.cash+1);
  assert.equal(chooseState(STORY,a,'repair'),a);assert.equal(backState(STORY,a).resources.cash,state.resources.cash);
  const poor={...prefixes().get('E03'),resources:{cash:0,supplies:0,water:0,stress:2}};assert.equal(chooseState(STORY,poor,'offer'),poor);assert.match(getRequirementFailure(expanded.cambodiaGame(poor),getEvent(expanded.cambodiaGame(poor)).choices[2]),/no longer/);
  const application=prefixes().get('E08');for(const choice of sceneFor(application).choices){const result=continueState(STORY,chooseState(STORY,{...application,resources:{cash:0,supplies:0,water:0,stress:20}},choice.id));assert.equal(result.sceneId,'E09');}

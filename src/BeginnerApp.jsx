@@ -551,7 +551,7 @@ function ContentSettings({ currentMode, onSelect, onClose }) {
   );
 }
 
-function Tutorial({ step, onBack, onNext, onFinish, historical = false }) {
+function Tutorial({ step, onBack, onNext, onFinish, historical = false, expanded = false }) {
   const tutorialRef = useRef(null);
   const returnFocus = useRef(typeof document === "undefined" ? null : document.activeElement);
   useEffect(() => {
@@ -572,7 +572,7 @@ function Tutorial({ step, onBack, onNext, onFinish, historical = false }) {
     if (event.shiftKey && (document.activeElement === first || outside)) { event.preventDefault(); last.focus(); }
     else if (!event.shiftKey && (document.activeElement === last || outside)) { event.preventDefault(); first.focus(); }
   };
-  const steps = historical ? CAMBODIA_TUTORIAL_STEPS : TUTORIAL_STEPS;
+  const steps = expanded ? CAMBODIA_TUTORIAL_STEPS.map((item,index)=>index===2?{...item,title:"Plan food, water and contact",copy:"Food, clean water, exchange means, health and stress carry between selected occasions. Protect paper names and addresses, seek relief and share tasks. Exact changes appear after each choice.",lessons:["Empty stores add fatigue and stress","Paper notes help later household questions","Resources never earn admission"]}:item) : historical ? CAMBODIA_TUTORIAL_STEPS : TUTORIAL_STEPS;
   const item = steps[step];
   const Icon = item.icon;
   const isLastStep = step === steps.length - 1;
@@ -1132,7 +1132,7 @@ export function BeginnerApp() {
       </section>
 
       <footer className="cinematic-footer">
-        {isCambodiaJourney(game) ? <CambodiaResources game={game} /> : <section className="cinematic-resources" aria-label="Group resources">
+        {isCambodiaJourney(game) ? <CambodiaResources game={game} variant="guided" /> : <section className="cinematic-resources" aria-label="Group resources">
           <StatusItem key={`water-${game.resources.water}`} icon={Drop} label="Water" value={`${game.resources.water} L`} tone={game.resources.water <= 3 ? "danger" : ""} tooltip="Drinking water carried by the group. Reaching zero causes dehydration." />
           <StatusItem key={`food-${game.resources.supplies}`} icon={ForkKnife} label="Food" value={`${game.resources.supplies} ${game.resources.supplies === 1 ? "day" : "days"}`} tone={game.resources.supplies <= 1 ? "danger" : ""} tooltip="Food for the group. Reaching zero harms health and raises stress." />
           <StatusItem key={`cash-${game.resources.cash}`} icon={Wallet} label="Cash" value={`$${game.resources.cash}`} tooltip="Money available for transport, shelter, food, and official fees." />
@@ -1218,6 +1218,7 @@ export function BeginnerApp() {
       {showTutorial && !showContentSettings && !showFamilySelection && (
         <Tutorial
           historical={isCambodiaJourney(game)}
+          expanded={game.familyId==="cambodia-1979" && game.householdEdition===3}
           step={tutorialStep}
           onBack={() => setTutorialStep((current) => Math.max(0, current - 1))}
           onNext={() => setTutorialStep((current) => Math.min(TUTORIAL_STEPS.length - 1, current + 1))}

@@ -1,0 +1,64 @@
+{
+  "base": "9eaa679fd734ed810a8ad08c895740ee72b49b68",
+  "branch": "fix/cambodia-period-resources",
+  "commands": {
+    "npm test": {
+      "tests": 180,
+      "pass": 180,
+      "fail": 0,
+      "skipped": 0
+    },
+    "npm run build": "PASS; existing >500 kB bundle warning",
+    "git diff --check": "PASS"
+  },
+  "browser": {
+    "origin": "http://127.0.0.1:5178",
+    "observed": "Chrome on connected Mac; CUA",
+    "passed": [
+      "Guided choice, consequence, Continue and Back; restored food/water/health",
+      "Refresh retains decision and outcome",
+      "Planning confirmation and costs; switch Guided/Planning same save",
+      "Restart scoped to disposable Cambodian run",
+      "Guided route through 14 scenes, camp reception, California and ending",
+      "Guided widths 390 and 320: scrollWidth equals innerWidth",
+      "Planning width 390: scrollWidth equals innerWidth",
+      "Paper contact inventory; California budget label and arrival support",
+      "Completed Cambodian run remains visible after other-family chooser interaction",
+      "Ramirez retry: phone 82% to 79%, risk 12% to 17%, outcome persisted after refresh/Continue",
+      "Final compact HUD: Notes kept after commitment, Back restores Uncertain and food",
+      "Final Guided 390/320 and Planning 320: no horizontal overflow",
+      "Fresh opening/choice/Back: no browser error/warning logs after duplicate React key fix"
+    ],
+    "partial": [],
+    "unrun": [
+      "Screen reader / assistive technology (issue #31 remains deferred)",
+      "Genuine 200% zoom, reduced motion, full keyboard audit in this correction",
+      "optional 1985 chapter in browser (covered by engine tests)"
+    ]
+  },
+  "source_access": {
+    "USHMM currency abolition and renewed war pages": "READ",
+    "National Bank of Cambodia history and research PDF": "403; indexed reintroduction date only; no exact date added to product",
+    "UNHCR chapter 4 PDF": "403 via curl, 429 via web; indexed context only; prior source limitations retained"
+  },
+  "visual": {
+    "reference_library_id": "libfile_292905a3fd2c8191beb773c2b480b9a7",
+    "locally_inspected": true,
+    "qa": "design-qa.md: passed",
+    "before_library_id": "libfile_ddf60f278d6481919a9e0f2988b6a9e4",
+    "after_library_id": "libfile_16adad53878481919fb0ba75481c1b1d",
+    "after_version": 1,
+    "viewport": [
+      1536,
+      1024
+    ],
+    "before_pixels": [
+      1536,
+      1306
+    ],
+    "after_pixels": [
+      1536,
+      1100
+    ]
+  }
+}
