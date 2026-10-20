@@ -1,0 +1,59 @@
+{
+  "cases": [
+    {
+      "mode": "guided",
+      "back": true,
+      "history": true,
+      "hudCells": 8,
+      "removedContentPresent": false,
+      "scrollWidth": 1536,
+      "width": 1536
+    },
+    {
+      "mode": "guided",
+      "back": true,
+      "history": true,
+      "hudCells": 8,
+      "removedContentPresent": false,
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "mode": "guided",
+      "back": true,
+      "history": true,
+      "hudCells": 8,
+      "removedContentPresent": false,
+      "scrollWidth": 320,
+      "width": 320
+    },
+    {
+      "mode": "planning",
+      "back": true,
+      "history": true,
+      "hudCells": 8,
+      "removedContentPresent": false,
+      "scrollWidth": 1536,
+      "width": 1536
+    },
+    {
+      "mode": "planning",
+      "back": true,
+      "history": true,
+      "hudCells": 8,
+      "removedContentPresent": false,
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "mode": "planning",
+      "back": true,
+      "history": true,
+      "hudCells": 8,
+      "removedContentPresent": false,
+      "scrollWidth": 320,
+      "width": 320
+    }
+  ],
+  "planningInteraction": "PASS: Escape cancels confirmation; commit reduces food 5 to 4 and records notes; keyboard Enter on standalone Back restores food 5 and Contacts Uncertain"
+}

@@ -82,8 +82,8 @@ test('both actual views render period resources at departure, reception and Cali
     storage.setItem(CAMBODIA_SAVE_KEY,JSON.stringify(state));
     for(const View of [App,BeginnerApp]) {
      const html=renderToStaticMarkup(React.createElement(View));
-     assert.match(html,/Household resources/);assert.equal((html.match(/class="cinematic-status-item/g)??[]).length,8);assert.match(html,/Stress:/);assert.match(html,/Carried information/);
-     assert.match(html,state.sceneId==='E10'?/Household budget units/:/Exchange units/);
+     assert.match(html,/Household resources/);assert.equal((html.match(/class="cinematic-status-item/g)??[]).length,8);assert.match(html,/Stress:/);assert.doesNotMatch(html,/Household notes|Carried information/);assert.match(html,/Back to the previous choice/);assert.match(html,/Why this setting matters/);
+     assert.match(html,state.sceneId==='E10'?/Budget:/:/Exchange:/);
      assert.doesNotMatch(html,/Phone charge|% phone|Use medicine|Available cash|undefined|NaN/);
     }
    }

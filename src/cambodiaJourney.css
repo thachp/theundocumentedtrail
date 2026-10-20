@@ -31,9 +31,6 @@ dialog.cambodia-choice-dialog::backdrop {background:rgba(2,10,15,.82);}
 .cambodia-choice-dialog .modal-close {width:44px;height:44px;}
 .cambodia-choice-dialog button {min-height:44px;}
 
-.cambodia-inventory {grid-column:1/-1;}
-.cambodia-inventory summary {min-height:44px;display:flex;align-items:center;cursor:pointer;}
-.cambodia-inventory summary:focus-visible {outline:3px solid #edc778;}
 
 /* Expanded Cambodia shares the cinematic game's compact persistent HUD. */
 .cambodia-hud {display:grid;grid-template-columns:repeat(8,minmax(0,1fr));color:#ece4d0;background:#10191b;}
@@ -45,17 +42,15 @@ dialog.cambodia-choice-dialog::backdrop {background:rgba(2,10,15,.82);}
 .cambodia-hud .cinematic-status-item strong {font:15px/1.3 "IBM Plex Sans",sans-serif;margin-top:4px;}
 .cambodia-hud .cinematic-status-item.danger svg,.cambodia-hud .cinematic-status-item.danger strong {color:#e58372;}
 .cambodia-expanded-planning .cambodia-hud {grid-column:1/-1;}
-.cambodia-compact-context {display:flex;align-items:flex-start;gap:12px;padding:0 12px;margin:6px 0;}
-.cambodia-compact-context > details {flex:1;min-width:0;}
-.cambodia-compact-context > button {margin:4px 0;flex:none;font-size:12px;padding:8px;}
-.cambodia-compact-context ul {padding-left:20px;font-size:13px;}
-.cambodia-compact-context h3 {font:16px Georgia,serif;}
 @media(max-width:680px){
  .cambodia-hud {grid-template-columns:repeat(4,minmax(0,1fr));}
  .cambodia-hud .cinematic-status-item {min-height:92px;border-bottom:1px solid #e2dcc947;}
- .cambodia-compact-context {display:block;}
 }
 @media(min-width:681px){
  .cambodia-expanded .cinematic-story {justify-content:space-between;}
  .cambodia-expanded .cinematic-stage {min-height:820px;}
 }
+
+.cambodia-back-choice {min-height:44px;margin:8px 0;padding:8px 12px;border:1px solid #9eae9c;background:#102328;color:#f0e7d1;font:13px "IBM Plex Sans",sans-serif;cursor:pointer;}
+.cambodia-back-choice:disabled {opacity:.5;cursor:default;}
+.cambodia-back-choice:focus-visible {outline:3px solid #edc778;outline-offset:3px;}

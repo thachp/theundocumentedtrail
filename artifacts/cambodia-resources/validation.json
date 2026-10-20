@@ -27,7 +27,10 @@
       "Ramirez retry: phone 82% to 79%, risk 12% to 17%, outcome persisted after refresh/Continue",
       "Final compact HUD: Notes kept after commitment, Back restores Uncertain and food",
       "Final Guided 390/320 and Planning 320: no horizontal overflow",
-      "Fresh opening/choice/Back: no browser error/warning logs after duplicate React key fix"
+      "Fresh opening/choice/Back: no browser error/warning logs after duplicate React key fix",
+      "Follow-up removal: no disclosure or disclosure content in Guided/Planning at 1536,390,320; HUD 8 cells, Back and historical context retained; no settled horizontal overflow",
+      "Follow-up Planning: Escape cancels; commit updates food/contacts; Enter on standalone Back restores resources",
+      "Follow-up browser console: no warnings or errors"
     ],
     "partial": [],
     "unrun": [
@@ -47,7 +50,7 @@
     "qa": "design-qa.md: passed",
     "before_library_id": "libfile_ddf60f278d6481919a9e0f2988b6a9e4",
     "after_library_id": "libfile_16adad53878481919fb0ba75481c1b1d",
-    "after_version": 1,
+    "after_version": 2,
     "viewport": [
       1536,
       1024
@@ -60,5 +63,11 @@
       1536,
       1100
     ]
+  },
+  "follow_up": {
+    "scope": "Remove player-facing Household notes & resources and its disclosure contents; no substitute panel",
+    "evidence": "removal-verification.json",
+    "library_after_version": 2,
+    "browser_recovery": "Initial tab creation and CDP focus failed. Normal address-bar navigation in the existing Chrome tab loaded the preview, after which supported browser binding and responsive tests worked. No blocker remains."
   }
 }

@@ -86,3 +86,17 @@ Source screenshot was not used to infer accessibility certification. Screen-read
 Checklist: source materialized and inspected; existing layout reused; substantive findings fixed; final full/focused comparison inspected; mobile widths and primary controls exercised; console checked; screenshots saved; no merge or deployment.
 
 final result: passed
+
+---
+
+# Latest follow-up: remove Household notes & resources
+
+Patrick's subsequent explicit instruction supersedes the earlier disclosure design: remove the section and all of its contents, with no replacement explanatory panel. The existing Oregon Trail-style gameplay remains the target.
+
+Implementation evidence: refreshed `artifacts/cambodia-resources/after-guided-desktop.jpg` (1536×1100 full page), `after-guided-390.jpg`, `after-planning-320.jpg`, and `removal-verification.json`. Source reference and normalization are unchanged. The desktop screenshot was opened and inspected: the standalone Back button remains between narrative and historical setting context, and no household-notes wrapper, summary or hidden contents remain. Updated full and HUD comparison images retain the same composition and asset treatment; there are no changes to typography, palette, art, game choices or HUD styling beyond removing the disclosure and styling Back.
+
+PASS: Guided and Planning at 1536/390/320 widths; all eight HUD cells, history/source disclosure and Back remain; no settled horizontal overflow. Planning Escape/confirm/keyboard Back passed, with resource changes reversed correctly. Console warning/error list empty. Aggregate 180 tests and build passed. Original editions, save behavior and resource rules were not changed. Screen reader remains unrun.
+
+Updated after Library attachment: `libfile_16adad53878481919fb0ba75481c1b1d`, version 2. Initial browser failures recovered using normal navigation in the existing Chrome preview. No P0/P1/P2 finding remains; no replacement panel or unrequested global redesign was introduced.
+
+final result: passed

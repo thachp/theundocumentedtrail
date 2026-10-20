@@ -64,3 +64,15 @@ Library attachments confirmed by successful create/replace results:
 - After: `libfile_16adad53878481919fb0ba75481c1b1d`, version 1, `after-guided-desktop.jpg`.
 
 The local corrected preview remains running at `http://127.0.0.1:5178/?story=cambodia-1979&edition=3`; detailed view is `http://127.0.0.1:5178/?mode=full&story=cambodia-1979&edition=3`. No install or server-start action is required while this process is running. Both ports are local previews only.
+
+## Latest follow-up — remove household-notes disclosure
+
+Patrick requested removal of the entire player-facing “Household notes & resources” section and its content. The expanded Cambodian shared context component now returns only a standalone Back button and any essential save-warning status. No replacement explanatory panel was introduced. The resource HUD, choices, underlying resource/contact mechanics, source/history disclosure, history dialog and per-person controls remain. Cohesion's accessible hint now points to person portraits rather than the removed notes. Obsolete disclosure/inventory CSS was removed. Original editions' frozen interfaces are unchanged.
+
+The Oregon Trail-style design instruction is recorded in AGENTS.md: these are playable journey/resource games, led by supplies, travel, choices and consequences; history should come through play and optional sources. No global rewrite was performed.
+
+Regression assertions first failed against the previous implementation, then passed after removal. Actual Guided and Planning components are tested at departure, camp and California for absence of both the section and its disclosure content, while retaining all eight HUD cells, Back and historical setting context. Full `npm test`: 180 passed, 0 failed; production build passed with its existing large-chunk warning; `git diff --check` passed.
+
+Browser removal verification passed in both modes at 1536, 390 and 320 CSS pixels. There is no removed content hidden in the DOM, all eight HUD cells remain, and Back/history controls remain. Planning's initial resize animation briefly added one pixel of scroll width; settled checks showed exact viewport width, with no CSS workaround needed. Escape canceled a Planning confirmation; committing the note choice changed food 5→4 and Contacts Uncertain→Notes kept; keyboard Enter on standalone Back restored food and contact status. Console warning/error list was empty. Screen-reader testing remains unrun.
+
+Chrome initially rejected tab creation and timed out binding a tab. Normal address-bar navigation in the existing preview succeeded, then the supported browser binding and mobile verification recovered. No remaining browser blocker. The updated after screenshot replaced the same confirmed Library item `libfile_16adad53878481919fb0ba75481c1b1d` at version **2**. Local desktop/mobile screenshots and full/HUD comparisons were refreshed. The before screenshot remains the unchanged-main baseline.
