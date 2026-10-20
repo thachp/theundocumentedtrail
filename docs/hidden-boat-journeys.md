@@ -1,0 +1,13 @@
+# Temporarily hidden boat journeys and compact selection
+
+Based on merged main 906d94ba58e2f90d579a489c1250debabf5530d7 (parent reports published Site v18). The Cuban Mariel and Vietnamese Pulau Bidong stories are temporarily excluded from the public selection carousel. Their source, art, adapters, edition saves and archives remain intact for rework. The modern Vietnamese Bùi UK journey, Cambodia and all six survival presets remain available.
+
+A shared availability gate wraps both Guided and Planning at the application entry point, before gameplay mounts. Direct story links for either hidden ID (including original/revised editions) show a clear unavailable message and mode-preserving Choose another journey link. This route never reads, migrates, resets or clears saves. Hidden cards and their launch/restart links are absent from the shared chooser. Internal story modules remain testable, preserving compatibility; this is lineup availability, not confidential content removal.
+
+The related selection-modal correction reduces portraits to 84px desktop/64px mobile, removes decorative header space and duplicate setting prose, uses concise family-specific selection summaries, and places Continue/Start again side by side. Body copy stays 14px, supporting labels 12px and actions at least 44px. Existing carousel keys/arrows, focus handling, source content, game mechanics and gameplay choice cards are unchanged.
+
+Validation: 190 aggregate tests passed, 0 failed; production/Sites build passed with existing large-bundle warning. Tests render the actual chooser in both modes, assert exactly seven available cards, and verify hidden URLs across both modes and editions never mount gameplay or access storage. Existing save/edition, all-family and Cambodia regressions remain included. Chrome verified old Cuban Planning and Vietnamese Guided links show unavailable and return to selection. Modern Bùi remains in the chooser.
+
+Chrome measured all seven collapsed card heights at 1280×600 (~304px), 390×667 (~281px), and 320×568 (~326px); all actions fit vertically inside the viewport. Keyboard End reaches Cambodia, including its optional archive disclosure and Open Cambodian story action. A card does not need vertical scrolling to reach its action; optional expanded archive detail and footer can still scroll. Captures: artifacts/chooser-release/desktop-1280x600.jpg, mobile-390x667.jpg, mobile-320x568-cambodia.jpg. Actual assistive-technology/screen-reader testing remains unrun/deferred issue #31.
+
+Parent owns Sites source synchronization/upload/deployment. No Sites save/deploy attempted for this release.

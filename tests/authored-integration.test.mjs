@@ -7,7 +7,7 @@ import { getJourneyChoices } from '../src/journeyChoices.js';
 
 test('both registered households share adapters while retaining independent saves, restart and archives',()=>{
  assert.deepEqual(AUTHORED_STORIES.map(s=>s.id),['mariel-1980','vietnam-bidong-1978']);
- assert.equal(getJourneyChoices().length,9);
+ assert.equal(getJourneyChoices().length,7);
  const data=new Map([['legacy-family','preserved'],['undocumented-trail:review:cambodia-1979:v1','preserved-cambodia']]);
  const storage={getItem:k=>data.get(k)??null,setItem:(k,v)=>data.set(k,String(v))};
  for(const story of AUTHORED_STORIES){
