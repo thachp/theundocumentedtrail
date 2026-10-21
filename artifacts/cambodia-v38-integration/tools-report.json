@@ -1,0 +1,18 @@
+[
+  {
+    "mode": "guided",
+    "width": 390,
+    "illustratedMap": true,
+    "feedbackDraftContext": true,
+    "escapeFocus": true,
+    "viewSwitchSameSave": true
+  },
+  {
+    "mode": "full",
+    "width": 390,
+    "illustratedMap": true,
+    "feedbackDraftContext": true,
+    "escapeFocus": true,
+    "viewSwitchSameSave": true
+  }
+]

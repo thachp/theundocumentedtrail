@@ -6,7 +6,7 @@
 .cambodia-travel-controls p {font-size:14px;line-height:1.5;}
 .cambodia-travel-controls button {min-height:44px;}
 .cambodia-travel-controls .cinematic-travel-strategies button[aria-pressed="true"] {border-color:#83d6d0;}
-.cambodia-travel-controls {grid-column:1 / -1;min-width:0;}
+.cambodia-travel-controls {grid-column:1 / -1;min-width:0;container-type:inline-size;container-name:cambodia-plan;}
 .cambodia-travel-controls .cinematic-travel-leads small {text-transform:none;letter-spacing:normal;}
 .cambodia-travel-controls .cinematic-travel-step > span,
 .cambodia-travel-controls .cinematic-travel-step > small,
@@ -16,6 +16,8 @@
 .cambodia-travel-controls .continue-button {display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;color:#09201e;border:1px solid #83d6d0;background:#83d6d0;font-weight:600;cursor:pointer;}
 .cambodia-travel-controls .continue-button svg {width:20px;height:20px;}
 @media(max-width:680px){.cambodia-travel-controls .cinematic-travel-leads{grid-template-columns:repeat(2,minmax(0,1fr));}.cambodia-travel-controls .cinematic-travel-strategies{grid-template-columns:1fr;}}
+/* The live Planning sidebar is narrow even on a wide desktop viewport. */
+@container cambodia-plan (max-width:480px){.cambodia-travel-controls .cinematic-travel-leads{grid-template-columns:repeat(2,minmax(0,1fr));}.cambodia-travel-controls .cinematic-travel-strategies{grid-template-columns:1fr;}}
 /* Planning's outcome-card button reset must not place each role in column 2. */
 .cambodia-travel-controls .cinematic-travel-leads > button,
 .cambodia-travel-controls .cinematic-travel-strategies > button {grid-column:auto;justify-self:stretch;padding:10px;color:#f3eee2;border:1px solid rgba(197,209,208,.4);background:rgba(17,33,39,.9);}
