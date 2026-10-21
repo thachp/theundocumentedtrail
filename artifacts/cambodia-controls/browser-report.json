@@ -1,0 +1,419 @@
+{
+  "cases": [
+    {
+      "mode": "guided",
+      "width": 1365,
+      "scene": "E01",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "scene": "E01",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "scene": "E01",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "scene": "E01",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "scene": "E01",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "scene": "E01",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "scene": "E02",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "scene": "E02",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "scene": "E02",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "scene": "E02",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "scene": "E02",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "scene": "E02",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "scene": "E04",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "scene": "E04",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "scene": "E04",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "scene": "E04",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "scene": "E04",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "scene": "E04",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "scene": "T01",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "scene": "T01",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "scene": "T01",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "scene": "T01",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "scene": "T01",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "scene": "M01",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "scene": "T01",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "scene": "M01",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "scene": "M01",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "scene": "M01",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "scene": "M01",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "scene": "M01",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "scene": "M02",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "scene": "M02",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "scene": "M02",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "scene": "M02",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "scene": "M02",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "scene": "E05",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "scene": "M02",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "scene": "E05",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "scene": "E05",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "scene": "E05",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "scene": "E05",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "scene": "E06",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "scene": "E06",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "scene": "E06",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "scene": "E05",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "scene": "E06",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "scene": "E10",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "scene": "E06",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "scene": "E10",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "scene": "E10",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "scene": "E10",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "scene": "E06",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "scene": "E10",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "scene": "E10",
+      "overflow": false,
+      "hud": true
+    },
+    {
+      "mode": "guided",
+      "width": 390,
+      "flow": "keyboard resupply/pending refresh/assignment/pace cancellation/commit/reload/history/injured eligibility/rules3",
+      "pass": true
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "flow": "keyboard resupply/pending refresh/assignment/pace cancellation/commit/reload/history/injured eligibility/rules3",
+      "pass": true
+    },
+    {
+      "mode": "guided",
+      "width": 1365,
+      "flow": "keyboard resupply/pending refresh/assignment/pace cancellation/commit/reload/history/injured eligibility/rules3",
+      "pass": true
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "flow": "keyboard resupply/pending refresh/assignment/pace cancellation/commit/reload/history/injured eligibility/rules3",
+      "pass": true
+    },
+    {
+      "mode": "full",
+      "width": 1365,
+      "flow": "keyboard resupply/pending refresh/assignment/pace cancellation/commit/reload/history/injured eligibility/rules3",
+      "pass": true
+    },
+    {
+      "mode": "guided",
+      "width": 320,
+      "flow": "keyboard resupply/pending refresh/assignment/pace cancellation/commit/reload/history/injured eligibility/rules3",
+      "pass": true
+    }
+  ],
+  "errors": []
+}

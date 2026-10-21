@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {STORY} from '../src/cambodiaExpanded/story.js';
 import {createState,startState,chooseState,continueState,validateState} from '../src/cambodiaExpanded/state.js';
 import {cambodiaGame,cambodiaEvent} from '../src/cambodiaExpanded/journey.js';
-const start=()=>startState(createState(STORY));
+const start=()=>startState(createState(STORY,3));
 const advance=(s,id)=>continueState(STORY,chooseState(STORY,s,id));
 function reach(ids){return ids.reduce(advance,start());}
 test('new road decisions use real active days, daily supplies and individual effort',()=>{

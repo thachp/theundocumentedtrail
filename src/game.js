@@ -488,7 +488,7 @@ import { isAuthoredJourney, authoredGame, storyFamily, authoredEvent, chooseAuth
 
 export function getJourneyStage(game) {
   if (isAuthoredJourney(game)) return JOURNEY_STAGES[storyScene(game).stage];
-  if (isCambodiaJourney(game) && game.householdEdition===3) return JOURNEY_STAGES[game.eventId < "E02" ? 0 : ["E02","E03","E04","R01","T01"].includes(game.eventId)?1:["E05","E06","E07","E08","E09","W01","J01","H01","F01"].includes(game.eventId)?2:3];
+  if (isCambodiaJourney(game) && game.householdEdition===3) return JOURNEY_STAGES[game.eventId < "E02" ? 0 : ["E02","E03","E04","R01","T01","M01","M02"].includes(game.eventId)?1:["E05","E06","E07","E08","E09","W01","J01","H01","F01"].includes(game.eventId)?2:3];
   if (isCambodiaJourney(game)) return JOURNEY_STAGES[game.eventId < "C03" ? 0 : game.eventId < "C05" ? 1 : game.eventId < "C08" ? 2 : 3];
   const stageId = game.progress >= 100 ? "review" : (JOURNEY_STAGE_BY_EVENT[game.eventId] ?? "transit");
   return JOURNEY_STAGES.find((stage) => stage.id === stageId);
@@ -7432,6 +7432,7 @@ function defersThresholdEnding(game) {
 }
 
 export function requiresTravelPlan(game) {
+  if(game.controlModel)return expandedCambodiaJourney.requiresCambodiaPlan(game);
   if (isAuthoredJourney(game)) return false;
   if (isCambodiaJourney(game)) return false;
   return Boolean(
@@ -7920,6 +7921,7 @@ export function respondToSocialFeed(game, responseId) {
 }
 
 export function planTravelLeg(game, strategyId, leadPersonId = null) {
+  if(game.controlModel)return expandedCambodiaJourney.planCambodiaLeg(game,strategyId,leadPersonId);
   if (!requiresTravelPlan(game)) return game;
   if (leadPersonId) {
     const lead = getTravelLeadOptions(game).find((option) => option.personId === leadPersonId);

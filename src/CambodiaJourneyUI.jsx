@@ -20,7 +20,7 @@ export function CambodiaResources({game,variant='planning'}) {
    {icon:FirstAidKit,label:'Health',value:`${health}/100`,hint:'Average fictional health units. Read each person’s state through their portrait.',danger:health<55},
    {icon:Handshake,label:'Cohesion',value:cohesion>=4?'Strong':cohesion>=3?'Steady':'Fragile',hint:'Shared trust. Select a person’s portrait to read their individual state.'},
    {icon:WarningCircle,label:'Stress',value:`${game.resources.stress}/20`,hint:'Fictional strain units. Shortages can increase strain; this is not a clinical measure.',danger:game.resources.stress>=12},
-   {icon:Clock,label:game.cambodiaState.resourceRulesVersion===3?'Days':'Turns',value:game.planning.time,hint:game.cambodiaState.resourceRulesVersion===3?`Active journey days; ${game.cambodiaState.travelDays??0} spent traveling. Dated waiting periods between events are summarized, not rationed.`:'Elapsed authored planning turns, not elapsed days.'},
+   {icon:Clock,label:game.cambodiaState.resourceRulesVersion>=3?'Days':'Turns',value:game.planning.time,hint:game.cambodiaState.resourceRulesVersion>=3?`Active journey days; ${game.cambodiaState.travelDays??0} spent traveling. Dated waiting periods between events are summarized, not rationed.`:'Elapsed authored planning turns, not elapsed days.'},
   ];
   return <section className={`cambodia-hud ${variant==='guided'?'cinematic-resources':''}`} aria-label="Household resources">
    {metrics.map(({icon:Icon,label,value,hint,danger})=><div key={label} className={`cinematic-status-item${danger?' danger':''}`} aria-label={`${label}: ${value}. ${hint}`} title={hint}>
