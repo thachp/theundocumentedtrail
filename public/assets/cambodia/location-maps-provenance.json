@@ -1,0 +1,23 @@
+{
+  "created": "2026-10-20",
+  "tool": "built-in image_gen",
+  "purpose": "Fictional illustrative game assets; not archival photographs or navigational maps.",
+  "prompts": [
+    {
+      "asset": "western-journey-map.png",
+      "prompt": "Antique worn parchment, intricate pen ink and muted watercolor, birds-eye/isometric travel vignettes, weathered sepia edges, olive foliage, dusty blue water, rust dotted symbolic path, humane somber historical journey game. Landscape 1536x1024. No labels, UI, coordinates, violence, weapons or modern technology. Symbolic fictional landscapes, not geographical reconstructions. Rural western Cambodia November 1979: four adult travelers with bundles, stilt homes, rice paddies, water buffalo, palms, a village gathering point and woodland resting places. No future locations."
+    },
+    {
+      "asset": "border-journey-map.png",
+      "prompt": "Antique worn parchment, intricate pen ink and muted watercolor, birds-eye/isometric travel vignettes, weathered sepia edges, olive foliage, dusty blue water, rust dotted symbolic path, humane somber historical journey game. Landscape 1536x1024. No labels, UI, coordinates, violence, weapons or modern technology. Symbolic fictional landscapes, not geographical reconstructions. Late November 1979 Thai-Cambodian border countryside: wooded hills, dry rice paddies, river and footbridge, resting shelters, four adult travelers and known companions. No checkpoints, mine locations, safe crossing claims, tactical routes, California or airport."
+    },
+    {
+      "asset": "camp-journey-map.png",
+      "prompt": "Antique worn parchment, intricate pen ink and muted watercolor, birds-eye/isometric travel vignettes, weathered sepia edges, olive foliage, dusty blue water, rust dotted symbolic path, humane somber historical journey game. Landscape 1536x1024. No labels, UI, coordinates, violence, weapons or modern technology. Symbolic fictional landscapes, not geographical reconstructions. Fictional Khao-I-Dang-area holding-centre neighborhood early 1980: bamboo and canvas shelters, water tanks, food distribution, clinic, clothing repair, shared cooking, distant forest hills. Not a reconstruction."
+    },
+    {
+      "asset": "longBeach-journey-map.png",
+      "prompt": "Antique worn parchment, intricate pen ink and muted watercolor, birds-eye/isometric travel vignettes, weathered sepia edges, olive foliage, dusty blue water, rust dotted symbolic path, humane somber historical journey game. Landscape 1536x1024. No labels, UI, coordinates, violence, weapons or modern technology. Symbolic fictional landscapes, not geographical reconstructions. Long Beach California 1981-1985: modest stucco apartments, palms, grocery, period buses and cars, community classroom, clothing repair and paper correspondence, distant Pacific harbor. Symbolic neighborhood path. No refugee camp or border crossing."
+    }
+  ]
+}

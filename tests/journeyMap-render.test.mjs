@@ -46,3 +46,23 @@ test("the actual map renders current-event markers, semantic itineraries and sha
     await server.close();
   }
 });
+
+test('all public journeys share scenic map controls while retaining their own artwork and geographic itinerary', async () => {
+ const {stat}=await import('node:fs/promises');
+ const server=await createServer({optimizeDeps:{noDiscovery:true,include:[],entries:[]},server:{middlewareMode:true,hmr:false},appType:'custom'});
+ try {
+  const {IllustratedJourneyMap}=await server.ssrLoadModule('/src/IllustratedJourneyMap.jsx');
+  for(const family of Object.values(FAMILY_PRESETS)) {
+   const game=createInitialGame(family.id);
+   const html=renderToStaticMarkup(React.createElement(IllustratedJourneyMap,{game}));
+   const expected=family.id==='ramirez'?family.mapImage:`/assets/journey-maps/${family.id}.png`;
+   assert.ok((await stat(`public${expected}`)).size>1000);
+   assert.ok(html.includes(`src="${expected}"`));
+   assert.ok(html.includes(`data-map-family="${family.id}"`));
+   assert.match(html,/Current location/);assert.match(html,/Journey progress/);
+   assert.match(html,/Geographic map &amp; visited itinerary/);
+   assert.ok(html.includes(`data-family="${family.id}"`));
+   assert.doesNotMatch(html,/assets\/cambodia|undefined|NaN/);
+  }
+ } finally {await server.close();}
+});

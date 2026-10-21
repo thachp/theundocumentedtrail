@@ -1,0 +1,58 @@
+[
+  {
+    "mode": "guided",
+    "outer": 640,
+    "width": 320,
+    "dpr": 2,
+    "visualScale": 1,
+    "cssZoom": "1",
+    "overflow": false,
+    "planner": 292,
+    "cancel": true,
+    "keyboardCommit": true,
+    "refresh": true,
+    "errors": []
+  },
+  {
+    "mode": "full",
+    "outer": 640,
+    "width": 320,
+    "dpr": 2,
+    "visualScale": 1,
+    "cssZoom": "1",
+    "overflow": false,
+    "planner": 246,
+    "cancel": true,
+    "keyboardCommit": true,
+    "refresh": true,
+    "errors": []
+  },
+  {
+    "mode": "guided",
+    "outer": 780,
+    "width": 390,
+    "dpr": 2,
+    "visualScale": 1,
+    "cssZoom": "1",
+    "overflow": false,
+    "planner": 362,
+    "cancel": true,
+    "keyboardCommit": true,
+    "refresh": true,
+    "errors": []
+  },
+  {
+    "mode": "full",
+    "outer": 780,
+    "width": 390,
+    "dpr": 2,
+    "visualScale": 1,
+    "cssZoom": "1",
+    "overflow": false,
+    "planner": 316,
+    "cancel": true,
+    "keyboardCommit": true,
+    "refresh": true,
+    "errors": []
+  }
+]

@@ -1,5 +1,7 @@
 # Cambodian travel controls — rules 4
 
+This document and its screenshots describe the original PR38 build. For reconciliation with the newer live maps, medicine and narrative features, see `cambodia-live-v38-integration.md`; the earlier browser evidence is not a test of that merged tree.
+
 Base/main: `05b350a666b5b890ddda033c7a395dcdf91d6a57` (v20 / PR37). Branch: `feat/cambodia-travel-controls`. Main was freshly checked and remained at that SHA during implementation. Connected GitHub reads found only unrelated open draft PR20; it was not changed. No screenshot-layout work, merge or publication is included.
 
 ## Household, chronology and premises

@@ -1,3 +1,4 @@
+import { treatTraveler } from './medicine.js';
 import {hasControls,legFor,leadOptions,paceOptions,supplyOptions,clamp} from './controls.js';
 import {eventRules,eventChoice,eventCosts,nextEvent} from './events.js';
 import {resourceEffects,usesResourceRules} from './resources.js';
@@ -5,7 +6,7 @@ import {resourceEffects,usesResourceRules} from './resources.js';
 // mortality, legal-approval roll or overall score. Values are game abstractions.
 export const initialResources = { cash: 3, supplies: 5, water: 4, stress: 2 };
 export function createState(story, resourceRulesVersion=4) {
- return {version:3,resourceRulesVersion,storyId:story.id,sceneId:story.start,phase:'intro',flags:{},resources:{...initialResources},people:Object.fromEntries(['dara','vann','maly','sophea'].map(id=>[id,{health:80,trust:3,alive:true}])),elapsed:0,lastNote:'',history:[],...(resourceRulesVersion===4?{actionLog:[],pendingLeg:null,travelPlans:[],purchases:[],resupplyUsed:{}}:{})};
+ return {version:3,resourceRulesVersion,storyId:story.id,sceneId:story.start,phase:'intro',flags:{},resources:{...initialResources},people:Object.fromEntries(['dara','vann','maly','sophea'].map(id=>[id,{health:80,trust:3,alive:true}])),elapsed:0,lastNote:'',history:[],careHistory:[],...(resourceRulesVersion===4?{actionLog:[],pendingLeg:null,travelPlans:[],purchases:[],resupplyUsed:{}}:{})};
 }
 export const startState=s=>s.phase==='intro'?{...s,phase:'scene'}:s;
 export function chooseState(story,state,id) {
@@ -51,23 +52,37 @@ export function stateBeforeLastChoice(story,state) {
  if(hasControls(state)){const i=state.actionLog.findLastIndex(a=>a.type==='choice');return i<0?state:replayControls(story,state.actionLog.slice(0,i));}
  if(state.phase==='intro')return state;
  if(!state.history.length)return createState(story,state.resourceRulesVersion??1);
+ const count=state.history.length-1;
  let restored=startState(createState(story,state.resourceRulesVersion??1));
  for(const h of state.history.slice(0,-1))restored=continueState(story,chooseState(story,restored,h.choiceId));
- return restored;
+ return validateState(story,{...restored,careHistory:(state.careHistory??[]).filter(r=>r.after<=count)})??restored;
 }
 export function validateState(story,raw) {
  if(raw?.resourceRulesVersion===4)return validateControls(story,raw);
  if(!raw||raw.version!==3||raw.storyId!==story.id||!Array.isArray(raw.history)||raw.history.length>story.scenes.length)return null;
  const rules=raw.resourceRulesVersion??1;if(![1,2,3].includes(rules))return null;
- let state=startState(createState(story,rules));
+ const care=raw.careHistory??[];if(!Array.isArray(care)||care.length>64||(raw.phase==='intro'&&care.length))return null;
+ let careIndex=0,state=startState(createState(story,rules));
+ function replayCare() {
+  while(careIndex<care.length) {
+   const receipt=care[careIndex];
+   if(!receipt||receipt.after!==state.history.length||receipt.phase!==state.phase||receipt.sceneId!==state.sceneId)break;
+   const treated=treatTraveler(state,receipt.personId);
+   if(treated===state||JSON.stringify(treated.careHistory.at(-1))!==JSON.stringify(receipt))return false;
+   state=treated;careIndex++;
+  }
+  return true;
+ }
+ if(!replayCare())return null;
  for(let i=0;i<raw.history.length;i++) {
   const h=raw.history[i];if(!h||state.sceneId!==h.sceneId)return null;
   const chosen=chooseState(story,state,h.choiceId);if(chosen===state)return null;state=chosen;
-  if(i<raw.history.length-1)state=continueState(story,state);
+  if(!replayCare())return null;
+  if(i<raw.history.length-1){state=continueState(story,state);if(!replayCare())return null;}
  }
  if(raw.phase==='intro'&&!raw.history.length)state=createState(story,rules);
- else if(raw.phase==='scene'&&raw.history.length||raw.phase==='complete')state=continueState(story,state);
- return state.phase===raw.phase&&state.sceneId===raw.sceneId?state:null;
+ else if(raw.phase==='scene'&&raw.history.length||raw.phase==='complete'){state=continueState(story,state);if(!replayCare())return null;}
+ return careIndex===care.length&&state.phase===raw.phase&&state.sceneId===raw.sceneId?state:null;
 }
 
 // Compatibility for old handlers: navigation never rewinds a committed choice.
@@ -101,7 +116,7 @@ function replayControls(story,actions){
  let s=startState(createState(story,4));
  for(const a of actions){
   if(!a||a.sceneId!==s.sceneId)return null;
-  const next=a.type==='choice'?chooseState(story,s,a.choiceId):a.type==='continue'?continueState(story,s):a.type==='travel'?planState(story,s,a.strategyId,a.personId):a.type==='resupply'?resupplyState(story,s,a.itemId):s;
+  const next=a.type==='choice'?chooseState(story,s,a.choiceId):a.type==='continue'?continueState(story,s):a.type==='travel'?planState(story,s,a.strategyId,a.personId):a.type==='resupply'?resupplyState(story,s,a.itemId):a.type==='care'?treatTraveler(s,a.personId):s;
   if(next===s||JSON.stringify(next.actionLog.at(-1))!==JSON.stringify(a))return null;s=next;
  }
  return s;
@@ -109,5 +124,5 @@ function replayControls(story,actions){
 function validateControls(story,raw){
  if(raw.version!==3||raw.storyId!==story.id||!Array.isArray(raw.actionLog)||raw.actionLog.length>256||!Array.isArray(raw.history))return null;
  const s=raw.phase==='intro'&&raw.actionLog.length===0?createState(story,4):replayControls(story,raw.actionLog);
- return s&&s.sceneId===raw.sceneId&&s.phase===raw.phase&&JSON.stringify(s.history)===JSON.stringify(raw.history)?s:null;
+ return s&&s.sceneId===raw.sceneId&&s.phase===raw.phase&&JSON.stringify(s.history)===JSON.stringify(raw.history)&&JSON.stringify(s.careHistory)===JSON.stringify(raw.careHistory??[])?s:null;
 }

@@ -1,0 +1,80 @@
+[
+  {
+    "mode": "guided",
+    "width": 1365,
+    "openingCareResupply": true,
+    "pendingCancel": true,
+    "careTravelCare": true,
+    "immutableReceipt": true,
+    "mineCareEligibility": true,
+    "legacyCare": true,
+    "refresh": true,
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "mode": "guided",
+    "width": 390,
+    "openingCareResupply": true,
+    "pendingCancel": true,
+    "careTravelCare": true,
+    "immutableReceipt": true,
+    "mineCareEligibility": true,
+    "legacyCare": true,
+    "refresh": true,
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "mode": "guided",
+    "width": 320,
+    "openingCareResupply": true,
+    "pendingCancel": true,
+    "careTravelCare": true,
+    "immutableReceipt": true,
+    "mineCareEligibility": true,
+    "legacyCare": true,
+    "refresh": true,
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "mode": "full",
+    "width": 1365,
+    "openingCareResupply": true,
+    "pendingCancel": true,
+    "careTravelCare": true,
+    "immutableReceipt": true,
+    "mineCareEligibility": true,
+    "legacyCare": true,
+    "refresh": true,
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "mode": "full",
+    "width": 390,
+    "openingCareResupply": true,
+    "pendingCancel": true,
+    "careTravelCare": true,
+    "immutableReceipt": true,
+    "mineCareEligibility": true,
+    "legacyCare": true,
+    "refresh": true,
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "mode": "full",
+    "width": 320,
+    "openingCareResupply": true,
+    "pendingCancel": true,
+    "careTravelCare": true,
+    "immutableReceipt": true,
+    "mineCareEligibility": true,
+    "legacyCare": true,
+    "refresh": true,
+    "overflow": false,
+    "errors": []
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "created": "2026-10-20",
+  "tool": "built-in image_gen",
+  "notice": "Original fictional symbolic journey illustrations, not navigational maps or verified historical reconstructions.",
+  "records": [
+    {
+      "family": "haddad",
+      "file": "haddad.png",
+      "prompt": "Create a finished landscape 1536x1024 illustrated journey-map background for The Undocumented Trail. Match antique worn parchment, intricate delicate pen ink and muted watercolor, birds-eye/isometric environmental travel vignettes, weathered sepia edges, olive foliage, dusty blue water, rust dotted winding symbolic path. The result must be scenic landscape illustration, NOT a country-outline map. No labels, lettering, UI, map coordinates, flags, violence, weapons, stereotypical costume, or real identifiable people. Humane somber tone, small travelers with agency. Narrative vignette montage with cloud breaks between distant places: the path is symbolic story order, never accurate navigation or a promised destination. A fictional Syrian family's 2015 journey: modest Aleppo courtyard and bundles, woodland bus-road transit through Türkiye, Aegean shore with small boat seen from a distance and a sheltered Greek reception area, railway waiting shelter and modest German reception neighborhood as a separated far-distance vignette. Four tiny relatives travel together. Avoid contemporary postwar-reconstruction imagery or military action. Preserve muted pen-and-watercolor detail and worn-paper margins."
+    },
+    {
+      "family": "diop",
+      "file": "diop.png",
+      "prompt": "Create a finished landscape 1536x1024 illustrated journey-map background for The Undocumented Trail. Match antique worn parchment, intricate delicate pen ink and muted watercolor, birds-eye/isometric environmental travel vignettes, weathered sepia edges, olive foliage, dusty blue water, rust dotted winding symbolic path. The result must be scenic landscape illustration, NOT a country-outline map. No labels, lettering, UI, map coordinates, flags, violence, weapons, stereotypical costume, or real identifiable people. Humane somber tone, small travelers with agency. Narrative vignette montage with cloud breaks between distant places: the path is symbolic story order, never accurate navigation or a promised destination. A fictional Senegalese brothers-and-cousins group's journey: Mbour courtyard and fishing harbor, Dakar workshop and bus yard, coastal road through drier Mauritanian terrain, Atlantic passage with modest distant fishing vessel, a separated Canary Islands reception harbor vignette. Four adult travelers, no exoticized spectacle, no claims about a safe sea route. Environmental map of everyday practical places."
+    },
+    {
+      "family": "nguyen",
+      "file": "nguyen.png",
+      "prompt": "Create a finished landscape 1536x1024 illustrated journey-map background for The Undocumented Trail. Match antique worn parchment, intricate delicate pen ink and muted watercolor, birds-eye/isometric environmental travel vignettes, weathered sepia edges, olive foliage, dusty blue water, rust dotted winding symbolic path. The result must be scenic landscape illustration, NOT a country-outline map. No labels, lettering, UI, map coordinates, flags, violence, weapons, stereotypical costume, or real identifiable people. Humane somber tone, small travelers with agency. Narrative vignette montage with cloud breaks between distant places: the path is symbolic story order, never accurate navigation or a promised destination. A fictional modern Vietnamese family's journey toward the United Kingdom: simple Vietnamese neighborhood and fields, separated continental European rail and warehouse waiting places, French Channel coast and modest harbor, separate British reception neighborhood across a cloud break. Four small travelers with bags. Buildings, sea and transport, not a literal navigable international path; no landmarks or stereotypes."
+    },
+    {
+      "family": "punjab",
+      "file": "punjab.png",
+      "prompt": "Create a finished landscape 1536x1024 illustrated journey-map background for The Undocumented Trail. Match antique worn parchment, intricate delicate pen ink and muted watercolor, birds-eye/isometric environmental travel vignettes, weathered sepia edges, olive foliage, dusty blue water, rust dotted winding symbolic path. The result must be scenic landscape illustration, NOT a country-outline map. No labels, lettering, UI, map coordinates, flags, violence, weapons, stereotypical costume, or real identifiable people. Humane somber tone, small travelers with agency. Narrative vignette montage with cloud breaks between distant places: the path is symbolic story order, never accurate navigation or a promised destination. A fictional Punjabi work group's journey toward Ireland: rural Punjab homes and farmland, Delhi bus/airport departure surroundings, separated international transit waiting hall vignette, modest Irish town with worker housing, workplace and community support doorway across a cloud break. Four tiny adult companions carry practical bags. Simple everyday architecture, no landmarks, no stereotypical cultural costume, no guarantee of work or admission."
+    },
+    {
+      "family": "rohingya",
+      "file": "rohingya.png",
+      "prompt": "Create a finished landscape 1536x1024 illustrated journey-map background for The Undocumented Trail. Match antique worn parchment, intricate delicate pen ink and muted watercolor, birds-eye/isometric environmental travel vignettes, weathered sepia edges, olive foliage, dusty blue water, rust dotted winding symbolic path. The result must be scenic landscape illustration, NOT a country-outline map. No labels, lettering, UI, map coordinates, flags, violence, weapons, stereotypical costume, or real identifiable people. Humane somber tone, small travelers with agency. Narrative vignette montage with cloud breaks between distant places: the path is symbolic story order, never accurate navigation or a promised destination. A fictional Rohingya family's journey from Cox's Bazar toward temporary reception in Aceh: humble bamboo/canvas shelter settlement amid green hills, water collection and shared tasks, coastal waiting area, broad blue Bay of Bengal and Andaman Sea with small distant crowded boat, separated Aceh coastal temporary reception shelters and trees across cloud breaks. Four tiny relatives together, no suffering spectacle, no ethnic caricatures, no guaranteed rescue or safe-route claim."
+    }
+  ]
+}

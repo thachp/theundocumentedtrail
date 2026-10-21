@@ -57,4 +57,39 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 - Patrick’s 20 October 2026 layout revision restores expanded Cambodia’s Planning composition with map on the left and hero/decisions on the right. Guided uses the shared shorter stage instead of the Cambodia-only 820px minimum; compact the phone hero/map to reduce distance to choices. Preserve the established style, readable content and natural small-screen/200%-zoom stacking and scrolling; never force viewport clipping.
 
-- Expanded Cambodia fresh runs use resource rules 4 for authored travel legs: choose an eligible family coordinator, select pace (which changes actual elapsed travel days), review and commit once in either view. Bounded food/water preparation, relief and exchange belong in optional resupply controls with period-specific units. Keep rules 1–3 and original editions frozen; canonical actions, assignments, plan effects and purchases must replay without duplicate charges or refunds. The mine encounter is non-graphic and entirely fictional at family level, centered on trained assistance, offscreen rescue/evacuation, care and onward planning. Never add device interaction instructions, a foot-on-mine trope or an admission reward. Preserve the stopped screenshot-layout work.
+- Refer to Cambodia as a journey in player controls. Expanded Cambodia follows the shared game conventions: map-left Planning, decisions-right, a compact resource header, and the traveler band with individual health and trust. Keep period-appropriate resources and edition saves.
+
+- Cambodia expanded journey uses illustrated worn-parchment route art as the primary map in Guided and Planning, with the geographic map and actual visited itinerary behind a disclosure. Art is symbolic, not coordinate-bearing. Keep desktop header navigation on one row beside date/place; the resources may stack below on narrower screens.
+
+- Cambodia illustrated maps change with the household’s actual current location: western Cambodia, border region, Khao-I-Dang/Thai departure, and Long Beach. Parallel letters about Site One/Two keep California artwork. Use the same location selector in Guided and Planning; never choose scenery from progress percentage or names mentioned in dialogue.
+
+- Expanded Cambodia Planning must reuse the same grid, StatusMetric, CharacterCard and DetailDrawer as Ramírez and the other journeys. No Cambodia-only Planning grid/header overrides or extra hero above the decision panel. Guided uses the shared care card too. Omit medicine actions where the journey has no medicine mechanic; retain portrait, condition, trust and strengths.
+
+- Planning traveler bio/detail cards are anchored inside the map on the left for every journey, rather than fixed to the viewport’s right edge. Keep the shared header icon family, resource order and safe/caution/danger colors; dense eight-resource headers must not overlap values and adjacent icons.
+
+- Planning keeps only the shared UsersThree journey icon and restart icon directly visible, with secondary controls inside a Journey tools dropdown. Expanded Cambodia replaces the Contacts HUD slot with the standard pill/Medicine supply. Treatment uses one supply, restores up to 15 health and reduces stress by 2; use both shared traveler cards. Keep illness/clinic events, period setting, original-edition saves, committed treatment receipts and supplies persistent; no real drug names or medical dosage claims. This user direction supersedes earlier no-medicine instructions for expanded Cambodia.
+
+- Keep Guided view directly visible in the Planning header alongside Journeys, tools and restart; it is not inside the tools dropdown.
+
+- Guided also reuses the compact shared header: Journeys icon, directly visible Planning view link, tools dropdown and restart icon. Tutorial, content settings, history, log, music and source remain available inside the dropdown; no duplicate footer restart.
+
+- In both Guided and Planning, put Start over/restart inside the shared Journey tools dropdown; only Journeys, the view switch and tools remain directly visible. Keep the existing restart confirmation.
+
+- Every public journey uses the shared IllustratedJourneyMap in both Guided and Planning: each group’s own scenic parchment illustration, current date/location/progress overlays, and expandable accurate geographic map/visited itinerary. Keep Cambodia’s location-specific artwork selection and use separate artwork for other groups.
+
+- Cambodia expanded HUD uses seven resources: Exchange/Budget, Food, Water, Medicine, Health, Stress and Exposure. Display Health, Stress and Exposure as percentages in both views; remove Cohesion/Steady and Days/Turns from the HUD while preserving individual trust and journey timing. Retain internal stress replay units and derive percentage display/exposure from committed decisions without overwriting saves.
+
+- Remove aggregate Health from Cambodia’s HUD. Keep six tiles: Exchange/Budget, Food, Water, Medicine, Stress and Exposure. Individual health remains on traveler cards and treatment controls.
+
+- Shared app header control order is Journeys icon, tools dropdown button, then the visible view-switch button, in both Guided and Planning.
+
+- Guided resource grids use the actual metric count, not a fixed eight-column template. Cambodia’s six metrics fill one desktop row and two three-column rows on phones, without empty slots.
+
+- User confirmed the current resource-bar standard across all public journeys: omit aggregate Health and Cohesion, include Stress and Exposure as percentages. Keep actual traveler health/trust and gameplay mechanics. Guided’s generic bar must have seven tiles, including Stress, matching Planning’s metric set. This supersedes any request to restore those aggregate indicators.
+
+- Expanded Cambodia storytelling uses ongoing Dara/Vann/Maly/Sophea voices, history-derived callbacks and objects, chapter arrivals tied to actual household location, ordinary moments and a personal ending. All dialogue is fictional. Narrative refreshes must not change committed resource/branch replay or original editions; optional 1985 letters stay in California.
+
+- Journey tools includes Feedback & bug reports in both views. Offer bug/feature GitHub drafts for thachp/theundocumentedtrail, with only journey ID, current view and edition prefilled. Clearly disclose new tab and GitHub account requirement; never attach save data or submit reports automatically.
+
+- Keep development/editorial notes out of player-facing Cambodia gameplay: no extra chapter-transition panel, “Since the previous scene” comparison, authored/fictional case labels, or descriptions of what happens offscreen. Use natural narrative and dates. Retain source/fiction provenance in optional historical context, plus useful gameplay instructions and save warnings.
+- Expanded Cambodia fresh runs use resource rules 4 for authored travel legs: choose an eligible family coordinator, select pace (which changes actual elapsed travel days), review and commit once in either view. Bounded food/water preparation, relief and exchange belong in optional resupply controls with period-specific units. Keep rules 1–3 and original editions frozen; canonical actions, assignments, plan effects and purchases must replay without duplicate charges or refunds. The mine encounter is non-graphic and entirely fictional at family level, centered on trained assistance, offscreen rescue/evacuation, care and onward planning. Never add device interaction instructions, a foot-on-mine trope or an admission reward. Preserve the current shared layout, illustrated maps, compact tools, medicine/care receipts, percentage stress/exposure displays and family narrative features when adding these controls.
