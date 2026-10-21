@@ -25,7 +25,7 @@ export function resourceEffects(state, choice) {
  }
  if (state.sceneId==='E10') {
   effects.supplies=2;effects.water=2;
-  notes.push('In this invented arrival occasion, their relative shares food and clean water. Earlier fatigue and spending still carry forward.');
+  notes.push('Their relative shares food and clean water. Earlier fatigue and spending still carry forward.');
  }
  if (state.sceneId==='E08' && choice.id==='relative' && state.resources.cash===0) notes.push('With no exchange means left, a neighbor shares writing materials; the letter remains possible.');
  if (state.sceneId==='E08' && choice.id==='records' && state.flags.contact==='notes') {
@@ -35,7 +35,7 @@ export function resourceEffects(state, choice) {
  return {effects,notes,consumes:occasions.has(state.sceneId)};
 }
 export function resourceHint(state) {
- if (!usesResourceRules(state)) return 'Original resource rules retained for this saved run. Restart this edition to use the revised resource model.';
+ if (!usesResourceRules(state)) return 'Food, clean water, exchange resources and stress carry forward with the household.';
  return `${occasions.has(state.sceneId)?'Food and clean water are used during this occasion. Empty stores add fatigue and stress; help remains available. ':''}${state.sceneId==='E05'?'Each reception choice includes food and water assistance. ':''}${state.sceneId==='E06'?'Coordinating with relief staff also helps replenish supplies. ':''}${state.sceneId==='E07'?'Preparing the shared meal also replenishes food and water. ':''}${state.sceneId==='E10'?'Their relative shares food and clean water during this arrival occasion. ':''}Quantities appear after the choice.`;
 }
 export function resourceContext(state) {

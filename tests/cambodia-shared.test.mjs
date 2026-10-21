@@ -87,7 +87,7 @@ test('Cambodia Planning preserves full scene art and removes narrow-header toolt
  const hero=css.match(/\.planning-cambodia-hero\s*\{([^}]+)\}/)[1];
  assert.match(hero,/width:100%/);assert.match(hero,/height:auto/);assert.match(hero,/max-height:440px/);assert.match(hero,/object-fit:contain/);assert.doesNotMatch(hero,/object-fit:cover/);
  assert.match(css,/@media \(max-width:680px\)\s*\{\s*\.cambodia-planning \.header-actions \[data-tooltip\]::after\s*\{display:none;/);
- const app=await readFile('src/App.jsx','utf8');
+ const app=await readFile('src/PlanningHeaderActions.jsx','utf8');
  for(const label of ['Explore the history','Reset journey','Play soundtrack','Open journey log'])assert.ok(app.includes(label),'retained accessible name: '+label);
- assert.match(app,/className="guided-return"[^>]*>Guided view</);
+ assert.match(app,/viewLabel = "Guided view"/);
 });

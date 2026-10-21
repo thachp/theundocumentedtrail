@@ -1,8 +1,12 @@
+import { PlanningHeaderActions } from "./PlanningHeaderActions.jsx";
+import { DetailDrawer } from "./DetailDrawer.jsx";
+import { StatusMetric } from "./StatusMetric.jsx";
+import { IllustratedJourneyMap } from "./IllustratedJourneyMap.jsx";
 import {CambodiaTravelPlanner,CambodiaResupply} from './CambodiaTravelControls.jsx';
 import {resupplyCambodia} from './cambodiaExpanded/journey.js';
 import { commitJourneyChoice } from "./journeyChoiceActions.js";
 import { isSharedHouseholdJourney as isCambodiaJourney } from "./sharedHouseholdJourney.js";
-import { CambodiaResources, CambodiaJourneyContext, CambodiaPersonDialog } from "./CambodiaJourneyUI.jsx";
+import { CambodiaResources, CambodiaJourneyContext, CambodiaPersonDialog, CambodiaEndingReflection } from "./CambodiaJourneyUI.jsx";
 import { selectJourneyGame as selectFamilyGame } from "./selectJourney.js";
 import { EndingDialog } from "./EndingDialog.jsx";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -111,22 +115,6 @@ const IconText = ({ icon: Icon, children }) => (
   </span>
 );
 
-function StatusMetric({ icon: Icon, value, label, tone = "default", tooltip }) {
-  return (
-    <div
-      className={`status-metric ${tone}`}
-      tabIndex="0"
-      data-tooltip={tooltip}
-      aria-label={`${label}: ${value}. ${tooltip}`}
-    >
-      <Icon weight="duotone" aria-hidden="true" />
-      <span>
-        <strong>{value}</strong>
-        <small>{label}</small>
-      </span>
-    </div>
-  );
-}
 
 function CharacterCard({ person, state, stress, family, active, onClick }) {
   const condition = getCondition(state.health, state.alive !== false);
@@ -148,7 +136,7 @@ function CharacterCard({ person, state, stress, family, active, onClick }) {
           <span><Sparkle weight="duotone" aria-hidden="true" />{person.skills[0]}</span>
           <span><Handshake weight="duotone" aria-hidden="true" />{person.skills[1]}</span>
         </span>
-        {!isCambodiaJourney(family) && <><span className={`condition ${condition.tone}`}>
+        {(!isCambodiaJourney(family) || family.householdEdition === 3) && <><span className={`condition ${condition.tone}`}>
           <i />{state.alive === false ? condition.label : `${condition.label} · ${state.health}%`}
         </span>
         <span className="trust-row">
@@ -168,7 +156,7 @@ function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop,
   const travelPlanRequired = requiresTravelPlan(game);
   return (
     <aside className="messages-panel" aria-label="Messages and decisions">
-      {game.familyId==="cambodia-1979" && game.householdEdition===3 && <><img className="planning-cambodia-hero" style={{objectPosition:event.heroFocalPoint ?? "50% 25%"}} onError={e=>{if(e.currentTarget.dataset.fallback!=="cover"){e.currentTarget.dataset.fallback="cover";e.currentTarget.src=getFamilyPreset(game).heroImage;}}} src={event.heroImage} alt={event.heroAlt} /><CambodiaJourneyContext game={game} /></>}
+
       <header className="panel-header">
         <div>
           <ChatCircleDots weight="duotone" aria-hidden="true" />
@@ -178,11 +166,12 @@ function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop,
       </header>
 
       <SceneHistory game={game} onExplore={onExploreHistory} />
+      {game.familyId === "cambodia-1979" && game.householdEdition === 3 && <CambodiaJourneyContext game={game} />}
       <CambodiaResupply game={game} onBuy={onCambodiaSupply} />
       <div className="message-thread">
         {event.messages.map((message) => (
           <article className={`message ${message.trusted ? "trusted-message" : "unknown-message"}`} key={`${message.sender}-${message.time}`}>
-            <span className={`sender-avatar ${message.trusted ? "mara" : "unknown"}`}>{message.initial}</span>
+            <span className={`sender-avatar ${message.trusted ? "mara" : "unknown"}`}>{game.narrative && message.trusted ? <Portrait person={getPeople(game).find(p=>p.name===message.sender)} state={game.people[game.narrative.voices.find(v=>v.sender===message.sender)?.personId]} stress={game.resources.stress} family={game} alt={`${message.sender} speaking`} /> : message.initial}</span>
             <div>
               <header><strong>{message.sender}</strong><time>{message.time}</time></header>
               <small>{message.role}</small>
@@ -235,7 +224,6 @@ function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop,
             <small>Decision resolved</small>
             <h3>{game.currentOutcome.title}</h3>
             <p>{game.currentOutcome.copy}</p>
-            <span className="outcome-consequence">{game.currentOutcome.consequence}</span>
             {game.currentOutcome.returningConsequences?.length > 0 && (
               <div className="outcome-echoes">
                 <small>Earlier choices return</small>
@@ -249,11 +237,12 @@ function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop,
                   <blockquote key={`${reaction.personId}-${reaction.text}`}>
                     <strong>{reaction.personName}</strong>
                     <span>“{reaction.text}”</span>
-                    <em>{reaction.trustDelta > 0 ? `Trust +${reaction.trustDelta}` : reaction.trustDelta < 0 ? `Trust ${reaction.trustDelta}` : "Trust holds"}</em>
+                    <em>{reaction.narrative ? "Family reflection" : reaction.trustDelta > 0 ? `Trust +${reaction.trustDelta}` : reaction.trustDelta < 0 ? `Trust ${reaction.trustDelta}` : "Trust holds"}</em>
                   </blockquote>
                 ))}
               </div>
             )}
+            <span className="outcome-consequence">{game.currentOutcome.consequence}</span>
             {game.currentOutcome.threadUpdates?.length > 0 && (
               <div className="outcome-thread-updates">
                 {game.currentOutcome.threadUpdates.map((thread) => <span className={thread.status} key={thread.id}><BookOpenText weight="fill" />{thread.title}</span>)}
@@ -298,61 +287,6 @@ function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop,
   );
 }
 
-function DetailDrawer({ person, personState, relationshipNote, route, medicine, stress, familyId, onUseMedicine, onClose }) {
-  const drawerRef = useRef(null);
-  useEffect(() => {
-    const previous = document.activeElement;
-    drawerRef.current?.querySelector('.drawer-close')?.focus({preventScroll:true});
-    const dismiss = event => { if (event.key === 'Escape') { event.preventDefault(); onClose(); } };
-    window.addEventListener('keydown', dismiss);
-    return () => { window.removeEventListener('keydown', dismiss); if (previous?.isConnected) previous.focus({preventScroll:true}); };
-  }, []);
-  const selectedRoute = route ? ROUTES[route] : null;
-  const condition = personState ? getCondition(personState.health, personState.alive !== false) : null;
-  return (
-    <div ref={drawerRef} className="detail-drawer" role="dialog" aria-modal="false" aria-label="Planning details">
-      <button className="drawer-close" onClick={onClose} aria-label="Close details" data-sound="dismiss"><X weight="bold" /></button>
-      {person ? (
-        <>
-          <Portrait person={person} state={personState} stress={stress} family={familyId} alt={`Portrait of ${person.name}`} />
-          <div className="drawer-copy">
-            <small>Group member</small>
-            <h2>{person.name}</h2>
-            <p>{person.story}</p>
-            <dl>
-              <div><dt>Condition</dt><dd>{personState.alive === false ? condition.label : `${condition.label} · ${personState.health}%`}</dd></div>
-              <div><dt>Strengths</dt><dd>{person.skills.join(" · ")}</dd></div>
-            </dl>
-            {relationshipNote && (
-              <blockquote className="drawer-voice">
-                <small>Latest family voice · Day {relationshipNote.day}</small>
-                <p>“{relationshipNote.text}”</p>
-              </blockquote>
-            )}
-            <button
-              className="drawer-medicine"
-              onClick={() => onUseMedicine(person.id)}
-              disabled={personState.alive === false || personState.health >= 100 || medicine < 1}
-              data-sound="confirm"
-            >
-              <Pill weight="duotone" />{medicine < 1 ? "No medicine remains" : personState.health >= 100 ? "Health is already full" : `Use medicine · ${medicine} available`}
-            </button>
-          </div>
-        </>
-      ) : (
-        <div className="drawer-copy route-detail">
-          <small>Route assessment</small>
-          <h2>{selectedRoute.title}</h2>
-          <p>{selectedRoute.detail}. Reports become less reliable as weather and visibility change.</p>
-          <dl>
-            <div><dt>Travel window</dt><dd>{selectedRoute.duration}</dd></div>
-            <div><dt>Assessment</dt><dd>{selectedRoute.confidence}</dd></div>
-          </dl>
-        </div>
-      )}
-    </div>
-  );
-}
 
 function CambodiaChoiceDialog({ children, onCancel }) {
   const ref = useRef(null);
@@ -380,7 +314,7 @@ function ChoiceModal({ choice, game, onCancel, onConfirm }) {
   const content = <>
         <button className="modal-close" onClick={onCancel} aria-label="Close decision" data-sound="dismiss"><X weight="bold" /></button>
         <span className="modal-symbol"><Icon weight="fill" /></span>
-        <small>{isCambodiaJourney(game) ? "Scene" : "Day"} {game.day} · choose carefully</small>
+        <small>{isCambodiaJourney(game) && game.householdEdition !== 3 ? "Scene" : "Day"} {game.day} · choose carefully</small>
         <h2 id="choice-title" tabIndex={native ? -1 : undefined}>{choice.title}?</h2>
         <p>{choice.hint}. The family cannot know the outcome in advance. Actual consequences appear after you commit.</p>
         <div className="modal-actions">
@@ -425,7 +359,7 @@ function JourneyLog({ game, onClose }) {
           <ol>
             {entries.map((entry) => (
               <li key={`${entry.day}-${entry.id}`}>
-                <span>{isCambodiaJourney(game) ? "Scene" : "Day"} {entry.day}</span>
+                <span>{isCambodiaJourney(game) && game.householdEdition !== 3 ? "Scene" : "Day"} {entry.day}</span>
                 <div><strong>{entry.title}</strong><small>{entry.detail}</small></div>
               </li>
             ))}
@@ -453,6 +387,7 @@ function EndingModal({ game, onRestart, onExploreHistory }) {
         <small>{reachedDestination ? "Destination reached · Route complete" : won ? "Journey complete · A new destination" : "The journey ends here"}</small>
         <h2 id="ending-title" tabIndex="-1">{game.ending.title}</h2>
         <p>{game.ending.copy}</p>
+        <CambodiaEndingReflection game={game} />
         <p className="history-ending-period">{getJourneyDate(game)}</p>
         <button className="history-ending-button" onClick={onExploreHistory}>Explore the history</button>
         <JourneyMap game={game} compact />
@@ -628,7 +563,7 @@ export function App() {
   };
 
   return (
-    <main className={`game-shell${isCambodiaJourney(game) ? " cambodia-planning" : ""}${game.familyId==="cambodia-1979"&&game.householdEdition===3?" cambodia-expanded-planning":""}`} onClickCapture={playInteractionSound}>
+    <main className={`game-shell${isCambodiaJourney(game) && game.householdEdition !== 3 ? " cambodia-planning" : ""}`} onClickCapture={playInteractionSound}>
       <header className="game-header">
         <div className="brand-lockup">
           <div><h1>The Undocumented Trail</h1><p>Everything they carry</p></div>
@@ -639,33 +574,7 @@ export function App() {
             <strong><span className="planning-date">{getJourneyDate(game)}</span><span className="planning-region">{event.region}</span></strong>
             <small>{game.history.length ? `${game.history.length} choices saved` : "Different paths. A more human tomorrow."}</small>
           </div>
-          <span className="header-actions">
-            <button className="planning-journey-select" onClick={() => setShowFamilySelection(true)} aria-label="Choose a journey" data-sound="tap">Journeys</button>
-            <button onClick={() => setShowHistory(true)} aria-label="Explore the history" data-tooltip="Historical context and sources" data-sound="tap"><BookOpenText weight="duotone" /></button>
-            <a data-ending-return className="guided-return" href={isCambodiaJourney(game) ? `/?story=${game.familyId}${game.familyId==="cambodia-1979"?`&edition=${game.householdEdition}`:game.householdEdition===1?"&edition=1":""}` : "/"} data-tooltip="Switch to the simpler story view">Guided view</a>
-            <a
-              className="source-link"
-              href="https://github.com/thachp/theundocumentedtrail"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="View the open-source project on GitHub"
-              data-tooltip="Open source on GitHub · MIT license"
-            >
-              <GithubLogo weight="fill" aria-hidden="true" />
-            </a>
-            <button
-              className={`soundtrack-toggle ${soundtrackOn ? `is-playing theme-${soundtrackTheme.id}` : ""}`}
-              onClick={toggleSoundtrack}
-              aria-label={soundtrackOn ? `Pause soundtrack — ${soundtrackTheme.label}` : "Play soundtrack"}
-              aria-pressed={soundtrackOn}
-              data-tooltip={soundtrackOn ? `${soundtrackTheme.label} playing · pause soundtrack` : "Play the journey soundtrack"}
-              data-sound="tap"
-            >
-              {soundtrackOn ? <SpeakerHigh weight="fill" /> : <MusicNotes weight="duotone" />}
-            </button>
-            <button onClick={() => setShowLog(true)} aria-label="Open journey log" data-tooltip="Journey log" data-sound="tap"><BookOpenText weight="duotone" /></button>
-            <button onClick={() => setShowRestart(true)} aria-label="Reset journey" data-tooltip="Reset journey · confirmation required" data-tooltip-align="right" data-sound="warning"><ArrowCounterClockwise weight="duotone" /></button>
-          </span>
+          <PlanningHeaderActions feedbackContext={{journey:game.familyId,edition:game.householdEdition,view:"planning"}} onChooseJourney={() => setShowFamilySelection(true)} onRestart={() => setShowRestart(true)} onHistory={() => setShowHistory(true)} onLog={() => setShowLog(true)} guidedHref={isCambodiaJourney(game) ? `/?story=${game.familyId}${game.familyId==="cambodia-1979"?`&edition=${game.householdEdition}`:game.householdEdition===1?"&edition=1":""}` : "/"} soundtrackOn={soundtrackOn} soundtrackTheme={soundtrackTheme} onToggleSoundtrack={toggleSoundtrack} />
           {soundtrackError && <span className="soundtrack-error" role="status">Sound is unavailable in this browser.</span>}
         </div>
         <>{isCambodiaJourney(game) ? <CambodiaResources game={game} /> : <div className="status-strip" aria-label="Group resources">
@@ -682,19 +591,19 @@ export function App() {
       {isCambodiaJourney(game) && !(game.familyId==="cambodia-1979" && game.householdEdition===3) && <><img className="planning-cambodia-hero" style={{objectPosition:event.heroFocalPoint ?? "50% 45%"}} onError={e=>{if(e.currentTarget.dataset.fallback!=="cover"){e.currentTarget.dataset.fallback="cover";e.currentTarget.src=getFamilyPreset(game).heroImage;}}} src={event.heroImage} alt={event.heroAlt} /><p className="cambodia-hero-credit">{event.time}</p><CambodiaJourneyContext game={game} onChange={setGame} /></>}
       <div className="game-grid">
         <section className="map-stage geographic-map-stage" aria-label="Journey geography">
-          <JourneyMap game={game} fitViewport />
-          <details className="planning-map-approaches">
+          {family.mapImage || (game.familyId === "cambodia-1979" && game.householdEdition === 3) ? <IllustratedJourneyMap game={game} /> : <JourneyMap game={game} fitViewport />}
+          <details className="planning-map-approaches" hidden={Boolean(family.mapImage) || (game.familyId === "cambodia-1979" && game.householdEdition === 3)}>
             <summary>Weather and travel approach details</summary>
             <div className="planning-map-context">
-              <strong>{isCambodiaJourney(game) ? "Scene" : "Day"} {game.day} · {event.time} · {event.weather}</strong>
+              <strong>{isCambodiaJourney(game) && game.householdEdition !== 3 ? "Scene" : "Day"} {game.day} · {event.time} · {event.weather}</strong>
               <small>{event.weatherDetail}</small>
             </div>
             <p>These approaches describe support and risk, not geographic waypoints.</p>
             {!isCambodiaJourney(game) && Object.entries(ROUTES).map(([id, approach]) => <button key={id} onClick={() => inspectRoute(id)} data-sound="tap">{approach.title}</button>)}
           </details>
 
-          {drawerOpen && selectedPerson && isCambodiaJourney(game) && <CambodiaPersonDialog game={game} person={selectedPerson} onClose={() => setDrawerOpen(false)} />}
-          {drawerOpen && !isCambodiaJourney(game) && (
+          {drawerOpen && selectedPerson && isCambodiaJourney(game) && game.householdEdition !== 3 && <CambodiaPersonDialog game={game} person={selectedPerson} onClose={() => setDrawerOpen(false)} />}
+          {drawerOpen && (!isCambodiaJourney(game) || game.householdEdition === 3) && (
             <DetailDrawer
               person={selectedPerson}
               personState={selectedPerson ? game.people[selectedPerson.id] : null}
@@ -702,8 +611,8 @@ export function App() {
               route={selectedPerson ? null : selectedRoute}
               medicine={game.resources.medicine}
               stress={game.resources.stress}
-              familyId={game.familyId}
-              onUseMedicine={(personId) => setGame((current) => useMedicine(current, personId))}
+              familyId={game}
+              onUseMedicine={isCambodiaJourney(game) && game.householdEdition !== 3 ? undefined : (personId) => setGame((current) => useMedicine(current, personId))}
               onClose={() => setDrawerOpen(false)}
             />
           )}
@@ -712,7 +621,7 @@ export function App() {
         <section className="team-strip" aria-label="Traveling group">
           <header>
             <UsersThree weight="duotone" aria-hidden="true" />
-            <div><strong>Traveling together</strong><small>{isCambodiaJourney(game) ? "Select a person to read their story" : "Select a person to review health, trust, and skills"}</small></div>
+            <div><strong>Traveling together</strong><small>{isCambodiaJourney(game) && game.householdEdition !== 3 ? "Select a person to read their story" : "Select a person to review health, trust, and skills"}</small></div>
           </header>
           <div className="team-grid">
             {people.map((person) => (

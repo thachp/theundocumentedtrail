@@ -7962,7 +7962,7 @@ export function planTravelLeg(game, strategyId, leadPersonId = null) {
 
 export function useMedicine(game, personId) {
   if (isAuthoredJourney(game)) return game;
-  if (isCambodiaJourney(game)) return game;
+  if (isCambodiaJourney(game)) return game.householdEdition===3 ? expandedCambodiaJourney.useCambodiaMedicine(game,personId) : game;
   const traveler = game.people[personId];
   if (game.status !== "playing" || !traveler || traveler.alive === false || traveler.health >= 100 || game.resources.medicine < 1) return game;
   const person = getPeople(game).find((item) => item.id === personId);

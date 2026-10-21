@@ -851,7 +851,7 @@
 }
 
 .cinematic-resources {
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(var(--resource-count, 7), minmax(0, 1fr));
   border-right: 1px solid var(--cinematic-line);
 }
 
@@ -1685,4 +1685,26 @@ dialog.cinematic-family-backdrop:not([open]) { display:none; }
   .cinematic-family-dialog h2 { font-size: 28px; }
   .cinematic-family-portrait img { height: 64px; }
   .cinematic-family-copy { padding: 8px 10px; }
+}
+
+/* Guided and Planning reuse the same compact header controls. */
+.cinematic-header>.planning-header-actions{flex-wrap:nowrap;justify-content:flex-end;}
+.cinematic-header .planning-header-actions>button,.cinematic-header .planning-tools>summary{width:44px;height:44px;}
+.cinematic-header .planning-guided-link{min-height:44px;}
+.cinematic-people{grid-template-columns:repeat(4,minmax(0,1fr));}
+@media(max-width:720px){
+ .cinematic-header{grid-template-columns:minmax(0,1fr);gap:14px;}
+ .cinematic-header>.planning-header-actions{justify-content:flex-start;}
+ .cinematic-people{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:720px){
+ .cinematic-header>.planning-header-actions{position:relative;}
+ .cinematic-header .planning-tools{position:static;}
+ .cinematic-header .planning-tools-menu{left:0;right:auto;top:calc(100% + 8px);}
+}
+
+@media(max-width:720px){
+ .cambodia-hud.cinematic-resources{grid-template-columns:repeat(3,minmax(0,1fr));}
+ .cambodia-hud.cinematic-resources .cinematic-status-item{border-right:1px solid var(--cinematic-line);}
+ .cambodia-hud.cinematic-resources .cinematic-status-item:nth-child(3n){border-right:0;}
 }

@@ -20,7 +20,7 @@ test("ending modal uses native containment, focuses its heading and restores the
 });
 
 test("both views suspend ending modality for tools/choosers and provide visible focus return",async()=>{
- const planning=await readFile(new URL("../src/App.jsx",import.meta.url),"utf8"),guided=await readFile(new URL("../src/BeginnerApp.jsx",import.meta.url),"utf8");
+ const planning=(await readFile(new URL("../src/App.jsx",import.meta.url),"utf8"))+(await readFile(new URL("../src/PlanningHeaderActions.jsx",import.meta.url),"utf8")),guided=await readFile(new URL("../src/BeginnerApp.jsx",import.meta.url),"utf8");
  for(const source of [planning,guided]){assert.match(source,/<EndingDialog /);assert.match(source,/data-ending-return/);assert.match(source,/id="(?:cinematic-)?ending-title" tabIndex="-1"/);}
  assert.match(planning,/game.phase === "ended" && !showHistory && !showRestart/);
  assert.match(guided,/game.phase === "ended" && !showFamilySelection && !historyMode && !restartFamilyId/);

@@ -41,13 +41,15 @@ test("the actual historical UI offers immediate exits, labeled sources and conte
 });
 
 test("both interfaces expose reopenable context and the dialog uses native modal focus containment", async () => {
-  const [guided, full, dialog, css] = await Promise.all([
+  const [guided, fullSource, dialog, css, controls] = await Promise.all([
     readFile(new URL("../src/BeginnerApp.jsx", import.meta.url), "utf8"),
     readFile(new URL("../src/App.jsx", import.meta.url), "utf8"),
     readFile(new URL("../src/JourneyHistory.jsx", import.meta.url), "utf8"),
     readFile(new URL("../src/journeyHistory.css", import.meta.url), "utf8"),
+    readFile(new URL("../src/PlanningHeaderActions.jsx", import.meta.url), "utf8"),
   ]);
-  for (const ui of [guided, full]) {
+  const full=fullSource+controls;
+  for (const ui of [guided+controls, full]) {
     assert.match(ui, /aria-label="Explore the history"/);
     assert.match(ui, /<SceneHistory game=\{game\}/);
     assert.match(ui, /<JourneyHistoryDialog game=\{game\}/);

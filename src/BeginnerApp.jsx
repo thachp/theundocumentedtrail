@@ -1,8 +1,10 @@
+import { PlanningHeaderActions } from "./PlanningHeaderActions.jsx";
+import { IllustratedJourneyMap } from "./IllustratedJourneyMap.jsx";
 import {CambodiaTravelPlanner,CambodiaResupply} from './CambodiaTravelControls.jsx';
 import {resupplyCambodia} from './cambodiaExpanded/journey.js';
 import { commitJourneyChoice } from "./journeyChoiceActions.js";
 import { isSharedHouseholdJourney as isCambodiaJourney } from "./sharedHouseholdJourney.js";
-import { CambodiaResources, CambodiaJourneyContext, CambodiaPersonDialog } from "./CambodiaJourneyUI.jsx";
+import { CambodiaResources, CambodiaJourneyContext, CambodiaPersonDialog, CambodiaEndingReflection } from "./CambodiaJourneyUI.jsx";
 import { selectJourneyGame as selectFamilyGame } from "./selectJourney.js";
 import { FamilySelection } from "./JourneySelection.jsx";
 import { EndingDialog } from "./EndingDialog.jsx";
@@ -31,6 +33,7 @@ import {
   MusicNotes,
   Pill,
   Question,
+  ShieldWarning,
   SpeakerHigh,
   Sparkle,
   UsersThree,
@@ -95,7 +98,7 @@ const CAMBODIA_TUTORIAL_STEPS = [
  {icon:Crosshair,eyebrow:"Choose with incomplete information",title:"Read, then select one option",copy:"Care, contact and household planning decisions carry forward. Their exact consequences appear after commitment. The map labels approximate locations honestly.",lessons:["Each scene has its original authored choices","Use the text itinerary with the map","Committed choices carry forward"]},
  {icon:FirstAidKit,eyebrow:"Household planning",title:"Allocate attention and effort",copy:"Time and energy are fictional planning units for each scene. They do not measure historical nutrition, survival odds or admission eligibility.",lessons:["Later scenes are new planning occasions","Portraits explain each person’s story","No health or mortality statistics are assigned"]},
  {icon:BookOpenText,eyebrow:"Historical context",title:"Separate evidence from fiction",copy:"Scene sources and labeled testimony explain the historical background. Other people’s experiences are never presented as this family’s biography.",lessons:["Explore context on demand","Admission follows the original story premise","No action earns humanitarian eligibility"]},
- {icon:ChatCircleDots,eyebrow:"Choices have a memory",title:"Resume this household’s story",copy:"Original decisions and callbacks are retained in a separate household save. Guided and Planning share that progress.",lessons:["Other families retain their saves","Restart replaces only this story","Earlier relationships return later"]},
+ {icon:ChatCircleDots,eyebrow:"Choices have a memory",title:"Resume this household’s journey",copy:"Original decisions and callbacks are retained in a separate household save. Guided and Planning share that progress.",lessons:["Other families retain their saves","Restart replaces only this journey","Earlier relationships return later"]},
 ];
 
 const TUTORIAL_STEPS = [
@@ -473,11 +476,11 @@ function CareDialog({ game, person, onUseMedicine, onClose }) {
             <p>“{relationshipNote.text}”</p>
           </blockquote>
         )}
-        <div className="cinematic-care-action">
+        {(!isCambodiaJourney(game) || game.householdEdition === 3) && <div className="cinematic-care-action">
           <Pill weight="duotone" />
           <span><strong>{game.resources.medicine} {game.resources.medicine === 1 ? "dose" : "doses"} available</strong><small>Medicine restores 15 health and lowers group stress.</small></span>
           <button onClick={() => onUseMedicine(person.id)} disabled={Boolean(unavailable)} data-sound="confirm">{unavailable ?? "Use one dose"}</button>
-        </div>
+        </div>}
       </section>
     </div>
   );
@@ -521,7 +524,7 @@ function JourneyLog({ game, onClose }) {
         )}
         {entries.length ? <ol>{entries.map((entry, index) => (
           <li key={`${entry.day}-${entry.title}-${index}`}>
-            <span>{isCambodiaJourney(game) ? "Scene" : "Day"} {entry.day}<small>{entry.kind}</small></span>
+            <span>{isCambodiaJourney(game) && game.householdEdition !== 3 ? "Scene" : "Day"} {entry.day}<small>{entry.kind}</small></span>
             <div><strong>{entry.title}</strong><small>{entry.detail}</small></div>
           </li>
         ))}</ol> : <p>The first decision begins at the family home.</p>}
@@ -623,6 +626,7 @@ function Ending({ game, onTryAgain, onChooseFamily, onExploreHistory }) {
         <small>{reachedDestination ? "Destination reached · Route complete" : won ? "A new destination · Journey complete" : "The journey ends here"}</small>
         <h2 id="cinematic-ending-title" tabIndex="-1">{game.ending.title}</h2>
         <p>{game.ending.copy}</p>
+        <CambodiaEndingReflection game={game} />
         <p className="history-ending-period">{getJourneyDate(game)}</p>
         <button className="history-ending-button" onClick={onExploreHistory}>Explore the history</button>
         <JourneyMap game={game} compact />
@@ -711,11 +715,9 @@ export function BeginnerApp() {
   const [showTutorial, setShowTutorial] = useState(initialOnboardingState.showTutorial);
   const [tutorialIsOnboarding, setTutorialIsOnboarding] = useState(initialOnboardingState.tutorialIsOnboarding);
   const [historyMode, setHistoryMode] = useState(null);
-  const [showJourneyTools, setShowJourneyTools] = useState(false);
   const [choicesVisible, setChoicesVisible] = useState(false);
   const soundtrackRef = useRef(null);
   const interactionSoundsRef = useRef(null);
-  const journeyToolsRef = useRef(null);
   const choicesRef = useRef(null);
   const family = getFamilyPreset(game);
   const people = getPeople(game);
@@ -764,26 +766,9 @@ export function BeginnerApp() {
   useEffect(() => {
     setShowSocialFeed(false);
     setShowSupplyShop(false);
-    setShowJourneyTools(false);
   }, [game.eventId]);
 
-  useEffect(() => {
-    if (!showJourneyTools) return undefined;
 
-    const dismissMenu = (pointerEvent) => {
-      if (!journeyToolsRef.current?.contains(pointerEvent.target)) setShowJourneyTools(false);
-    };
-    const dismissOnEscape = (keyboardEvent) => {
-      if (keyboardEvent.key === "Escape") setShowJourneyTools(false);
-    };
-
-    document.addEventListener("pointerdown", dismissMenu);
-    document.addEventListener("keydown", dismissOnEscape);
-    return () => {
-      document.removeEventListener("pointerdown", dismissMenu);
-      document.removeEventListener("keydown", dismissOnEscape);
-    };
-  }, [showJourneyTools]);
 
   useEffect(() => {
     if (game.phase !== "decision") {
@@ -808,11 +793,6 @@ export function BeginnerApp() {
   const groupHealth = useMemo(() => {
     const people = Object.values(game.people).filter((person) => person.alive !== false);
     return people.length ? Math.round(people.reduce((total, person) => total + person.health, 0) / people.length) : 0;
-  }, [game.people]);
-
-  const averageTrust = useMemo(() => {
-    const people = Object.values(game.people).filter((person) => person.alive !== false);
-    return people.length ? people.reduce((total, person) => total + person.trust, 0) / people.length : 0;
   }, [game.people]);
 
   const soundtrackMood = useMemo(() => ({
@@ -913,7 +893,6 @@ export function BeginnerApp() {
   };
 
   const replayTutorial = () => {
-    setShowJourneyTools(false);
     setTutorialStep(0);
     setTutorialIsOnboarding(false);
     setShowTutorial(true);
@@ -937,66 +916,24 @@ export function BeginnerApp() {
           <i />
           <small>Family<br />Safety<br />Tomorrow</small>
         </div>
-        <div className="cinematic-tools" ref={journeyToolsRef}>
-          <button
-            className="cinematic-tools-trigger"
-            onClick={() => setShowJourneyTools((current) => !current)}
-            aria-expanded={showJourneyTools}
-            aria-controls="cinematic-journey-tools"
-            data-sound="tap"
-          >
-            <Compass weight="duotone" aria-hidden="true" />
-            <span>Journey tools</span>
-            <ArrowRight weight="bold" aria-hidden="true" />
-          </button>
-          <div id="cinematic-journey-tools" className={`cinematic-header-actions ${showJourneyTools ? "open" : ""}`} role="group" aria-label="Journey tools">
-            <button className="cinematic-music" onClick={() => { setShowJourneyTools(false); setShowFamilySelection(true); }} aria-label="Choose family journey" data-tooltip={`Playing ${family.name} · choose another family`} data-sound="tap"><UsersThree weight="duotone" /><span className="cinematic-tool-label">Choose family</span></button>
-            <button className="cinematic-music" onClick={() => { setShowJourneyTools(false); setHistoryMode("explore"); }} aria-label="Explore the history" data-tooltip="Place, period, timeline and sources" data-sound="tap"><BookOpenText weight="duotone" /><span className="cinematic-tool-label">Explore the history</span></button>
-            <button className="cinematic-music" onClick={replayTutorial} aria-label="Open tutorial" data-tooltip="How to play" data-sound="tap"><Question weight="duotone" /><span className="cinematic-tool-label">How to play</span></button>
-            <button className="cinematic-music" onClick={() => { setShowJourneyTools(false); setShowContentSettings(true); }} aria-label="Open content settings" data-tooltip="Sensitive-content settings" data-sound="tap"><WarningCircle weight="duotone" /><span className="cinematic-tool-label">Content settings</span></button>
-            <button className="cinematic-music" onClick={() => { setShowJourneyTools(false); setShowJourneyLog(true); }} aria-label="Open journey log" data-tooltip="Journey log" data-sound="tap"><BookOpenText weight="duotone" /><span className="cinematic-tool-label">Journey log</span></button>
-            <a
-              className="cinematic-source-link"
-              href="https://github.com/thachp/theundocumentedtrail"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="View the open-source project on GitHub"
-              data-tooltip="Open source on GitHub · MIT license"
-              onClick={() => setShowJourneyTools(false)}
-            >
-              <GithubLogo weight="fill" aria-hidden="true" />
-              <span className="cinematic-tool-label">Open-source project</span>
-            </a>
-            <button
-              className={`cinematic-music ${soundtrackOn ? `playing ${soundtrackTheme.id}` : ""}`}
-              onClick={() => { setShowJourneyTools(false); toggleSoundtrack(); }}
-              aria-pressed={soundtrackOn}
-              aria-label={soundtrackOn ? `Pause music — ${soundtrackTheme.label}` : "Play soundtrack"}
-              data-tooltip={soundtrackOn ? `${soundtrackTheme.label} playing · pause music` : "Play the journey soundtrack"}
-              data-sound="tap"
-            >
-              {soundtrackOn ? <SpeakerHigh weight="fill" /> : <MusicNotes weight="duotone" />}
-              <span className="cinematic-tool-label">{soundtrackOn ? "Pause soundtrack" : "Play soundtrack"}</span>
-            </button>
-            <a href={isCambodiaJourney(game) ? `/?mode=full&story=${game.familyId}${game.familyId==="cambodia-1979"?`&edition=${game.householdEdition}`:game.householdEdition===1?"&edition=1":""}` : "/?mode=full"} className="cinematic-full-link" data-tooltip="Open the detailed planning view" data-tooltip-align="right">Planning view</a>
-          </div>
-        </div>
+        <PlanningHeaderActions feedbackContext={{journey:game.familyId,edition:game.householdEdition,view:"guided"}} onChooseJourney={() => setShowFamilySelection(true)} onRestart={requestRestart} onHistory={() => setHistoryMode("explore")} onLog={() => setShowJourneyLog(true)} guidedHref={isCambodiaJourney(game) ? `/?mode=full&story=${game.familyId}${game.familyId==="cambodia-1979"?`&edition=${game.householdEdition}`:game.householdEdition===1?"&edition=1":""}` : "/?mode=full"} viewLabel="Planning view" soundtrackOn={soundtrackOn} soundtrackTheme={soundtrackTheme} onToggleSoundtrack={toggleSoundtrack} onTutorial={replayTutorial} onContentSettings={() => setShowContentSettings(true)} />
       </header>
 
       <section className="cinematic-stage">
         {isCambodiaJourney(game) ? <img key={event.id} className="cinematic-scene" style={{backgroundImage:"none",objectPosition:event.heroFocalPoint ?? "50% 45%"}} onError={e=>{if(e.currentTarget.dataset.fallback!=="cover"){e.currentTarget.dataset.fallback="cover";e.currentTarget.src=family.heroImage;}}} src={event.heroImage} alt={event.heroAlt} /> : <div key={`${game.familyId}-${event.id}`} className="cinematic-scene" style={{ backgroundImage: `url("${sceneByEvent[event.id] ?? family.heroImage}")` }} aria-hidden="true" />}
 
         <aside className="cinematic-map" aria-label="Journey geography">
-          <JourneyMap game={game} fitViewport={game.familyId==="cambodia-1979" && game.householdEdition===3} />
+          {family.mapImage || (game.familyId === "cambodia-1979" && game.householdEdition === 3) ? <IllustratedJourneyMap game={game} /> : <JourneyMap game={game} />}
           <JourneyGauge game={game} event={event} />
         </aside>
 
-        <section className="cinematic-story" aria-label="Current story and decision">
+        <section className="cinematic-story" aria-label="Current journey and decision">
           <div className="cinematic-copy" key={`${event.id}-${game.phase}-${game.currentOutcome?.id ?? "decision"}`}>
             <span>{event.location} · {getJourneyDate(game)}</span>
             <h1 tabIndex="-1" data-history-return>{game.phase === "decision" ? (storyTitles[event.id] ?? event.location) : game.currentOutcome.title}</h1>
+            {isCambodiaJourney(game) && <CambodiaJourneyContext game={game} onChange={setGame} />}
             {game.phase === "decision" ? (
-              <div className={`cinematic-voices ${decisionMessages.length > 1 ? "multiple" : ""}`}>
+              <div className={`cinematic-voices ${decisionMessages.length > 1 ? "multiple" : ""} ${game.narrative ? "cambodia-voices" : ""}`}>
                 {decisionMessages.map((message, index) => (
                   <StoryVoice key={`${message.sender}-${message.time ?? index}`} message={message} game={game} people={people} />
                 ))}
@@ -1004,7 +941,6 @@ export function BeginnerApp() {
             ) : (
               <p>{storyCopy}</p>
             )}
-            {isCambodiaJourney(game) && <CambodiaJourneyContext game={game} onChange={setGame} />}
             <SceneHistory game={game} onExplore={() => setHistoryMode("explore")} />
             <div className="cinematic-context">
               <MapPin weight="fill" />
@@ -1093,7 +1029,6 @@ export function BeginnerApp() {
               <div className={`cinematic-outcome ${game.currentOutcome.tone}`} key={`outcome-${game.currentOutcome.id}`}>
                 <div>
                   <strong>Decision recorded</strong>
-                  <span>{game.currentOutcome.consequence}</span>
                   {game.currentOutcome.appliedBonuses?.map((bonus) => <em key={bonus}><Sparkle weight="fill" />{bonus}</em>)}
                   {game.currentOutcome.travelPlan && <em><Clock weight="fill" />{game.currentOutcome.travelPlan.title}: {game.currentOutcome.travelPlan.consequence}</em>}
                   {game.currentOutcome.returningConsequences?.length > 0 && (
@@ -1111,11 +1046,12 @@ export function BeginnerApp() {
                         <blockquote key={`${reaction.personId}-${reaction.text}`}>
                           <strong>{reaction.personName}</strong>
                           <span>“{reaction.text}”</span>
-                          <em>{reaction.trustDelta > 0 ? `Trust +${reaction.trustDelta}` : reaction.trustDelta < 0 ? `Trust ${reaction.trustDelta}` : "Trust holds"}</em>
+                          <em>{reaction.narrative ? "Family reflection" : reaction.trustDelta > 0 ? `Trust +${reaction.trustDelta}` : reaction.trustDelta < 0 ? `Trust ${reaction.trustDelta}` : "Trust holds"}</em>
                         </blockquote>
                       ))}
                     </section>
                   )}
+                  <span>{game.currentOutcome.consequence}</span>
                   {game.currentOutcome.threadUpdates?.length > 0 && (
                     <section className="cinematic-thread-updates">
                       {game.currentOutcome.threadUpdates.map((thread) => (
@@ -1141,9 +1077,8 @@ export function BeginnerApp() {
           <StatusItem key={`cash-${game.resources.cash}`} icon={Wallet} label="Cash" value={`$${game.resources.cash}`} tooltip="Money available for transport, shelter, food, and official fees." />
           <StatusItem key={`medicine-${game.resources.medicine}`} icon={Pill} label="Medicine" value={`${game.resources.medicine} ${game.resources.medicine === 1 ? "dose" : "doses"}`} tone={game.resources.medicine === 0 ? "danger" : ""} tooltip="Doses that can restore an injured or exhausted traveler’s health." />
           <StatusItem key={`battery-${game.resources.battery}`} icon={BatteryMedium} label="Phone" value={`${game.resources.battery}%`} tone={game.resources.battery <= 15 ? "danger" : ""} tooltip="Phone charge used for verification, calls, maps, and support." />
-          <StatusItem key={`health-${groupHealth}`} icon={FirstAidKit} label="Health" value={getCondition(groupHealth).label} tone={groupHealth < 55 ? "danger" : ""} tooltip="Average health of the travelers who are still alive." />
-          <StatusItem key={`cohesion-${averageTrust}`} icon={Handshake} label="Cohesion" value={averageTrust >= 4 ? "Strong" : averageTrust >= 3 ? "Steady" : "Fragile"} tooltip="How strongly the group trusts the decisions being made." />
-          <StatusItem key={`risk-${game.resources.exposure}`} icon={Eye} label="Risk" value={`${game.resources.exposure}%`} tone={game.resources.exposure >= 75 ? "danger" : ""} tooltip="Visibility to danger or enforcement. At 100%, the journey stops." />
+          <StatusItem key={`stress-${game.resources.stress}`} icon={ShieldWarning} label="Stress" value={`${game.resources.stress}%`} tone={game.resources.stress >= 75 ? "danger" : ""} tooltip="Shared emotional strain. Rest, care and difficult decisions change this percentage." />
+          <StatusItem key={`risk-${game.resources.exposure}`} icon={Eye} label="Exposure" value={`${game.resources.exposure}%`} tone={game.resources.exposure >= 75 ? "danger" : ""} tooltip="Visibility to danger or enforcement. At 100%, the journey stops." />
         </section>}
 
         <section className="cinematic-people" aria-label="People traveling together">
@@ -1153,11 +1088,11 @@ export function BeginnerApp() {
               <span><strong>{person.name}</strong><small>{game.people[person.id].alive === false ? "Remembered" : `${person.age} · ${person.skills[0]}`}</small></span>
             </button>
           ))}
-          <button className="cinematic-restart" onClick={requestRestart} aria-label="Reset journey" data-tooltip="Reset journey · confirmation required" data-tooltip-position="top" data-tooltip-align="right" data-sound="warning"><ArrowCounterClockwise weight="bold" /></button>
+
         </section>
       </footer>
 
-      {selectedPerson && isCambodiaJourney(game) && <CambodiaPersonDialog game={game} person={selectedPerson} onClose={() => setSelectedPersonId(null)} />}
+      {selectedPerson && isCambodiaJourney(game) && game.householdEdition !== 3 && <CambodiaPersonDialog game={game} person={selectedPerson} onClose={() => setSelectedPersonId(null)} />}
       {historyMode && !showFamilySelection && <JourneyHistoryDialog game={game} introduction={historyMode === "intro"} onClose={closeHistory} />}
       {game.phase === "ended" && !showFamilySelection && !historyMode && !restartFamilyId && (
         <Ending
@@ -1194,7 +1129,7 @@ export function BeginnerApp() {
           onClose={() => setShowSupplyShop(false)}
         />
       )}
-      {selectedPerson && !isCambodiaJourney(game) && <CareDialog game={game} person={selectedPerson} onUseMedicine={(personId) => setGame((current) => useMedicine(current, personId))} onClose={() => setSelectedPersonId(null)} />}
+      {selectedPerson && (!isCambodiaJourney(game) || game.householdEdition === 3) && <CareDialog game={game} person={selectedPerson} onUseMedicine={(personId) => setGame((current) => useMedicine(current, personId))} onClose={() => setSelectedPersonId(null)} />}
       {showJourneyLog && <JourneyLog game={game} onClose={() => setShowJourneyLog(false)} />}
       {showContentSettings && <ContentSettings currentMode={contentMode} onSelect={selectContentMode} onClose={() => setShowContentSettings(false)} />}
       {game.pendingIncident && <TravelIncident game={game} onResolve={(responseId) => setGame((current) => resolveTravelIncident(current, responseId))} />}

@@ -23,9 +23,6 @@ img.cinematic-scene{width:100%;height:100%;object-fit:cover;object-position:50% 
 }
 .cambodia-resources ul {grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));list-style:none;margin:0;padding:0;gap:8px;font-size:13px;}
 @media(max-width:480px){.cambodia-resources ul{grid-template-columns:1fr;}}
-.cambodia-expanded-planning .cambodia-resources {grid-column:1/-1;grid-template-columns:repeat(4,minmax(0,1fr));}
-.cambodia-expanded-planning .header-actions button,.cambodia-expanded-planning .header-actions a {min-width:44px;min-height:44px;}
-@media(min-width:681px){.cambodia-expanded-planning .cambodia-resources ul{grid-template-columns:repeat(4,minmax(0,1fr));}}
 dialog.cambodia-choice-dialog {margin:auto;max-height:calc(100dvh - 32px);overflow:auto;color:#edf4f4;}
 dialog.cambodia-choice-dialog::backdrop {background:rgba(2,10,15,.82);}
 .cambodia-choice-dialog .modal-close {width:44px;height:44px;}
@@ -33,7 +30,7 @@ dialog.cambodia-choice-dialog::backdrop {background:rgba(2,10,15,.82);}
 
 
 /* Expanded Cambodia shares the cinematic game's compact persistent HUD. */
-.cambodia-hud {display:grid;grid-template-columns:repeat(8,minmax(0,1fr));color:#ece4d0;background:#10191b;}
+.cambodia-hud {display:grid;grid-template-columns:repeat(var(--resource-count,7),minmax(0,1fr));color:#ece4d0;background:#10191b;}
 .cambodia-hud .cinematic-status-item {min-width:0;min-height:112px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:12px 6px;border-right:1px solid #e2dcc947;}
 .cambodia-hud .cinematic-status-item svg {width:28px;height:28px;color:#f2e6ca;}
 .cambodia-hud .cinematic-status-item:first-child svg {color:#83d6d0;}
@@ -41,7 +38,6 @@ dialog.cambodia-choice-dialog::backdrop {background:rgba(2,10,15,.82);}
 .cambodia-hud .cinematic-status-item small {font:12px Georgia,serif;}
 .cambodia-hud .cinematic-status-item strong {font:15px/1.3 "IBM Plex Sans",sans-serif;margin-top:4px;}
 .cambodia-hud .cinematic-status-item.danger svg,.cambodia-hud .cinematic-status-item.danger strong {color:#e58372;}
-.cambodia-expanded-planning .cambodia-hud {grid-column:1/-1;}
 @media(max-width:680px){
  .cambodia-hud {grid-template-columns:repeat(4,minmax(0,1fr));}
  .cambodia-hud .cinematic-status-item {min-height:92px;border-bottom:1px solid #e2dcc947;}
@@ -51,33 +47,23 @@ dialog.cambodia-choice-dialog::backdrop {background:rgba(2,10,15,.82);}
  .cambodia-expanded .cinematic-stage {min-height:610px;}
 }
 
-/* Restore the shared map-left / scene-right Planning composition for edition 3. */
-.cambodia-expanded-planning .messages-panel {overflow:visible;}
-.cambodia-expanded-planning .messages-panel > .planning-cambodia-hero {
- width:100%;height:clamp(180px,25vh,260px);max-height:none;object-fit:cover;flex:none;
-}
-.cambodia-expanded-planning .panel-header {position:static;}
-@media(min-width:981px){
- .cambodia-expanded-planning .game-grid {grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);grid-template-rows:auto auto;align-items:start;}
- .cambodia-expanded-planning .team-strip {height:auto;min-height:200px;}
- .cambodia-expanded-planning .team-strip > header {width:100%;}
- .cambodia-expanded-planning .journey-map-fit > .journey-map-canvas {height:clamp(280px,36vh,400px);min-height:280px;}
-}
-@media(max-width:980px){
- .cambodia-expanded-planning .map-stage {min-height:0;}
- .cambodia-expanded-planning .messages-panel > .planning-cambodia-hero {height:clamp(160px,46vw,240px);}
-}
-@media(max-width:720px){
- .cambodia-expanded .cinematic-stage > .cinematic-scene {height:160px;}
- .cambodia-expanded .cinematic-stage > .cinematic-map {padding-top:160px;}
- .cambodia-expanded .cinematic-map .journey-map-canvas {height:180px;max-height:180px;aspect-ratio:auto;}
-}
+.cambodia-narrative {margin:12px 0;color:#d5e2df;font:14px/1.55 "IBM Plex Sans",sans-serif;}
+.messages-panel > .cambodia-narrative {margin:12px 20px;}
+.cambodia-chapter {padding:12px 14px;border-left:2px solid #51c7d5;background:#102830;}
+.cambodia-chapter small {display:block;color:#9cbdc1;font-size:12px;}
+.cambodia-chapter h3 {margin:4px 0;font-size:20px;color:#eee7d5;}
+.cambodia-narrative p,.cinematic-copy .cambodia-narrative p {font-size:14px;line-height:1.55;margin:8px 0;}
+.cambodia-memory {padding:10px 0;}.cambodia-memory strong{display:block;color:#d8c28b;font-size:12px;}
+.cambodia-keepsakes summary {min-height:44px;display:list-item;padding:12px 0;cursor:pointer;color:#d8c28b;}
+.cambodia-keepsakes summary:focus-visible {outline:2px solid #51c7d5;outline-offset:3px;}
+.cambodia-keepsakes ul {list-style:none;padding:0;margin:0;display:grid;gap:12px;}
+.cambodia-keepsakes li {display:flex;gap:10px;border-top:1px solid #29424a;padding:12px 0;}
+.cambodia-keepsakes li svg {width:22px;height:22px;color:#d8c28b;}.cambodia-keepsakes li>span {flex:0 0 22px;}
+.message .sender-avatar img {width:100%;height:100%;object-fit:cover;border-radius:50%;}
 
-.cambodia-expanded .cinematic-map .journey-map-fit > .journey-map-canvas {height:280px;}
-.cambodia-expanded img.cinematic-scene {width:calc(100% - min(29vw,410px));}
-.cambodia-expanded-planning .map-stage {background:#d8c397;align-self:stretch;}
-@media(max-width:1120px) and (min-width:721px){.cambodia-expanded img.cinematic-scene {width:69%;}}
-@media(max-width:720px){
- .cambodia-expanded img.cinematic-scene {width:100%;}
- .cambodia-expanded .cinematic-map .journey-map-fit > .journey-map-canvas {height:180px;}
-}
+.cambodia-ending-reflection {text-align:left;border-left:2px solid #d8c28b;padding:0 16px;margin:20px 0;}
+.cambodia-ending-reflection h3 {font-size:20px;color:#eee7d5;}
+.cambodia-ending-reflection p {font-size:15px;line-height:1.6;}
+
+.cambodia-voices > :first-child {grid-column:1/-1;}
+.message .sender-avatar .portrait-crop {width:100%;height:100%;border-radius:50%;}
