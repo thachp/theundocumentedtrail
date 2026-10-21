@@ -1,10 +1,10 @@
 // Authored game occasions, not continuous ration accounting across months.
 const occasions = new Set(['E02','E03','R01','E04','W01','E06','E07','J01']);
-export const usesResourceRules = state => [2,3].includes(state.resourceRulesVersion);
+export const usesResourceRules = state => [2,3,4].includes(state.resourceRulesVersion);
 export function resourceEffects(state, choice) {
  if (!usesResourceRules(state)) return {effects:{},notes:[]};
  const effects={},notes=[];
- if (occasions.has(state.sceneId) && !(state.resourceRulesVersion===3 && ['E02','E03','R01','E04'].includes(state.sceneId))) {
+ if (occasions.has(state.sceneId) && !([3,4].includes(state.resourceRulesVersion) && ['E02','E03','R01','E04'].includes(state.sceneId))) {
   // An already-authored consumption counts toward this occasion's use.
   if (!(choice.effects.supplies < 0)) effects.supplies=-1;
   if (!(choice.effects.water < 0)) effects.water=-1;

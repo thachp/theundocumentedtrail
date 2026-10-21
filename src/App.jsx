@@ -1,3 +1,5 @@
+import {CambodiaTravelPlanner,CambodiaResupply} from './CambodiaTravelControls.jsx';
+import {resupplyCambodia} from './cambodiaExpanded/journey.js';
 import { commitJourneyChoice } from "./journeyChoiceActions.js";
 import { isSharedHouseholdJourney as isCambodiaJourney } from "./sharedHouseholdJourney.js";
 import { CambodiaResources, CambodiaJourneyContext, CambodiaPersonDialog } from "./CambodiaJourneyUI.jsx";
@@ -162,7 +164,7 @@ function CharacterCard({ person, state, stress, family, active, onClick }) {
   );
 }
 
-function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop, onOpenSocialFeed, onOpenSupplyShop, onExploreHistory, onChoice, onContinue, onTravelPlan }) {
+function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop, onOpenSocialFeed, onOpenSupplyShop, onExploreHistory, onChoice, onContinue, onTravelPlan, onCambodiaSupply }) {
   const travelPlanRequired = requiresTravelPlan(game);
   return (
     <aside className="messages-panel" aria-label="Messages and decisions">
@@ -176,6 +178,7 @@ function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop,
       </header>
 
       <SceneHistory game={game} onExplore={onExploreHistory} />
+      <CambodiaResupply game={game} onBuy={onCambodiaSupply} />
       <div className="message-thread">
         {event.messages.map((message) => (
           <article className={`message ${message.trusted ? "trusted-message" : "unknown-message"}`} key={`${message.sender}-${message.time}`}>
@@ -258,7 +261,7 @@ function MessagePanel({ event, game, socialFeed, socialFeedResolved, supplyStop,
             )}
           </div>
           {travelPlanRequired ? (
-            <div className="planning-travel-options">
+            game.controlModel ? <CambodiaTravelPlanner game={game} onChoose={onTravelPlan} /> : <div className="planning-travel-options">
               <small>Plan the next {game.currentOutcome.days} days</small>
               {getTravelPlanOptions(game).map((strategy) => (
                 <button key={strategy.id} onClick={() => onTravelPlan(strategy.id)} disabled={Boolean(strategy.unavailable)} data-sound="choice">
@@ -738,7 +741,8 @@ export function App() {
           onOpenSupplyShop={() => setShowSupplyShop(true)}
           onChoice={setPendingChoice}
           onContinue={continueWithIncidents}
-          onTravelPlan={(strategyId) => setGame((current) => planTravelLeg(current, strategyId))}
+          onTravelPlan={(strategyId,personId) => setGame((current) => planTravelLeg(current, strategyId,personId))}
+          onCambodiaSupply={itemId=>setGame(current=>resupplyCambodia(current,itemId))}
         />
       </div>
 

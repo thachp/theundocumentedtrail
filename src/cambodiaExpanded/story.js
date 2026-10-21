@@ -141,6 +141,23 @@ CAMBODIA_SCENES.push(
  ],'E08','expanded-camp-work',[102.5,14],['C10'])
 );
 for(const id of ['T01','F01'])CAMBODIA_SCENES.find(s=>s.id===id).choices.find(c=>c.id==='exchange').requires={cash:1};
+// Rules-4-only encounter: no device interaction, tactical rescue or diagnosis.
+CAMBODIA_SOURCES.E6={title:'ICRC · Humanitarian action in Thailand (2015 retrospective)',date:'23 June 2015 · section on 1979 border assistance; read 21 October 2026. Food, water and the Khao-I-Dang hospital, not a particular rescue service or waiting time.',url:'https://www.icrc.org/en/document/7th-princess-maha-chakri-sirindhorn-lecture-international-humanitarian-law-contemporary'};
+CAMBODIA_SCENES.push(
+ s('M01','Late November–December 1979 · an authored encounter',1979.93,'Thai–Cambodian border region · broad anchor','An injury interrupts the journey',
+ 'A mine explosion has injured Vann. The injury is not shown. The household cannot make the area safe or treat this as a device puzzle. In this invented encounter, trained help eventually reaches them and handles rescue and evacuation offscreen. No named service, route, response time or rescue method is reconstructed. The family must decide how to share the waiting, care and household tasks.',[
+ c('assistance','Give the available time to seeking trained assistance','Put help and accompaniment first; food collection waits.','They explain the need for trained assistance. Rescue is handled offscreen. Dara stays with Vann while the others postpone their tasks.',{supplies:-1,stress:-1},{mineCare:'assistance'},undefined,2),
+ c('evacuation','Prioritize responder-coordinated evacuation','Let trained responders determine the movement; share the remaining water.','Responders coordinate Vann’s evacuation offscreen. The family’s hurried timetable leaves them strained and short of water.',{water:-1,stress:1},{mineCare:'evacuation'},undefined,1),
+ c('care','Ask for help with the household’s care and supplies','Accept practical help while making room for Vann’s needs; the pause is longer.','Vann is accompanied through rescue and assessment. A companion helps with tasks; extra waiting uses more of the carried food.',{supplies:-2,health:2,cohesion:1},{mineCare:'shared'},undefined,3),
+ ],'M02','C04',[102.6,13.9],['C3','E6','E3']),
+ s('M02','December 1979 · after assistance',1979.94,'Thai–Cambodian border region · broad anchor','Continuing means changing the plan',
+ 'After offscreen rescue and assessment, Vann is alive but needs lighter tasks and continuing care. His recovery is not instant. No onward route is certified safe here. Local assistance changes their plans; the movement itself is summarized. Decide what support to organize, then assign a different relative to coordinate the onward leg and choose its pace.',[
+ c('companions','Arrange the longer onward journey with companions','Share planning without treating companionship as a guarantee of safety.','They agree on a longer timetable with companions, leaving Vann out of the coordinator role while his leg recovers.',{cohesion:1},{mineOnward:'companions'}),
+ c('care','Make lighter tasks the first priority','Organize accompaniment and rest before the onward movement.','Dara and Sophea share tasks while Maly discusses what can wait. Vann’s injury remains part of the next plan.',{stress:-1},{mineOnward:'care'}),
+ c('relief','Pause for a household relief request','Use more time asking for food and water before resuming.','A limited relief allocation helps with provisions. No service promises a cleared route or a legal outcome.',{supplies:2,water:2},{mineOnward:'relief'},undefined,2),
+ ],'E05','C04',[102.6,13.9],['E6','C5'])
+);
+for(const id of ['M01','M02'])CAMBODIA_SCENES.find(s=>s.id===id).context='This entire family incident, rescue, timetable, quantities and injury course are authored fiction. ICRC’s 2015 account supports emergency food/water and hospital assistance in the 1979 border crisis, not a guaranteed mine-response team or this evacuation. CDC’s 1981–83 observations are later context, not evidence of this late-1979 case. No instructions for interacting with explosives are provided.';
 export const STORY={id:'cambodia-1979',start:'E01',scenes:CAMBODIA_SCENES};
 export const sceneFor=state=>CAMBODIA_SCENES.find(s=>s.id===state.sceneId);
 export function callbacks(state){const f=state.flags;return [

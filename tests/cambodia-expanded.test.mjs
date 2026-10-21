@@ -18,7 +18,7 @@ test('expanded branch replay preserves resources and actual itinerary; Back cann
 
 import {STORY,sceneFor,CAMBODIA_SOURCES} from '../src/cambodiaExpanded/story.js';
 import * as expanded from '../src/cambodiaExpanded/journey.js';
-import {getEvent,chooseOption,continueJourney,getRequirementFailure} from '../src/game.js';
+import {getEvent,chooseOption,continueJourney,getRequirementFailure,requiresTravelPlan,planTravelLeg} from '../src/game.js';
 import {getJourneyGeography} from '../src/journeyGeography.js';
 import {loadCambodiaJourney,restartCambodiaJourney,applyCambodiaJourneyAction,CAMBODIA_EXPANDED_ARCHIVE_KEY} from '../src/cambodiaJourneyStore.js';
 const memory=()=>{const data=new Map();return {data,getItem:k=>data.get(k)??null,setItem:(k,v)=>data.set(k,String(v))};};
@@ -44,7 +44,7 @@ test('shortages carry forward to care/work; camp exchange settles once and canno
 test('edition 3 writes only its own save/archive; original editions and neighbors remain byte-identical; stale and unreadable protected',()=>{
  const storage=memory();for(const key of ['undocumented-trail:review:cambodia-1979:v1','undocumented-trail:review:cambodia-1979:v2','undocumented-trail:review:cambodia-1979:archive:v1','undocumented-trail:review:cambodia-1979:archive:v2','the-undocumented-trail-family-saves-v1','the-undocumented-trail-journey-archive-v1'])storage.setItem(key,'preserved sentinel');
  const before=[...storage.data];let game=restartCambodiaJourney(storage);assert.equal(game.householdEdition,3);let old;
- while(game.phase!=='ended'){old=game;const event=getEvent(game);game=applyCambodiaJourneyAction(game,game.phase==='outcome'?continueJourney:g=>chooseOption(g,event.choices[0].id),storage);assert.deepEqual(loadCambodiaJourney(storage).cambodiaState,game.cambodiaState);}
+ while(game.phase!=='ended'){old=game;const event=getEvent(game);game=applyCambodiaJourneyAction(game,game.phase==='outcome'?(requiresTravelPlan(game)?g=>planTravelLeg(g,'steady',g.controlModel.leads.find(p=>!p.unavailable).personId):continueJourney):g=>chooseOption(g,event.choices[0].id),storage);assert.deepEqual(loadCambodiaJourney(storage).cambodiaState,game.cambodiaState);}
  assert.deepEqual(applyCambodiaJourneyAction(old,continueJourney,storage),game);assert.equal(JSON.parse(storage.getItem(CAMBODIA_EXPANDED_ARCHIVE_KEY)).length,1);
  const archive=storage.getItem(CAMBODIA_EXPANDED_ARCHIVE_KEY);restartCambodiaJourney(storage);assert.equal(storage.getItem(CAMBODIA_EXPANDED_ARCHIVE_KEY),archive);for(const [k,v]of before)assert.equal(storage.getItem(k),v);
  storage.setItem(expanded.CAMBODIA_SAVE_KEY,'{"version":99}');game=loadCambodiaJourney(storage);assert.equal(game.saveWritable,false);assert.equal(storage.getItem(expanded.CAMBODIA_SAVE_KEY),'{"version":99}');

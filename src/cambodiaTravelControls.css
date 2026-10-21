@@ -1,0 +1,27 @@
+/* Control text must remain readable inside both existing journey panels. */
+.cambodia-travel-controls .cinematic-travel-leads > button {grid-template-columns:minmax(0,1fr);min-height:88px;padding:10px;}
+.cambodia-travel-controls .cinematic-travel-leads strong {font-size:14px;white-space:normal;}
+.cambodia-travel-controls .cinematic-travel-leads small {font-size:12px;line-height:1.4;white-space:normal;}
+.cambodia-travel-controls .cinematic-travel-strategies > button {min-height:88px;}
+.cambodia-travel-controls p {font-size:14px;line-height:1.5;}
+.cambodia-travel-controls button {min-height:44px;}
+.cambodia-travel-controls .cinematic-travel-strategies button[aria-pressed="true"] {border-color:#83d6d0;}
+.cambodia-travel-controls {grid-column:1 / -1;min-width:0;}
+.cambodia-travel-controls .cinematic-travel-leads small {text-transform:none;letter-spacing:normal;}
+.cambodia-travel-controls .cinematic-travel-step > span,
+.cambodia-travel-controls .cinematic-travel-step > small,
+.cambodia-travel-controls > header small,
+.cambodia-travel-controls .cinematic-travel-strategies small,
+.cambodia-travel-controls .cinematic-travel-strategies span {font-size:12px;line-height:1.4;}
+.cambodia-travel-controls .continue-button {display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;color:#09201e;border:1px solid #83d6d0;background:#83d6d0;font-weight:600;cursor:pointer;}
+.cambodia-travel-controls .continue-button svg {width:20px;height:20px;}
+@media(max-width:680px){.cambodia-travel-controls .cinematic-travel-leads{grid-template-columns:repeat(2,minmax(0,1fr));}.cambodia-travel-controls .cinematic-travel-strategies{grid-template-columns:1fr;}}
+/* Planning's outcome-card button reset must not place each role in column 2. */
+.cambodia-travel-controls .cinematic-travel-leads > button,
+.cambodia-travel-controls .cinematic-travel-strategies > button {grid-column:auto;justify-self:stretch;padding:10px;color:#f3eee2;border:1px solid rgba(197,209,208,.4);background:rgba(17,33,39,.9);}
+.cambodia-travel-controls .cinematic-travel-leads > button.selected {border-color:#83d6d0;background:rgba(13,67,65,.72);}
+.cambodia-resupply-controls .cinematic-optional-list > button {width:100%;min-height:48px;display:grid;grid-template-columns:minmax(0,1fr) 20px;align-items:center;gap:8px;padding:12px;color:#f3eee2;text-align:left;border:1px solid rgba(197,209,208,.4);background:rgba(17,33,39,.9);cursor:pointer;}
+.cambodia-resupply-controls button > span {min-width:0;display:flex;flex-direction:column;gap:4px;}
+.cambodia-resupply-controls button strong {font-size:14px;}
+.cambodia-resupply-controls button small,.cambodia-resupply-controls p {font-size:12px;line-height:1.5;}
+.cambodia-resupply-controls button:disabled {opacity:.5;cursor:not-allowed;}

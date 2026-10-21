@@ -1,3 +1,5 @@
+import {CambodiaTravelPlanner,CambodiaResupply} from './CambodiaTravelControls.jsx';
+import {resupplyCambodia} from './cambodiaExpanded/journey.js';
 import { commitJourneyChoice } from "./journeyChoiceActions.js";
 import { isSharedHouseholdJourney as isCambodiaJourney } from "./sharedHouseholdJourney.js";
 import { CambodiaResources, CambodiaJourneyContext, CambodiaPersonDialog } from "./CambodiaJourneyUI.jsx";
@@ -1014,6 +1016,7 @@ export function BeginnerApp() {
                 {event.source && <a href={event.source.url} target="_blank" rel="noreferrer">Research basis: {event.source.label}</a>}
               </div>
             )}
+            <CambodiaResupply game={game} onBuy={itemId=>setGame(current=>resupplyCambodia(current,itemId))} />
             {game.phase === "decision" && optionalActionLabels.length > 0 && (
               <details className="cinematic-optional-actions" key={`optional-${event.id}`}>
                 <summary>
@@ -1125,7 +1128,7 @@ export function BeginnerApp() {
                   {game.pendingEnding ? "See journey result" : "Continue the journey"}<ArrowRight weight="bold" />
                 </button>}
               </div>
-              {travelPlanRequired && <TravelPlanner game={game} onChoose={(strategyId, leadPersonId) => setGame((current) => planTravelLeg(current, strategyId, leadPersonId))} />}
+              {travelPlanRequired && (game.controlModel?<CambodiaTravelPlanner game={game} onChoose={(strategyId,personId)=>setGame(current=>planTravelLeg(current,strategyId,personId))}/>:<TravelPlanner game={game} onChoose={(strategyId, leadPersonId) => setGame((current) => planTravelLeg(current, strategyId, leadPersonId))} />)}
             </>
           )}
         </section>

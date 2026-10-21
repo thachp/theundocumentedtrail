@@ -11,7 +11,7 @@ const journeyFor=edition=>edition===1?originalJourney:edition===3?expanded:revis
 export const CAMBODIA_ARCHIVE_KEY='undocumented-trail:review:cambodia-1979:archive:v2';
 export function loadCambodiaArchive(storage){return [CAMBODIA_ARCHIVE_KEY,CAMBODIA_EXPANDED_ARCHIVE_KEY].flatMap(key=>{try{const rows=JSON.parse(storageFor(storage).getItem(key)??'[]');return Array.isArray(rows)?rows:[];}catch{return [];}});}
 export const CAMBODIA_EXPANDED_ARCHIVE_KEY='undocumented-trail:review:cambodia-1979:archive:v3';
-function archiveCambodia(game,target){if(![2,3].includes(game.householdEdition)||game.phase!=='ended')return;const key=game.householdEdition===3?CAMBODIA_EXPANDED_ARCHIVE_KEY:CAMBODIA_ARCHIVE_KEY;const rows=JSON.parse(target.getItem(key)??'[]');if(!Array.isArray(rows))throw Error('Unknown archive preserved');if(!rows.some(r=>r.runId===game.runId))target.setItem(key,JSON.stringify([...rows,{familyId:game.familyId,runId:game.runId,endingTitle:game.ending.title,history:game.cambodiaState.history}]));}
+function archiveCambodia(game,target){if(![2,3].includes(game.householdEdition)||game.phase!=='ended')return;const key=game.householdEdition===3?CAMBODIA_EXPANDED_ARCHIVE_KEY:CAMBODIA_ARCHIVE_KEY;const rows=JSON.parse(target.getItem(key)??'[]');if(!Array.isArray(rows))throw Error('Unknown archive preserved');if(!rows.some(r=>r.runId===game.runId))target.setItem(key,JSON.stringify([...rows,{familyId:game.familyId,runId:game.runId,endingTitle:game.ending.title,history:game.cambodiaState.history,...(game.cambodiaState.resourceRulesVersion===4?{state:game.cambodiaState}:{})}]));}
 export function loadCambodiaJourney(storage,requestedEdition) {
  const target=storageFor(storage);let edition=requestedEdition;
  try{if(!edition)edition=target.getItem(expanded.CAMBODIA_SAVE_KEY)!==null?3:target.getItem(revisedState.CAMBODIA_SAVE_KEY)!==null?2:target.getItem(originalState.CAMBODIA_SAVE_KEY)!==null?1:3;}catch{edition??=3;}
@@ -23,8 +23,12 @@ export function loadCambodiaJourney(storage,requestedEdition) {
 export function applyCambodiaJourneyAction(snapshot,action,storage) {
  const edition=snapshot.householdEdition??2,target=storageFor(storage),api=stateFor(edition),stored=loadCambodiaJourney(target,edition);
  if(typeof action==='function'&&stored.saveWritable&&(snapshot.runId!==stored.runId||snapshot.saveRevision!==stored.saveRevision))return stored;
- const next=typeof action==='function'?action(snapshot):action;
+ let next=typeof action==='function'?action(snapshot):action;
  if(next?.householdEdition!==edition||!api.validateCambodiaSave(next?.cambodiaState))return stored;
+ if(next.cambodiaState.resourceRulesVersion===4){
+  const canonical=api.validateCambodiaSave(next.cambodiaState);next={...next,cambodiaState:canonical};
+  const previous=stored.cambodiaState.actionLog??[];if(previous.some((a,i)=>JSON.stringify(a)!==JSON.stringify(canonical.actionLog[i])))return stored;
+ }
  if(!preservesCommittedChoices(stored.saveWritable?stored.cambodiaState:snapshot.cambodiaState,next.cambodiaState))return stored.saveWritable?stored:snapshot;
  if(!stored.saveWritable)return {...next,saveWritable:false,saveWarning:stored.saveWarning};
  if(next.runId!==stored.runId||next.saveRevision!==stored.saveRevision)return stored;
